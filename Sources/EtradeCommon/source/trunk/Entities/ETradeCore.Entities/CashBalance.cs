@@ -1,0 +1,128 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CashBalance.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Defines the CashBalance type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ETradeCore.Entities
+{
+    public class CashBalance
+    {
+        /// <summary>
+        /// Gets or sets the buy credit.
+        /// </summary>
+        /// <value>The buy credit.</value>
+        public System.Decimal BuyCredit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the cash balance.
+        /// </summary>
+        /// <value>The cash balance.</value>
+        public System.Decimal CashBal { get; set; }
+
+        /// <summary>
+        /// Gets or sets the PP.
+        /// </summary>
+        /// <value>The PP.</value>
+        public System.Decimal PP { get; set; }
+
+        /// <summary>
+        /// Gets or sets the IM.
+        /// </summary>
+        /// <value>The IM.</value>
+        public System.Decimal IM { get; set; }
+
+        /// <summary>
+        /// Gets or sets the EE.
+        /// </summary>
+        /// <value>The EE.</value>
+        public System.Decimal EE { get; set; }
+
+        /// <summary>
+        /// Gets or sets the with draw.
+        /// </summary>
+        /// <value>The with draw.</value>
+        public System.Decimal WithDraw { get; set; }
+
+        /// <summary>
+        /// Gets or sets the AMT_T1.
+        /// </summary>
+        /// <value>The AMT_T1.</value>
+        public System.Decimal AMT_T1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the AMT_T2.
+        /// </summary>
+        /// <value>The AMT_T2.</value>
+        public System.Decimal AMT_T2 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the AMT_T3.
+        /// </summary>
+        /// <value>The AMT_T3.</value>
+        public System.Decimal AMT_T3 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the total buy.
+        /// </summary>
+        /// <value>The total buy.</value>
+        public System.Decimal TotalBuy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the total sell.
+        /// </summary>
+        /// <value>The total sell.</value>
+        public System.Decimal TotalSell { get; set; }
+
+        /// <summary>
+        /// Gets or sets the call margin.
+        /// </summary>
+        /// <value>The call margin.</value>
+        public System.Decimal CallMargin { get; set; }
+
+        /// <summary>
+        /// Gets or sets the call fore sell.
+        /// </summary>
+        /// <value>The call fore sell.</value>
+        public System.Decimal CallForeSell { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dept.
+        /// </summary>
+        /// <value>The dept.</value>
+        public System.Decimal Dept { get; set; }
+
+        /// <summary>
+        /// Gets or sets the over due.
+        /// </summary>
+        /// <value>The over due.</value>
+        public System.Decimal OverDue { get; set; }
+
+        /// <summary>
+        /// Gets or sets the payment.
+        /// </summary>
+        /// <value>The payment.</value>
+        public System.Decimal Payment { get; set; }
+
+        /// <summary>
+        /// Gets or sets the advance ordered amount.
+        /// </summary>
+        /// <value>The advance ordered amount.</value>
+        public System.Decimal AdvanceOrderedAmount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the cash transfered amount.
+        /// </summary>
+        /// <value>The cash transfered amount.</value>
+        public System.Decimal CashTransferedAmount { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance can buy.
+        /// </summary>
+        /// <value><c>true</c> if this instance can buy; otherwise, <c>false</c>.</value>
+        public bool CanBuy { get; set; }
+    }
+}

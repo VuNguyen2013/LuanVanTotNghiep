@@ -1,0 +1,160 @@
+#include "Common.h"
+#include "IFISMessageInfo.h"
+
+string Padding (string source, int newSize)
+{
+	string newString = source;
+
+	newString.resize(newSize, SPACE_CHAR);
+	
+	return newString;
+}
+
+string GetDate()
+{
+    time_t lTime      = time(NULL);
+	struct tm *tmTime = localtime(&lTime);
+
+	char buffer [BUFFER_LEN];
+
+	strftime (buffer,BUFFER_LEN,"%Y%m%d-%H%M%S",tmTime);
+	buffer[PACKTIME_LEN] = '\0';
+	
+	string sDate = buffer;
+
+	return sDate;
+}
+
+string GetTimestamp()
+{
+	time_t lTime      = time(NULL);
+	struct tm *tmTime = localtime(&lTime);
+
+	char buffer[BUFFER_LEN];
+
+	strftime (buffer, BUFFER_LEN,"%H%M%S    ",tmTime);
+
+	buffer[ACCOUNT_LEN] = '\0';
+
+	string sTime = buffer;
+
+	return sTime;
+}
+
+string Price2String(float price)
+{
+	char buffer[BUFFER_LEN];
+
+	sprintf (buffer, "%9.2f0000", price);
+
+	return string(buffer);
+}
+
+
+string Int2String(int number, int length)
+{
+	stringstream ss;
+
+	ss << std::setw(length) << std::setfill('0') << number;
+
+	return ss.str();
+}
+
+string Int2String(const int& number)
+{
+   ostringstream oss;
+
+   oss << number;
+
+   return oss.str();
+} 
+
+
+string Float2String(float number, int length)
+{
+	stringstream ss;
+
+	ss << std::setw(length) << std::setfill('0') << number;
+
+	return ss.str();
+}
+
+string GetRawMessage (char * message, int len)
+{
+	char buffer[BUFFER_LEN];
+	memcpy((char *)buffer, message + 2, len - 3);
+	
+	buffer[len - 3] = '\0';
+
+	return string(buffer) + "^C";
+}
+
+int GetIntVal(string strConvert)
+ {
+	int intReturn;
+
+	intReturn = atoi(strConvert.c_str());
+
+	return(intReturn);
+}
+
+int GetIntVal(char * rawString, int len)
+{
+	char buffer[NUM_LEN];
+
+	strncpy (buffer, rawString, len);
+
+	buffer[len] = '\0';
+
+	return atoi(buffer);
+}
+
+int GetIntVal(char number)
+{
+	char buffer[2];
+
+	buffer[0] = number;
+
+	return atoi(buffer);
+}
+
+float  GetFloatVal(char * rawString, int len)
+{	
+	char buffer[NUM_LEN];
+
+	strncpy (buffer, rawString, len);
+
+	buffer[len] = '\0';
+
+	return atof(buffer);
+}
+
+string GetString(char * rawString, int len)
+{
+	char buffer[NUM_LEN];
+
+	strncpy (buffer, rawString, len);
+
+	buffer[len] = '\0';
+
+	return string(buffer);
+}
+
+int GetStatus(int status, int sourceID)
+ {
+     switch (status)
+     { 
+         case 0:
+         case 7:
+			 if (sourceID == FROM_SET)
+			 {
+				return ORD_WAITING;
+			 }
+
+			 return ORD_PENDING;
+         case 8:
+             return ORD_REJECTED;
+         default:
+             return ORD_UNKNOWN;
+     }
+ }

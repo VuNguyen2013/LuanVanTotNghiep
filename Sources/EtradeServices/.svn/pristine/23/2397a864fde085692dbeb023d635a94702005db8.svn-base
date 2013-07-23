@@ -1,0 +1,289 @@
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Global.asax.cs" company="OTS">
+//   2010
+// </copyright>
+// <summary>
+//   Global class
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+using ETradeFinance.Entities;
+using ETradeFinance.Services;
+using ETradeWebServices.Services;
+using ETradeWebServices.Utils;
+
+namespace MEtradeWebServices
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Diagnostics;
+    using System.Web;
+    using System.Web.Script.Serialization;
+
+    using AccountManager.Entities;
+
+    using ETradeCommon;
+    using ETradeGWServices;
+
+    using ETradeOrders.Services;
+
+    using AMServices;
+
+    ///<summary>
+    /// Global class
+    ///</summary>
+    public class Global : System.Web.HttpApplication
+    {
+
+        private static readonly bool MultipleLogin = bool.Parse(ConfigurationManager.AppSettings["MultipleLogin"]);
+
+        private const string WEB_SERVICE_POLICY = "WebServiceExceptionPolicy";
+
+        protected void Application_Start(object sender, EventArgs e)
+        {
+            try
+            {
+                // Start OrderUpdate to check message from LinkOPS
+                LogHandler.Log("Start OrderUpdater", "Global.Application_Start", TraceEventType.Information);
+                var execOrderService = new ExecOrderService();
+                var orderUpdater = OrderUpdater.Instance;
+                orderUpdater.InitLinkOPS();
+                orderUpdater.StartFISUpdater();
+
+                // Start market status thread
+                var etradeServices = new ETradeServices();
+
+                MarketServices.HandleHOSECheckConditionOrderEvent += etradeServices.CheckHOSEConditionOrder;
+                MarketServices.HandleHNXCheckConditionOrderEvent += etradeServices.CheckHNXConditionOrder;
+                MarketServices.HandleUPCOMCheckConditionOrderEvent += etradeServices.CheckUPCOMConditionOrder;
+
+                MarketServices.StartSessionThread();
+
+                // Clear Order table
+                LogHandler.Log("Clear old data in exec order", "Global.Application_Start", TraceEventType.Information);
+                execOrderService.DeleteOldData();
+
+                //Clear ConditionOrder table
+                var conditionOrderService = new ConditionOrderService();
+                //Update expired data
+                conditionOrderService.UpdateExpiredData(0);
+
+                // Clear cash advance
+                LogHandler.Log("Clear old data in CashAdvance table", "Global.Application_Start", TraceEventType.Information);
+                var cashAdvanceService = new CashAdvanceService();
+                cashAdvanceService.DeleteOldData();
+
+                // Load system configuration
+                LoadSysConfig();
+            }
+            catch (Exception ex)
+            {
+                // Clear Order table
+                ExceptionHandler.HandleException(ex, WEB_SERVICE_POLICY);
+            }
+        }
+
+        #region system configuration
+
+        /// <summary>
+        /// Loads the sys config.
+        /// </summary>
+        private void LoadSysConfig()
+        {
+            // Load syconfig
+
+            var serializer = new JavaScriptSerializer();
+
+            try
+            {
+                var accountManagerServices = new AccountManagerServices();
+
+                var fromDate = DateTime.Now.Date.ToString("dd/MM/yyyy");
+                var toDate = DateTime.MaxValue.Date.ToString("dd/MM/yyyy");
+
+                var holidayses = serializer.Deserialize<ResultObject<PagingObject<List<Holidays>>>>(accountManagerServices.GetListHoliday(fromDate, toDate, 1, int.MaxValue));
+
+                SaveHolidayConfig(holidayses.Result.Data);
+
+                var workingDayses = serializer.Deserialize<ResultObject<List<WorkingDays>>>(accountManagerServices.GetListWorkingDays());
+
+                SaveWorkingDaysConfig(workingDayses.Result);
+
+                var configurationses = serializer.Deserialize<ResultObject<List<Configurations>>>(accountManagerServices.GetListConfiguration());
+
+                SaveAllConfiguration(configurationses.Result);
+
+                var advanceTimes = serializer.Deserialize<ResultObject<List<AdvanceTime>>>(accountManagerServices.GetLisAdvanceTime());
+
+                SaveAdvanceTime(advanceTimes.Result);
+
+                var feeService = new FeeService();
+                var list = feeService.GetAll();
+                FeeService.ListFees.Clear();
+                if (list != null)
+                {
+                    foreach (var fee in list)
+                    {
+                        FeeService.ListFees.Add(fee);
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                LogHandler.Log("LoadSysConfig fail Exception = " + exception, GetType() + ".LoadSysConfig", TraceEventType.Error);
+                ExceptionHandler.HandleException(exception, WEB_SERVICE_POLICY);
+            }
+        }
+
+        /// <summary>
+        /// Saves the config.
+        /// </summary>
+        /// <param name="holidayses">The holidayses.</param>
+        private static void SaveHolidayConfig(IEnumerable<Holidays> holidayses)
+        {
+            foreach (var holidayse in holidayses)
+            {
+                holidayse.Holiday = holidayse.Holiday.ToLocalTime();
+
+                if (!SysConfig.Holidays.ContainsKey(holidayse.Holiday.ToString("yyyyMMdd")))
+                {
+                    SysConfig.Holidays.Add(holidayse.Holiday.ToString("yyyyMMdd"), holidayse.Holiday);
+                }
+                else
+                {
+                    SysConfig.Holidays[holidayse.Holiday.ToString("yyyyMMdd")] = holidayse.Holiday;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Saves the working days config.
+        /// </summary>
+        /// <param name="workingDayses">The working dayses.</param>
+        private static void SaveWorkingDaysConfig(IEnumerable<WorkingDays> workingDayses)
+        {
+            foreach (var workingDayse in workingDayses)
+            {
+                if (!SysConfig.WorkingDays.ContainsKey(workingDayse.DateId))
+                {
+                    SysConfig.WorkingDays.Add(workingDayse.DateId, workingDayse.IsWorkingDay);
+                }
+                else
+                {
+                    SysConfig.WorkingDays[workingDayse.DateId] = workingDayse.IsWorkingDay;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Saves all configuration.
+        /// </summary>
+        /// <param name="configurationses">The configurationses.</param>
+        private static void SaveAllConfiguration(IEnumerable<Configurations> configurationses)
+        {
+            foreach (Configurations configurationse in configurationses)
+            {
+                if (!SysConfig.Configurations.ContainsKey(configurationse.Name))
+                {
+                    SysConfig.Configurations.Add(configurationse.Name, configurationse.Value);
+                }
+                else
+                {
+                    SysConfig.Configurations[configurationse.Name] = configurationse.Value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Saves the advance time.
+        /// </summary>
+        /// <param name="advanceTimes">The advance times.</param>
+        private static void SaveAdvanceTime(IEnumerable<AdvanceTime> advanceTimes)
+        {
+            foreach (AdvanceTime advanceTime in advanceTimes)
+            {
+                advanceTime.StartTime = advanceTime.StartTime.ToLocalTime();
+                advanceTime.EndTime = advanceTime.EndTime.ToLocalTime();
+
+                if (!SysConfig.AdvanceTimes.ContainsKey(advanceTime.AdvanceType))
+                {
+                    SysConfig.AdvanceTimes.Add(advanceTime.AdvanceType, advanceTime);
+                }
+                else
+                {
+                    SysConfig.AdvanceTimes[advanceTime.AdvanceType] = advanceTime;
+                }
+            }
+        }
+
+        #endregion
+
+        protected void Session_Start(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Application_AuthenticateRequest(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Session_End(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Application_End(object sender, EventArgs e)
+        {
+            // Stop market status thread
+            MarketServices.StopSessionThread();
+            //Stop OrderUpdater
+            var orderUpdater = OrderUpdater.Instance;
+            orderUpdater.StopFISUpdater();
+            LogHandler.Log("Stop OrderUpdater", "Global.Application_End", TraceEventType.Information);
+        }
+
+        /// <summary>
+        /// Process before every requests
+        /// Check multiple login
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void Application_PreRequestHandlerExecute(object sender, EventArgs e)
+        {
+            if (HttpContext.Current.Session != null)
+            {
+                var loginUser = (string)Session[ETradeCommon.Enums.CommonEnums.SESSION_KEY.CUSTOMER_ACCOUNT.ToString()];
+                if (loginUser != null)
+                {
+                    var previousSessionId = (string)HttpContext.Current.Cache[loginUser];
+                    if (string.IsNullOrEmpty(previousSessionId))
+                    {
+                        //Kicked out by admin or timeout.
+                        Session.Remove(ETradeCommon.Enums.CommonEnums.SESSION_KEY.CUSTOMER_ACCOUNT.ToString());
+                    }
+                    // Check if allow multiple login or not.
+                    if (!MultipleLogin)
+                    {
+                        if (previousSessionId != Session.SessionID)
+                        {
+                            // Multiple login
+                            Session.Remove(ETradeCommon.Enums.CommonEnums.SESSION_KEY.CUSTOMER_ACCOUNT.ToString());
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,115 @@
+﻿	
+
+#region Using Directives
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Collections;
+using System.Linq;
+using System.Text;
+using System.Xml.Serialization;
+using System.Data;
+
+using ETradeFinance.Entities;
+using ETradeFinance.Entities.Validation;
+
+using ETradeFinance.DataAccess;
+using Microsoft.Practices.EnterpriseLibrary.Logging;
+
+#endregion
+
+namespace ETradeFinance.Services
+{		
+	/// <summary>
+	/// An component type implementation of the 'CashAdvanceHistory' table.
+	/// </summary>
+	/// <remarks>
+	/// All custom implementations should be done here.
+	/// </remarks>
+	[CLSCompliant(true)]
+	public partial class CashAdvanceHistoryService : ETradeFinance.Services.CashAdvanceHistoryServiceBase
+	{
+		#region Constructors
+		/// <summary>
+		/// Initializes a new instance of the CashAdvanceHistoryService class.
+		/// </summary>
+		public CashAdvanceHistoryService() : base()
+		{
+		}
+		#endregion Constructors
+
+	    ///<summary>
+	    /// Get list of Cash advance history
+	    ///</summary>
+	    ///<param name="subAccountId">Sub account id</param>
+	    ///<param name="fromDate">Advance date from, format DD/MM/YYYY</param>
+	    ///<param name="toDate">Advance date to, format DD/MM/YYYY</param>
+	    ///<param name="contractNo">Contract no</param>
+	    ///<param name="sellDueDateTo">Sell Due date from, format DD/MM/YYYY</param>
+	    ///<param name="sellDueDateFrom">Sell Due date from, format DD/MM/YYYY</param>
+	    ///<param name="status">Status</param>
+	    ///<param name="tradeType">Trade type</param>
+	    ///<param name="pageIndex">Page index</param>
+	    ///<param name="pageSize">Page size</param>
+	    ///<param name="count">Total records</param>
+	    ///<returns>
+	    /// <para>Return list of CashAdvance object that contains CashAdvance information.</para>
+	    /// </returns>
+	    public List<CashAdvanceHistory> GetListCashAdvanceHistory(string subAccountId, string fromDate, string toDate, 
+            string contractNo, string sellDueDateFrom, string sellDueDateTo, int status, int tradeType, string brokerId, 
+            int pageIndex, int pageSize, out int count)
+        {
+            var whereClause = new StringBuilder();
+            //whereClause.AppendFormat("(BrokerID = '{0}') ", brokerId);
+            if (!string.IsNullOrEmpty(subAccountId))
+            {
+                whereClause.AppendFormat("AND (SubAccountID LIKE '%{0}%') ", subAccountId);
+            }
+            if (!string.IsNullOrEmpty(fromDate))
+            {
+                whereClause.AppendFormat("AND (AdvanceDate >= " + ETradeCommon.Constants.SQL_CONVERT_DATETIME + ")",
+                                         fromDate);
+            }
+            if (!string.IsNullOrEmpty(toDate))
+            {
+                whereClause.AppendFormat("AND (AdvanceDate < " + ETradeCommon.Constants.SQL_CONVERT_DATETIME + ")",
+                                         toDate);
+            }
+            if (!string.IsNullOrEmpty(contractNo))
+            {
+                whereClause.AppendFormat("AND (ContractNo LIKE '%{0}%') ", contractNo);
+            }
+            if (!string.IsNullOrEmpty(sellDueDateFrom))
+            {
+                whereClause.AppendFormat("AND (SellDueDate >= " + ETradeCommon.Constants.SQL_CONVERT_DATETIME + ") ",
+                                         sellDueDateFrom);
+            }
+            if (!string.IsNullOrEmpty(sellDueDateTo))
+            {
+                whereClause.AppendFormat("AND (SellDueDate < " + ETradeCommon.Constants.SQL_CONVERT_DATETIME + ") ",
+                                         sellDueDateTo);
+            }
+            if (status >= 0)
+            {
+                whereClause.AppendFormat("AND (Status = {0}) ", status);
+            }
+            if (tradeType >= 0)
+            {
+                whereClause.AppendFormat("AND (TradeType = {0}) ", tradeType);
+            }
+	        string where = whereClause.ToString();
+            if(!string.IsNullOrEmpty(where))
+            {
+                where = where.Substring(4);
+            }
+            var list = GetPaged(where, "ExecTime DESC", pageIndex - 1, pageSize, out count);
+            if (list != null)
+            {
+                return list.ToList();
+            }
+            return null;
+        }
+		
+	}//End Class
+
+} // end namespace

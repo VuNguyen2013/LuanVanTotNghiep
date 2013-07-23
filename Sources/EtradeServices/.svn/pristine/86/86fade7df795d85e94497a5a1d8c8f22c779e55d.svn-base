@@ -1,0 +1,191 @@
+﻿	
+
+#region Using Directives
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Collections;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Xml.Serialization;
+using System.Data;
+using ETradeCommon;
+using ETradeCommon.Enums;
+using ETradeFinance.DataAccess.Bases;
+using ETradeFinance.Entities;
+using ETradeFinance.Entities.Validation;
+
+using ETradeFinance.DataAccess;
+using Microsoft.Practices.EnterpriseLibrary.Logging;
+
+#endregion
+
+namespace ETradeFinance.Services
+{		
+	/// <summary>
+	/// An component type implementation of the 'Fee' table.
+	/// </summary>
+	/// <remarks>
+	/// All custom implementations should be done here.
+	/// </remarks>
+	[CLSCompliant(true)]
+	public partial class FeeService : ETradeFinance.Services.FeeServiceBase
+	{
+		#region Constructors
+		/// <summary>
+		/// Initializes a new instance of the FeeService class.
+		/// </summary>
+		public FeeService() : base()
+		{
+		}
+		#endregion Constructors
+
+        ///<summary>
+        /// Create fee
+        ///</summary>
+        ///<param name="minValue">Min value of fee range</param>
+        ///<param name="maxValue">Max value of fee range</param>
+        ///<param name="minFee">Name of configuration</param>
+        /// <param name="feeRatio">Fee ratio</param>
+        /// <param name="feeType">Fee type</param>
+        /// <param name="vat">Vat fee</param>
+        /// <returns>
+        /// <para>Result of creating fee</para>
+        /// <para>RET_CODE=RANGE_OVERLAP: Data is overlap with data in database.</para>
+        /// <para>RET_CODE=EXISTED_DATA: Data is existing.</para>
+        /// <para>RET_CODE=FAIL: Fail to create data.</para>
+        /// <para>RET_CODE=SUCCESS: Create data successfully.</para>
+        /// </returns>
+        public int CreateFee(decimal minValue, decimal maxValue, decimal minFee, decimal feeRatio, int feeType, decimal vat)
+        {
+            // Check intersection with range in database
+            var whereClause = new StringBuilder();
+            whereClause.AppendFormat("(MinValue <= CAST({0} AS decimal(18,3)))", maxValue);
+            whereClause.AppendFormat(" AND ((MaxValue >= CAST({0} AS decimal(18,3))) OR (MaxValue IS NULL))", minValue);
+            whereClause.AppendFormat(" AND (FeeType = {0})", feeType);
+            int count;
+            var list = GetPaged(whereClause.ToString(), string.Empty, 0, 1, out count);
+            if ((list != null) && (list.Count > 0))
+            {
+                // The inserting range is overlap with range in database
+                return (int) CommonEnums.RET_CODE.RANGE_OVERLAP;
+            }
+            var fee = new Fee
+                          {
+                              MinValue = minValue,
+                              MaxValue = maxValue,
+                              MinFee = minFee,
+                              FeeRatio = feeRatio,
+                              FeeType = feeType,
+                              Vat = vat
+                          };
+            bool result = Insert(fee);
+            if (result)
+            {
+                return (int) CommonEnums.RET_CODE.SUCCESS;
+            }
+            return (int) CommonEnums.RET_CODE.FAIL;
+        }
+
+        ///<summary>
+        /// Update fee
+        ///</summary>
+        ///<param name="feeId">Fee id</param>
+        ///<param name="minValue">Min value of fee range</param>
+        ///<param name="maxValue">Max value of fee range</param>
+        ///<param name="minFee">Name of configuration</param>
+        /// <param name="feeRatio">Fee ratio</param>
+        /// <param name="feeType">Fee type</param>
+        /// <param name="vat">Vat fee</param>
+        /// <returns>
+        /// <para>Result of updating fee</para>
+        /// <para>RET_CODE=RANGE_OVERLAP: Data is overlap with data in database.</para>
+        /// <para>RET_CODE=NO_EXISTED_DATA: Data is not existing.</para>
+        /// <para>RET_CODE=FAIL: Fail to create data.</para>
+        /// <para>RET_CODE=SUCCESS: Create data successfully.</para>
+        /// </returns>
+	    public int UpdateFee(long feeId, decimal minValue, decimal maxValue, decimal minFee, decimal feeRatio, int feeType, decimal vat)
+        {
+            // Check intersection with range in database
+            var whereClause = new StringBuilder();
+            whereClause.AppendFormat("(MinValue <= CAST({0} AS decimal(18,3)))", maxValue);
+            whereClause.AppendFormat(" AND ((MaxValue >= CAST({0} AS decimal(18,3))) OR (MaxValue IS NULL))", minValue);
+            whereClause.AppendFormat(" AND (FeeType = {0})", feeType);
+            whereClause.AppendFormat(" AND (FeeID != {0})", feeId);
+            int count;
+            var list = GetPaged(whereClause.ToString(), string.Empty, 0, 1, out count);
+            if ((list != null) && (list.Count > 0))
+            {
+                // The inserting range is overlap with range in database
+                return (int)CommonEnums.RET_CODE.RANGE_OVERLAP;
+            }
+            // Get existing data to update
+            var fee = GetByFeeId(feeId);
+            if (fee == null)
+            {
+                return (int) CommonEnums.RET_CODE.NO_EXISTED_DATA;
+            }
+            fee.MinValue = minValue;
+            fee.MaxValue = maxValue;
+            fee.MinFee = minFee;
+            fee.FeeRatio = feeRatio;
+            fee.FeeType = feeType;
+            fee.Vat = vat;
+
+            bool result = Update(fee);
+            if (result)
+            {
+                return (int)CommonEnums.RET_CODE.SUCCESS;
+            }
+            return (int)CommonEnums.RET_CODE.FAIL;
+        }
+
+        ///<summary>
+        ///</summary>
+        ///<param name="feeType"></param>
+        ///<returns></returns>
+        public List<Fee> GetListFee(int feeType)
+        {
+            var feeParameterBuilder = new FeeParameterBuilder();
+            feeParameterBuilder.AppendEquals(FeeColumn.FeeType, feeType.ToString());
+            var list = Find(feeParameterBuilder);
+            if (list != null)
+            {
+                return list.ToList();
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the trade fee.
+        /// </summary>
+        /// <param name="feeType">Type of the fee.</param>
+        /// <param name="sellAmt">The sell amt.</param>
+        /// <returns></returns>
+        public Fee GetTradeFee(CommonEnums.FEE_TYPE feeType, decimal sellAmt)
+        {
+            Fee fee;
+
+            int totalRecords;
+            var fees = this.GetPaged("FeeType  = " + (int)feeType + " AND MaxValue > " + sellAmt + " AND MinValue < " + sellAmt, " FeeId DESC", 0, int.MaxValue, out totalRecords);
+
+            if (fees != null && fees.Count > 0)
+            {
+                fee = fees[0];
+
+                return fee;
+            }
+            else
+            {
+                LogHandler.Log(
+                               "GetTradeFee: sellAmt " + sellAmt + " not in configured range in DB",
+                               this.GetType() + ".GetTradeFee()",
+                               TraceEventType.Information);
+
+                return null;
+            }
+        }
+	}//End Class
+
+} // end namespace

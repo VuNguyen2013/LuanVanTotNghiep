@@ -1,0 +1,112 @@
+using System.Collections.Generic;
+
+namespace RTDataServices.Entities
+{
+    public class StockInfo
+    {
+        public virtual System.Int32 StockInfoId { get; set; }
+        public virtual System.DateTime TradeDate { get; set; }
+        public virtual System.Int32 StockNo { get; set; }
+        public virtual System.String StockSymbol { get; set; }
+        public virtual System.String Name { get; set; }
+        public virtual System.Int16 MarketID { get; set; }
+        public virtual System.String StockType { get; set; }
+        public virtual System.Int16 Status { get; set; }
+        public virtual System.Double Floor { get; set; }
+        public virtual System.Double Ceiling { get; set; }
+        public virtual System.Double AvrPrice { get; set; }
+        public virtual System.Double OpenPrice { get; set; }
+        public virtual System.Double ClosePrice { get; set; }
+        public virtual System.Double RefPrice { get; set; }
+        public virtual System.Double Last { get; set; }
+        public virtual System.Int32 LastVol { get; set; }
+        public virtual System.Int64 LastVal { get; set; }
+        public virtual System.Double Highest { get; set; }
+        public virtual System.Double Lowest { get; set; }
+        public virtual System.Int64 TotalShare { get; set; }
+        public virtual System.Int64 NMTotalShare { get; set; }
+        public virtual System.Int64 TotalValue { get; set; }
+        public virtual System.Double Best1Bid { get; set; }
+        public virtual System.Int32 Best1BidVolume { get; set; }
+        public virtual System.Double Best2Bid { get; set; }
+        public virtual System.Int32 Best2BidVolume { get; set; }
+        public virtual System.Double Best3Bid { get; set; }
+        public virtual System.Int32 Best3BidVolume { get; set; }
+        public virtual System.Double Best1Offer { get; set; }
+        public virtual System.Int32 Best1OfferVolume { get; set; }
+        public virtual System.Double Best2Offer { get; set; }
+        public virtual System.Int32 Best2OfferVolume { get; set; }
+        public virtual System.Double Best3Offer { get; set; }
+        public virtual System.Int32 Best3OfferVolume { get; set; }
+        public virtual System.Int64 TotalForeignRoom { get; set; }
+        public virtual System.Int64 AvailableForeignRoom { get; set; }
+        public virtual System.Int64 Sequence { get; set; }
+        public virtual System.Int64 FRBoughtVol { get; set; }
+        public virtual System.Int64 FRSoldVol { get; set; }
+        public virtual System.Int64 CanTrade { get; set; }
+        public virtual System.Boolean IsVn30 { get; set; }
+
+        //Advanced field
+        public virtual System.Double Changed { get; set; }
+        public virtual System.Double PercentChanged { get; set; }
+        public virtual System.Int32 Best4BidVolume { get; set; }
+        public virtual System.Int32 Best4OfferVolume { get; set; }
+        public virtual System.String TradingSessionId { get; set; }
+        public virtual System.Int32 TradSessionStatus { get; set; }
+        public List<DealDetail> DealDetails { get; set; }
+
+        public StockInfo()
+        {}
+
+        public StockInfo(System.Int32 StockInfoId, System.DateTime TradeDate, System.Int32 StockNo, System.String StockSymbol, System.String Name, System.Int16 MarketID, System.String StockType,
+                          System.Int16 Status, System.Double Floor, System.Double Ceiling, System.Double AvrPrice, System.Double OpenPrice, System.Double RefPrice,
+                          System.Double Last, System.Int32 LastVol, System.Int64 LastVal,System.Double Highest,System.Double Lowest, System.Int64 TotalShare,
+                          System.Int64 TotalValue, System.Double Best1Bid, System.Int32 Best1BidVolume, System.Double Best2Bid, System.Int32 Best2BidVolume,
+                          System.Double Best3Bid, System.Int32 Best3BidVolume, System.Double Best1Offer, System.Int32 Best1OfferVolume, System.Double Best2Offer, System.Int32 Best2OfferVolume,
+                          System.Double Best3Offer, System.Int32 Best3OfferVolume, System.Int64 TotalForeignRoom, System.Int64 AvailableForeignRoom, System.Int64 Sequence, System.Boolean IsVn30)
+        {
+            this.StockInfoId          = StockInfoId;
+            this.TradeDate            = TradeDate;
+            this.StockNo              = StockNo;
+            this.StockSymbol          = StockSymbol;
+            this.Name                 = Name;
+            this.MarketID             = MarketID;
+            this.StockType            = StockType;
+            this.Status               = Status;
+            this.Floor                = Floor;
+            this.Ceiling              = Ceiling;
+            this.AvrPrice             = AvrPrice;
+            this.OpenPrice            = OpenPrice;
+            this.RefPrice             = RefPrice;
+            this.Last                 = Last;
+            this.LastVol              = LastVol;
+            this.LastVal              = LastVal;
+            this.Highest              = Highest;
+            this.Lowest               = Lowest;
+            this.TotalShare           = TotalShare;
+            this.TotalValue           = TotalValue;
+            this.Best1Bid             = Best1Bid;
+            this.Best1BidVolume       = Best1BidVolume;
+            this.Best2Bid             = Best2Bid;
+            this.Best2BidVolume       = Best2BidVolume;
+            this.Best3Bid             = Best3Bid ;
+            this.Best3BidVolume       = Best3BidVolume;
+            this.Best1Offer           = Best1Offer;
+            this.Best1OfferVolume     = Best1OfferVolume ;
+            this.Best2Offer           = Best2Offer;
+            this.Best2OfferVolume     = Best2OfferVolume;
+            this.Best3Offer           = Best3Offer;
+            this.Best3OfferVolume     = Best3OfferVolume;
+            this.TotalForeignRoom     = TotalForeignRoom;
+            this.AvailableForeignRoom = AvailableForeignRoom;
+            this.Sequence             = Sequence;
+            this.IsVn30 = IsVn30;
+        }
+    }
+
+    public class StockInfoDTO
+    {
+        public int RetCode { get; set; }
+        public StockInfo StockInfo { get; set; }
+    }
+}

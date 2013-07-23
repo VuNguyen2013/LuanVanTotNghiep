@@ -1,0 +1,176 @@
+﻿	
+
+#region Using Directives
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using ETradeCommon.Enums;
+using ETradeFinance.DataAccess.Bases;
+using ETradeFinance.Entities;
+using ETradeFinance.DataAccess;
+
+#endregion
+
+namespace ETradeFinance.Services
+{		
+	/// <summary>
+	/// An component type implementation of the 'CashAdvance' table.
+	/// </summary>
+	/// <remarks>
+	/// All custom implementations should be done here.
+	/// </remarks>
+	[CLSCompliant(true)]
+	public partial class CashAdvanceService : ETradeFinance.Services.CashAdvanceServiceBase
+	{
+        private const string LAYER_EXCEPTION_POLICY = "ServiceLayerExceptionPolicy";
+        private const bool NO_TRAN_BY_DEFAULT = false;
+		#region Constructors
+		/// <summary>
+		/// Initializes a new instance of the CashAdvanceService class.
+		/// </summary>
+		public CashAdvanceService() : base()
+		{
+		}
+		#endregion Constructors
+
+        ///<summary>
+        /// Update Cash advance and Cash advance history
+        ///</summary>
+        ///<param name="id">Cash advance id</param>
+        ///<param name="cashReceived">Cash received</param>
+        ///<param name="status">Status</param>
+        ///<param name="reason">Reason</param>
+        /// <returns>
+        /// <para>Result of updating Cash advance</para>
+        /// <para>RET_CODE=NO_EXISTED_DATA: Data is not existing.</para>
+        /// <para>RET_CODE=FAIL: Fail to update data.</para>
+        /// <para>RET_CODE=SUCCESS: Update data successfully.</para>
+        /// </returns>
+        [DataObjectMethod(DataObjectMethodType.Update)]
+        public int UpdateCashAdvance(long id, decimal cashReceived, int status, string reason, string brokerId)
+        {
+            #region Security and validation check
+            // throws security exception if not authorized
+            SecurityContext.IsAuthorized("UpdateCashAdvance");
+
+            #endregion Security and validation check
+
+            #region Initialisation
+            bool result = false;
+            bool isBorrowedTransaction = false;
+            TransactionManager transactionManager = null;
+            NetTiersProvider dataProvider;
+            #endregion Initialisation
+
+            try
+            {
+                isBorrowedTransaction = ConnectionScope.Current.HasTransaction;
+                transactionManager = ConnectionScope.ValidateOrCreateTransaction(NO_TRAN_BY_DEFAULT);
+                dataProvider = ConnectionScope.Current.DataProvider;
+
+                //Get cash advance
+                var cashAdvance = GetById(id);
+                if (cashAdvance == null)
+                {
+                    return (int)CommonEnums.RET_CODE.NO_EXISTED_DATA;
+                }
+
+                //Get cash advance history
+                var cashAdvanceHistoryBuilder = new CashAdvanceHistoryParameterBuilder();
+                cashAdvanceHistoryBuilder.AppendEquals(CashAdvanceHistoryColumn.ContractNo, cashAdvance.ContractNo);
+                var cashAdvanceHistoryList = dataProvider.CashAdvanceHistoryProvider.Find(cashAdvanceHistoryBuilder);
+                if ((cashAdvanceHistoryList == null) || (cashAdvanceHistoryList.Count == 0))
+                {
+                    return (int)CommonEnums.RET_CODE.NO_EXISTED_DATA;
+                }
+                var cashAdvanceHistory = cashAdvanceHistoryList[0];
+
+                cashAdvance.CashReceived = cashReceived;
+                cashAdvance.Status = status;
+                cashAdvance.Reason = reason;
+                cashAdvance.BrokerId = brokerId;
+                cashAdvance.ExecTime = DateTime.Now;
+                result = dataProvider.CashAdvanceProvider.Update(transactionManager, cashAdvance);
+                if (result)
+                {
+                    cashAdvanceHistory.CashReceived = cashReceived;
+                    cashAdvanceHistory.Status = status;
+                    cashAdvanceHistory.Reason = reason;
+                    cashAdvanceHistory.BrokerId = brokerId;
+                    cashAdvanceHistory.ExecTime = cashAdvance.ExecTime;
+                    result = dataProvider.CashAdvanceHistoryProvider.Update(transactionManager, cashAdvanceHistory);
+                    if (result)
+                    {
+                        return (int) CommonEnums.RET_CODE.SUCCESS;
+                    }
+                }
+
+                if (!isBorrowedTransaction && transactionManager != null && transactionManager.IsOpen)
+                    transactionManager.Commit();
+            }
+            catch (Exception exc)
+            {
+                #region Handle transaction rollback and exception
+                if (transactionManager != null && transactionManager.IsOpen)
+                    transactionManager.Rollback();
+
+                //Handle exception based on policy
+                if (DomainUtil.HandleException(exc, LAYER_EXCEPTION_POLICY))
+                    throw;
+                #endregion Handle transaction rollback and exception
+            }
+
+            return (int) CommonEnums.RET_CODE.FAIL;
+        }
+
+	    ///<summary>
+	    /// Get list of Cash advances
+	    ///</summary>
+	    ///<param name="subAccountId">Sub account id</param>
+	    ///<param name="contractNo">Contract no</param>
+	    ///<param name="status">Status</param>
+	    ///<param name="tradeType">Trade type</param>
+	    ///<param name="pageIndex">Page index</param>
+	    ///<param name="pageSize">Page size</param>
+	    ///<param name="count">Total of records</param>
+	    ///<returns>
+	    /// <para>Return list of CashAdvance object that contains CashAdvance information.</para>
+	    /// </returns>
+	    public List<CashAdvance> GetListCashAdvance(string subAccountId, string contractNo, int status, 
+            int tradeType, int pageIndex, int pageSize, out int count)
+        {
+            var whereClause = new StringBuilder();
+            //whereClause.AppendFormat("(BrokerID = '{0}') ", brokerId);
+            if (!string.IsNullOrEmpty(subAccountId))
+            {
+                whereClause.AppendFormat("AND (SubAccountID LIKE '%{0}%') ", subAccountId);
+            }
+            if (!string.IsNullOrEmpty(contractNo))
+            {
+                whereClause.AppendFormat("AND (ContractNo LIKE '%{0}%') ", contractNo);
+            }
+            if (status >= 0)
+            {
+                whereClause.AppendFormat("AND (Status = {0}) ", status);
+            }
+            if (tradeType >= 0)
+            {
+                whereClause.AppendFormat("AND (TradeType = {0}) ", tradeType);
+            }
+	        string where = whereClause.ToString();
+	        if (!string.IsNullOrEmpty(where))
+	        {
+	            where = where.Substring(4);
+	        }
+            var list = GetPaged(where, "AdvanceDate", pageIndex - 1, pageSize, out count);
+            if (list != null)
+            {
+                return list.ToList();
+            }
+            return null;
+        }
+	}//End Class
+
+} // end namespace

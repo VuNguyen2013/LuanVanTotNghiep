@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6934DBEF-C299-4F25-998D-1ACD1391D5E1}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AppUpdateIndexInnoStock</RootNamespace>
+    <AssemblyName>AppUpdateIndexInnoStock</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InnoStockPortal.Data.SqlClient\InnoStockPortal.Data.SqlClient.csproj">
+      <Project>{8996A7B4-57D3-440B-A545-A701844B8C4A}</Project>
+      <Name>InnoStockPortal.Data.SqlClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InnoStockPortal.Data\InnoStockPortal.Data.csproj">
+      <Project>{041C1BBE-0BFB-4D45-8125-9AB0BBC09A92}</Project>
+      <Name>InnoStockPortal.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InnoStockPortal.Entities\InnoStockPortal.Entities.csproj">
+      <Project>{20E43088-4618-4F4A-B8AD-FC31B50D94CD}</Project>
+      <Name>InnoStockPortal.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InnoStockPortal.Services\InnoStockPortal.Services.csproj">
+      <Project>{794327CE-DC0A-4381-89EE-4C00AFB08D5A}</Project>
+      <Name>InnoStockPortal.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RTStockData.Data.SqlClient\RTStockData.Data.SqlClient.csproj">
+      <Project>{64095148-025A-4D3D-B977-B787C675097A}</Project>
+      <Name>RTStockData.Data.SqlClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RTStockData.Data\RTStockData.Data.csproj">
+      <Project>{4EE28EEF-62E3-4749-9510-8F606BEA23E9}</Project>
+      <Name>RTStockData.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RTStockData.Entities\RTStockData.Entities.csproj">
+      <Project>{10CBC139-B8F7-40AC-B22C-820F9AAF668F}</Project>
+      <Name>RTStockData.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RTStockData.Services\RTStockData.Services.csproj">
+      <Project>{BB0A9811-1AD4-4854-823F-5025F3AA0DAD}</Project>
+      <Name>RTStockData.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

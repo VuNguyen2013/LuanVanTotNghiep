@@ -1,0 +1,10 @@
+DELETE FROM [Holidays]
+DELETE FROM [CustomerActionHistory]
+DELETE FROM [Research]
+DELETE FROM [OpenCustAccount]
+DELETE FROM [BuyRight]
+DELETE FROM [SubCustAccountPermission]
+DELETE FROM [SubCustAccount]
+DELETE FROM [MainCustAccount]
+DELETE FROM [BrokerPermission]
+DELETE FROM [BrokerAccount] WHERE [BrokerID] != 'admin'

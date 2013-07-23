@@ -1,0 +1,135 @@
+
+#define SocketHandler_EXPORTS
+#include "SocketHandler.h"
+#include "IFISMessageInfo.h"
+#include "Log.h"
+
+CSocketHandler::CSocketHandler()
+{ 
+	pSocketClient = new SocketClient();
+}
+
+CSocketHandler::~CSocketHandler()
+{ 
+	delete pSocketClient;
+}
+
+bool CSocketHandler::Connect(char* server, int port)
+{
+	return pSocketClient->Connect(string(server), port);
+}
+
+bool CSocketHandler::Disconnect()
+{
+	return pSocketClient->Disconnect();
+}
+
+bool CSocketHandler::IsConnected()
+{
+	return pSocketClient->Connected();
+}
+
+bool CSocketHandler::Send(char *message, int length)
+{
+	return pSocketClient->SendMessage(message, length);
+}
+
+bool CSocketHandler::Receive (char *message, int *length)
+{
+	return pSocketClient->ReceiveMessage(message, length);
+}
+
+void CSocketHandler::InitLog(char * fileName)
+{
+	pSocketClient->InitLog(fileName);		
+}
+
+void * __stdcall CreateSocketHandler()
+{
+	return new CSocketHandler;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// DestroySocketHandler - free the memory for the class instance 
+void __stdcall DestroySocketHandler(void * objptr)
+{
+	CSocketHandler *SocketHandler = (CSocketHandler *) objptr;
+
+	if (SocketHandler)
+	{
+		delete SocketHandler;
+	}
+}
+
+bool __stdcall SocketHandlerConnect(void * objptr, char *server, int port)
+{
+	CSocketHandler *SocketHandler = (CSocketHandler *) objptr;
+
+	if (SocketHandler)
+	{
+		return SocketHandler->Connect(server, port);
+	}
+
+	return false;
+}
+
+bool __stdcall SocketHandlerDisconnect(void * objptr)
+{
+	CSocketHandler *SocketHandler = (CSocketHandler *) objptr;
+
+	if (SocketHandler)
+	{
+		return SocketHandler->Disconnect();
+	}
+
+	return false;
+}
+
+bool __stdcall SocketHandlerSendMessage(void * objptr, char * message, int length)
+{
+	CSocketHandler *SocketHandler = (CSocketHandler *) objptr;
+
+	if (SocketHandler)
+	{
+		return SocketHandler->Send(message, length);
+	}
+
+	return false;
+}
+
+bool __stdcall SocketHandlerReceiveMessage(void * objptr, char *message, int *length)
+{
+	CSocketHandler *SocketHandler = (CSocketHandler *) objptr;
+
+	if (SocketHandler)
+	{
+		return SocketHandler->Receive(message, length);
+	}
+
+	return false;
+}
+
+bool __stdcall SocketHandlerIsConnected(void * objptr)
+{
+	CSocketHandler *SocketHandler = (CSocketHandler *) objptr;
+
+	if (SocketHandler)
+	{
+		return SocketHandler->IsConnected();
+	}
+
+	return false;
+}
+
+void __stdcall SocketHandlerInitLog(void * objptr, char * fileName)
+{
+	CSocketHandler *SocketHandler = (CSocketHandler *) objptr;
+
+	if (SocketHandler)
+	{
+		SocketHandler->InitLog(fileName);
+	}
+}
+
+
+

@@ -1,0 +1,283 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="OrderHistory.cs" company="OTS">
+//   2010
+// </copyright>
+// <summary>
+//   Defines the OrderHistory type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ETradeCore.Services
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+
+    using DataAccess;
+    using DataAccess.SqlClient;
+
+    using Entities;
+
+    using ETradeCommon;
+    using ETradeCommon.Enums;
+
+    public class OrderHistoryServices
+    {
+        private readonly IFisCoreProvider _db2Provider = new SqlDb2Provider();
+
+        private readonly ISbaCoreProvider _informixProvider = new SqlInformixProvider();
+
+        /// <summary>
+        /// Compare FILTER_ORDER_STATUS with core order status
+        /// </summary>
+        /// <param name="orderStatus">The order status.</param>
+        /// <param name="coreOrdStatus">The order hist status.</param>
+        /// <returns></returns>
+        public bool Equals(int orderStatus, string coreOrdStatus)
+        {
+            switch (orderStatus)
+            {
+                case (int)ETradeCommon.Enums.CommonEnums.FILTER_ORDER_STATUS.MATCHED:
+                    {
+                        if (coreOrdStatus == "M"
+                            || coreOrdStatus == "MD"
+                            || coreOrdStatus == "MA"
+                            || coreOrdStatus == "m")
+                        {
+                            return true;
+                        }
+                    }
+                    break;
+                case (int)ETradeCommon.Enums.CommonEnums.FILTER_ORDER_STATUS.CANCELLED:
+                    {
+                        if (coreOrdStatus == "C"
+                            || coreOrdStatus == "X"
+                            || coreOrdStatus == "XA"
+                            || coreOrdStatus == "XC"
+                            || coreOrdStatus == "XAC"
+                            || coreOrdStatus == "MAC"
+                            || coreOrdStatus == "OA"
+                            || coreOrdStatus == "O"
+                            || coreOrdStatus == "UO"
+                            || coreOrdStatus == "UX"
+                            || coreOrdStatus == "U"
+                            || coreOrdStatus == "A"
+                            || coreOrdStatus == "x")
+                        {
+                            return true;
+                        }
+                    }
+                    break;
+                case (int)ETradeCommon.Enums.CommonEnums.FILTER_ORDER_STATUS.REJECTED:
+                    {
+                        if (coreOrdStatus == "D" || coreOrdStatus == "R"
+                            || coreOrdStatus == "RC" || coreOrdStatus == "SD"
+                            || coreOrdStatus == "CD")
+                        {
+                            return true;
+                        }
+                    }
+                    break;
+                case (int)ETradeCommon.Enums.CommonEnums.FILTER_ORDER_STATUS.CHANGED:
+                    {
+                        if (coreOrdStatus == "MC" || coreOrdStatus == "OC"
+                            || coreOrdStatus == "OAC" || coreOrdStatus == "SD"
+                            || coreOrdStatus == "CD")
+                        {
+                            return true;
+                        }
+                    }
+                    break;
+                case (int)ETradeCommon.Enums.CommonEnums.FILTER_ORDER_STATUS.ALL:
+                default:
+                    return true;
+
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Mappings the order hist status.
+        /// </summary>
+        /// <param name="coreOrdStatus">The core ord status.</param>
+        /// <returns>order history status</returns>
+        static int MappingOrderHistStatus(string coreOrdStatus)
+        {
+            if (coreOrdStatus == "M"
+                || coreOrdStatus == "MD"
+                || coreOrdStatus == "MA"
+                || coreOrdStatus == "m")
+            {
+                return (int)ETradeCommon.Enums.CommonEnums.FILTER_ORDER_STATUS.MATCHED;
+            }
+
+            if (coreOrdStatus == "C"
+                || coreOrdStatus == "X"
+                || coreOrdStatus == "XA"
+                || coreOrdStatus == "XC"
+                || coreOrdStatus == "XAC"
+                || coreOrdStatus == "MAC"
+                || coreOrdStatus == "OA"
+                || coreOrdStatus == "O"
+                || coreOrdStatus == "UO"
+                || coreOrdStatus == "UX"
+                || coreOrdStatus == "U"
+                || coreOrdStatus == "A"
+                || coreOrdStatus == "x")
+            {
+                return (int)ETradeCommon.Enums.CommonEnums.FILTER_ORDER_STATUS.CANCELLED;
+            }
+
+            if (coreOrdStatus == "D" || coreOrdStatus == "R"
+                || coreOrdStatus == "RC" || coreOrdStatus == "SD"
+                || coreOrdStatus == "CD")
+            {
+                return (int)ETradeCommon.Enums.CommonEnums.FILTER_ORDER_STATUS.REJECTED;
+            }
+
+            if (coreOrdStatus == "MC" || coreOrdStatus == "OC"
+                || coreOrdStatus == "OAC" || coreOrdStatus == "SD"
+                || coreOrdStatus == "CD")
+            {
+                return (int)ETradeCommon.Enums.CommonEnums.FILTER_ORDER_STATUS.CHANGED;
+            }
+
+            return (int)ETradeCommon.Enums.CommonEnums.FILTER_ORDER_STATUS.NOTMATCH;
+        }
+
+        /// <summary>
+        /// Gets the order history.
+        /// </summary>
+        /// <param name="accountNo">The account no.</param>
+        /// <param name="fromDate">From date.</param>
+        /// <param name="toDate">To date.</param>
+        /// <param name="symbol">The symbol.</param>
+        /// <param name="orderStatus">The order status.</param>
+        /// <param name="pageNumber">The page number.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public List<OrderHistory> GetOrderHistory(string accountNo, string fromDate, string toDate, string symbol, int orderStatus, int pageNumber, int pageSize)
+        {
+            // we will get all order history and then 
+            // 1. Paging by pageSize and pageNumner
+            // 3. Filter by order status
+            var list = new List<OrderHistory>();
+
+            if (AppConfig.OrderHistSource == (int)CommonEnums.ORDERHIST_SOURCE.FISDB)
+            {
+                list = this._db2Provider.GetOrderHistory(accountNo, fromDate, toDate, symbol, orderStatus, 0, pageSize);
+            }
+            else if (AppConfig.OrderHistSource == (int)CommonEnums.ORDERHIST_SOURCE.SBA)
+            {
+
+                List<OrderHistory> result = this._informixProvider.GetOrderHistory(accountNo, fromDate, toDate, symbol, orderStatus, 0, pageSize);
+
+                // Filter by date
+                if (result != null)
+                {
+                    list.AddRange(result.Where(orderHistory => this.IsValidOrderHistDate(orderHistory.OrderDate, fromDate, toDate)));
+                }
+            }
+
+            if (list == null)
+            {
+                return null;
+            }
+
+            var returnVal = new List<OrderHistory>();
+
+            // Filter order status
+            foreach (OrderHistory orderHistory in list)
+            {
+                if (this.Equals(orderStatus, orderHistory.OrderStatus))
+                {
+                    orderHistory.OrderStatus = MappingOrderHistStatus(orderHistory.OrderStatus).ToString();
+                    returnVal.Add(orderHistory);
+                }
+            }
+
+            return returnVal;
+        }
+
+        /// <summary>
+        /// Determines whether [is valid order hist date] [the specified order date].
+        /// </summary>
+        /// <param name="orderDate">The order date.</param>
+        /// <param name="fromDate">From date.</param>
+        /// <param name="toDate">To date.</param>
+        /// <returns>
+        /// 	<c>true</c> if [is valid order hist date] [the specified order date]; otherwise, <c>false</c>.
+        /// </returns>
+        private bool IsValidOrderHistDate(string orderDate, string fromDate, string toDate)
+        {
+            try
+            {
+                DateTime dateTime;
+                DateTime dtFromDate = new DateTime();
+                DateTime dtToDate = new DateTime();
+                DateTime dtOrderDate = new DateTime();
+
+                if (fromDate != string.Empty)
+                {
+                    // fromDate is yyyyMMdd
+                    dateTime = new DateTime(
+                        int.Parse(fromDate.Substring(0, 4)),
+                        int.Parse(fromDate.Substring(4, 2)),
+                        int.Parse(fromDate.Substring(6, 2)));
+
+                    dtFromDate = dateTime;
+                }
+
+                if (toDate != string.Empty)
+                {
+                    // toDate is yyyyMMdd
+                    dateTime = new DateTime(
+                        int.Parse(toDate.Substring(0, 4)),
+                        int.Parse(toDate.Substring(4, 2)),
+                        int.Parse(toDate.Substring(6, 2)));
+
+                    dtToDate = dateTime;
+                }
+
+                if (orderDate.IndexOf('-') > 0 && orderDate != string.Empty)
+                {
+                    // orderDate is yyyy-MM-dd
+                    dateTime = new DateTime(
+                        int.Parse(orderDate.Substring(0, 4)),
+                        int.Parse(orderDate.Substring(5, 2)),
+                        int.Parse(orderDate.Substring(8, 2)));
+
+                    dtOrderDate = dateTime;
+                }
+                else
+                {
+                    // orderDate is yyyyMMdd
+                    dateTime = new DateTime(
+                        int.Parse(orderDate.Substring(0, 4)),
+                        int.Parse(orderDate.Substring(4, 2)),
+                        int.Parse(orderDate.Substring(6, 2)));
+
+                    dtOrderDate = dateTime;
+                }
+
+                if (dtOrderDate < dtToDate && dtOrderDate > dtFromDate)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception exception)
+            {
+                LogHandler.Log(
+                    "IsValidOrderHistDate: exception, fromDate = " + fromDate + ", toDate = " + toDate +
+                    ", orderDate = " + orderDate + ", exception = " + exception,
+                    this.GetType() + ".IsValidOrderHistDate",
+                    TraceEventType.Error);
+                return false;
+            }
+        }
+    }
+}

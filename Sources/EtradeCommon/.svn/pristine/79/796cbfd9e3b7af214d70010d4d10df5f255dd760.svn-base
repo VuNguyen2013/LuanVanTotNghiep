@@ -1,0 +1,129 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CoreAccountInfo.cs" company="OTS">
+//   2010
+// </copyright>
+// <summary>
+//   Defines the CoreAccountInfo type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace AccountManager.Entities
+{
+    public class CoreAccountInfo
+    {
+        /// <summary>
+        /// Gets or sets the name of the cust.
+        /// </summary>
+        /// <value>The name of the cust.</value>
+        public System.String CustName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the address.
+        /// </summary>
+        /// <value>The address.</value>
+        public System.String Address { get; set; }
+
+        /// <summary>
+        /// Gets or sets the phone.
+        /// </summary>
+        /// <value>The phone.</value>
+        public System.String Phone { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sub account.
+        /// </summary>
+        /// <value>The sub account.</value>
+        public System.String SubAccount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the birth day.
+        /// </summary>
+        /// <value>The birth day.</value>
+        public System.DateTime BirthDay { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sex.
+        /// </summary>
+        /// <value>The sex.</value>
+        public System.String Sex { get; set; }
+
+        /// <summary>
+        /// Gets or sets the branch code.
+        /// </summary>
+        /// <value>The branch code.</value>
+        public System.String BranchCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the branch.
+        /// </summary>
+        /// <value>The name of the branch.</value>
+        public System.String BranchName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the customer.
+        /// This field means:
+        /// H: HighNetwork
+        /// N: Normal
+        /// </summary>
+        /// <value>The type of the customer.</value>
+        public System.String CustomerType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the account status.
+        /// This field means:
+        /// C: Close
+        /// N: Normal
+        /// </summary>
+        /// <value>The account status.</value>
+        public System.String AccountStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets the open date.
+        /// </summary>
+        /// <value>The open date.</value>
+        public System.DateTime OpenDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the close date.
+        /// </summary>
+        /// <value>The close date.</value>
+        public System.DateTime CloseDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the MKT id.
+        /// This field means: ID of manager
+        /// </summary>
+        /// <value>The MKT id.</value>
+        public System.String MktId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the MKT. 
+        /// This field means: the name of manager
+        /// </summary>
+        /// <value>The name of the MKT.</value>
+        public System.String MktName { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance can buy.
+        /// </summary>
+        /// <value><c>true</c> if this instance can buy; otherwise, <c>false</c>.</value>
+        public System.Boolean CanBuy { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance can sell.
+        /// </summary>
+        /// <value><c>true</c> if this instance can sell; otherwise, <c>false</c>.</value>
+        public System.Boolean CanSell { get; set; }
+        /// <summary>
+        /// Gets or sets the type of the bank account.
+        /// </summary>
+        /// <value>The type of the bank account.</value>
+        public ETradeCommon.Enums.CommonEnums.BANK_ACCOUNT_TYPE BankAccountType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the email.
+        /// </summary>
+        /// <value>The email.</value>
+        public System.String Email { get; set; }
+    }
+}

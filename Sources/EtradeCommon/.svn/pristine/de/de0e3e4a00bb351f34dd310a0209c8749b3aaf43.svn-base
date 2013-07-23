@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <configSections>
+        <sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" >
+            <section name="ETradeAutomation.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+        </sectionGroup>
+        <section name="enterpriseLibrary.ConfigurationSource" type="Microsoft.Practices.EnterpriseLibrary.Common.Configuration.ConfigurationSourceSection, Microsoft.Practices.EnterpriseLibrary.Common, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    </configSections>
+  <appSettings>
+    <add key="ActivationTime" value="0"/>
+    <add key="ConditionOrderTime" value="8"/>
+  </appSettings>
+  <enterpriseLibrary.ConfigurationSource selectedSource="File Configuration Source">
+    <sources>
+      <add name="File Configuration Source" type="Microsoft.Practices.EnterpriseLibrary.Common.Configuration.FileConfigurationSource, Microsoft.Practices.EnterpriseLibrary.Common, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" filePath="entlib.config" />
+    </sources>
+  </enterpriseLibrary.ConfigurationSource>
+    <applicationSettings>
+        <ETradeAutomation.Properties.Settings>
+            <setting name="ETradeAutomation_ETradeWebService_ETradeServicesWebServices"
+                serializeAs="String">
+                <value>http://172.16.68.9/ETradeServicesTest/ETradeServicesWebServices.asmx</value>
+            </setting>
+        </ETradeAutomation.Properties.Settings>
+    </applicationSettings>
+</configuration>

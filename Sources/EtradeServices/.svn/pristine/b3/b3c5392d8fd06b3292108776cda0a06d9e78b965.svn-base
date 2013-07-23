@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="SocketServer">
+</Property><Property Name="Solution File" Value="D:\References\Network Programming\Server\SocketServer.sln">
+</Property><Property Name="User Options File" Value="D:\References\Network Programming\Server\SocketServer.suo">
+</Property><Property Name="Date" Value="Saturday, December 25, 2010">
+</Property><Property Name="Time" Value="0:03 AM">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="SocketServer.sln" Description="File successfully backed up as D:\References\Network Programming\Server\Backup\SocketServer.sln">
+</Event><Event ErrorLevel="0" Project="" Source="SocketServer.suo" Description="File successfully backed up as D:\References\Network Programming\Server\Backup\SocketServer.suo">
+</Event><Event ErrorLevel="0" Project="SocketServer" Source="SocketServer.csproj" Description="Project file successfully backed up as D:\References\Network Programming\Server\Backup\SocketServer.csproj">
+</Event><Event ErrorLevel="0" Project="SocketServer" Source="SocketServer.csproj.user" Description="Project user file successfully backed up as D:\References\Network Programming\Server\Backup\SocketServer.csproj.user">
+</Event><Event ErrorLevel="0" Project="SocketServer" Source="AssemblyInfo.cs" Description="File successfully backed up as D:\References\Network Programming\Server\Backup\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="SocketServer" Source="SocketServerForm.cs" Description="File successfully backed up as D:\References\Network Programming\Server\Backup\SocketServerForm.cs">
+</Event><Event ErrorLevel="0" Project="SocketServer" Source="App.ico" Description="File successfully backed up as D:\References\Network Programming\Server\Backup\App.ico">
+</Event><Event ErrorLevel="0" Project="SocketServer" Source="SocketServerForm.resx" Description="File successfully backed up as D:\References\Network Programming\Server\Backup\SocketServerForm.resx">
+</Event><Event ErrorLevel="0" Project="SocketServer" Source="SocketServer.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="SocketServer" Source="SocketServer.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="SocketServer.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="SocketServer.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="SocketServer" Source="SocketServer.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>

@@ -1,0 +1,25 @@
+#include "SockException.h"
+
+SockException::SockException(int errCode,const string& errMsg)
+{
+	initVars();
+	errorCode = errCode;
+	
+	if ( errMsg[0] ) 
+	{
+		errorMsg.append(errMsg);
+	}
+}
+
+void SockException::initVars()
+{
+	errorCode = 0;
+	errorMsg = "";
+}
+
+void SockException::response()
+{
+	winLog << "Error detect: " << endl;
+	winLog << "		==> error code: " << errorCode << endl;
+	winLog << "		==> error message: " << errorMsg << endl;
+}

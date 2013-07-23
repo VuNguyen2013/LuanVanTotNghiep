@@ -1,0 +1,265 @@
+﻿using System;
+using System.IO;
+
+namespace ETradeGWServices
+{
+    class EtradeGWCommonUtils
+    {
+        public static string GetDate()
+        {
+            return DateTime.Now.ToString("yyyyMMdd-HHmmss");
+        }
+
+        public static string GetSourceName(short sourceID)
+        {
+            switch (sourceID)
+            {
+                case 1:
+                    return "WEB";
+                case 2:
+                    return "Broker";
+            }
+
+            return "";
+        }
+
+        static string ServiceID(string serviceName)
+        {
+            switch (serviceName)
+            {
+                case "WEB":
+                    return "01";
+                case "IVR":
+                    return "02";
+                case "SMS":
+                    return "03";
+                default:
+                    return "";
+            }
+        }
+
+        static public string GetRefOrderID(long refOrderID, string serviceName)
+        {
+            string serviceID = ServiceID(serviceName);
+            string sRefOrderID = refOrderID.ToString(ETradeGWCommonConstants.ZERO_REFORDERID);
+
+            return sRefOrderID.Substring(0, ETradeGWCommonConstants.SOURCE_ORDER_POS) + serviceID + sRefOrderID.Substring(ETradeGWCommonConstants.SOURCE_ORDER_POS + 2, ETradeGWCommonConstants.REFORDERID_LEN - ETradeGWCommonConstants.SOURCE_ORDER_POS - 2);
+        }
+
+        static public ORDER_SOURCE GetOrderSource(string refOrderID)
+        {
+            string sourceID = refOrderID.Substring(ETradeGWCommonConstants.SOURCE_ORDER_POS, 2);
+
+            switch (sourceID)
+            {
+                case "00":
+                    return ORDER_SOURCE.FROM_BROKER;
+                case "01":
+                    return ORDER_SOURCE.FROM_WEB;
+                case "02":
+                    return ORDER_SOURCE.FROM_IVR;
+                case "03":
+                    return ORDER_SOURCE.FROM_SMS;
+                default:
+                    return ORDER_SOURCE.FROM_BROKER;
+            }
+        }
+
+
+        public static string GetErrorMessage(string errorCode)
+        {
+            if (errorCode != "")
+            {
+                errorCode = errorCode.Trim();
+            }
+
+            switch (errorCode)
+            {
+                case "00":
+                    return "MP order without contra-side";
+                case "01":
+                    return "Illegal price spread";
+                case "02":
+                    return "Incorrect volume for specified board";
+                case "03":
+                    return "Illegal request - Market Closed";
+                case "04":
+                    return "Incorrect Stock Symbol";
+                case "05":
+                    return "Incorrect Firm";
+                case "06":
+                    return "Incorrect Trader ID";
+                case "07":
+                    return "Incorrect confirm number";
+                case "08":
+                    return "Too late to perform requested action";
+                case "09":
+                    return "Incorrect Reference Number";
+                case "10":
+                    return "Incorrect Conditions";
+                case "11":
+                    return "Trading halted in Stock";
+                case "12":
+                    return "Incorrect Board";
+                case "13":
+                    return "Security in DS - Missing Client ID";
+                case "14":
+                    return "Incorrect Order Type";
+                case "15":
+                    return "Incorrect Port / Client flag";
+                case "16":
+                    return "Incorrect Request Code or Reply Code";
+                case "17":
+                    return "Incorrect Side: must be Buy or Sell";
+                case "18":
+                    return "Incorrect Order Number";
+                case "19":
+                    return "Incorrect Time";
+                case "20":
+                    return "Incorrect Date";
+                case "21":
+                    return "Cannot do on Odd-Lot board";
+                case "22":
+                    return "Incorrect Sub-Broker ID";
+                case "23":
+                    return "Illegal Trustee ID";
+                case "24":
+                    return "Security suspended";
+                case "25":
+                    return "Missing P/C Flag";
+                case "26":
+                    return "Missing Sub-Broker ID";
+                case "27":
+                    return "No available room for Thai Trust Fund";
+                case "28":
+                    return "Market in Intermission";
+                case "29":
+                    return "Market Halted";
+                case "30":
+                    return "Incorrect Published Volume";
+                case "31":
+                    return "Changing Deal information disallowed";
+                case "32":
+                    return "Publish Vol disallowed at this time";
+                case "33":
+                    return "Trading disallowed for this stock";
+                case "34":
+                    return "Incorrect price - above ceiling";
+                case "35":
+                    return "Incorrect price - below floor";
+                case "36":
+                    return "Put-Through price incorrect format";
+                case "37":
+                    return "Cancel of automatch deal disallowed";
+                case "38":
+                    return "Incorrect Volume for Put-Through deal";
+                case "39":
+                    return "Incorrect Market Maker";
+                case "40":
+                    return "Illegal Short Sales Order";
+                case "41":
+                    return "Illegal Market ID";
+                case "42":
+                    return "Illegal Message Type/Header";
+                case "43":
+                    return "Illegal Message Length";
+                case "71":
+                    return "Warning! Price over 10 %";
+                case "81":
+                    return "Disapprove Order";
+                case "82":
+                    return "Reject from FIS";
+                case "97":
+                    return "Trading is halt";
+                case "99":
+                    return "Unidentified Error";
+                case "":
+                    return "";
+                default:
+                    return "Unidentified Error";
+            }
+        }
+
+        public static void ClearLogFile()
+        {
+            var fileInfo = new FileInfo(ETradeGWCommonConstants.LogFile);
+            fileInfo.Delete();
+
+            fileInfo = new FileInfo(ETradeGWCommonConstants.MessageFile);
+            fileInfo.Delete();
+        }
+
+        public static void Log(string sErrMsg)
+        {
+            bool isNotOpened = true;
+
+            string sLogFormat = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToLongTimeString() + " ==> ";
+
+            while (isNotOpened)
+            {
+                try
+                {
+                    var sw = new StreamWriter(ETradeGWCommonConstants.LogFile, true);
+                    sw.WriteLine(sLogFormat + sErrMsg);
+                    sw.Flush();
+                    sw.Close();
+
+                    isNotOpened = false;
+                }
+                catch
+                {
+                    System.Threading.Thread.Sleep(5);
+                }
+            }
+        }
+
+        public static void ExportMessage(String[] messages)
+        {
+            bool isNotOpened = true;
+
+            while (isNotOpened)
+            {
+                try
+                {
+                    var sw = new StreamWriter(ETradeGWCommonConstants.MessageFile, true);
+                    string message = "";
+
+                    for (int index = 0; index < messages.Length; index++)
+                    {
+                        message += messages[index] + ",";
+                    }
+
+                    sw.WriteLine(message);
+                    sw.Flush();
+                    sw.Close();
+
+                    isNotOpened = false;
+                }
+                catch
+                {
+                    System.Threading.Thread.Sleep(5);
+                }
+            }
+        }
+
+        public static ETradeCommon.Enums.CommonEnums.ACCOUNT_TYPE AccountType(string accountNo)
+        {
+            if (accountNo == null || accountNo.Length < 6)
+            {
+                return ETradeCommon.Enums.CommonEnums.ACCOUNT_TYPE.OTHER;
+            }
+            //Normal account 0088661, margin account 0088666
+            if (accountNo[6] == '1')
+            {
+                return ETradeCommon.Enums.CommonEnums.ACCOUNT_TYPE.NORMAL;
+            }
+
+            if (accountNo[6] == '6')
+            {
+                return ETradeCommon.Enums.CommonEnums.ACCOUNT_TYPE.MARGIN;
+            }
+
+            return ETradeCommon.Enums.CommonEnums.ACCOUNT_TYPE.OTHER;
+        }
+    }
+}

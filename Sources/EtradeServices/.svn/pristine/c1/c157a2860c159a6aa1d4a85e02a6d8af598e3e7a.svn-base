@@ -1,0 +1,47 @@
+#ifndef __SocketClient_H__
+#define __SocketClient_H__
+
+#include <string>
+#include <queue>
+using namespace std;
+
+#include "Socket.h"
+#include "IFISMessageInfo.h"
+#include "Log.h"
+
+
+
+
+class SocketClient
+{
+
+private:
+	bool _isConnected;
+public:
+    bool Connected() const
+    {
+        return _isConnected;
+    }
+    void Connected(bool connected)
+    {
+        _isConnected = connected;
+    }
+
+	TcpSocket *tcpSocket;
+
+    SocketClient();
+
+	void InitLog(char * fileName);
+
+	bool Connect(string server, int port);
+    bool Disconnect();
+
+	bool SendMessage (char *message, int length);
+
+	bool ReceiveMessage (char *message, int *length);
+
+	~SocketClient();
+};
+
+
+#endif //__SocketClient_H__

@@ -1,0 +1,79 @@
+//   Class: Log
+//   
+//   Description: used as a system log file for the simDelta project 
+//
+//
+//////////////////////////////////////////////////////////////////////////////
+
+#ifndef Log_H
+#define Log_H 1
+
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <time.h>
+using namespace std;
+
+/* 
+   the log file has to be accessed from any code
+   which includes this header (similiar to cout, cerr, clog, etc..)
+*/
+
+class Log;
+extern Log winLog;
+
+// const string SD_DEFAULT_LOGFILE = "simDelta.log";
+
+const int LOG_WRITE  = ios::out;
+const int LOG_APPEND = ios::app;
+
+const int EXIT_MSG_SIZE = 512;
+const int MAX_EXIT_CODES = 3;
+
+class Log : public ofstream
+{
+
+public:
+
+   enum logLevels 
+   {
+      LEVEL_0,       // buffer all log messages
+      LEVEL_1,       // buffer Level one, two and three log messages
+      LEVEL_2,       // buffer Level two and three log messages
+      LEVEL_3,       // buffer Level three log messages
+      QUIET_MODE     // do not print out any messages
+   };
+ 
+   Log();
+   void init(const string&);
+   Log(enum logLevels);
+   virtual ~Log();
+
+private:
+
+   void initVars();
+   
+   void init(const string&,int);
+   void init();
+
+   char* getExecTime();
+   void  getExecTime(int*,int*);
+   void  openLog(const string&,int);
+   void  printHeader(int);
+
+private:
+
+   string logName;
+   enum logLevels logLevel;
+   time_t startTime;
+
+};
+
+const enum Log::logLevels L0 = Log::LEVEL_0;
+const enum Log::logLevels L1 = Log::LEVEL_1;
+const enum Log::logLevels L2 = Log::LEVEL_2;
+const enum Log::logLevels L3 = Log::LEVEL_3;
+const enum Log::logLevels LQUIET = Log::QUIET_MODE;
+
+#endif
+

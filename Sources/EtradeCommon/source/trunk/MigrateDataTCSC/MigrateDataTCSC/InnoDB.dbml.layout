@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="InnoDB">
+  <DataContextMoniker Name="/InnoDBDataContext" />
+  <nestedChildShapes>
+    <classShape Id="da166558-2bd7-4b55-a2ac-6b4e6e24b8ee" absoluteBounds="0.875, 0.5, 2, 4.6554182942708326">
+      <DataClassMoniker Name="/InnoDBDataContext/AccountInfoFromInno" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2d3b73a4-bb4c-477a-8528-59d0bda7bb1f" absoluteBounds="0.89, 0.96, 1.9700000000000002, 4.095418294270833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

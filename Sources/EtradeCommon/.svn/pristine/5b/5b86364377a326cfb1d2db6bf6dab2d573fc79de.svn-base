@@ -1,0 +1,1 @@
+﻿<%@ WebService Language="C#" CodeBehind="ETradeRTServicesMock.asmx.cs" Class="ETradeRTServicesMock.Service1" %>

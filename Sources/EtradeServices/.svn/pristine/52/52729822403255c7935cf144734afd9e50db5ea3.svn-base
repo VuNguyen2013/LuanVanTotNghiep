@@ -1,0 +1,791 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="OrderUpdater.cs" company="OTS">
+//   2010
+// </copyright>
+// <summary>
+//   Defines the OrderUpdater type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+using ETradeCore.Entities;
+using ETradeCore.Services;
+
+namespace ETradeGWServices
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Globalization;
+    using System.Threading;
+    using System.Web.Script.Serialization;
+
+    using ETradeCommon;
+    using ETradeCommon.Enums;
+
+    using ETradeHistory.Entities;
+    using ETradeHistory.Services;
+
+    using ETradeOrders.Entities;
+    using ETradeOrders.Services;
+    using ETradeGWServices.RTServices;
+    using ETradeFinance.Services;
+
+
+    public class OrderUpdater
+    {
+        private Thread _receiveFromFISThread;
+
+        private static bool _iFISRun;
+
+        private readonly StockServices stockServices = new StockServices();
+
+        private static ExecOrderService _execOrderService = new ExecOrderService();
+
+        private readonly MessageHandler _messageHandler = new MessageHandler();
+
+        private readonly PnLhistoryService pnLHistoryServices = new PnLhistoryService();
+
+        private readonly RTServices.Service _rtServices = new Service();
+
+        private static readonly JavaScriptSerializer Serializer = new JavaScriptSerializer();
+
+        private readonly FeeService feeService = new FeeService();
+
+        private readonly ConditionOrderService _conditionOrderService = new ConditionOrderService();
+
+        public OrderUpdater()
+        {
+            isRecovery = false;
+        }
+
+        public OrderUpdater(ExecOrderService execOrderService)
+        {
+            isRecovery  = false;
+            _execOrderService = execOrderService;
+        }
+
+        public bool DBReset()
+        {
+            return true;
+        }
+
+        public List<OrderInfo> GetRemainOrder()
+        {
+            return new List<OrderInfo>();//_dbServices.GetRemainOrders();
+        }
+
+        public int GetLastSequence()
+        {
+            return _execOrderService.GetMaxSeq();
+        }
+
+        public ExecOrder GetExecOrder(string condition)
+        {
+            int count;
+            ETradeOrders.Entities.TList<ExecOrder> listOrder = _execOrderService.GetPaged(condition, string.Empty, 0, 0, out count);
+
+            if (listOrder.Count == 0)
+            {
+                return null;
+            }
+
+            return listOrder[0];
+        }
+
+        private void InsertOrderFromBroker(OrderInfo orderInfo)
+        {
+            try
+            {
+                ExecOrder execOrder = new ExecOrder();
+
+                CommonEnums.ORDER_SOURCE orderSource = EtradeGWCommonUtils.GetOrderSource(orderInfo.RefOrderID);
+
+                execOrder.ExecutedVol = 0;
+                execOrder.NumOfMatch = 0;
+                execOrder.CancelledVolume = 0;
+
+                execOrder.RefOrderId = orderInfo.RefOrderID;
+                execOrder.MessageType = orderInfo.Type;
+                execOrder.FisOrderId = orderInfo.FISOrderID;
+                execOrder.SecSymbol = orderInfo.Symbol.Trim();
+                execOrder.Side = orderInfo.Side.ToString();
+                execOrder.Price = new decimal(orderInfo.Price);
+                execOrder.ConPrice = orderInfo.ConPrice.ToString();
+                execOrder.Volume = orderInfo.Volume;
+
+                execOrder.SubCustAccountId = orderInfo.Account.Trim();
+                execOrder.ExecTransType = (int) TRANS_TYPE.TRANS_NEW;
+                execOrder.TradeTime = DateTime.ParseExact(orderInfo.Time, "yyyyMMdd-HHmmss",
+                                                          CultureInfo.InvariantCulture);
+
+                execOrder.OrderStatus = (int) CommonEnums.ORDER_STATUS.CONFIRMED_FIS;
+
+                execOrder.SourceId = (short) orderInfo.SourceID;
+
+                execOrder.OrderSource = ((char) orderSource).ToString();
+                execOrder.IsNewOrder = true;
+                execOrder.Sequence = orderInfo.Sequence;
+                execOrder.Market = "";
+
+                if (execOrder.Side[0] == (char) CommonEnums.TRADE_SIDE.SELL)
+                {
+                    var stockAvailable = new StockAvailable();
+
+                    stockAvailable = this.stockServices.GetStockAvailable(execOrder.SubCustAccountId,
+                                                                          execOrder.SecSymbol,
+                                                                          (int)
+                                                                          EtradeGWCommonUtils.AccountType(
+                                                                              execOrder.SubCustAccountId));
+
+                    execOrder.AvgPrice = stockAvailable != null ? stockAvailable.AvgPrice : 0;
+                }
+
+                _execOrderService.Insert(execOrder);
+            }
+            catch(Exception exception)
+            {
+                LogHandler.Log("InsertOrderFromBroker", GetType()+ ".InsertOrderFromBroker" + "Exception = " + exception, TraceEventType.Error);
+
+            }
+        }
+
+
+        public bool Update(OrderInfo orderInfo)
+        {
+            try
+            {
+                string condition;
+
+                ExecOrder execOrder;
+
+                if (orderInfo.RefOrderID == ETradeGWCommonConstants.ZERO_REFORDERID)
+                {
+                    condition = "FISOrderID=" + orderInfo.FISOrderID;
+                }
+                else
+                {
+                    condition = "RefOrderID='" + orderInfo.RefOrderID + "'";
+                }
+
+                switch (orderInfo.Type)
+                {
+                    case ETradeGWCommonConstants.DATA_NEW_ORDER_FROM_BROKER:
+
+                        InsertOrderFromBroker(orderInfo);
+                        // TODO: add log transaction here
+                        break;
+                        /*case ETradeGWCommonConstants.DATA_CHANGE_ORDER_FROM_BROKER:
+                        execOrder = GetExecOrder(condition);
+                        if (execOrder != null)
+                        {
+                            execOrder.MessageType = orderInfo.Type;
+                            execOrder.FisOrderId = orderInfo.FISOrderID;
+                            execOrder.SubCustAccountId = orderInfo.Account;
+                            execOrder.Sequence = orderInfo.Sequence;
+
+                            _execOrderService.Update(execOrder);
+                        }
+                        break;*/
+                    default:
+                        execOrder = GetExecOrder(condition);
+                        if (execOrder != null)
+                        {
+                            execOrder.MessageType = orderInfo.Type;
+                            execOrder.FisOrderId = orderInfo.FISOrderID;
+                            execOrder.ExecTransType = orderInfo.ExecTransType;
+                            execOrder.SourceId = (short) orderInfo.SourceID;
+                            execOrder.Sequence = orderInfo.Sequence;
+
+                            //Set value to execOrder based on order status
+                            SetExecOrderValues(ref execOrder, orderInfo);
+
+                            _execOrderService.Update(execOrder);
+                            // TODO: add log transaction here
+
+                            SaveExecPnL(execOrder);
+
+                            //Check condition order
+                            if (execOrder.ConditionOrderId != null)
+                            {
+                                if ((execOrder.OrderStatus == (short) CommonEnums.ORDER_STATUS.CANCELLED) 
+                                    || (execOrder.OrderStatus == (short)CommonEnums.ORDER_STATUS.FULL_MATCHED) 
+                                    || (execOrder.OrderStatus == (short)CommonEnums.ORDER_STATUS.SEMI_MATCHED))
+                                {
+                                    // Update condition order and condition order detail
+                                    _conditionOrderService.UpdateConditionOrder(execOrder, orderInfo.Volume, execOrder.ExecutedPrice);
+                                }
+                            }
+                        }
+                        else // int case the data in database was lost.
+                        {
+                            //InsertOrderFromBroker(orderInfo);
+                            LogHandler.Log("Not found the order to update FISOrderID = " + orderInfo.FISOrderID, GetType() + ".Update",TraceEventType.Warning);
+                            LogOrderInfo(orderInfo, "Update", TraceEventType.Warning);
+                        }
+
+                        break;
+
+                }
+
+                return true;
+            }
+            catch(Exception exception)
+            {
+                LogHandler.Log("Update Order message error Exception =" + exception, GetType() + ".Update",TraceEventType.Error);
+
+                return false;
+            }
+        }
+
+        private decimal PnLRatio (decimal profitValue, decimal investValue)
+        {
+            if (investValue != 0)
+            {
+                return (profitValue / investValue) * 100;
+            }
+            else if (profitValue > 0)
+            {
+                return 100;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Saves the exec pn L.
+        /// </summary>
+        /// <param name="execOrder">The exec order.</param>
+        private void SaveExecPnL(ExecOrder execOrder)
+        {
+            try
+            {
+                if (execOrder != null)
+                {
+                    if (execOrder.Side[0] == (char) CommonEnums.TRADE_SIDE.SELL)
+                    {
+                        switch (execOrder.OrderStatus)
+                        {
+                            case (short) CommonEnums.ORDER_STATUS.FULL_MATCHED:
+                            case (short) CommonEnums.ORDER_STATUS.SEMI_MATCHED:
+                                if (execOrder.ExecutedVol > 0)
+                                {
+                                    //Get the PnLInfor for this deal from PnLHistory has the same FISOrderID and Trading date.
+
+                                    int totalRecord = 0;
+                                    var tradeTime = (DateTime) execOrder.TradeTime;
+                                    string whereClause = string.Format(
+                                        "FISOrderID = {0} AND CONVERT(varchar(8), TradeTime, 112) = '{1}'",
+                                        execOrder.FisOrderId, tradeTime.ToString("yyyyMMdd"));
+
+                                    ETradeHistory.Entities.TList<PnLhistory> pnLhistories =
+                                        this.pnLHistoryServices.GetPaged(
+                                            whereClause, "TradeTime DESC", 0, int.MaxValue, out totalRecord);
+
+                                    PnLhistory pnLhistory;
+
+                                    if (pnLhistories == null || pnLhistories.Count == 0)
+                                    {
+                                        pnLhistory = new PnLhistory();
+                                        if (execOrder.TradeTime != null)
+                                        {
+                                            pnLhistory.TradeTime = (DateTime) execOrder.TradeTime;
+                                        }
+
+                                        pnLhistory.RefOrderId = execOrder.RefOrderId;
+                                        pnLhistory.SecSymbol = execOrder.SecSymbol;
+                                        pnLhistory.FisOrderId = execOrder.FisOrderId;
+                                        pnLhistory.AvgPrice = execOrder.AvgPrice;
+                                        pnLhistory.Profit = 0;
+                                        pnLhistory.ProfitabilityRatio = 0;
+                                        pnLhistory.SubCustAccountId = execOrder.SubCustAccountId;
+                                        pnLhistory.Market = execOrder.Market;
+                                        pnLhistory.Volume = execOrder.ExecutedVol ?? 0;
+
+                                        decimal matchValue = (decimal) (pnLhistory.Volume*execOrder.ExecutedPrice * Constants.MONEY_UNIT);
+
+                                        //sell value after fee and VAT
+                                        matchValue = feeService.SelValueAfterFee(matchValue);
+
+                                        decimal? investValue = pnLhistory.Volume * execOrder.AvgPrice * Constants.MONEY_UNIT;
+
+                                        pnLhistory.Profit = matchValue - investValue;
+
+                                        pnLhistory.ProfitabilityRatio = PnLRatio((decimal) pnLhistory.Profit, (decimal) investValue);
+
+                                        if (pnLhistory.Volume > 0)
+                                        {
+                                            pnLhistory.Price = (decimal) (investValue + pnLhistory.Profit)/
+                                                               pnLhistory.Volume;
+                                            pnLhistory.Price = pnLhistory.Price / Constants.MONEY_UNIT;
+                                        }
+
+                                        pnLHistoryServices.Insert(pnLhistory);
+                                    }
+                                    else
+                                    {
+                                        pnLhistory = pnLhistories[0];
+                                        //Caculate the profit and lost
+
+                                        int? matchedVol = execOrder.ExecutedVol - pnLhistory.Volume;
+                                        decimal? matchedVal = matchedVol*execOrder.ExecutedPrice*Constants.MONEY_UNIT;
+
+                                        //Caculate sell value after trading fee and VAT
+                                        matchedVal = feeService.SelValueAfterFee((decimal)matchedVal);
+
+                                        if (matchedVol != null)
+                                        {
+                                            pnLhistory.Volume += (int) matchedVol;
+
+                                            pnLhistory.Profit += matchedVal -
+                                                                 execOrder.AvgPrice*matchedVol*Constants.MONEY_UNIT;
+                                            ;
+                                        }
+
+                                        decimal totalInvestValue = (decimal) (execOrder.AvgPrice*execOrder.ExecutedVol*
+                                                                              Constants.MONEY_UNIT);
+
+
+                                        pnLhistory.ProfitabilityRatio = PnLRatio((decimal) pnLhistory.Profit, totalInvestValue);
+
+                                        if (pnLhistory.Volume > 0)
+                                        {
+                                            pnLhistory.Price = (decimal) (totalInvestValue + pnLhistory.Profit)/
+                                                               pnLhistory.Volume;
+                                            pnLhistory.Price = pnLhistory.Price/Constants.MONEY_UNIT;
+                                        }
+
+                                        pnLHistoryServices.Update(pnLhistory);
+                                    }
+                                }
+
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch(Exception exception)
+            {
+                LogHandler.Log("SaveExecPnL error Message Sequence = " + execOrder.Sequence + " Exception = " + exception, GetType() + ".SaveExecPnL", TraceEventType.Error);
+            }
+        }
+
+        public void StartFISUpdater()
+        {
+            if (!_iFISRun)
+            {
+                LogHandler.Log("Start OrderUpdater", "OrderUpdater.StartFISUpdater", TraceEventType.Information);
+                _receiveFromFISThread = new Thread(DataFromFISReceiver);
+                _receiveFromFISThread.IsBackground = true;
+                _iFISRun = true;
+                _receiveFromFISThread.Start();
+            }
+        }
+
+        public void StopFISUpdater()
+        {
+            LogHandler.Log("Stop OrderUpdater", "OrderUpdater.StopFISUpdater", TraceEventType.Information);
+            _iFISRun = false;
+        }
+
+        private void DataFromFISReceiver()
+        {
+            bool logged = false;
+
+            while (_iFISRun)
+            {
+                Thread.Sleep(1);
+
+                try
+                {
+                    //Connect to LinkOPS
+                    if (AppConfig.CheckGWConnection && !_messageHandler.IsConnected())
+                    {
+                        bool connected = _messageHandler.Connect(ETradeCommon.AppConfig.LinkOPSAddress, ETradeCommon.AppConfig.LinkOPSPort);
+
+                        if (connected)
+                        {
+                            logged = _messageHandler.Logon(Int32.Parse(ETradeCommon.AppConfig.LinkOPSHeartBeat), ETradeCommon.AppConfig.LinkOPSUserName, ETradeCommon.AppConfig.LinkOPSPass);
+                        }
+                        else
+                        {
+                            /*LogHandler.Log("Cannot not connect LinkOPS.", GetType() + ".DataFromFISReceiver()",
+                                       TraceEventType.Error);*/
+
+                            continue;
+                        }
+                    }
+
+                    
+                    // Recovery lost packages
+                    if (!isRecovery)
+                    {
+                        try
+                        {
+                            int OldSequence = 0;
+
+                            OldSequence = GetLastSequence();
+   
+                            _messageHandler.Recovery(OldSequence, OldSequence + 1, 999999);
+
+                        }
+                        catch (Exception e)
+                        {
+                            LogHandler.Log("Cannot not recovery.Exception = " + e, GetType() + ".DataFromFISReceiver()",
+                                       TraceEventType.Error);
+                        }
+
+                        isRecovery = true;
+                    }
+
+                    //Check exist orders.
+                    if (_messageHandler.HasOrder())
+                    {
+                        var orderInfo = new OrderInfo();
+
+                        _messageHandler.GetOrder(ref orderInfo.Sequence, ref orderInfo.Time, ref orderInfo.Type, ref orderInfo.RefOrderID,
+                                                 ref orderInfo.FISOrderID, ref orderInfo.Symbol, ref orderInfo.Side, ref orderInfo.Price, ref orderInfo.ConPrice, ref orderInfo.Volume, ref orderInfo.Account,
+                                                 ref orderInfo.Status, ref orderInfo.OrdRejReason, ref orderInfo.ExecTransType, ref orderInfo.SourceID);
+
+                        LogOrderInfo(orderInfo, "DataFromFISReceiver", TraceEventType.Information);
+
+                        HandleFISData(orderInfo);
+                    }
+                }
+                catch (Exception e)
+                {
+                    if (_iFISRun)
+                    {
+                        LogHandler.Log("DataFromFISReceiver Exception = " + e, GetType() + ".DataFromFISReceiver()",
+                                       TraceEventType.Error);
+                        _iFISRun = false;
+
+                        ExceptionHandler.HandleException(e, Constants.EXCEPTION_POLICY);
+                    }
+                }
+
+            }
+
+            return;
+        }
+
+        private void HandleFISData(OrderInfo orderInfo)
+        {
+            Update(orderInfo);
+        }
+
+        public static void SetExecOrderValues(ref ExecOrder execOrder, OrderInfo orderInfo)
+        {
+            try
+            {
+                string rejectCode = orderInfo.OrdRejReason;
+
+                if (string.IsNullOrEmpty(rejectCode.Trim()))
+                {
+                    rejectCode = "-1"; //no reject.  
+                }
+                switch (execOrder.OrderStatus)
+                {
+                    case (short) CommonEnums.ORDER_STATUS.NEW_ORDER:
+                        switch (orderInfo.Type)
+                        {
+                            case ETradeGWCommonConstants.DATA_NEW_CANCEL_ACK: //7b
+                                if (orderInfo.SourceID == (int) SOURCE_ID.FROM_FIS)
+                                {
+                                    if (!string.IsNullOrEmpty(orderInfo.OrdRejReason.Trim())) //Reject from FIS
+                                    {
+                                        execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.ORDER_REJECTED;
+                                        execOrder.OrdRejReason = Int32.Parse(rejectCode);
+                                        execOrder.CancelledTime = DateTime.ParseExact(orderInfo.Time, "yyyyMMdd-HHmmss",
+                                                                                  CultureInfo.InvariantCulture);
+                                        return;
+                                    }
+                                    execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.CONFIRMED_FIS;
+                                    return;
+                                }
+                                execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.OTHER;
+                                return;
+
+                            default:
+                                execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.OTHER;
+                                return;
+                        }
+
+                    case (short) CommonEnums.ORDER_STATUS.CONFIRMED_FIS:
+                        switch (orderInfo.Type)
+                        {
+                            case ETradeGWCommonConstants.DATA_NEW_CANCEL_ACK: //7b
+                                if (orderInfo.SourceID == (int) SOURCE_ID.FROM_SET)
+                                {
+                                    if (!string.IsNullOrEmpty(orderInfo.OrdRejReason.Trim())) //Reject from SET
+                                    {
+                                        execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.ORDER_REJECTED;
+                                        execOrder.OrdRejReason = Int32.Parse(rejectCode);
+                                        execOrder.CancelledTime = DateTime.ParseExact(orderInfo.Time, "yyyyMMdd-HHmmss",
+                                                                                  CultureInfo.InvariantCulture);
+                                        return;
+                                    }
+                                    execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.CONFIRMED_SET;
+                                    return;
+                                }
+
+                                if (!string.IsNullOrEmpty(orderInfo.OrdRejReason.Trim())) //Reject from FIS
+                                {
+                                    execOrder.OrderStatus = (short)CommonEnums.ORDER_STATUS.ORDER_REJECTED;
+                                    execOrder.OrdRejReason = Int32.Parse(rejectCode);
+                                    execOrder.CancelledTime = DateTime.ParseExact(orderInfo.Time, "yyyyMMdd-HHmmss",
+                                                                              CultureInfo.InvariantCulture);
+                                    return;
+                                }
+
+                                execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.WAITING_CANCEL;
+                                return;
+
+                                /*case ETradeGWCommonConstants.DATA_CANCEL_ORDER: //7c Never happen
+                                execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.NEW_CANCEL;
+                                execOrder.CancelVolume = orderInfo.Volume;
+                                execOrder.OrdRejReason = Int32.Parse(rejectCode);
+                                return;*/
+
+                            case ETradeGWCommonConstants.DATA_EXEC_REPORT: //7e
+                                if (orderInfo.Volume > 0)
+                                {
+                                    execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.CANCELLED;
+                                    execOrder.CancelledTime = DateTime.ParseExact(orderInfo.Time, "yyyyMMdd-HHmmss",
+                                                                                  CultureInfo.InvariantCulture);
+                                    execOrder.SecSymbol = orderInfo.Symbol;
+                                    execOrder.CancelledVolume = orderInfo.Volume;
+
+                                    return;
+                                }
+                                execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.OTHER;
+                                return;
+
+                            default:
+                                execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.OTHER;
+                                return;
+                        }
+
+                    case (short) CommonEnums.ORDER_STATUS.CONFIRMED_SET:
+                        switch (orderInfo.Type)
+                        {
+                                /*case ETradeGWCommonConstants.DATA_CANCEL_ORDER: //7c Never happen
+                                execOrder.OrderStatus = (short)CommonEnums.ORDER_STATUS.NEW_CANCEL;
+                                execOrder.CancelVolume = orderInfo.Volume;
+                                execOrder.OrdRejReason = Int32.Parse(rejectCode);
+                                return;*/
+                            case ETradeGWCommonConstants.DATA_NEW_CANCEL_ACK:
+                                if (orderInfo.ExecTransType == 1) //Cancel from broker
+                                {
+                                    execOrder.OrderStatus = (short)CommonEnums.ORDER_STATUS.WAITING_CANCEL;
+                                    execOrder.CancelledTime = DateTime.ParseExact(orderInfo.Time, "yyyyMMdd-HHmmss",
+                                                                                  CultureInfo.InvariantCulture);
+                                    execOrder.SecSymbol = orderInfo.Symbol;
+                                    execOrder.CancelledVolume = orderInfo.Volume;
+                                }
+                                return;
+                            case ETradeGWCommonConstants.DATA_EXEC_REPORT:
+                                if (Math.Round(orderInfo.Price, 2) == 0)
+                                {
+                                    execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.CANCELLED;
+                                    execOrder.CancelledTime = DateTime.ParseExact(orderInfo.Time, "yyyyMMdd-HHmmss",
+                                                                                  CultureInfo.InvariantCulture);
+                                    execOrder.SecSymbol = orderInfo.Symbol;
+                                    execOrder.CancelledVolume = orderInfo.Volume;
+
+                                    return;
+                                }
+                                //Full matched or semi matched
+                                if (orderInfo.Volume == execOrder.Volume)
+                                {
+                                    execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.FULL_MATCHED;
+
+                                }
+                                else
+                                {
+                                    execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.SEMI_MATCHED;
+                                }
+
+                                execOrder.ExecutedVol = execOrder.ExecutedVol + orderInfo.Volume;
+                                execOrder.ExecutedPrice = (decimal) orderInfo.Price;
+                                execOrder.MatchedTime = DateTime.ParseExact(orderInfo.Time, "yyyyMMdd-HHmmss",
+                                                                            CultureInfo.InvariantCulture);
+                                execOrder.NumOfMatch = execOrder.NumOfMatch + 1;
+                                return;
+
+                            default:
+                                execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.OTHER;
+                                return;
+                        }
+
+                    case (short) CommonEnums.ORDER_STATUS.ORDER_REJECTED:
+                        return;
+
+                    case (short)CommonEnums.ORDER_STATUS.CANCEL_REJECTED:
+                    case (short) CommonEnums.ORDER_STATUS.SEMI_MATCHED:
+                        switch (orderInfo.Type)
+                        {
+                            case ETradeGWCommonConstants.DATA_CANCEL_ORDER:
+                                execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.NEW_CANCEL;
+                                execOrder.CancelVolume = orderInfo.Volume;
+                                execOrder.OrdRejReason = Int32.Parse(rejectCode);
+                                return;
+
+                                /*seven add*/
+                            case ETradeGWCommonConstants.DATA_NEW_CANCEL_ACK: //7b, broker cancel.
+                                //if (orderInfo.sourceID == (int)SOURCE_ID.FROM_SET)
+                                {
+                                    if (!string.IsNullOrEmpty(orderInfo.OrdRejReason.Trim())) //Reject from SET
+                                    {
+                                        execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.ORDER_REJECTED;
+                                        execOrder.OrdRejReason = Int32.Parse(rejectCode);
+                                        execOrder.CancelledTime = DateTime.ParseExact(orderInfo.Time, "yyyyMMdd-HHmmss",
+                                                                                  CultureInfo.InvariantCulture);
+                                        return;
+                                    }
+                                    execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.WAITING_CANCEL;
+
+                                    return;
+                                }
+
+                            case ETradeGWCommonConstants.DATA_EXEC_REPORT:
+                                if (Math.Round(orderInfo.Price, 2) == 0)
+                                {
+                                    execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.CANCELLED;
+                                    execOrder.CancelledTime = DateTime.ParseExact(orderInfo.Time, "yyyyMMdd-HHmmss",
+                                                                                  CultureInfo.InvariantCulture);
+                                    execOrder.SecSymbol = orderInfo.Symbol;
+                                    execOrder.CancelledVolume = orderInfo.Volume;
+
+                                    return;
+                                }
+
+                                //Full matched or semi matched
+                                if ((orderInfo.Volume + execOrder.ExecutedVol) == execOrder.Volume)
+                                {
+                                    execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.FULL_MATCHED;
+
+                                }
+                                else
+                                {
+                                    execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.SEMI_MATCHED;
+                                }
+
+                                execOrder.ExecutedVol = execOrder.ExecutedVol + orderInfo.Volume;
+                                execOrder.ExecutedPrice = (decimal) orderInfo.Price;
+                                execOrder.MatchedTime = DateTime.ParseExact(orderInfo.Time, "yyyyMMdd-HHmmss",
+                                                                            CultureInfo.InvariantCulture);
+                                execOrder.NumOfMatch = execOrder.NumOfMatch + 1;
+                                return;
+
+                            default:
+                                execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.OTHER;
+                                return;
+                        }
+
+                    case (short) CommonEnums.ORDER_STATUS.NEW_CANCEL:
+                        switch (orderInfo.Type)
+                        {
+                            case ETradeGWCommonConstants.DATA_NEW_CANCEL_ACK:
+                                execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.WAITING_CANCEL;
+                                execOrder.CancelVolume = orderInfo.Volume;
+                                execOrder.OrdRejReason = Int32.Parse(rejectCode);
+                                return;
+                            default:
+                                execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.OTHER;
+                                return;
+                        }
+
+                    case (short) CommonEnums.ORDER_STATUS.WAITING_CANCEL:
+                        switch (orderInfo.Type)
+                        {
+                            case ETradeGWCommonConstants.DATA_NEW_CANCEL_ACK:
+                                if (!string.IsNullOrEmpty(orderInfo.OrdRejReason.Trim()))
+                                {
+                                    execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.CANCEL_REJECTED;
+                                    execOrder.OrdRejReason = Int32.Parse(rejectCode);
+                                    return;
+                                }
+                                execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.OTHER;
+                                return;
+                            case ETradeGWCommonConstants.DATA_EXEC_REPORT:
+                                execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.CANCELLED;
+                                execOrder.CancelledTime = DateTime.ParseExact(orderInfo.Time, "yyyyMMdd-HHmmss",
+                                                                              CultureInfo.InvariantCulture);
+                                execOrder.SecSymbol = orderInfo.Symbol;
+                                execOrder.CancelledVolume = orderInfo.Volume;
+
+                                return;
+                            default:
+                                execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.OTHER;
+                                return;
+                        }
+
+                    case (short) CommonEnums.ORDER_STATUS.CANCELLED:
+                        return;
+
+                    case (short) CommonEnums.ORDER_STATUS.FULL_MATCHED:
+                        return;
+
+                    default:
+                        execOrder.OrderStatus = (short) CommonEnums.ORDER_STATUS.OTHER;
+                        return;
+                }
+            }
+            catch(Exception exception)
+            {
+                LogHandler.Log("SetExecOrderValues error Message Sequence = " + orderInfo.Sequence + " exception = " + exception,
+                               ".SetExecOrderValues", TraceEventType.Error);
+
+                LogOrderInfo(orderInfo, "SetExecOrderValues", TraceEventType.Error);
+            }
+        }
+
+        private static void LogOrderInfo (OrderInfo orderInfo, string methodName, TraceEventType erroType)
+        {
+            try
+            {
+
+                if (orderInfo == null)
+                {
+                    return;
+                }
+
+                LogHandler.Log(methodName + " Sequence " + orderInfo.Sequence + " " +
+                               "FISOrderID " + orderInfo.FISOrderID + " " +
+                               "SourceID " + orderInfo.SourceID + " " +
+                               "Time " + orderInfo.Time + " " +
+                               "Symbol " + orderInfo.Symbol + " " +
+                               "Type " + orderInfo.Type + " " +
+                               "Side " + orderInfo.Side + " " +
+                               "Price " + orderInfo.Price + " " +
+                               "ConPrice " + orderInfo.ConPrice + " " +
+                               "Volume " + orderInfo.Volume + " " +
+                               "Account " + orderInfo.Account + " " +
+                               "Status " + orderInfo.Status + " " +
+                               "OrdRejReason " + orderInfo.OrdRejReason + " " +
+                               "ExecTransType " + orderInfo.ExecTransType + " " +
+                               "RefOrderId " + orderInfo.RefOrderID,
+                               methodName,
+                               erroType);
+            }
+            catch(Exception ex)
+            {
+                return;
+            }
+        }
+
+        public void InitLinkOPS()
+        {
+            _messageHandler.InitLinkOPS();
+        }
+
+        #region MessageHandler
+
+        public bool isRecovery { get; set; }
+
+        #endregion
+    }
+}

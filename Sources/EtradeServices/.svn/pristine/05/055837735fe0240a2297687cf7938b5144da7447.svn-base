@@ -1,0 +1,15 @@
+; SocketLib.def - defines the exports for SocketHandler.dll
+
+LIBRARY SocketLib
+
+EXPORTS
+	SocketHandlerConnect
+	SocketHandlerDisconnect
+	SocketHandlerInitLog
+	SocketHandlerIsConnected
+	CreateSocketHandler
+	DestroySocketHandler
+	SocketHandlerSendMessage
+	SocketHandlerReceiveMessage
+	
+	

@@ -1,0 +1,40 @@
+namespace ETradeGWServices
+{
+    public class OrderInfo
+    {
+        public int Sequence;
+        public string Time;
+        public string Type;
+        public string RefOrderID;
+        public int FISOrderID;    // FIS order number 
+        public string Symbol;     // Local Exchange Code 
+        public char Side;          // B=Buy|S=Sell 
+        public float Price;         // Range from 0.000001 to 999999.999999 %13.6f 
+        public char ConPrice;      // ‘ ‘(blank)=no condition| A=ATO|M=MP|C=ATC 
+        public int Volume;        // <= 1000000 
+        public string Account;       // FIS Account ID 
+        public int Status;     // 0=Accepted|8=Rejected|7=Warning 
+        public string OrdRejReason;
+        public int ExecTransType; // 0=New|1=Cancel|2=Change Acc 
+        public int SourceID;        // 0=FIS|3=SET
+
+        public OrderInfo()
+        {
+            Sequence      = 0;
+            Time          = EtradeGWCommonUtils.GetDate();
+            Type          = "";
+            RefOrderID    = "";
+            FISOrderID    = 0;
+            Symbol        = "";
+            Side          = ' ';
+            Price         = 0;
+            ConPrice      = ' ';
+            Volume        = 0;
+            Account       = "";
+            Status        = 0;
+            OrdRejReason  = "";
+            ExecTransType = 0;
+            SourceID      = -1;
+        }
+    }
+}

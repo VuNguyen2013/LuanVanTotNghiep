@@ -1,0 +1,1458 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ETradeFinance.UnitTests</name>
+    </assembly>
+    <members>
+        <member name="T:ETradeFinance.UnitTests.CashAdvanceTest">
+            <summary>
+            Provides tests for the and <see cref="T:ETradeFinance.Entities.CashAdvance"/> objects (entity, collection and repository).
+            </summary>
+            <summary>
+            Provides tests for the and <see cref="T:ETradeFinance.Entities.CashAdvance"/> objects (entity, collection and repository).
+            </summary>
+            <remarks>
+            This file is generated once and will never be overwritten.
+            </remarks>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Init_Generated">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.CleanUp_Generated">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_01_Insert_Generated">
+            <summary>
+            Inserts a mock CashAdvance entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_02_SelectAll_Generated">
+            <summary>
+            Selects all CashAdvance objects of the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_03_DeepLoad_Generated">
+            <summary>
+            Deep load all CashAdvance children.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_04_Update_Generated">
+            <summary>
+            Updates a mock CashAdvance entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_05_Delete_Generated">
+            <summary>
+            Delete the mock CashAdvance entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_06_SerializeEntity_Generated">
+            <summary>
+            Serialize the mock CashAdvance entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_07_DeserializeEntity_Generated">
+            <summary>
+            Deserialize the mock CashAdvance entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_08_SerializeCollection_Generated">
+            <summary>
+            Serialize a CashAdvance collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_09_DeserializeCollection_Generated">
+            <summary>
+            Deserialize a CashAdvance collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_10_FK_Generated">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_11_IX_Generated">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_20_TestEntityHelper_Generated">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_30_TestFindByQuery_Generated">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.CreateMockInstance_Generated(ETradeFinance.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed CashAdvance Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.UpdateMockInstance_Generated(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.CashAdvance)">
+            <summary>
+              Update the Typed CashAdvance Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.UnitTests.CashAdvanceTest"/> instance.
+            </summary>	
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Init">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Dispose">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_01_Insert">
+            <summary>
+            Inserts a mock CashAdvance entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_02_SelectAll">
+            <summary>
+            Selects a sample of  CashAdvance objects of the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_03_DeepLoad">
+            <summary>
+            Deep load all CashAdvance children.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_04_Update">
+            <summary>
+            Updates a mock CashAdvance entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_05_Delete">
+            <summary>
+            Delete the mock CashAdvance entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_06_SerializeEntity">
+            <summary>
+            Serialize the mock CashAdvance entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_07_DeserializeEntity">
+            <summary>
+            Deserialize the mock CashAdvance entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_08_SerializeCollection">
+            <summary>
+            Serialize a CashAdvance collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_09_DeserializeCollection">
+            <summary>
+            Deserialize a CashAdvance collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_10_FK">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_11_IX">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_20_TestEntityHelper">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.Step_30_TestFindByQuery">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.CreateMockInstance(ETradeFinance.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed CashAdvance Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.UpdateMockInstance(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.CashAdvance)">
+            <summary>
+              Update the Typed CashAdvance Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceTest.SetSpecialTestData(ETradeFinance.Entities.CashAdvance)">
+            <summary>
+            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
+            </summary>
+            <param name="mock">Object to be modified</param>
+        </member>
+        <member name="T:ETradeFinance.UnitTests.CashTransferTest">
+            <summary>
+            Provides tests for the and <see cref="T:ETradeFinance.Entities.CashTransfer"/> objects (entity, collection and repository).
+            </summary>
+            <remarks>
+            This file is generated once and will never be overwritten.
+            </remarks>
+            <summary>
+            Provides tests for the and <see cref="T:ETradeFinance.Entities.CashTransfer"/> objects (entity, collection and repository).
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.UnitTests.CashTransferTest"/> instance.
+            </summary>	
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Init">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Dispose">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_01_Insert">
+            <summary>
+            Inserts a mock CashTransfer entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_02_SelectAll">
+            <summary>
+            Selects a sample of  CashTransfer objects of the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_03_DeepLoad">
+            <summary>
+            Deep load all CashTransfer children.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_04_Update">
+            <summary>
+            Updates a mock CashTransfer entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_05_Delete">
+            <summary>
+            Delete the mock CashTransfer entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_06_SerializeEntity">
+            <summary>
+            Serialize the mock CashTransfer entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_07_DeserializeEntity">
+            <summary>
+            Deserialize the mock CashTransfer entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_08_SerializeCollection">
+            <summary>
+            Serialize a CashTransfer collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_09_DeserializeCollection">
+            <summary>
+            Deserialize a CashTransfer collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_10_FK">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_11_IX">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_20_TestEntityHelper">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_30_TestFindByQuery">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.CreateMockInstance(ETradeFinance.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed CashTransfer Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.UpdateMockInstance(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.CashTransfer)">
+            <summary>
+              Update the Typed CashTransfer Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.SetSpecialTestData(ETradeFinance.Entities.CashTransfer)">
+            <summary>
+            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
+            </summary>
+            <param name="mock">Object to be modified</param>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Init_Generated">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.CleanUp_Generated">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_01_Insert_Generated">
+            <summary>
+            Inserts a mock CashTransfer entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_02_SelectAll_Generated">
+            <summary>
+            Selects all CashTransfer objects of the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_03_DeepLoad_Generated">
+            <summary>
+            Deep load all CashTransfer children.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_04_Update_Generated">
+            <summary>
+            Updates a mock CashTransfer entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_05_Delete_Generated">
+            <summary>
+            Delete the mock CashTransfer entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_06_SerializeEntity_Generated">
+            <summary>
+            Serialize the mock CashTransfer entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_07_DeserializeEntity_Generated">
+            <summary>
+            Deserialize the mock CashTransfer entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_08_SerializeCollection_Generated">
+            <summary>
+            Serialize a CashTransfer collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_09_DeserializeCollection_Generated">
+            <summary>
+            Deserialize a CashTransfer collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_10_FK_Generated">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_11_IX_Generated">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_20_TestEntityHelper_Generated">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.Step_30_TestFindByQuery_Generated">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.CreateMockInstance_Generated(ETradeFinance.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed CashTransfer Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashTransferTest.UpdateMockInstance_Generated(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.CashTransfer)">
+            <summary>
+              Update the Typed CashTransfer Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="T:ETradeFinance.UnitTests.StockTransferTest">
+            <summary>
+            Provides tests for the and <see cref="T:ETradeFinance.Entities.StockTransfer"/> objects (entity, collection and repository).
+            </summary>
+            <remarks>
+            This file is generated once and will never be overwritten.
+            </remarks>
+            <summary>
+            Provides tests for the and <see cref="T:ETradeFinance.Entities.StockTransfer"/> objects (entity, collection and repository).
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.UnitTests.StockTransferTest"/> instance.
+            </summary>	
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Init">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Dispose">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_01_Insert">
+            <summary>
+            Inserts a mock StockTransfer entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_02_SelectAll">
+            <summary>
+            Selects a sample of  StockTransfer objects of the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_03_DeepLoad">
+            <summary>
+            Deep load all StockTransfer children.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_04_Update">
+            <summary>
+            Updates a mock StockTransfer entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_05_Delete">
+            <summary>
+            Delete the mock StockTransfer entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_06_SerializeEntity">
+            <summary>
+            Serialize the mock StockTransfer entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_07_DeserializeEntity">
+            <summary>
+            Deserialize the mock StockTransfer entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_08_SerializeCollection">
+            <summary>
+            Serialize a StockTransfer collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_09_DeserializeCollection">
+            <summary>
+            Deserialize a StockTransfer collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_10_FK">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_11_IX">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_20_TestEntityHelper">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_30_TestFindByQuery">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.CreateMockInstance(ETradeFinance.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed StockTransfer Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.UpdateMockInstance(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.StockTransfer)">
+            <summary>
+              Update the Typed StockTransfer Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.SetSpecialTestData(ETradeFinance.Entities.StockTransfer)">
+            <summary>
+            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
+            </summary>
+            <param name="mock">Object to be modified</param>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Init_Generated">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.CleanUp_Generated">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_01_Insert_Generated">
+            <summary>
+            Inserts a mock StockTransfer entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_02_SelectAll_Generated">
+            <summary>
+            Selects all StockTransfer objects of the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_03_DeepLoad_Generated">
+            <summary>
+            Deep load all StockTransfer children.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_04_Update_Generated">
+            <summary>
+            Updates a mock StockTransfer entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_05_Delete_Generated">
+            <summary>
+            Delete the mock StockTransfer entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_06_SerializeEntity_Generated">
+            <summary>
+            Serialize the mock StockTransfer entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_07_DeserializeEntity_Generated">
+            <summary>
+            Deserialize the mock StockTransfer entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_08_SerializeCollection_Generated">
+            <summary>
+            Serialize a StockTransfer collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_09_DeserializeCollection_Generated">
+            <summary>
+            Deserialize a StockTransfer collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_10_FK_Generated">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_11_IX_Generated">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_20_TestEntityHelper_Generated">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.Step_30_TestFindByQuery_Generated">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.CreateMockInstance_Generated(ETradeFinance.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed StockTransfer Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.StockTransferTest.UpdateMockInstance_Generated(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.StockTransfer)">
+            <summary>
+              Update the Typed StockTransfer Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="T:ETradeFinance.UnitTests.OddLotOrderTest">
+            <summary>
+            Provides tests for the and <see cref="T:ETradeFinance.Entities.OddLotOrder"/> objects (entity, collection and repository).
+            </summary>
+            <remarks>
+            This file is generated once and will never be overwritten.
+            </remarks>
+            <summary>
+            Provides tests for the and <see cref="T:ETradeFinance.Entities.OddLotOrder"/> objects (entity, collection and repository).
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.UnitTests.OddLotOrderTest"/> instance.
+            </summary>	
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Init">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Dispose">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_01_Insert">
+            <summary>
+            Inserts a mock OddLotOrder entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_02_SelectAll">
+            <summary>
+            Selects a sample of  OddLotOrder objects of the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_03_DeepLoad">
+            <summary>
+            Deep load all OddLotOrder children.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_04_Update">
+            <summary>
+            Updates a mock OddLotOrder entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_05_Delete">
+            <summary>
+            Delete the mock OddLotOrder entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_06_SerializeEntity">
+            <summary>
+            Serialize the mock OddLotOrder entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_07_DeserializeEntity">
+            <summary>
+            Deserialize the mock OddLotOrder entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_08_SerializeCollection">
+            <summary>
+            Serialize a OddLotOrder collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_09_DeserializeCollection">
+            <summary>
+            Deserialize a OddLotOrder collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_10_FK">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_11_IX">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_20_TestEntityHelper">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_30_TestFindByQuery">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.CreateMockInstance(ETradeFinance.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed OddLotOrder Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.UpdateMockInstance(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.OddLotOrder)">
+            <summary>
+              Update the Typed OddLotOrder Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.SetSpecialTestData(ETradeFinance.Entities.OddLotOrder)">
+            <summary>
+            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
+            </summary>
+            <param name="mock">Object to be modified</param>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Init_Generated">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.CleanUp_Generated">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_01_Insert_Generated">
+            <summary>
+            Inserts a mock OddLotOrder entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_02_SelectAll_Generated">
+            <summary>
+            Selects all OddLotOrder objects of the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_03_DeepLoad_Generated">
+            <summary>
+            Deep load all OddLotOrder children.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_04_Update_Generated">
+            <summary>
+            Updates a mock OddLotOrder entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_05_Delete_Generated">
+            <summary>
+            Delete the mock OddLotOrder entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_06_SerializeEntity_Generated">
+            <summary>
+            Serialize the mock OddLotOrder entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_07_DeserializeEntity_Generated">
+            <summary>
+            Deserialize the mock OddLotOrder entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_08_SerializeCollection_Generated">
+            <summary>
+            Serialize a OddLotOrder collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_09_DeserializeCollection_Generated">
+            <summary>
+            Deserialize a OddLotOrder collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_10_FK_Generated">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_11_IX_Generated">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_20_TestEntityHelper_Generated">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.Step_30_TestFindByQuery_Generated">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.CreateMockInstance_Generated(ETradeFinance.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed OddLotOrder Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.OddLotOrderTest.UpdateMockInstance_Generated(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.OddLotOrder)">
+            <summary>
+              Update the Typed OddLotOrder Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="T:ETradeFinance.UnitTests.CashAdvanceHistoryTest">
+            <summary>
+            Provides tests for the and <see cref="T:ETradeFinance.Entities.CashAdvanceHistory"/> objects (entity, collection and repository).
+            </summary>
+            <summary>
+            Provides tests for the and <see cref="T:ETradeFinance.Entities.CashAdvanceHistory"/> objects (entity, collection and repository).
+            </summary>
+            <remarks>
+            This file is generated once and will never be overwritten.
+            </remarks>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Init_Generated">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.CleanUp_Generated">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_01_Insert_Generated">
+            <summary>
+            Inserts a mock CashAdvanceHistory entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_02_SelectAll_Generated">
+            <summary>
+            Selects all CashAdvanceHistory objects of the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_03_DeepLoad_Generated">
+            <summary>
+            Deep load all CashAdvanceHistory children.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_04_Update_Generated">
+            <summary>
+            Updates a mock CashAdvanceHistory entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_05_Delete_Generated">
+            <summary>
+            Delete the mock CashAdvanceHistory entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_06_SerializeEntity_Generated">
+            <summary>
+            Serialize the mock CashAdvanceHistory entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_07_DeserializeEntity_Generated">
+            <summary>
+            Deserialize the mock CashAdvanceHistory entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_08_SerializeCollection_Generated">
+            <summary>
+            Serialize a CashAdvanceHistory collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_09_DeserializeCollection_Generated">
+            <summary>
+            Deserialize a CashAdvanceHistory collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_10_FK_Generated">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_11_IX_Generated">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_20_TestEntityHelper_Generated">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_30_TestFindByQuery_Generated">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.CreateMockInstance_Generated(ETradeFinance.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed CashAdvanceHistory Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.UpdateMockInstance_Generated(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.CashAdvanceHistory)">
+            <summary>
+              Update the Typed CashAdvanceHistory Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.UnitTests.CashAdvanceHistoryTest"/> instance.
+            </summary>	
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Init">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Dispose">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_01_Insert">
+            <summary>
+            Inserts a mock CashAdvanceHistory entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_02_SelectAll">
+            <summary>
+            Selects a sample of  CashAdvanceHistory objects of the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_03_DeepLoad">
+            <summary>
+            Deep load all CashAdvanceHistory children.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_04_Update">
+            <summary>
+            Updates a mock CashAdvanceHistory entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_05_Delete">
+            <summary>
+            Delete the mock CashAdvanceHistory entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_06_SerializeEntity">
+            <summary>
+            Serialize the mock CashAdvanceHistory entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_07_DeserializeEntity">
+            <summary>
+            Deserialize the mock CashAdvanceHistory entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_08_SerializeCollection">
+            <summary>
+            Serialize a CashAdvanceHistory collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_09_DeserializeCollection">
+            <summary>
+            Deserialize a CashAdvanceHistory collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_10_FK">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_11_IX">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_20_TestEntityHelper">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.Step_30_TestFindByQuery">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.CreateMockInstance(ETradeFinance.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed CashAdvanceHistory Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.UpdateMockInstance(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.CashAdvanceHistory)">
+            <summary>
+              Update the Typed CashAdvanceHistory Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.CashAdvanceHistoryTest.SetSpecialTestData(ETradeFinance.Entities.CashAdvanceHistory)">
+            <summary>
+            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
+            </summary>
+            <param name="mock">Object to be modified</param>
+        </member>
+        <member name="T:ETradeFinance.UnitTests.XrOrdersTest">
+            <summary>
+            Provides tests for the and <see cref="T:ETradeFinance.Entities.XrOrders"/> objects (entity, collection and repository).
+            </summary>
+            <summary>
+            Provides tests for the and <see cref="T:ETradeFinance.Entities.XrOrders"/> objects (entity, collection and repository).
+            </summary>
+            <remarks>
+            This file is generated once and will never be overwritten.
+            </remarks>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Init_Generated">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.CleanUp_Generated">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_01_Insert_Generated">
+            <summary>
+            Inserts a mock XrOrders entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_02_SelectAll_Generated">
+            <summary>
+            Selects all XrOrders objects of the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_03_DeepLoad_Generated">
+            <summary>
+            Deep load all XrOrders children.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_04_Update_Generated">
+            <summary>
+            Updates a mock XrOrders entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_05_Delete_Generated">
+            <summary>
+            Delete the mock XrOrders entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_06_SerializeEntity_Generated">
+            <summary>
+            Serialize the mock XrOrders entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_07_DeserializeEntity_Generated">
+            <summary>
+            Deserialize the mock XrOrders entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_08_SerializeCollection_Generated">
+            <summary>
+            Serialize a XrOrders collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_09_DeserializeCollection_Generated">
+            <summary>
+            Deserialize a XrOrders collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_10_FK_Generated">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_11_IX_Generated">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_20_TestEntityHelper_Generated">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_30_TestFindByQuery_Generated">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.CreateMockInstance_Generated(ETradeFinance.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed XrOrders Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.UpdateMockInstance_Generated(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.XrOrders)">
+            <summary>
+              Update the Typed XrOrders Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.UnitTests.XrOrdersTest"/> instance.
+            </summary>	
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Init">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Dispose">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_01_Insert">
+            <summary>
+            Inserts a mock XrOrders entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_02_SelectAll">
+            <summary>
+            Selects a sample of  XrOrders objects of the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_03_DeepLoad">
+            <summary>
+            Deep load all XrOrders children.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_04_Update">
+            <summary>
+            Updates a mock XrOrders entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_05_Delete">
+            <summary>
+            Delete the mock XrOrders entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_06_SerializeEntity">
+            <summary>
+            Serialize the mock XrOrders entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_07_DeserializeEntity">
+            <summary>
+            Deserialize the mock XrOrders entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_08_SerializeCollection">
+            <summary>
+            Serialize a XrOrders collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_09_DeserializeCollection">
+            <summary>
+            Deserialize a XrOrders collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_10_FK">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_11_IX">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_20_TestEntityHelper">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.Step_30_TestFindByQuery">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.CreateMockInstance(ETradeFinance.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed XrOrders Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.UpdateMockInstance(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.XrOrders)">
+            <summary>
+              Update the Typed XrOrders Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.XrOrdersTest.SetSpecialTestData(ETradeFinance.Entities.XrOrders)">
+            <summary>
+            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
+            </summary>
+            <param name="mock">Object to be modified</param>
+        </member>
+        <member name="T:ETradeFinance.UnitTests.AdvanceTimeTest">
+            <summary>
+            Provides tests for the and <see cref="T:ETradeFinance.Entities.AdvanceTime"/> objects (entity, collection and repository).
+            </summary>
+            <remarks>
+            This file is generated once and will never be overwritten.
+            </remarks>
+            <summary>
+            Provides tests for the and <see cref="T:ETradeFinance.Entities.AdvanceTime"/> objects (entity, collection and repository).
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.UnitTests.AdvanceTimeTest"/> instance.
+            </summary>	
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Init">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Dispose">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_01_Insert">
+            <summary>
+            Inserts a mock AdvanceTime entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_02_SelectAll">
+            <summary>
+            Selects a sample of  AdvanceTime objects of the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_03_DeepLoad">
+            <summary>
+            Deep load all AdvanceTime children.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_04_Update">
+            <summary>
+            Updates a mock AdvanceTime entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_05_Delete">
+            <summary>
+            Delete the mock AdvanceTime entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_06_SerializeEntity">
+            <summary>
+            Serialize the mock AdvanceTime entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_07_DeserializeEntity">
+            <summary>
+            Deserialize the mock AdvanceTime entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_08_SerializeCollection">
+            <summary>
+            Serialize a AdvanceTime collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_09_DeserializeCollection">
+            <summary>
+            Deserialize a AdvanceTime collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_10_FK">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_11_IX">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_20_TestEntityHelper">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_30_TestFindByQuery">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.CreateMockInstance(ETradeFinance.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed AdvanceTime Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.UpdateMockInstance(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.AdvanceTime)">
+            <summary>
+              Update the Typed AdvanceTime Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.SetSpecialTestData(ETradeFinance.Entities.AdvanceTime)">
+            <summary>
+            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
+            </summary>
+            <param name="mock">Object to be modified</param>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Init_Generated">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.CleanUp_Generated">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_01_Insert_Generated">
+            <summary>
+            Inserts a mock AdvanceTime entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_02_SelectAll_Generated">
+            <summary>
+            Selects all AdvanceTime objects of the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_03_DeepLoad_Generated">
+            <summary>
+            Deep load all AdvanceTime children.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_04_Update_Generated">
+            <summary>
+            Updates a mock AdvanceTime entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_05_Delete_Generated">
+            <summary>
+            Delete the mock AdvanceTime entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_06_SerializeEntity_Generated">
+            <summary>
+            Serialize the mock AdvanceTime entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_07_DeserializeEntity_Generated">
+            <summary>
+            Deserialize the mock AdvanceTime entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_08_SerializeCollection_Generated">
+            <summary>
+            Serialize a AdvanceTime collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_09_DeserializeCollection_Generated">
+            <summary>
+            Deserialize a AdvanceTime collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_10_FK_Generated">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_11_IX_Generated">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_20_TestEntityHelper_Generated">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.Step_30_TestFindByQuery_Generated">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.CreateMockInstance_Generated(ETradeFinance.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed AdvanceTime Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.AdvanceTimeTest.UpdateMockInstance_Generated(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.AdvanceTime)">
+            <summary>
+              Update the Typed AdvanceTime Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="T:ETradeFinance.UnitTests.TestUtility">
+            <summary>
+             Singleton class for Helper functions for UnitTesting
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.TestUtility.#ctor">
+            <summary>
+            Private constructor for Singleton
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.TestUtility.RandomNumber">
+            <summary>
+            Generates a random number between 0 and int.MaxValue.
+            </summary>
+            <returns>Random Number</returns>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.TestUtility.RandomNumber(System.Int32,System.Int32)">
+            <summary>
+            Generates a random number between the given bounds.
+            </summary>
+            <param name="min">lowest bound</param>
+            <param name="max">highest bound</param>
+            <returns>Random Number</returns>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.TestUtility.RandomString(System.Int32,System.Boolean)">
+            <summary>
+            Generates a random string with the given length
+            </summary>
+            <param name="size">Size of the string</param>
+            <param name="lowerCase">If true, generate lowercase string</param>
+            <returns>Random string</returns>
+            <remarks>Mahesh Chand  - http://www.c-sharpcorner.com/Code/2004/Oct/RandomNumber.asp</remarks>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.TestUtility.RandomDate">
+            <summary>
+            Returns a random date between the default min and max dates
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.TestUtility.RandomDate(System.DateTime,System.DateTime)">
+            <summary>
+            Returns a random date between the dates you pass in
+            </summary>
+            <param name="minDate">Min date to return</param>
+            <param name="maxDate">Max date to return</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.TestUtility.RandomDateTime">
+            <summary>
+            Returns a random date and time between the default datess
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.TestUtility.RandomDateTime(System.DateTime,System.DateTime)">
+            <summary>
+            Get a random DateTime with a random Time
+            </summary>
+            <param name="minDate">Min datetime to return</param>
+            <param name="maxDate">Max datetime to return</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.TestUtility.RandomBoolean">
+            <summary>
+            Returns a random boolean value
+            </summary>
+            <returns>Random Boolean</returns>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.TestUtility.RandomChar">
+            <summary>
+            Returns a random character
+            </summary>
+            <returns>Random Character</returns>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.TestUtility.RandomByte">
+            <summary>
+            Return a random byte between 0 and byte.MaxValue;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.TestUtility.RandomByte(System.Byte,System.Byte)">
+            <summary>
+            Return a random byte between the values specified
+            </summary>
+            <param name="min">Min value</param>
+            <param name="max">Max value</param>
+            <returns>Random Byte</returns>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.TestUtility.RandomShort">
+            <summary>
+            Return a random short between 0 and byte.MaxValue;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.UnitTests.TestUtility.RandomShort(System.Int16,System.Int16)">
+            <summary>
+            Return a random short between the values specified
+            </summary>
+            <param name="min">Min value</param>
+            <param name="max">Max value</param>
+            <returns>Random short</returns>
+        </member>
+        <member name="P:ETradeFinance.UnitTests.TestUtility.Instance">
+            <summary>
+            Get the instance of the TestUtility class
+            </summary>
+        </member>
+    </members>
+</doc>

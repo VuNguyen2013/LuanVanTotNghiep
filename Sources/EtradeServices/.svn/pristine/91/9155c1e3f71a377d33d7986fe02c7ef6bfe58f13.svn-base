@@ -1,0 +1,8 @@
+DELETE FROM [CashAdvance]
+DELETE FROM [CashAdvanceHistory]
+DELETE FROM [CashTransfer]
+DELETE FROM [OddLotOrder]
+DELETE FROM [StockTransfer]
+DELETE FROM [XROrders]
+DELETE FROM [AdvanceTime]
+DELETE FROM [Fee]

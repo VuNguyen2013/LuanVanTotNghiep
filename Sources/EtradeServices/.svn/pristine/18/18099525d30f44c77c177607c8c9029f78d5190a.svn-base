@@ -1,0 +1,574 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="MarketServices.cs" company="OTS">
+//   2010
+// </copyright>
+// <summary>
+//   Defines the MarketServices type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System.Diagnostics;
+using System.Threading;
+using ETradeWebServices.RTServices;
+using System;
+using System.Web.Script.Serialization;
+using ETradeCommon;
+using ETradeCommon.Enums;
+
+namespace METradeWebServices.Services
+{
+    ///<summary>
+    /// Service to get market information.
+    ///</summary>
+    public static class MarketServices
+    {
+        /// <summary>
+        /// Event for market HOSE to check condition orders.
+        /// </summary>
+        public static event EventHandler HandleHOSECheckConditionOrderEvent;
+        /// <summary>
+        /// Event for market HNX to check condition orders.
+        /// </summary>
+        public static event EventHandler HandleHNXCheckConditionOrderEvent;
+        /// <summary>
+        /// Event for market UPCOM to check condition orders.
+        /// </summary>
+        public static event EventHandler HandleUPCOMCheckConditionOrderEvent;
+        private static char _tradingStatusHOSE = (char)CommonEnums.MARKET_STATUS.INIT_APP;
+        private static char _marketStatusHOSE = (char)CommonEnums.MARKET_STATUS.UNVAILABLE;
+
+        private static DateTime _sessionTimeHOSE = DateTime.Now;
+
+        private static char _tradingStatusHNX = (char)CommonEnums.MARKET_STATUS.INIT_APP;
+        private static char _marketStatusHNX = (char)CommonEnums.MARKET_STATUS.UNVAILABLE;
+
+        private static DateTime _sessionTimeHNX = DateTime.Now;
+
+        private static char _tradingStatusUpcom = (char)CommonEnums.MARKET_STATUS.INIT_APP;
+        private static char _marketStatusUpcom = (char)CommonEnums.MARKET_STATUS.UNVAILABLE;
+
+        private static DateTime _sessionTimeUpcom = DateTime.Now;
+
+        private static readonly Service RtServices = new Service();
+
+        private static readonly JavaScriptSerializer Serializer = new JavaScriptSerializer();
+
+        public static bool _isSessionThread;
+
+        private static Thread _sessionThread;
+
+        private static readonly DateTime CheckDateTime = new DateTime(2010, 09, 01);
+        private static DateTime _timeReadyHOSE = CheckDateTime;
+        private static DateTime _timeReadyHNX = CheckDateTime;
+        private static DateTime _timeReadyUPCOM = CheckDateTime;
+
+        /// <summary>
+        /// Updates the session HOSE.
+        /// </summary>
+        /// <param name="marketState">State of the market.</param>
+        /// <param name="sessionTime">The session time.</param>
+        private static void UpdateSessionHOSE(char marketState, DateTime sessionTime)
+        {
+            // Update market status
+            _marketStatusHOSE = marketState;
+
+            // Reset status when can not get status.
+            if (marketState == (char)CommonEnums.MARKET_STATUS.UNVAILABLE)
+            {
+                _tradingStatusHOSE = marketState;
+                _sessionTimeHOSE = sessionTime;
+
+                return;
+            }
+
+            if ((_tradingStatusHOSE != marketState) && (marketState == (char)CommonEnums.MARKET_STATUS.READY))
+            {
+                if(_timeReadyHOSE == CheckDateTime)
+                {
+                    _timeReadyHOSE = DateTime.Now;
+                    return;
+                }
+                if (_timeReadyHOSE.AddSeconds(30) > DateTime.Now)
+                {
+                    return;
+                }
+            }
+            switch (_tradingStatusHOSE)
+            {
+                case (char)CommonEnums.MARKET_STATUS.INIT_APP:
+                case (char)CommonEnums.MARKET_STATUS.UNVAILABLE:
+                    _tradingStatusHOSE = marketState;
+                    _sessionTimeHOSE = sessionTime;
+                    if (_tradingStatusHOSE == (char)CommonEnums.MARKET_STATUS.PRE_OPEN)
+                    {
+                        HandleHOSECheckConditionOrderEvent(null, EventArgs.Empty);
+                    }
+                    break;
+                case (char)CommonEnums.MARKET_STATUS.READY:
+                    if (marketState == (char)CommonEnums.MARKET_STATUS.PRE_OPEN)
+                    {
+                        _tradingStatusHOSE = marketState;
+                        _sessionTimeHOSE = sessionTime;
+                        HandleHOSECheckConditionOrderEvent(null, EventArgs.Empty);
+                    }
+
+                    break;
+                case (char)CommonEnums.MARKET_STATUS.PRE_OPEN:
+                    {
+                        TimeSpan duration = sessionTime - _sessionTimeHOSE;
+                        if ((duration.TotalSeconds > AppConfig.PreOpenDuration) ||
+                            marketState == (char)CommonEnums.MARKET_STATUS.OPEN)
+                        {
+                            _tradingStatusHOSE = (char)CommonEnums.MARKET_STATUS.OPEN;
+                            _sessionTimeHOSE = sessionTime;
+                        }
+                    }
+
+                    break;
+                case (char)CommonEnums.MARKET_STATUS.OPEN:
+                    {
+                        TimeSpan duration = sessionTime - _sessionTimeHOSE;
+
+                        //support for trading only on morning.
+                        if (AppConfig.AfternoonOpenDuration == 0)
+                        {
+                            if ((duration.TotalSeconds > AppConfig.MorningOpenDuration) ||
+                                (marketState == (char)CommonEnums.MARKET_STATUS.PRE_CLOSE))
+                            {
+                                _tradingStatusHOSE = (char)CommonEnums.MARKET_STATUS.PRE_CLOSE;
+                                _sessionTimeHOSE = sessionTime;
+
+                                return;
+                            }
+                        }
+                        else
+                        {
+
+                            //Support for extend trading to afternoon
+                            if ((duration.TotalSeconds > AppConfig.MorningOpenDuration) ||
+                                (marketState == (char)CommonEnums.MARKET_STATUS.HAFT))
+                            {
+                                _tradingStatusHOSE = (char)CommonEnums.MARKET_STATUS.HAFT;
+                                _sessionTimeHOSE = sessionTime;
+
+                                return;
+                            }
+                        }
+                    }
+
+                    break;
+
+                //Support for extend trading to afternoon 
+                case (char)CommonEnums.MARKET_STATUS.HAFT:
+                    if (marketState == (char)CommonEnums.MARKET_STATUS.OPEN_2)
+                    {
+                        _tradingStatusHOSE = (char)CommonEnums.MARKET_STATUS.OPEN_2;
+
+                        _sessionTimeHOSE = sessionTime;
+
+                        return;
+                    }
+
+                    break;
+
+                //Support for extend trading to afternoon 
+                case (char)CommonEnums.MARKET_STATUS.OPEN_2:
+                    {
+                        TimeSpan duration = sessionTime - _sessionTimeHOSE;
+                        if ((duration.TotalSeconds > AppConfig.AfternoonOpenDuration) ||
+                            (marketState == (char) CommonEnums.MARKET_STATUS.PRE_CLOSE))
+                        {
+                            _tradingStatusHOSE = (char) CommonEnums.MARKET_STATUS.PRE_CLOSE;
+                            _sessionTimeHOSE = sessionTime;
+
+                            return;
+                        }
+                    }
+
+                    break;
+                case (char)CommonEnums.MARKET_STATUS.PRE_CLOSE:
+                    {
+                        TimeSpan duration = sessionTime - _sessionTimeHOSE;
+                        if (duration.TotalSeconds > AppConfig.PreCloseDuration ||
+                            marketState == (char)CommonEnums.MARKET_STATUS.CLOSE)
+                        {
+                            _tradingStatusHOSE = (char)CommonEnums.MARKET_STATUS.CLOSE;
+                            _sessionTimeHOSE = sessionTime;
+                        }
+                    }
+
+                    break;
+                case (char)CommonEnums.MARKET_STATUS.CLOSE:
+                    {
+                        if (marketState == (char)CommonEnums.MARKET_STATUS.CLOSE_PT)
+                        {
+                            _tradingStatusHOSE = (char)CommonEnums.MARKET_STATUS.CLOSE_PT;
+                            _sessionTimeHOSE = sessionTime;
+                        }
+                    }
+
+                    break;
+                default: // Close PT or break down->jum current state or switch to new trading day.
+                    _tradingStatusHOSE = marketState;
+                    _sessionTimeHOSE = sessionTime;
+                    if (_tradingStatusHOSE == (char)CommonEnums.MARKET_STATUS.PRE_OPEN)
+                    {
+                        HandleHOSECheckConditionOrderEvent(null, EventArgs.Empty);
+                    }
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Updates the session HNX.
+        /// </summary>
+        /// <param name="marketState">State of the market.</param>
+        /// <param name="sessionTime">The session time.</param>
+        private static void UpdateSessionHNX(char marketState, DateTime sessionTime)
+        {
+            // Update market status
+            _marketStatusHNX = marketState;
+
+            // Reset status when can not get status.
+            if (marketState == (char)CommonEnums.MARKET_STATUS.UNVAILABLE)
+            {
+                _tradingStatusHNX = marketState;
+                _sessionTimeHNX = sessionTime;
+
+                return;
+            }
+            if ((_tradingStatusHNX != marketState) && (marketState == (char)CommonEnums.MARKET_STATUS.READY))
+            {
+                if (_timeReadyHNX == CheckDateTime)
+                {
+                    _timeReadyHNX = DateTime.Now;
+                    return;
+                }
+                if (_timeReadyHNX.AddSeconds(30) > DateTime.Now)
+                {
+                    return;
+                }
+            }
+            switch (_tradingStatusHNX)
+            {
+                case (char)CommonEnums.MARKET_STATUS.INIT_APP:
+                case (char)CommonEnums.MARKET_STATUS.UNVAILABLE:
+                    _tradingStatusHNX = marketState;
+                    _sessionTimeHNX = sessionTime;
+                    if (_tradingStatusHNX == (char)CommonEnums.MARKET_STATUS.OPEN)
+                    {
+                        HandleHNXCheckConditionOrderEvent(null, EventArgs.Empty);
+                    }  
+
+                    break;
+                case (char)CommonEnums.MARKET_STATUS.READY:
+                    if (marketState == (char)CommonEnums.MARKET_STATUS.OPEN)
+                    {
+                        _tradingStatusHNX = marketState;
+                        _sessionTimeHNX = sessionTime;
+                        HandleHNXCheckConditionOrderEvent(null, EventArgs.Empty);
+                    }
+
+                    break;
+                case (char)CommonEnums.MARKET_STATUS.OPEN:
+                    {
+                        TimeSpan duration = sessionTime - _sessionTimeHNX;
+                        if (AppConfig.TradingDurationHnxSS2 == 0)
+                        { // Only morning trading
+                            
+                            if (duration.TotalSeconds > AppConfig.TradingDurationHNX ||
+                                marketState == (char)CommonEnums.MARKET_STATUS.CLOSE)
+                            {
+                                _tradingStatusHNX = (char)CommonEnums.MARKET_STATUS.CLOSE;
+                                _sessionTimeHNX = sessionTime;
+                            }
+                        }
+                        else
+                        { // Allow afternoon trading
+                            if (duration.TotalSeconds > AppConfig.TradingDurationHNX ||
+                                marketState == (char)CommonEnums.MARKET_STATUS.HAFT)
+                            {
+                                _tradingStatusHNX = (char)CommonEnums.MARKET_STATUS.HAFT;
+                                _sessionTimeHNX = sessionTime;
+                            }
+                        }
+                    }
+                    break;
+                case (char)CommonEnums.MARKET_STATUS.HAFT:
+                    if (marketState == (char)CommonEnums.MARKET_STATUS.OPEN_2)
+                    {
+                        _tradingStatusHNX = marketState;
+                        _sessionTimeHNX = sessionTime;
+                    }
+
+                    break;
+
+                case (char)CommonEnums.MARKET_STATUS.OPEN_2:
+                    {
+                        TimeSpan duration = sessionTime - _sessionTimeHNX;
+                        if (duration.TotalSeconds > AppConfig.TradingDurationHnxSS2 ||
+                            marketState == (char)CommonEnums.MARKET_STATUS.CLOSE)
+                        {
+                            _tradingStatusHNX = (char)CommonEnums.MARKET_STATUS.CLOSE;
+                            _sessionTimeHNX = sessionTime;
+                        }
+                    }
+                    break;
+                default:
+                    _tradingStatusHNX = marketState;
+                    _sessionTimeHNX = sessionTime;
+                    if (_tradingStatusHNX == (char)CommonEnums.MARKET_STATUS.OPEN)
+                    {
+                        HandleHNXCheckConditionOrderEvent(null, EventArgs.Empty);
+                    }  
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Updates the session HNX.
+        /// </summary>
+        /// <param name="marketState">State of the market.</param>
+        /// <param name="sessionTime">The session time.</param>
+        private static void UpdateSessionUpcom(char marketState, DateTime sessionTime)
+        {
+            // Update market status
+            _marketStatusUpcom = marketState;
+
+            // Reset status when can not get status.
+            if (marketState == (char)CommonEnums.MARKET_STATUS.UNVAILABLE)
+            {
+                _tradingStatusUpcom = marketState;
+                _sessionTimeUpcom = sessionTime;
+
+                return;
+            }
+            // Waiting for 30 seconds in Ready state
+            if ((_tradingStatusUpcom != marketState) && (marketState == (char)CommonEnums.MARKET_STATUS.READY))
+            {
+                if (_timeReadyUPCOM == CheckDateTime)
+                {
+                    _timeReadyUPCOM = DateTime.Now;
+                    return;
+                }
+                if (_timeReadyUPCOM.AddSeconds(30) > DateTime.Now)
+                {
+                    return;
+                }
+            }
+            switch (_tradingStatusUpcom)
+            {
+                case (char)CommonEnums.MARKET_STATUS.INIT_APP:
+                case (char)CommonEnums.MARKET_STATUS.UNVAILABLE:
+                    _tradingStatusUpcom = marketState;
+                    _sessionTimeUpcom = sessionTime;
+                    if (_tradingStatusUpcom == (char)CommonEnums.MARKET_STATUS.OPEN)
+                    {
+                        HandleUPCOMCheckConditionOrderEvent(null, EventArgs.Empty);
+                    }
+                    break;
+                case (char)CommonEnums.MARKET_STATUS.READY:
+                    if (marketState == (char)CommonEnums.MARKET_STATUS.OPEN)
+                    {
+                        _tradingStatusUpcom = marketState;
+                        _sessionTimeUpcom = sessionTime;
+                        HandleUPCOMCheckConditionOrderEvent(null, EventArgs.Empty);
+                    }
+
+                    break;
+                case (char)CommonEnums.MARKET_STATUS.OPEN:
+                    {
+                        TimeSpan duration = sessionTime - _sessionTimeUpcom;
+                        if (duration.TotalSeconds > AppConfig.TradingDurationUpcomSession1 ||
+                            marketState == (char)CommonEnums.MARKET_STATUS.HAFT)
+                        {
+                            _tradingStatusUpcom = (char)CommonEnums.MARKET_STATUS.HAFT;
+                            _sessionTimeUpcom = sessionTime;
+                        }
+                    }
+                    break;
+                case (char)CommonEnums.MARKET_STATUS.HAFT:
+                    if (marketState == (char)CommonEnums.MARKET_STATUS.OPEN_2)
+                    {
+                        _tradingStatusUpcom = marketState;
+                        _sessionTimeUpcom = sessionTime;
+                    }
+
+                    break;
+
+                case (char)CommonEnums.MARKET_STATUS.OPEN_2:
+                    {
+                        TimeSpan duration = sessionTime - _sessionTimeUpcom;
+                        if (duration.TotalSeconds > AppConfig.TradingDurationUpcomSession2 ||
+                            marketState == (char)CommonEnums.MARKET_STATUS.CLOSE)
+                        {
+                            _tradingStatusUpcom = (char)CommonEnums.MARKET_STATUS.CLOSE;
+                            _sessionTimeUpcom = sessionTime;
+                        }
+                    }
+                    break;
+
+                default:
+                    _tradingStatusUpcom = marketState;
+                    _sessionTimeUpcom = sessionTime;
+                    if (_tradingStatusUpcom == (char)CommonEnums.MARKET_STATUS.OPEN)
+                    {
+                        HandleUPCOMCheckConditionOrderEvent(null, EventArgs.Empty);
+                    }
+                    break;
+            }
+        }
+        
+        /// <summary>
+        /// Start thread to get market status
+        /// </summary>
+        public static void StartSessionThread()
+        {
+            if (!_isSessionThread)
+            {
+                LogHandler.Log("Start StartSessionThread", "MarketServices.StartSessionThread",
+                               TraceEventType.Information);
+                _sessionThread = new Thread(UpdateSessionTime) {IsBackground = true};
+                _isSessionThread = true;
+                _sessionThread.Start();
+            }
+        }
+
+        /// <summary>
+        /// Stop thread to get market status
+        /// </summary>
+        public static void StopSessionThread()
+        {
+            LogHandler.Log("Start StopSessionThread", "MarketServices.StopSessionThread",
+                               TraceEventType.Information);
+            _isSessionThread = false;
+        }
+
+        /// <summary>
+        /// Updates the session time.
+        /// </summary>
+        private static void UpdateSessionTime()
+        {
+            while (_isSessionThread)
+            {
+                try
+                {
+                    var resultObject = Serializer.Deserialize<ResultObject<char[]>>(RtServices.AllMarketStatus());
+                    if (resultObject != null)
+                    {
+                        var statusArray = resultObject.Result;
+                        var sessionTime = DateTime.Now;
+                        UpdateSessionHOSE(statusArray[0], sessionTime);
+                        UpdateSessionHNX(statusArray[1], sessionTime);
+                        UpdateSessionUpcom(statusArray[2], sessionTime);
+                    }
+                    Thread.Sleep(1000);
+                }
+                catch (Exception e)
+                {
+                    if (_isSessionThread)
+                    {
+                        ExceptionHandler.HandleException(e, Constants.EXCEPTION_POLICY);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// The trading status.
+        /// </summary>
+        /// <param name="market">The market.</param>
+        /// <returns>Return the trading status of a specified center</returns>
+        public static char TradingStatus(int market)
+        {
+            //var marketState = (char)CommonEnums.MARKET_STATUS.UNVAILABLE;
+
+            var center = market;
+
+            //ResultObject<char> resultObject;
+
+            switch (center)
+            {
+                case (int)CommonEnums.MARKET_ID.HOSE:
+
+                    return _tradingStatusHOSE;
+
+                case (int)CommonEnums.MARKET_ID.HNX:
+
+                    return _tradingStatusHNX;
+
+                case (int)CommonEnums.MARKET_ID.UPCoM:
+
+                    return _tradingStatusUpcom;
+                default:
+                    return (char)CommonEnums.MARKET_STATUS.CLOSE;
+            }
+        }
+
+        /// <summary>
+        /// All trading statuses.
+        /// </summary>
+        /// <returns>Return the trading status of all markets</returns>
+        public static char[] AllTradingStatus()
+        {
+            var tradingStatus = new char[3];
+            tradingStatus[0] = _tradingStatusHOSE;
+            tradingStatus[1] = _tradingStatusHNX;
+            tradingStatus[2] = _tradingStatusUpcom;
+            return tradingStatus;
+        }
+
+        /// <summary>
+        /// Gets the order session.
+        /// </summary>
+        /// <param name="marketId">The market id.</param>
+        /// <returns>CommonEnums.ORDER_SESSION</returns>
+        public static CommonEnums.ORDER_SESSION GetOrderSession(int marketId)
+        {
+            CommonEnums.MARKET_STATUS marketStatus = GetMarketStatus(marketId);
+
+            CommonEnums.ORDER_SESSION orderSession = ETradeCommon.Utils.OrderSession(marketId, marketStatus,
+                                                                         (CommonEnums.MARKET_STATUS) TradingStatus(marketId));
+
+
+            return orderSession;
+        }
+
+        /// <summary>
+        /// Get order session of all markets.
+        /// </summary>
+        /// <returns>Return the order session of all markets</returns>
+        public static char[] AllOrderSession()
+        {
+            var orderSessions = new char[3];
+            orderSessions[0] = (char) GetOrderSession((int) CommonEnums.MARKET_ID.HOSE);
+            orderSessions[1] = (char)GetOrderSession((int)CommonEnums.MARKET_ID.HNX);
+            orderSessions[2] = (char)GetOrderSession((int)CommonEnums.MARKET_ID.UPCoM);
+            return orderSessions;
+        }
+
+        ///<summary>
+        /// Get market status
+        ///</summary>
+        ///<param name="marketId">Market id</param>
+        ///<returns></returns>
+        public static CommonEnums.MARKET_STATUS GetMarketStatus (int marketId)
+        {
+            switch (marketId)
+            {
+                case (int)CommonEnums.MARKET_ID.HOSE:
+                    return (CommonEnums.MARKET_STATUS) _marketStatusHOSE;
+
+                case (int)CommonEnums.MARKET_ID.HNX:
+                    return (CommonEnums.MARKET_STATUS) _marketStatusHNX;
+
+                case (int) CommonEnums.MARKET_ID.UPCoM:
+                    return (CommonEnums.MARKET_STATUS) _marketStatusUpcom;
+
+                default:
+                    return CommonEnums.MARKET_STATUS.UNVAILABLE;
+
+            }
+        }
+    }
+}

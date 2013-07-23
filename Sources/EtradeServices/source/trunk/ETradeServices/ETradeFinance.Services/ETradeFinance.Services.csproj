@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{26498C00-A5CD-4DE8-803D-2B9D282C52DF}</ProjectGuid>
+    <ProjectType>Local</ProjectType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <OutputType>Library</OutputType>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>ETradeFinance.Services</AssemblyName>
+    <AssemblyOriginatorKeyFile>..\ETradeFinance.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>false</SignAssembly>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <RootNamespace>ETradeFinance.Services</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>ETradeFinance.Services.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>ETradeFinance.Services.xml</DocumentationFile>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'GenerateDebug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>ETradeFinance.Services.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching.Cryptography, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Microsoft.Practices.EnterpriseLibrary.Caching.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ObjectBuilder2, Version=2.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Microsoft.Practices.ObjectBuilder2.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging.Database, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Microsoft.Practices.EnterpriseLibrary.Logging.Database.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Security, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Microsoft.Practices.EnterpriseLibrary.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Security.Cryptography, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Microsoft.Practices.EnterpriseLibrary.Security.Cryptography.dll</HintPath>
+    </Reference>
+    <ProjectReference Include="..\..\..\..\..\EtradeCommon\source\trunk\Entities\AccountManager.Entities\AccountManager.Entities.csproj">
+      <Project>{1719FD35-1A77-43A2-A4AA-A76F9685C304}</Project>
+      <Name>AccountManager.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\EtradeCommon\source\trunk\Entities\ETradeFinance.Entities\ETradeFinance.Entities.csproj">
+      <Project>{4918BD3B-037F-4227-9831-787E0C84443D}</Project>
+      <Name>ETradeFinance.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\EtradeCommon\source\trunk\ETradeCommon\ETradeCommon\ETradeCommon.csproj">
+      <Project>{A578FFC5-379C-4219-8BB8-DA543D470770}</Project>
+      <Name>ETradeCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ETradeFinance.DataAccess\ETradeFinance.DataAccess.csproj">
+      <Project>{B8594D6B-559D-42FB-BD5B-D39B8D495637}</Project>
+      <Name>ETradeFinance.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <!-- Custom code folder: D:\OTS\svnProjects\Etrade\FinanceServices\source\trunk\ETradeFinance\ETradeFinance.Services\App_Code -->
+  <ItemGroup>
+    <Compile Include="App_Code\**\*.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <!-- Include any user files -->
+  <ItemGroup>
+    <Compile Include="**\*.user.*" Exclude="**\*.csproj.user;**\.svn\**">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdvanceTimeService.cs" />
+    <Compile Include="AdvanceTimeServiceBase.generated.cs" />
+    <Compile Include="CashAdvanceHistoryService.cs" />
+    <Compile Include="CashAdvanceHistoryServiceBase.generated.cs" />
+    <Compile Include="FeeService.cs" />
+    <Compile Include="FeeServiceBase.generated.cs" />
+    <Compile Include="StockTransferService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StockTransferServiceBase.generated.cs">
+      <DependentUpon>StockTransferService.cs</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="OddLotOrderService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="OddLotOrderServiceBase.generated.cs">
+      <DependentUpon>OddLotOrderService.cs</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CashTransferService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CashTransferServiceBase.generated.cs">
+      <DependentUpon>CashTransferService.cs</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CashAdvanceService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CashAdvanceServiceBase.generated.cs">
+      <DependentUpon>CashAdvanceService.cs</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <!-- 
+			<Compile Include="Processors\**\*.cs">
+			   <SubType>Code</SubType>
+			</Compile>		
+		 -->
+    <Compile Include="Processors\GenericProcessorResult.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Processors\IProcessor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Processors\IProcessorResult.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Processors\ProcessorBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SecurityContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SecurityContextBase.generated.cs">
+      <DependentUpon>SecurityContext.cs</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ContextView.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DomainUtil.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IConnectionScope.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ConnectionScope.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ConnectionScopeBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServiceResult.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServiceBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServiceBaseCore.generated.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>ServiceBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IComponentService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\ServiceViewBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\ServiceViewBaseCore.generated.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>ServiceViewBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XrOrdersService.cs" />
+    <Compile Include="XrOrdersServiceBase.generated.cs" />
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Code\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

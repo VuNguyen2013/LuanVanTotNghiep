@@ -1,0 +1,1087 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet type='text/xsl' href="scriptsql.xsl"?>
+<root xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<database includeDrop="true">ETradeHistory</database>
+<procedures>
+		
+		<procedure owner="dbo" name="TradedHistory_Get_List" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 12, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the TradedHistory table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				SELECT
+					[ID],
+					[TradeTime],
+					[SubCustAccountID],
+					[Type],
+					[FISOrderID],
+					[SecSymbol],
+					[Side],
+					[Price],
+					[ConPrice],
+					[Volume],
+					[ExecutedVol],
+					[ExecutedPrice],
+					[CancelledVolume],
+					[MatchedTime],
+					[CancelledTime],
+					[OrdRejReason],
+					[CancelledRejReason],
+					[SourceID],
+					[Market],
+					[RefOrderID],
+					[EffDate],
+					[ExpDate],
+					[MinValue],
+					[MaxValue]
+				FROM
+					[dbo].[TradedHistory]
+					
+				SELECT @@ROWCOUNT
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="TradedHistory_GetPaged" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 12, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the TradedHistory table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@WhereClause" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)" />
+				<parameter name="@OrderBy" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)"/>
+				<parameter name="@PageIndex" type="int" direction="Input" size="0" precision="10" scale="0" />
+				<parameter name="@PageSize" type="int" direction="Input" size="0" precision="10" scale="0" /> 
+			</parameters>
+			<body><![CDATA[
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[ID]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [ID]'
+				SET @SQL = @SQL + ', [TradeTime]'
+				SET @SQL = @SQL + ', [SubCustAccountID]'
+				SET @SQL = @SQL + ', [Type]'
+				SET @SQL = @SQL + ', [FISOrderID]'
+				SET @SQL = @SQL + ', [SecSymbol]'
+				SET @SQL = @SQL + ', [Side]'
+				SET @SQL = @SQL + ', [Price]'
+				SET @SQL = @SQL + ', [ConPrice]'
+				SET @SQL = @SQL + ', [Volume]'
+				SET @SQL = @SQL + ', [ExecutedVol]'
+				SET @SQL = @SQL + ', [ExecutedPrice]'
+				SET @SQL = @SQL + ', [CancelledVolume]'
+				SET @SQL = @SQL + ', [MatchedTime]'
+				SET @SQL = @SQL + ', [CancelledTime]'
+				SET @SQL = @SQL + ', [OrdRejReason]'
+				SET @SQL = @SQL + ', [CancelledRejReason]'
+				SET @SQL = @SQL + ', [SourceID]'
+				SET @SQL = @SQL + ', [Market]'
+				SET @SQL = @SQL + ', [RefOrderID]'
+				SET @SQL = @SQL + ', [EffDate]'
+				SET @SQL = @SQL + ', [ExpDate]'
+				SET @SQL = @SQL + ', [MinValue]'
+				SET @SQL = @SQL + ', [MaxValue]'
+				SET @SQL = @SQL + ' FROM [dbo].[TradedHistory]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [ID],'
+				SET @SQL = @SQL + ' [TradeTime],'
+				SET @SQL = @SQL + ' [SubCustAccountID],'
+				SET @SQL = @SQL + ' [Type],'
+				SET @SQL = @SQL + ' [FISOrderID],'
+				SET @SQL = @SQL + ' [SecSymbol],'
+				SET @SQL = @SQL + ' [Side],'
+				SET @SQL = @SQL + ' [Price],'
+				SET @SQL = @SQL + ' [ConPrice],'
+				SET @SQL = @SQL + ' [Volume],'
+				SET @SQL = @SQL + ' [ExecutedVol],'
+				SET @SQL = @SQL + ' [ExecutedPrice],'
+				SET @SQL = @SQL + ' [CancelledVolume],'
+				SET @SQL = @SQL + ' [MatchedTime],'
+				SET @SQL = @SQL + ' [CancelledTime],'
+				SET @SQL = @SQL + ' [OrdRejReason],'
+				SET @SQL = @SQL + ' [CancelledRejReason],'
+				SET @SQL = @SQL + ' [SourceID],'
+				SET @SQL = @SQL + ' [Market],'
+				SET @SQL = @SQL + ' [RefOrderID],'
+				SET @SQL = @SQL + ' [EffDate],'
+				SET @SQL = @SQL + ' [ExpDate],'
+				SET @SQL = @SQL + ' [MinValue],'
+				SET @SQL = @SQL + ' [MaxValue]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[TradedHistory]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			]]></body>
+		</procedure>
+		
+		<procedure owner="dbo" name="TradedHistory_Insert" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 12, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the TradedHistory table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="bigint" direction="Output" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@TradeTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@SubCustAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@Type" type="varchar" direction="Input" size="10" precision="0" scale="0" param="(10)" nulldefault=""/>
+				<parameter name="@FisOrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@SecSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault=""/>
+				<parameter name="@Side" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@Price" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@ConPrice" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@Volume" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@ExecutedVol" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@ExecutedPrice" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@CancelledVolume" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@MatchedTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@CancelledTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@OrdRejReason" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@CancelledRejReason" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@SourceId" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault=""/>
+				<parameter name="@Market" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@RefOrderId" type="varchar" direction="Input" size="64" precision="0" scale="0" param="(64)" nulldefault=""/>
+				<parameter name="@EffDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@ExpDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@MinValue" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@MaxValue" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				INSERT INTO [dbo].[TradedHistory]
+					(
+					[TradeTime]
+					,[SubCustAccountID]
+					,[Type]
+					,[FISOrderID]
+					,[SecSymbol]
+					,[Side]
+					,[Price]
+					,[ConPrice]
+					,[Volume]
+					,[ExecutedVol]
+					,[ExecutedPrice]
+					,[CancelledVolume]
+					,[MatchedTime]
+					,[CancelledTime]
+					,[OrdRejReason]
+					,[CancelledRejReason]
+					,[SourceID]
+					,[Market]
+					,[RefOrderID]
+					,[EffDate]
+					,[ExpDate]
+					,[MinValue]
+					,[MaxValue]
+					)
+				VALUES
+					(
+					@TradeTime
+					,@SubCustAccountId
+					,@Type
+					,@FisOrderId
+					,@SecSymbol
+					,@Side
+					,@Price
+					,@ConPrice
+					,@Volume
+					,@ExecutedVol
+					,@ExecutedPrice
+					,@CancelledVolume
+					,@MatchedTime
+					,@CancelledTime
+					,@OrdRejReason
+					,@CancelledRejReason
+					,@SourceId
+					,@Market
+					,@RefOrderId
+					,@EffDate
+					,@ExpDate
+					,@MinValue
+					,@MaxValue
+					)
+				
+				-- Get the identity value
+				SET @Id = SCOPE_IDENTITY()
+									
+							
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="TradedHistory_Update" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 12, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the TradedHistory table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@TradeTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@SubCustAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@Type" type="varchar" direction="Input" size="10" precision="0" scale="0" param="(10)" nulldefault=""/>
+				<parameter name="@FisOrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@SecSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault=""/>
+				<parameter name="@Side" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@Price" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@ConPrice" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@Volume" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@ExecutedVol" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@ExecutedPrice" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@CancelledVolume" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@MatchedTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@CancelledTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@OrdRejReason" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@CancelledRejReason" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@SourceId" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault=""/>
+				<parameter name="@Market" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@RefOrderId" type="varchar" direction="Input" size="64" precision="0" scale="0" param="(64)" nulldefault=""/>
+				<parameter name="@EffDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@ExpDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@MinValue" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@MaxValue" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[TradedHistory]
+				SET
+					[TradeTime] = @TradeTime
+					,[SubCustAccountID] = @SubCustAccountId
+					,[Type] = @Type
+					,[FISOrderID] = @FisOrderId
+					,[SecSymbol] = @SecSymbol
+					,[Side] = @Side
+					,[Price] = @Price
+					,[ConPrice] = @ConPrice
+					,[Volume] = @Volume
+					,[ExecutedVol] = @ExecutedVol
+					,[ExecutedPrice] = @ExecutedPrice
+					,[CancelledVolume] = @CancelledVolume
+					,[MatchedTime] = @MatchedTime
+					,[CancelledTime] = @CancelledTime
+					,[OrdRejReason] = @OrdRejReason
+					,[CancelledRejReason] = @CancelledRejReason
+					,[SourceID] = @SourceId
+					,[Market] = @Market
+					,[RefOrderID] = @RefOrderId
+					,[EffDate] = @EffDate
+					,[ExpDate] = @ExpDate
+					,[MinValue] = @MinValue
+					,[MaxValue] = @MaxValue
+				WHERE
+[ID] = @Id 
+				
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="TradedHistory_Delete" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 12, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the TradedHistory table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				DELETE FROM [dbo].[TradedHistory] WITH (ROWLOCK) 
+				WHERE
+					[ID] = @Id
+					
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="TradedHistory_GetById" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 12, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the TradedHistory table through an index
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SELECT
+					[ID],
+					[TradeTime],
+					[SubCustAccountID],
+					[Type],
+					[FISOrderID],
+					[SecSymbol],
+					[Side],
+					[Price],
+					[ConPrice],
+					[Volume],
+					[ExecutedVol],
+					[ExecutedPrice],
+					[CancelledVolume],
+					[MatchedTime],
+					[CancelledTime],
+					[OrdRejReason],
+					[CancelledRejReason],
+					[SourceID],
+					[Market],
+					[RefOrderID],
+					[EffDate],
+					[ExpDate],
+					[MinValue],
+					[MaxValue]
+				FROM
+					[dbo].[TradedHistory]
+				WHERE
+					[ID] = @Id
+				SELECT @@ROWCOUNT
+					
+			]]></body>
+			
+		</procedure>
+		<procedure owner="dbo" name="TradedHistory_Find" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 12, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the TradedHistory table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@SearchUsingOR" type="bit" direction="Input" size="0" precision="1" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Id" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault="null"/>
+				<parameter name="@TradeTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@SubCustAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault="null"/>
+				<parameter name="@Type" type="varchar" direction="Input" size="10" precision="0" scale="0" param="(10)" nulldefault="null"/>
+				<parameter name="@FisOrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@SecSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault="null"/>
+				<parameter name="@Side" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault="null"/>
+				<parameter name="@Price" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault="null"/>
+				<parameter name="@ConPrice" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault="null"/>
+				<parameter name="@Volume" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault="null"/>
+				<parameter name="@ExecutedVol" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault="null"/>
+				<parameter name="@ExecutedPrice" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault="null"/>
+				<parameter name="@CancelledVolume" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault="null"/>
+				<parameter name="@MatchedTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@CancelledTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@OrdRejReason" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@CancelledRejReason" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@SourceId" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Market" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault="null"/>
+				<parameter name="@RefOrderId" type="varchar" direction="Input" size="64" precision="0" scale="0" param="(64)" nulldefault="null"/>
+				<parameter name="@EffDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@ExpDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@MinValue" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault="null"/>
+				<parameter name="@MaxValue" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault="null"/>
+			</parameters>
+			<body><![CDATA[
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [ID]
+	, [TradeTime]
+	, [SubCustAccountID]
+	, [Type]
+	, [FISOrderID]
+	, [SecSymbol]
+	, [Side]
+	, [Price]
+	, [ConPrice]
+	, [Volume]
+	, [ExecutedVol]
+	, [ExecutedPrice]
+	, [CancelledVolume]
+	, [MatchedTime]
+	, [CancelledTime]
+	, [OrdRejReason]
+	, [CancelledRejReason]
+	, [SourceID]
+	, [Market]
+	, [RefOrderID]
+	, [EffDate]
+	, [ExpDate]
+	, [MinValue]
+	, [MaxValue]
+    FROM
+	[dbo].[TradedHistory]
+    WHERE 
+	 ([ID] = @Id OR @Id IS NULL)
+	AND ([TradeTime] = @TradeTime OR @TradeTime IS NULL)
+	AND ([SubCustAccountID] = @SubCustAccountId OR @SubCustAccountId IS NULL)
+	AND ([Type] = @Type OR @Type IS NULL)
+	AND ([FISOrderID] = @FisOrderId OR @FisOrderId IS NULL)
+	AND ([SecSymbol] = @SecSymbol OR @SecSymbol IS NULL)
+	AND ([Side] = @Side OR @Side IS NULL)
+	AND ([Price] = @Price OR @Price IS NULL)
+	AND ([ConPrice] = @ConPrice OR @ConPrice IS NULL)
+	AND ([Volume] = @Volume OR @Volume IS NULL)
+	AND ([ExecutedVol] = @ExecutedVol OR @ExecutedVol IS NULL)
+	AND ([ExecutedPrice] = @ExecutedPrice OR @ExecutedPrice IS NULL)
+	AND ([CancelledVolume] = @CancelledVolume OR @CancelledVolume IS NULL)
+	AND ([MatchedTime] = @MatchedTime OR @MatchedTime IS NULL)
+	AND ([CancelledTime] = @CancelledTime OR @CancelledTime IS NULL)
+	AND ([OrdRejReason] = @OrdRejReason OR @OrdRejReason IS NULL)
+	AND ([CancelledRejReason] = @CancelledRejReason OR @CancelledRejReason IS NULL)
+	AND ([SourceID] = @SourceId OR @SourceId IS NULL)
+	AND ([Market] = @Market OR @Market IS NULL)
+	AND ([RefOrderID] = @RefOrderId OR @RefOrderId IS NULL)
+	AND ([EffDate] = @EffDate OR @EffDate IS NULL)
+	AND ([ExpDate] = @ExpDate OR @ExpDate IS NULL)
+	AND ([MinValue] = @MinValue OR @MinValue IS NULL)
+	AND ([MaxValue] = @MaxValue OR @MaxValue IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [ID]
+	, [TradeTime]
+	, [SubCustAccountID]
+	, [Type]
+	, [FISOrderID]
+	, [SecSymbol]
+	, [Side]
+	, [Price]
+	, [ConPrice]
+	, [Volume]
+	, [ExecutedVol]
+	, [ExecutedPrice]
+	, [CancelledVolume]
+	, [MatchedTime]
+	, [CancelledTime]
+	, [OrdRejReason]
+	, [CancelledRejReason]
+	, [SourceID]
+	, [Market]
+	, [RefOrderID]
+	, [EffDate]
+	, [ExpDate]
+	, [MinValue]
+	, [MaxValue]
+    FROM
+	[dbo].[TradedHistory]
+    WHERE 
+	 ([ID] = @Id AND @Id is not null)
+	OR ([TradeTime] = @TradeTime AND @TradeTime is not null)
+	OR ([SubCustAccountID] = @SubCustAccountId AND @SubCustAccountId is not null)
+	OR ([Type] = @Type AND @Type is not null)
+	OR ([FISOrderID] = @FisOrderId AND @FisOrderId is not null)
+	OR ([SecSymbol] = @SecSymbol AND @SecSymbol is not null)
+	OR ([Side] = @Side AND @Side is not null)
+	OR ([Price] = @Price AND @Price is not null)
+	OR ([ConPrice] = @ConPrice AND @ConPrice is not null)
+	OR ([Volume] = @Volume AND @Volume is not null)
+	OR ([ExecutedVol] = @ExecutedVol AND @ExecutedVol is not null)
+	OR ([ExecutedPrice] = @ExecutedPrice AND @ExecutedPrice is not null)
+	OR ([CancelledVolume] = @CancelledVolume AND @CancelledVolume is not null)
+	OR ([MatchedTime] = @MatchedTime AND @MatchedTime is not null)
+	OR ([CancelledTime] = @CancelledTime AND @CancelledTime is not null)
+	OR ([OrdRejReason] = @OrdRejReason AND @OrdRejReason is not null)
+	OR ([CancelledRejReason] = @CancelledRejReason AND @CancelledRejReason is not null)
+	OR ([SourceID] = @SourceId AND @SourceId is not null)
+	OR ([Market] = @Market AND @Market is not null)
+	OR ([RefOrderID] = @RefOrderId AND @RefOrderId is not null)
+	OR ([EffDate] = @EffDate AND @EffDate is not null)
+	OR ([ExpDate] = @ExpDate AND @ExpDate is not null)
+	OR ([MinValue] = @MinValue AND @MinValue is not null)
+	OR ([MaxValue] = @MaxValue AND @MaxValue is not null)
+	SELECT @@ROWCOUNT			
+  END
+				]]></body>
+		</procedure>
+
+		
+		<procedure owner="dbo" name="TradedHistory_Find_Dynamic"  skip="true">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 12, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the TradedHistory table using a dynamically generated query.
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				BEGIN
+				
+				WITH PageIndex AS (
+					SELECT TOP {3} row_number() over (order by {1}) AS RowIndex
+					, [ID]
+					, [TradeTime]
+					, [SubCustAccountID]
+					, [Type]
+					, [FISOrderID]
+					, [SecSymbol]
+					, [Side]
+					, [Price]
+					, [ConPrice]
+					, [Volume]
+					, [ExecutedVol]
+					, [ExecutedPrice]
+					, [CancelledVolume]
+					, [MatchedTime]
+					, [CancelledTime]
+					, [OrdRejReason]
+					, [CancelledRejReason]
+					, [SourceID]
+					, [Market]
+					, [RefOrderID]
+					, [EffDate]
+					, [ExpDate]
+					, [MinValue]
+					, [MaxValue]
+					FROM [dbo].[TradedHistory] {0}
+				)
+				SELECT
+				       [ID],
+				       [TradeTime],
+				       [SubCustAccountID],
+				       [Type],
+				       [FISOrderID],
+				       [SecSymbol],
+				       [Side],
+				       [Price],
+				       [ConPrice],
+				       [Volume],
+				       [ExecutedVol],
+				       [ExecutedPrice],
+				       [CancelledVolume],
+				       [MatchedTime],
+				       [CancelledTime],
+				       [OrdRejReason],
+				       [CancelledRejReason],
+				       [SourceID],
+				       [Market],
+				       [RefOrderID],
+				       [EffDate],
+				       [ExpDate],
+				       [MinValue],
+				       [MaxValue]
+				  FROM PageIndex
+				 WHERE RowIndex > {2}
+				   AND RowIndex <= {3}
+				ORDER BY {1};
+				
+
+				-- get total count
+				SELECT COUNT(*) AS TotalRowCount FROM [dbo].[TradedHistory] {0};
+				
+				END
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="PnLHistory_Get_List" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 12, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the PnLHistory table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				SELECT
+					[ID],
+					[TradeTime],
+					[RefOrderID],
+					[FISOrderID],
+					[SecSymbol],
+					[Price],
+					[AvgPrice],
+					[Volume],
+					[Profit],
+					[ProfitabilityRatio],
+					[SubCustAccountID],
+					[Market]
+				FROM
+					[dbo].[PnLHistory]
+					
+				SELECT @@ROWCOUNT
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="PnLHistory_GetPaged" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 12, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the PnLHistory table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@WhereClause" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)" />
+				<parameter name="@OrderBy" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)"/>
+				<parameter name="@PageIndex" type="int" direction="Input" size="0" precision="10" scale="0" />
+				<parameter name="@PageSize" type="int" direction="Input" size="0" precision="10" scale="0" /> 
+			</parameters>
+			<body><![CDATA[
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[ID]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [ID]'
+				SET @SQL = @SQL + ', [TradeTime]'
+				SET @SQL = @SQL + ', [RefOrderID]'
+				SET @SQL = @SQL + ', [FISOrderID]'
+				SET @SQL = @SQL + ', [SecSymbol]'
+				SET @SQL = @SQL + ', [Price]'
+				SET @SQL = @SQL + ', [AvgPrice]'
+				SET @SQL = @SQL + ', [Volume]'
+				SET @SQL = @SQL + ', [Profit]'
+				SET @SQL = @SQL + ', [ProfitabilityRatio]'
+				SET @SQL = @SQL + ', [SubCustAccountID]'
+				SET @SQL = @SQL + ', [Market]'
+				SET @SQL = @SQL + ' FROM [dbo].[PnLHistory]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [ID],'
+				SET @SQL = @SQL + ' [TradeTime],'
+				SET @SQL = @SQL + ' [RefOrderID],'
+				SET @SQL = @SQL + ' [FISOrderID],'
+				SET @SQL = @SQL + ' [SecSymbol],'
+				SET @SQL = @SQL + ' [Price],'
+				SET @SQL = @SQL + ' [AvgPrice],'
+				SET @SQL = @SQL + ' [Volume],'
+				SET @SQL = @SQL + ' [Profit],'
+				SET @SQL = @SQL + ' [ProfitabilityRatio],'
+				SET @SQL = @SQL + ' [SubCustAccountID],'
+				SET @SQL = @SQL + ' [Market]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[PnLHistory]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			]]></body>
+		</procedure>
+		
+		<procedure owner="dbo" name="PnLHistory_Insert" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 12, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the PnLHistory table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="bigint" direction="Output" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@TradeTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@RefOrderId" type="varchar" direction="Input" size="64" precision="0" scale="0" param="(64)" nulldefault=""/>
+				<parameter name="@FisOrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@SecSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault=""/>
+				<parameter name="@Price" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@AvgPrice" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@Volume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@Profit" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@ProfitabilityRatio" type="decimal" direction="Input" size="5" precision="8" scale="3" param="(8, 3)" nulldefault=""/>
+				<parameter name="@SubCustAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@Market" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				INSERT INTO [dbo].[PnLHistory]
+					(
+					[TradeTime]
+					,[RefOrderID]
+					,[FISOrderID]
+					,[SecSymbol]
+					,[Price]
+					,[AvgPrice]
+					,[Volume]
+					,[Profit]
+					,[ProfitabilityRatio]
+					,[SubCustAccountID]
+					,[Market]
+					)
+				VALUES
+					(
+					@TradeTime
+					,@RefOrderId
+					,@FisOrderId
+					,@SecSymbol
+					,@Price
+					,@AvgPrice
+					,@Volume
+					,@Profit
+					,@ProfitabilityRatio
+					,@SubCustAccountId
+					,@Market
+					)
+				
+				-- Get the identity value
+				SET @Id = SCOPE_IDENTITY()
+									
+							
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="PnLHistory_Update" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 12, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the PnLHistory table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@TradeTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@RefOrderId" type="varchar" direction="Input" size="64" precision="0" scale="0" param="(64)" nulldefault=""/>
+				<parameter name="@FisOrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@SecSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault=""/>
+				<parameter name="@Price" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@AvgPrice" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@Volume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@Profit" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@ProfitabilityRatio" type="decimal" direction="Input" size="5" precision="8" scale="3" param="(8, 3)" nulldefault=""/>
+				<parameter name="@SubCustAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@Market" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[PnLHistory]
+				SET
+					[TradeTime] = @TradeTime
+					,[RefOrderID] = @RefOrderId
+					,[FISOrderID] = @FisOrderId
+					,[SecSymbol] = @SecSymbol
+					,[Price] = @Price
+					,[AvgPrice] = @AvgPrice
+					,[Volume] = @Volume
+					,[Profit] = @Profit
+					,[ProfitabilityRatio] = @ProfitabilityRatio
+					,[SubCustAccountID] = @SubCustAccountId
+					,[Market] = @Market
+				WHERE
+[ID] = @Id 
+				
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="PnLHistory_Delete" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 12, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the PnLHistory table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				DELETE FROM [dbo].[PnLHistory] WITH (ROWLOCK) 
+				WHERE
+					[ID] = @Id
+					
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="PnLHistory_GetById" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 12, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the PnLHistory table through an index
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SELECT
+					[ID],
+					[TradeTime],
+					[RefOrderID],
+					[FISOrderID],
+					[SecSymbol],
+					[Price],
+					[AvgPrice],
+					[Volume],
+					[Profit],
+					[ProfitabilityRatio],
+					[SubCustAccountID],
+					[Market]
+				FROM
+					[dbo].[PnLHistory]
+				WHERE
+					[ID] = @Id
+				SELECT @@ROWCOUNT
+					
+			]]></body>
+			
+		</procedure>
+		<procedure owner="dbo" name="PnLHistory_Find" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 12, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the PnLHistory table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@SearchUsingOR" type="bit" direction="Input" size="0" precision="1" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Id" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault="null"/>
+				<parameter name="@TradeTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@RefOrderId" type="varchar" direction="Input" size="64" precision="0" scale="0" param="(64)" nulldefault="null"/>
+				<parameter name="@FisOrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@SecSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault="null"/>
+				<parameter name="@Price" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault="null"/>
+				<parameter name="@AvgPrice" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault="null"/>
+				<parameter name="@Volume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Profit" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault="null"/>
+				<parameter name="@ProfitabilityRatio" type="decimal" direction="Input" size="5" precision="8" scale="3" param="(8, 3)" nulldefault="null"/>
+				<parameter name="@SubCustAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault="null"/>
+				<parameter name="@Market" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault="null"/>
+			</parameters>
+			<body><![CDATA[
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [ID]
+	, [TradeTime]
+	, [RefOrderID]
+	, [FISOrderID]
+	, [SecSymbol]
+	, [Price]
+	, [AvgPrice]
+	, [Volume]
+	, [Profit]
+	, [ProfitabilityRatio]
+	, [SubCustAccountID]
+	, [Market]
+    FROM
+	[dbo].[PnLHistory]
+    WHERE 
+	 ([ID] = @Id OR @Id IS NULL)
+	AND ([TradeTime] = @TradeTime OR @TradeTime IS NULL)
+	AND ([RefOrderID] = @RefOrderId OR @RefOrderId IS NULL)
+	AND ([FISOrderID] = @FisOrderId OR @FisOrderId IS NULL)
+	AND ([SecSymbol] = @SecSymbol OR @SecSymbol IS NULL)
+	AND ([Price] = @Price OR @Price IS NULL)
+	AND ([AvgPrice] = @AvgPrice OR @AvgPrice IS NULL)
+	AND ([Volume] = @Volume OR @Volume IS NULL)
+	AND ([Profit] = @Profit OR @Profit IS NULL)
+	AND ([ProfitabilityRatio] = @ProfitabilityRatio OR @ProfitabilityRatio IS NULL)
+	AND ([SubCustAccountID] = @SubCustAccountId OR @SubCustAccountId IS NULL)
+	AND ([Market] = @Market OR @Market IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [ID]
+	, [TradeTime]
+	, [RefOrderID]
+	, [FISOrderID]
+	, [SecSymbol]
+	, [Price]
+	, [AvgPrice]
+	, [Volume]
+	, [Profit]
+	, [ProfitabilityRatio]
+	, [SubCustAccountID]
+	, [Market]
+    FROM
+	[dbo].[PnLHistory]
+    WHERE 
+	 ([ID] = @Id AND @Id is not null)
+	OR ([TradeTime] = @TradeTime AND @TradeTime is not null)
+	OR ([RefOrderID] = @RefOrderId AND @RefOrderId is not null)
+	OR ([FISOrderID] = @FisOrderId AND @FisOrderId is not null)
+	OR ([SecSymbol] = @SecSymbol AND @SecSymbol is not null)
+	OR ([Price] = @Price AND @Price is not null)
+	OR ([AvgPrice] = @AvgPrice AND @AvgPrice is not null)
+	OR ([Volume] = @Volume AND @Volume is not null)
+	OR ([Profit] = @Profit AND @Profit is not null)
+	OR ([ProfitabilityRatio] = @ProfitabilityRatio AND @ProfitabilityRatio is not null)
+	OR ([SubCustAccountID] = @SubCustAccountId AND @SubCustAccountId is not null)
+	OR ([Market] = @Market AND @Market is not null)
+	SELECT @@ROWCOUNT			
+  END
+				]]></body>
+		</procedure>
+
+		
+		<procedure owner="dbo" name="PnLHistory_Find_Dynamic"  skip="true">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 12, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the PnLHistory table using a dynamically generated query.
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				BEGIN
+				
+				WITH PageIndex AS (
+					SELECT TOP {3} row_number() over (order by {1}) AS RowIndex
+					, [ID]
+					, [TradeTime]
+					, [RefOrderID]
+					, [FISOrderID]
+					, [SecSymbol]
+					, [Price]
+					, [AvgPrice]
+					, [Volume]
+					, [Profit]
+					, [ProfitabilityRatio]
+					, [SubCustAccountID]
+					, [Market]
+					FROM [dbo].[PnLHistory] {0}
+				)
+				SELECT
+				       [ID],
+				       [TradeTime],
+				       [RefOrderID],
+				       [FISOrderID],
+				       [SecSymbol],
+				       [Price],
+				       [AvgPrice],
+				       [Volume],
+				       [Profit],
+				       [ProfitabilityRatio],
+				       [SubCustAccountID],
+				       [Market]
+				  FROM PageIndex
+				 WHERE RowIndex > {2}
+				   AND RowIndex <= {3}
+				ORDER BY {1};
+				
+
+				-- get total count
+				SELECT COUNT(*) AS TotalRowCount FROM [dbo].[PnLHistory] {0};
+				
+				END
+			]]></body>
+		</procedure>
+		
+</procedures>
+</root>

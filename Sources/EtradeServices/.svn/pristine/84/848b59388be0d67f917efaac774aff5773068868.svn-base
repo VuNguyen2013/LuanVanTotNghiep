@@ -1,0 +1,686 @@
+USE [AccountManager]
+GO
+/****** Object:  Table [dbo].[CustServicesPermission]    Script Date: 10/15/2010 10:00:31 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CustServicesPermission]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[CustServicesPermission](
+	[CustServicesPermissionID] [int] NOT NULL,
+	[PermissionName] [varchar](64) NULL,
+ CONSTRAINT [PK_CustServicesPermission] PRIMARY KEY CLUSTERED 
+(
+	[CustServicesPermissionID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[BrokerAMPermission]    Script Date: 10/15/2010 10:00:31 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[BrokerAMPermission]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[BrokerAMPermission](
+	[PermissionID] [int] NOT NULL,
+	[PermissionName] [nvarchar](64) NULL,
+ CONSTRAINT [PK_BrokerAMPermission] PRIMARY KEY CLUSTERED 
+(
+	[PermissionID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+/****** Object:  Table [dbo].[BrokerAccount]    Script Date: 10/15/2010 10:00:31 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[BrokerAccount]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[BrokerAccount](
+	[BrokerID] [varchar](20) NOT NULL,
+	[Name] [nvarchar](50) NULL,
+	[Password] [varchar](20) NULL,
+	[AccountType] [smallint] NULL,
+	[Actived] [bit] NULL,
+	[MobilePhone] [varchar](10) NULL,
+	[EmailAddr] [varchar](10) NULL,
+	[CreatedDate] [datetime] NULL,
+	[CreatedUser] [varchar](20) NULL,
+	[UpdatedDate] [datetime] NULL,
+	[UpdatedUser] [varchar](20) NULL,
+ CONSTRAINT [PK_BrokerAccount] PRIMARY KEY CLUSTERED 
+(
+	[BrokerID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Research]    Script Date: 10/15/2010 10:00:31 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Research]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Research](
+	[ResearchID] [varchar](20) NOT NULL,
+	[UploadedDate] [datetime] NULL,
+	[Tittle] [text] NULL,
+	[Path] [varchar](20) NULL,
+	[Downloads] [smallint] NULL,
+	[Actived] [bit] NULL,
+	[UploadedUser] [varchar](20) NULL,
+ CONSTRAINT [PK_Research] PRIMARY KEY CLUSTERED 
+(
+	[ResearchID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+END
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[OpenCustAccount]    Script Date: 10/15/2010 10:00:31 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[OpenCustAccount]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[OpenCustAccount](
+	[OpenID] [varchar](20) NOT NULL,
+	[RegisterDate] [datetime] NULL,
+	[CardID] [varchar](20) NULL,
+	[CardIssue] [datetime] NULL,
+	[PlaceIssue] [varchar](100) NULL,
+	[Name] [nvarchar](50) NULL,
+	[Birthday] [datetime] NULL,
+	[Sex] [bit] NULL,
+	[Occupation] [varchar](100) NULL,
+	[Nationality] [varchar](100) NULL,
+	[Adress1] [varchar](100) NULL,
+	[Telephone1] [varchar](100) NULL,
+	[Fax1] [varchar](100) NULL,
+	[Adress2] [varchar](100) NULL,
+	[Telephone2] [varchar](100) NULL,
+	[Fax2] [varchar](100) NULL,
+	[Adress3] [varchar](100) NULL,
+	[Telephone3] [varchar](100) NULL,
+	[Fax3] [varchar](100) NULL,
+	[Email] [varchar](100) NULL,
+	[BranchCode] [varchar](100) NULL,
+	[BranchName] [nvarchar](100) NULL,
+	[Custodian] [bit] NULL,
+	[CustomerType] [varchar](1) NULL,
+	[TradeAtCompany] [bit] NULL,
+	[TradeByTelephone] [bit] NULL,
+	[TradeOnline] [bit] NULL,
+	[ExistedAccount] [bit] NULL,
+ CONSTRAINT [PK_OpenCustAccount] PRIMARY KEY CLUSTERED 
+(
+	[OpenID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[MainCustAccount]    Script Date: 10/15/2010 10:00:31 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[MainCustAccount]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[MainCustAccount](
+	[MainCustAccountID] [varchar](10) NOT NULL,
+	[FullName] [nvarchar](64) NULL,
+	[Email] [varchar](64) NULL,
+	[Phone] [varchar](64) NULL,
+	[Actived] [bit] NULL,
+	[Password] [varchar](10) NULL,
+	[PIN] [varchar](10) NULL,
+	[LockReason] [varchar](10) NULL,
+	[TokenID] [varchar](10) NULL,
+	[TokenActived] [varchar](10) NULL,
+	[BrokerID] [varchar](20) NULL,
+	[PassIsNew] [bit] NULL,
+	[PINIsNew] [bit] NULL,
+	[CreatedDate] [datetime] NULL,
+	[CreatedUser] [varchar](20) NULL,
+	[UpdatedUser] [varchar](20) NULL,
+	[UpdatedDate] [datetime] NULL,
+ CONSTRAINT [PK_MainCustAccount] PRIMARY KEY CLUSTERED 
+(
+	[MainCustAccountID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[BrokerPermission]    Script Date: 10/15/2010 10:00:31 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[BrokerPermission]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[BrokerPermission](
+	[BrokerID] [varchar](20) NOT NULL,
+	[PermissionID] [int] NOT NULL,
+ CONSTRAINT [PK_BrokerPermission] PRIMARY KEY CLUSTERED 
+(
+	[BrokerID] ASC,
+	[PermissionID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[SubCustAccount]    Script Date: 10/15/2010 10:00:31 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SubCustAccount]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[SubCustAccount](
+	[SubCustAccountID] [varchar](10) NOT NULL,
+	[Name] [nvarchar](50) NULL,
+	[Actived] [bit] NULL,
+	[LockAccountReason] [smallint] NULL,
+	[AuthType] [smallint] NULL,
+	[AccountType] [bit] NULL,
+	[MainCustAccountID] [varchar](10) NULL,
+	[CreatedDate] [datetime] NULL,
+	[CreatedUser] [varchar](20) NULL,
+	[UpdatedDate] [datetime] NULL,
+	[UpdatedUser] [varchar](20) NULL,
+ CONSTRAINT [PK_SubCustAccount] PRIMARY KEY CLUSTERED 
+(
+	[SubCustAccountID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[ChangedPassHistory]    Script Date: 10/15/2010 10:00:31 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ChangedPassHistory]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[ChangedPassHistory](
+	[ID] [int] NOT NULL,
+	[BrokerID] [varchar](20) NULL,
+	[BrokerName] [nvarchar](50) NULL,
+	[MainAccountName] [nvarchar](50) NULL,
+	[ChangedTime] [datetime] NULL,
+	[MainCustAccountID] [varchar](10) NULL,
+	[PINorPass] [bit] NULL,
+ CONSTRAINT [PK_ChangedPassHistory] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[SubCustAccountPermission]    Script Date: 10/15/2010 10:00:31 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SubCustAccountPermission]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[SubCustAccountPermission](
+	[SubCustAccountID] [varchar](10) NOT NULL,
+	[CustServicesPermissionID] [int] NOT NULL
+CONSTRAINT [PK_SubCustAccountPermission] PRIMARY KEY CLUSTERED 
+(
+	[SubCustAccountID] ASC,
+	[CustServicesPermissionID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  ForeignKey [FK_MainCustAccount_BrokerAccount]    Script Date: 10/15/2010 10:00:31 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_MainCustAccount_BrokerAccount]') AND parent_object_id = OBJECT_ID(N'[dbo].[MainCustAccount]'))
+ALTER TABLE [dbo].[MainCustAccount]  WITH CHECK ADD  CONSTRAINT [FK_MainCustAccount_BrokerAccount] FOREIGN KEY([BrokerID])
+REFERENCES [dbo].[BrokerAccount] ([BrokerID])
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_MainCustAccount_BrokerAccount]') AND parent_object_id = OBJECT_ID(N'[dbo].[MainCustAccount]'))
+ALTER TABLE [dbo].[MainCustAccount] CHECK CONSTRAINT [FK_MainCustAccount_BrokerAccount]
+GO
+/****** Object:  ForeignKey [FK_BrokerPermission_BrokerAccount]    Script Date: 10/15/2010 10:00:31 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_BrokerPermission_BrokerAccount]') AND parent_object_id = OBJECT_ID(N'[dbo].[BrokerPermission]'))
+ALTER TABLE [dbo].[BrokerPermission]  WITH CHECK ADD  CONSTRAINT [FK_BrokerPermission_BrokerAccount] FOREIGN KEY([BrokerID])
+REFERENCES [dbo].[BrokerAccount] ([BrokerID])
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_BrokerPermission_BrokerAccount]') AND parent_object_id = OBJECT_ID(N'[dbo].[BrokerPermission]'))
+ALTER TABLE [dbo].[BrokerPermission] CHECK CONSTRAINT [FK_BrokerPermission_BrokerAccount]
+GO
+/****** Object:  ForeignKey [FK_BrokerPermission_BrokerAMPermission]    Script Date: 10/15/2010 10:00:31 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_BrokerPermission_BrokerAMPermission]') AND parent_object_id = OBJECT_ID(N'[dbo].[BrokerPermission]'))
+ALTER TABLE [dbo].[BrokerPermission]  WITH CHECK ADD  CONSTRAINT [FK_BrokerPermission_BrokerAMPermission] FOREIGN KEY([PermissionID])
+REFERENCES [dbo].[BrokerAMPermission] ([PermissionID])
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_BrokerPermission_BrokerAMPermission]') AND parent_object_id = OBJECT_ID(N'[dbo].[BrokerPermission]'))
+ALTER TABLE [dbo].[BrokerPermission] CHECK CONSTRAINT [FK_BrokerPermission_BrokerAMPermission]
+GO
+/****** Object:  ForeignKey [FK_SubCustAccount_MainCustAccount]    Script Date: 10/15/2010 10:00:31 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_SubCustAccount_MainCustAccount]') AND parent_object_id = OBJECT_ID(N'[dbo].[SubCustAccount]'))
+ALTER TABLE [dbo].[SubCustAccount]  WITH CHECK ADD  CONSTRAINT [FK_SubCustAccount_MainCustAccount] FOREIGN KEY([MainCustAccountID])
+REFERENCES [dbo].[MainCustAccount] ([MainCustAccountID])
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_SubCustAccount_MainCustAccount]') AND parent_object_id = OBJECT_ID(N'[dbo].[SubCustAccount]'))
+ALTER TABLE [dbo].[SubCustAccount] CHECK CONSTRAINT [FK_SubCustAccount_MainCustAccount]
+GO
+/****** Object:  ForeignKey [FK_ChangedPassHistory_MainCustAccount]    Script Date: 10/15/2010 10:00:31 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_ChangedPassHistory_MainCustAccount]') AND parent_object_id = OBJECT_ID(N'[dbo].[ChangedPassHistory]'))
+ALTER TABLE [dbo].[ChangedPassHistory]  WITH CHECK ADD  CONSTRAINT [FK_ChangedPassHistory_MainCustAccount] FOREIGN KEY([MainCustAccountID])
+REFERENCES [dbo].[MainCustAccount] ([MainCustAccountID])
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_ChangedPassHistory_MainCustAccount]') AND parent_object_id = OBJECT_ID(N'[dbo].[ChangedPassHistory]'))
+ALTER TABLE [dbo].[ChangedPassHistory] CHECK CONSTRAINT [FK_ChangedPassHistory_MainCustAccount]
+GO
+/****** Object:  ForeignKey [FK_SubCustAccountPermission_CustServicesPermission]    Script Date: 10/15/2010 10:00:31 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_SubCustAccountPermission_CustServicesPermission]') AND parent_object_id = OBJECT_ID(N'[dbo].[SubCustAccountPermission]'))
+ALTER TABLE [dbo].[SubCustAccountPermission]  WITH CHECK ADD  CONSTRAINT [FK_SubCustAccountPermission_CustServicesPermission] FOREIGN KEY([CustServicesPermissionID])
+REFERENCES [dbo].[CustServicesPermission] ([CustServicesPermissionID])
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_SubCustAccountPermission_CustServicesPermission]') AND parent_object_id = OBJECT_ID(N'[dbo].[SubCustAccountPermission]'))
+ALTER TABLE [dbo].[SubCustAccountPermission] CHECK CONSTRAINT [FK_SubCustAccountPermission_CustServicesPermission]
+GO
+/****** Object:  ForeignKey [FK_SubCustAccountPermission_SubCustAccount]    Script Date: 10/15/2010 10:00:31 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_SubCustAccountPermission_SubCustAccount]') AND parent_object_id = OBJECT_ID(N'[dbo].[SubCustAccountPermission]'))
+ALTER TABLE [dbo].[SubCustAccountPermission]  WITH CHECK ADD  CONSTRAINT [FK_SubCustAccountPermission_SubCustAccount] FOREIGN KEY([SubCustAccountID])
+REFERENCES [dbo].[SubCustAccount] ([SubCustAccountID])
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_SubCustAccountPermission_SubCustAccount]') AND parent_object_id = OBJECT_ID(N'[dbo].[SubCustAccountPermission]'))
+ALTER TABLE [dbo].[SubCustAccountPermission] CHECK CONSTRAINT [FK_SubCustAccountPermission_SubCustAccount]
+GO
+USE [ETradeOrders]
+GO
+/****** Object:  Table [dbo].[ConditionOrder]    Script Date: 10/15/2010 10:01:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ConditionOrder]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[ConditionOrder](
+	[ConditionOrderID] [int] NOT NULL,
+	[SecSymbol] [varchar](8) NULL,
+	[Side] [varchar](1) NULL,
+	[Price] [float] NULL,
+	[Volume] [int] NULL,
+	[SubCustAccountID] [varchar](10) NULL,
+	[Market] [varchar](1) NULL,
+	[EffDate] [datetime] NULL,
+	[ExpDate] [datetime] NULL,
+	[TypeOfCond] [smallint] NULL,
+	[MaxValue] [float] NULL,
+	[MinValue] [float] NULL,
+	[Status] [varchar](1) NULL,
+	[TradeTime] [varchar](10) NULL,
+ CONSTRAINT [PK_ConditionOrder] PRIMARY KEY CLUSTERED 
+(
+	[ConditionOrderID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[QuickOrder]    Script Date: 10/15/2010 10:01:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[QuickOrder]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[QuickOrder](
+	[QuickOrderID] [int] NOT NULL,
+	[SecSymbol] [varchar](8) NULL,
+	[Side] [varchar](1) NULL,
+	[Volume] [int] NULL,
+	[SubCustAccountID] [varchar](10) NULL,
+	[Market] [varchar](1) NULL,
+	[TradeTime] [datetime] NULL,
+	[TypeOfQuick] [smallint] NULL,
+	[Status] [varchar](1) NULL,
+ CONSTRAINT [PK_QuickOrder] PRIMARY KEY CLUSTERED 
+(
+	[QuickOrderID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[ExecOrder]    Script Date: 10/15/2010 10:01:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ExecOrder]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[ExecOrder](
+	[OrderID] [int] NOT NULL,
+	[RefOrderID] [varchar](64) NULL,
+	[MessageType] [varchar](2) NULL,
+	[FISOrderID] [int] NULL,
+	[SecSymbol] [varchar](8) NULL,
+	[Side] [varchar](1) NULL,
+	[Price] [float] NULL,
+	[ConPrice] [varchar](1) NULL,
+	[Volume] [int] NULL,
+	[ExecutedVol] [int] NULL,
+	[ExecutedPrice] [float] NULL,
+	[CancelVolume] [int] NULL,
+	[CancelledVolume] [int] NULL,
+	[SubCustAccountID] [varchar](10) NULL,
+	[ExecTransType] [varchar](10) NULL,
+	[TradeTime] [datetime] NULL,
+	[MatchedTime] [datetime] NULL,
+	[CancelledTime] [datetime] NULL,
+	[OrderStatus] [smallint] NULL,
+	[CancelStatus] [smallint] NULL,
+	[OrdRejReason] [int] NULL,
+	[CancelledRejReason] [int] NULL,
+	[ConfirmNo] [varchar](6) NULL,
+	[CancelledConfirmNo] [varchar](6) NULL,
+	[SourceID] [smallint] NULL,
+	[CancelledSourceID] [smallint] NULL,
+	[ExecType] [varchar](1) NULL,
+	[CancelledExecType] [varchar](1) NULL,
+	[PortOrClient] [varchar](1) NULL,
+	[Market] [varchar](1) NULL,
+	[MarketStatus] [varchar](1) NULL,
+	[OrderSource] [varchar](1) NULL,
+	[IsNew] [bit] NULL,
+	[Sequence] [int] NULL,
+	[NumOfMatch] [int] NULL,
+	[QuickOrderID] [int] NULL,
+	[ConditionOrderID] [int] NULL,
+ CONSTRAINT [PK_ExecOrder] PRIMARY KEY CLUSTERED 
+(
+	[OrderID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  ForeignKey [FK_ExecOrder_ConditionOrder]    Script Date: 10/15/2010 10:01:53 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_ExecOrder_ConditionOrder]') AND parent_object_id = OBJECT_ID(N'[dbo].[ExecOrder]'))
+ALTER TABLE [dbo].[ExecOrder]  WITH CHECK ADD  CONSTRAINT [FK_ExecOrder_ConditionOrder] FOREIGN KEY([ConditionOrderID])
+REFERENCES [dbo].[ConditionOrder] ([ConditionOrderID])
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_ExecOrder_ConditionOrder]') AND parent_object_id = OBJECT_ID(N'[dbo].[ExecOrder]'))
+ALTER TABLE [dbo].[ExecOrder] CHECK CONSTRAINT [FK_ExecOrder_ConditionOrder]
+GO
+/****** Object:  ForeignKey [FK_ExecOrder_QuickOrder]    Script Date: 10/15/2010 10:01:53 ******/
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_ExecOrder_QuickOrder]') AND parent_object_id = OBJECT_ID(N'[dbo].[ExecOrder]'))
+ALTER TABLE [dbo].[ExecOrder]  WITH CHECK ADD  CONSTRAINT [FK_ExecOrder_QuickOrder] FOREIGN KEY([QuickOrderID])
+REFERENCES [dbo].[QuickOrder] ([QuickOrderID])
+GO
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_ExecOrder_QuickOrder]') AND parent_object_id = OBJECT_ID(N'[dbo].[ExecOrder]'))
+ALTER TABLE [dbo].[ExecOrder] CHECK CONSTRAINT [FK_ExecOrder_QuickOrder]
+GO
+USE [ETradeHistory]
+GO
+/****** Object:  Table [dbo].[TradedHistory]    Script Date: 10/15/2010 10:02:34 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TradedHistory]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[TradedHistory](
+	[ID] [int] NOT NULL,
+	[TradeTime] [datetime] NULL,
+	[SubCustAccountID] [varchar](10) NULL,
+	[Type] [varchar](10) NULL,
+	[FISOrderID] [int] NULL,
+	[SecSymbol] [varchar](8) NULL,
+	[Side] [varchar](1) NULL,
+	[Price] [float] NULL,
+	[ConPrice] [varchar](1) NULL,
+	[Volume] [int] NULL,
+	[ExecutedVol] [int] NULL,
+	[ExecutedPrice] [float] NULL,
+	[CancelledVolume] [int] NULL,
+	[MatchedTime] [datetime] NULL,
+	[CancelledTime] [datetime] NULL,
+	[OrdRejReason] [int] NULL,
+	[CancelledRejReason] [int] NULL,
+	[SourceID] [smallint] NULL,
+	[Market] [varchar](1) NULL,
+	[RefOrderID] [varchar](64) NULL,
+	[EffDate] [datetime] NULL,
+	[ExpDate] [datetime] NULL,
+	[MinValue] [float] NULL,
+	[MaxValue] [float] NULL,
+ CONSTRAINT [PK_TradedHistory] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[PnLHistory]    Script Date: 10/15/2010 10:02:34 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PnLHistory]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[PnLHistory](
+	[ID] [int] NOT NULL,
+	[TradeTime] [datetime] NULL,
+	[RefOrderID] [varchar](64) NULL,
+	[FISOrderID] [int] NULL,
+	[SecSymbol] [varchar](8) NULL,
+	[Price] [float] NULL,
+	[AvgPrice] [varchar](1) NULL,
+	[Volume] [int] NULL,
+	[Profit] [int] NULL,
+	[ProfitabilityRatio] [float] NULL,
+	[SubCustAccountID] [varchar](10) NULL,
+	[Market] [varchar](1) NULL,
+ CONSTRAINT [PK_PnLHistory] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_PADDING OFF
+GO
+USE [EtradeFinance]
+GO
+/****** Object:  Table [dbo].[StockTransfer]    Script Date: 10/15/2010 10:01:15 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[StockTransfer]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[StockTransfer](
+	[StockTransferID] [int] NOT NULL,
+	[RequestTime] [datetime] NULL,
+	[SecSymbol] [varchar](8) NULL,
+	[StockQuantity] [int] NULL,
+	[RejectedTime] [datetime] NULL,
+	[RejectedReason] [text] NULL,
+	[SourceAccountID] [varchar](10) NULL,
+	[TargetAccountID] [varchar](10) NULL,
+	[Status] [varchar](64) NULL,
+	[BrokerID] [varchar](20) NULL,
+	[ExecTime] [datetime] NULL,
+ CONSTRAINT [PK_StockTransfer] PRIMARY KEY CLUSTERED 
+(
+	[StockTransferID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+END
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[OddLotOrder]    Script Date: 10/15/2010 10:01:15 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[OddLotOrder]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[OddLotOrder](
+	[OddLotOrderID] [int] NOT NULL,
+	[SecSymbol] [varchar](8) NULL,
+	[Side] [varchar](1) NULL,
+	[Price] [float] NULL,
+	[Volume] [int] NULL,
+	[SubCustAccountID] [varchar](10) NULL,
+	[Market] [varchar](1) NULL,
+	[ExecPrice] [decimal](10, 2) NULL,
+	[ExecVol] [decimal](10, 2) NULL,
+	[Status] [varchar](1) NULL,
+	[BrokerID] [varchar](20) NULL,
+	[RejectTime] [datetime] NULL,
+	[RejectReason] [text] NULL,
+	[ExecTime] [datetime] NULL,
+	[Note] [text] NULL,
+ CONSTRAINT [PK_OddLotOrder] PRIMARY KEY CLUSTERED 
+(
+	[OddLotOrderID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+END
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[CashTransfer]    Script Date: 10/15/2010 10:01:15 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CashTransfer]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[CashTransfer](
+	[CashTransferID] [int] NOT NULL,
+	[RequestTime] [datetime] NULL,
+	[Amount] [int] NULL,
+	[Fee] [int] NULL,
+	[AmountAfterFee] [int] NULL,
+	[RejectedTime] [datetime] NULL,
+	[RejectedReason] [text] NULL,
+	[SourceAccountID] [varchar](10) NULL,
+	[TargetAccountID] [varchar](10) NULL,
+	[BankAcount] [varchar](20) NULL,
+	[Status] [varchar](64) NULL,
+	[Note] [text] NULL,
+	[BrokerID] [varchar](20) NULL,
+	[ExecTime] [datetime] NULL,
+ CONSTRAINT [PK_CashTransfer] PRIMARY KEY CLUSTERED 
+(
+	[CashTransferID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+END
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[CashAdvance]    Script Date: 10/15/2010 10:01:15 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CashAdvance]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[CashAdvance](
+	[CashAdvanceID] [int] NOT NULL,
+	[FISOrderID] [int] NULL,
+	[RefOrderID] [varchar](64) NULL,
+	[TradeTime] [datetime] NULL,
+	[SecSymbol] [varchar](8) NULL,
+	[Market] [varchar](1) NULL,
+	[Price] [float] NULL,
+	[Volume] [int] NULL,
+	[AmountAfterTradeFee] [int] NULL,
+	[AdvancedAmount] [int] NULL,
+	[RequestTime] [datetime] NULL,
+	[Amount] [int] NULL,
+	[AdvanceFee] [int] NULL,
+	[AmountAfterAdvanceFee] [int] NULL,
+	[RejectedTime] [datetime] NULL,
+	[RejectedReason] [text] NULL,
+	[SourceID] [smallint] NULL,
+	[Status] [varchar](64) NULL,
+	[SubCustAccountID] [varchar](10) NULL,
+	[Note] [text] NULL,
+	[BrokerID] [varchar](20) NULL,
+	[ExecTime] [datetime] NULL,
+ CONSTRAINT [PK_CashAdvance] PRIMARY KEY CLUSTERED 
+(
+	[CashAdvanceID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+END
+GO
+SET ANSI_PADDING OFF
+GO

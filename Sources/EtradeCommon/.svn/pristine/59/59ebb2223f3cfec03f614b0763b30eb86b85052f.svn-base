@@ -1,0 +1,9 @@
+﻿namespace ETradeAutomation
+{
+    class Constants
+    {
+        public const string ACTIVATION_TASK = "ETrade Automation Activation";
+        public const string CONDITION_ORDER_TASK = "ETrade Automation Condition Order";
+        public const string EXECUTION_FILENAME = "ETradeAutomation.exe";
+    }
+}

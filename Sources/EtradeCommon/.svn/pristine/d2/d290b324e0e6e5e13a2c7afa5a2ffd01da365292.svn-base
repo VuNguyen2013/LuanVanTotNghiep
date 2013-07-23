@@ -1,0 +1,107 @@
+namespace RTDataServices.Entities
+{
+    public class TransactionInfo
+    {
+        private System.Int32 _id;
+        private System.DateTime _tradeDate;
+        private System.String _stockSymbol;
+        private System.Double _price;
+        private System.Double _changed;
+        private System.Int32 _vol;
+        private System.Int64 _val;
+        private System.Int32 _accumulatedVol;
+        private System.Int64 _accumulatedVal;
+        private System.Double _highest;
+        private System.Double _lowest;
+        private System.Int32 _time;
+        private System.String _side;
+
+        public System.Int32 Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
+
+        public System.DateTime TradeDate
+        {
+            get { return _tradeDate; }
+            set { _tradeDate = value; }
+        }
+
+        public System.String StockSymbol
+        {
+            get { return _stockSymbol; }
+            set { _stockSymbol = value; }
+        }
+
+        public System.Double Price
+        {
+            get { return _price; }
+            set { _price = value; }
+        }
+
+        public System.Double Changed
+        {
+            get { return _changed; }
+            set { _changed = value; }
+        }
+
+        public System.Int32 Vol
+        {
+            get { return _vol; }
+            set { _vol = value; }
+        }
+
+        public System.Int64 Val
+        {
+            get { return _val; }
+            set { _val = value; }
+        }
+
+        public System.Int32 AccumulatedVol
+        {
+            get { return _accumulatedVol; }
+            set { _accumulatedVol = value; }
+        }
+
+        public System.Int64 AccumulatedVal
+        {
+            get { return _accumulatedVal; }
+            set { _accumulatedVal = value; }
+        }
+
+        public System.Double Highest
+        {
+            get { return _highest; }
+            set { _highest = value; }
+        }
+
+        public System.Double Lowest
+        {
+            get { return _lowest; }
+            set { _lowest = value; }
+        }
+
+        public System.Int32 Time
+        {
+            get { return _time; }
+            set { _time = value; }
+        }
+
+        public System.String Side
+        {
+            get { return _side; }
+            set { _side = value; }
+        }
+    }
+
+    public class HOSETransactionInfo : TransactionInfo { }
+    public class HNXTransactionInfo : TransactionInfo { }
+    public class UPCOMTransactionInfo : TransactionInfo { }
+
+    public class MainMatchedPricesInfo
+    {
+        public double Price { get; set; }
+        public int Volume { get; set; }
+    }
+}

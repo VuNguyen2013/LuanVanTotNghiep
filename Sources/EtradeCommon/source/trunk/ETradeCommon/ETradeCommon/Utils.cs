@@ -1,0 +1,574 @@
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text;
+using ETradeCommon.Enums;
+using System;
+using System.Globalization;
+
+namespace ETradeCommon
+{
+    /// <summary>
+    /// Class provide common APIs that are relate to orders. EtradeWEbUI and EtradeWebServices use this class
+    /// </summary>
+    public static class Utils
+    {
+        /// <summary>
+        /// Orders the session.
+        /// </summary>
+        /// <param name="marketId">Market id.</param>
+        /// <param name="marketStatus">The market status. The real status.</param>
+        /// <param name="tradingStatus">The trading status. The status after using state machine.</param>
+        /// <returns>CommonEnums.ORDER_SESSION</returns>
+        static public CommonEnums.ORDER_SESSION OrderSession(int marketId, CommonEnums.MARKET_STATUS marketStatus, CommonEnums.MARKET_STATUS tradingStatus)
+        {
+            if ((marketStatus == CommonEnums.MARKET_STATUS.READY || marketStatus == CommonEnums.MARKET_STATUS.UNVAILABLE) && tradingStatus == CommonEnums.MARKET_STATUS.READY)
+            {
+                return CommonEnums.ORDER_SESSION.SESSION1;
+            }
+            switch (marketId)
+            {
+                case (int) CommonEnums.MARKET_ID.HOSE:
+                    if (marketStatus == CommonEnums.MARKET_STATUS.PRE_OPEN && tradingStatus == CommonEnums.MARKET_STATUS.PRE_OPEN)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION2;
+                    }
+
+                    if (marketStatus == CommonEnums.MARKET_STATUS.PRE_OPEN && tradingStatus == CommonEnums.MARKET_STATUS.OPEN)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION3;
+                    }
+
+                    if (marketStatus == CommonEnums.MARKET_STATUS.OPEN && tradingStatus == CommonEnums.MARKET_STATUS.OPEN)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION4;
+                    }
+
+                    if (marketStatus == CommonEnums.MARKET_STATUS.OPEN && tradingStatus == CommonEnums.MARKET_STATUS.HAFT)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION5;
+                    }
+
+                    if (marketStatus == CommonEnums.MARKET_STATUS.HAFT && tradingStatus == CommonEnums.MARKET_STATUS.HAFT)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION6;
+                    }
+
+                    if (marketStatus == CommonEnums.MARKET_STATUS.OPEN_2 && tradingStatus == CommonEnums.MARKET_STATUS.OPEN_2)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION7;
+                    }
+                    if ((marketStatus == CommonEnums.MARKET_STATUS.OPEN_2 && tradingStatus == CommonEnums.MARKET_STATUS.PRE_CLOSE)
+                        || (marketStatus == CommonEnums.MARKET_STATUS.OPEN && tradingStatus == CommonEnums.MARKET_STATUS.PRE_CLOSE))
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION8;
+                    }
+
+                    if (marketStatus == CommonEnums.MARKET_STATUS.PRE_CLOSE && tradingStatus == CommonEnums.MARKET_STATUS.PRE_CLOSE)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION9;
+                    }
+
+                    if (marketStatus == CommonEnums.MARKET_STATUS.PRE_CLOSE && tradingStatus == CommonEnums.MARKET_STATUS.CLOSE)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION10;
+                    }
+
+                    if (marketStatus == CommonEnums.MARKET_STATUS.CLOSE && tradingStatus == CommonEnums.MARKET_STATUS.CLOSE)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION11;
+                    }
+
+                    if (marketStatus == CommonEnums.MARKET_STATUS.CLOSE_PT && tradingStatus == CommonEnums.MARKET_STATUS.CLOSE_PT)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION12;
+                    }
+                    break;
+                case (int)CommonEnums.MARKET_ID.HNX:
+                case (int)CommonEnums.MARKET_ID.UPCoM:
+                    if (marketStatus == CommonEnums.MARKET_STATUS.READY && tradingStatus == CommonEnums.MARKET_STATUS.READY)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION1;
+                    }
+
+                    if (marketStatus == CommonEnums.MARKET_STATUS.PRE_OPEN && tradingStatus == CommonEnums.MARKET_STATUS.PRE_OPEN)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION2;
+                    }
+
+                    if (marketStatus == CommonEnums.MARKET_STATUS.PRE_OPEN && tradingStatus == CommonEnums.MARKET_STATUS.OPEN)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION3;
+                    }
+
+                    if (marketStatus == CommonEnums.MARKET_STATUS.OPEN && tradingStatus == CommonEnums.MARKET_STATUS.OPEN)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION4;
+                    }
+
+                    if (marketStatus == CommonEnums.MARKET_STATUS.OPEN && tradingStatus == CommonEnums.MARKET_STATUS.HAFT)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION5;
+                    }
+
+                    if (marketStatus == CommonEnums.MARKET_STATUS.HAFT && tradingStatus == CommonEnums.MARKET_STATUS.HAFT)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION6;
+                    }
+
+                    if (marketStatus == CommonEnums.MARKET_STATUS.OPEN_2 && tradingStatus == CommonEnums.MARKET_STATUS.OPEN_2)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION7;
+                    }
+                    
+                    if (marketStatus == CommonEnums.MARKET_STATUS.OPEN_2 && tradingStatus == CommonEnums.MARKET_STATUS.PRE_CLOSE)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION8;
+                    }
+
+                    if (marketStatus == CommonEnums.MARKET_STATUS.PRE_CLOSE && tradingStatus == CommonEnums.MARKET_STATUS.PRE_CLOSE)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION9;
+                    }
+
+                    if (marketStatus == CommonEnums.MARKET_STATUS.PRE_CLOSE2 && tradingStatus == CommonEnums.MARKET_STATUS.PRE_CLOSE2)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION10;
+                    }
+
+                    if (marketStatus == CommonEnums.MARKET_STATUS.PRE_CLOSE2 && tradingStatus == CommonEnums.MARKET_STATUS.CLOSE)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION11;
+                    }
+
+                    if (marketStatus == CommonEnums.MARKET_STATUS.CLOSE && tradingStatus == CommonEnums.MARKET_STATUS.CLOSE)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION12;
+                    }
+
+                    if (marketStatus == CommonEnums.MARKET_STATUS.AFTER_CLOSE && tradingStatus == CommonEnums.MARKET_STATUS.AFTER_CLOSE)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION14;
+                    }
+
+                    if (marketStatus == CommonEnums.MARKET_STATUS.CLOSE_PT && tradingStatus == CommonEnums.MARKET_STATUS.CLOSE_PT)
+                    {
+                        return CommonEnums.ORDER_SESSION.SESSION15;
+                    }
+
+                    break;
+            }
+
+            return CommonEnums.ORDER_SESSION.SESSION0;
+        }
+
+
+        static public DateTime StringToDateTime(string stringDate)
+        {
+            DateTime retVal;
+
+            try
+            {
+                retVal = new DateTime(
+                        int.Parse(stringDate.Substring(0, 4)),
+                        int.Parse(stringDate.Substring(4, 2)),
+                        int.Parse(stringDate.Substring(6, 2)));
+            }
+            catch
+            {
+                retVal = new DateTime();
+                LogHandler.Log(
+                    "stringDate: was incorrect format (yyyyMMdd), stringDate = " + stringDate,
+                    "StringToDateTime()",
+                    TraceEventType.Warning);
+            }
+
+            return retVal;
+        }
+
+        /// <summary>
+        /// Get account type based on sub account no:1234561/1234566
+        /// </summary>
+        /// <param name="accountNo"></param>
+        /// <returns></returns>
+        public static int GetAccountType(string accountNo)
+        {
+            var returnValue = (int)CommonEnums.ACCOUNT_TYPE.OTHER;
+            if(!string.IsNullOrEmpty(accountNo))
+            {
+                int accountType = int.Parse(accountNo.Substring(accountNo.Length - 1));
+                if (accountType == 1)
+                {
+                    returnValue = (int) CommonEnums.ACCOUNT_TYPE.NORMAL;
+                }
+                else if (accountType == 6)
+                {
+                    returnValue = (int)CommonEnums.ACCOUNT_TYPE.MARGIN;
+                }
+            }
+            return returnValue;
+        }
+
+        public static string GetMarketName(int marketId)
+        {
+            if (marketId == (int) CommonEnums.MARKET_ID.HOSE)
+            {
+                return "HOSE";
+            }
+            if (marketId == (int) CommonEnums.MARKET_ID.HNX)
+            {
+                return "HNX";
+            }
+            if (marketId == (int)CommonEnums.MARKET_ID.UPCoM)
+            {
+                return "UPCOM";
+            }
+            return string.Empty;
+        }
+
+        public static string GetMarketName(char marketSign)
+        {
+            if (marketSign == (char)CommonEnums.MARKET_SIGN.HOSE)
+            {
+                return "HOSE";
+            }
+            if (marketSign == (char)CommonEnums.MARKET_SIGN.HNX)
+            {
+                return "HNX";
+            }
+            if (marketSign == (char)CommonEnums.MARKET_SIGN.UPCOM)
+            {
+                return "UPCOM";
+            }
+            return string.Empty;
+        }
+
+        public static char GetMarketSign(string marketName)
+        {
+            if (marketName == "HOSE")
+            {
+                return 'O';
+            }
+            if (marketName == "HNX")
+            {
+                return 'N';
+            }
+            if (marketName == "UPCOM")
+            {
+                return 'U';
+            }
+            return ' ';
+        }
+
+        /// <summary>
+        /// Create message based on account type
+        /// </summary>
+        /// <param name="mainAccountNo">Main customer account id.</param>
+        /// <param name="subAccountNo">Sub customer account id.</param>
+        /// <param name="languageId">Language id.</param>
+        /// <returns></returns>
+        public static string CreateAccountMessage(string mainAccountNo, string subAccountNo, string languageId)
+        {
+            string message;
+            int accountType = GetAccountType(subAccountNo);
+            if (accountType == (int) CommonEnums.ACCOUNT_TYPE.NORMAL)
+            {
+                if (languageId == Constants.VIETNAMESE_ID)
+                {
+                    message = mainAccountNo + " (TK thuong)";
+                }
+                else
+                {
+                    message = mainAccountNo + " (Normal account)";
+                }
+            }
+            else if (accountType == (int)CommonEnums.ACCOUNT_TYPE.MARGIN)
+            {
+                if (languageId == Constants.VIETNAMESE_ID)
+                {
+                    message = mainAccountNo + " (TK ky quy)";
+                }
+                else
+                {
+                    message = mainAccountNo + " (Margin account)";
+                }
+            }
+            else
+            {
+                message = mainAccountNo;
+            }
+            return message;
+        }
+
+        public static string GetString(byte[] data)
+        {
+            return Encoding.ASCII.GetString(data);
+        }
+
+        /// <summary>
+        /// Determines whether [is valid date] [the specified date].
+        /// </summary>
+        /// <param name="date">The date.</param>
+        /// <returns>
+        /// 	<c>true</c> if [is valid date] [the specified date]; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsValidDate(string date)
+        {
+            var dateTime= new DateTime();           
+            return !string.IsNullOrEmpty(date) ? DateTime.TryParseExact(date, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime) : true;
+        }
+        /// <summary>
+        /// Determines whether [is valid date] [the specified date].
+        /// </summary>
+        /// <param name="date">The date.</param>
+        /// <returns>
+        /// 	<c>true</c> if [is valid date] [the specified date]; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsValidDate(string date, ref  DateTime outDateTime)
+        {
+            outDateTime = new DateTime();            
+            return !string.IsNullOrEmpty(date) ? DateTime.TryParseExact(date, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out outDateTime) : true;
+        }
+
+        /// <summary>
+        /// Determines whether [is valid step price] [the specified market id].
+        /// </summary>
+        /// <param name="marketId">The market id.</param>
+        /// <param name="price">The price.</param>
+        /// <param name="condPrice">The con price.</param>
+        /// <returns>
+        /// <para>Result checking if this is a valid step of price.</para>
+        /// <para>REJECT_REASON=ERROR_PRICE_NOT_MULTIPLE_100_FOR_HOSE: Price is incorrect for HOSE market.</para>
+        /// <para>REJECT_REASON=ERROR_PRICE_NOT_MULTIPLE_500_FOR_HOSE: Price is incorrect for HOSE market.</para>
+        /// <para>REJECT_REASON=ERROR_PRICE_NOT_MULTIPLE_1000_FOR_HOSE: Price is incorrect for HOSE market.</para>
+        /// <para>REJECT_REASON=ERROR_HNX_NOT_USE_ATO_ATC: Cannot put ATO, ATC order in HNX market.</para>
+        /// <para>REJECT_REASON=ERROR_PRICE_NOT_MULTIPLE_100_FOR_HNX: Price is incorrect for HNX market.</para>
+        /// <para>REJECT_REASON=ERROR_UPCOM_NOT_USE_ATO_ATC: Cannot put ATO, ATC order in UPCOM market.</para>
+        /// <para>REJECT_REASON=ERROR_PRICE_NOT_MULTIPLE_100_FOR_UPCOM: Price is incorrect for UPCOM market.</para>
+        /// <para>REJECT_REASON=IS_VALID: This is a valid order.</para>
+        /// </returns>
+        public static CommonEnums.REJECT_REASON IsValidStepPrice(int marketId, decimal price, char condPrice)
+        {
+            var center = (CommonEnums.MARKET_ID)marketId;
+
+            // validate the volume unit and step price first
+            switch (center)
+            {
+                case CommonEnums.MARKET_ID.HOSE:
+                    if (condPrice == Constants.ORDER_TYPE_ATO || condPrice == Constants.ORDER_TYPE_ATC || condPrice==Constants.ORDER_TYPE_MP)
+                    {
+                        return CommonEnums.REJECT_REASON.IS_VALID;
+                    }
+                    if (condPrice == Constants.ORDER_TYPE_MOK || condPrice == Constants.ORDER_TYPE_MAK)
+                    {
+                        LogHandler.Log(
+                            "IsValidStepPrice: incorrect order type, condPrice = " + condPrice + ", marketId = " +
+                            marketId,
+                            "IsValidStepPrice.",
+                            TraceEventType.Warning);
+                        return CommonEnums.REJECT_REASON.ERROR_HOSE_NOT_USE_MAK_MOK;
+                    }
+                    if(price == 0) return CommonEnums.REJECT_REASON.ERROR_CONDITION_PRICE_IS_ZERO;
+
+                    price = price * (decimal)CommonEnums.TRADE_RULE.MONEY_UNIT_HOSE;
+
+                    if ((price < (decimal)CommonEnums.TRADE_RULE.PRICE_LEVEL_1_HOSE) &&
+                        (price % (decimal)CommonEnums.TRADE_RULE.PRICE_STEP_LEVEL_1_HOSE != 0))
+                    {
+                        LogHandler.Log(
+                            "IsValidStepPrice: incorrect step price: price must multiple of 100, price = " + price +
+                            ", market = " + marketId,
+                            "IsValidStepPrice.",
+                            TraceEventType.Warning);
+                        return CommonEnums.REJECT_REASON.ERROR_PRICE_NOT_MULTIPLE_100_FOR_HOSE;
+                    }
+
+                    if ((price >= (decimal)CommonEnums.TRADE_RULE.PRICE_LEVEL_1_HOSE) &&
+                        (price < (decimal)CommonEnums.TRADE_RULE.PRICE_LEVEL_2_HOSE) &&
+                        (price % (decimal)CommonEnums.TRADE_RULE.PRICE_STEP_LEVEL_2_HOSE != 0))
+                    {
+                        LogHandler.Log(
+                            "IsValidStepPrice: incorrect step price, price must multiple of 500, price = " + price +
+                            ", market = " + marketId,
+                            "IsValidStepPrice.",
+                            TraceEventType.Warning);
+                        return CommonEnums.REJECT_REASON.ERROR_PRICE_NOT_MULTIPLE_500_FOR_HOSE;
+                    }
+
+                    if ((price >= (decimal)CommonEnums.TRADE_RULE.PRICE_LEVEL_2_HOSE) &&
+                        (price % (decimal)CommonEnums.TRADE_RULE.PRICE_STEP_LEVEL_3_HOSE != 0))
+                    {
+                        LogHandler.Log(
+                            "IsValidStepPrice: incorrect step price, price must multiple of 1000, price must multiple of 500, price = " +
+                            price + ", market = " + marketId,
+                            "IsValidStepPrice.",
+                            TraceEventType.Warning);
+                        return CommonEnums.REJECT_REASON.ERROR_PRICE_NOT_MULTIPLE_1000_FOR_HOSE;
+                    }
+
+                    break;
+                case CommonEnums.MARKET_ID.HNX:
+                    if (condPrice == Constants.ORDER_TYPE_ATO || condPrice == Constants.ORDER_TYPE_ATC || condPrice == Constants.ORDER_TYPE_MP
+                        || condPrice == Constants.ORDER_TYPE_MAK || condPrice == Constants.ORDER_TYPE_MOK)
+                    {
+                        return CommonEnums.REJECT_REASON.IS_VALID;
+                    }
+                    if (price == 0) return CommonEnums.REJECT_REASON.ERROR_CONDITION_PRICE_IS_ZERO;
+                    price = price * (decimal)CommonEnums.TRADE_RULE.MONEY_UNIT_HNX;
+
+                    if (price % (decimal)CommonEnums.TRADE_RULE.PRICE_STEP_HNX != 0)
+                    {
+                        LogHandler.Log(
+                            "IsValidStepPrice: incorrect step price, price must multiple of 100, price = " +
+                            price + ", market = " + marketId,
+                            "IsValidStepPrice.",
+                            TraceEventType.Warning);
+                        return CommonEnums.REJECT_REASON.ERROR_PRICE_NOT_MULTIPLE_100_FOR_HNX;
+                    }
+
+                    break;
+                case CommonEnums.MARKET_ID.UPCoM:
+                    if (condPrice == Constants.ORDER_TYPE_ATO || condPrice == Constants.ORDER_TYPE_ATC || condPrice == Constants.ORDER_TYPE_MP
+                        || condPrice == Constants.ORDER_TYPE_MAK || condPrice == Constants.ORDER_TYPE_MOK)
+                    {
+                        return CommonEnums.REJECT_REASON.IS_VALID;
+                    }
+                    if (price == 0) return CommonEnums.REJECT_REASON.ERROR_CONDITION_PRICE_IS_ZERO;
+                    price = price * (decimal)CommonEnums.TRADE_RULE.MONEY_UNIT_UPCOM;
+
+                    if (price % (decimal)CommonEnums.TRADE_RULE.PRICE_STEP_UPCOM != 0)
+                    {
+                        LogHandler.Log(
+                            "IsValidStepPrice: incorrect step price, price must multiple of 100, price = " +
+                            price + ", market = " + marketId,
+                            "IsValidStepPrice.",
+                            TraceEventType.Warning);
+                        return CommonEnums.REJECT_REASON.ERROR_PRICE_NOT_MULTIPLE_100_FOR_UPCOM;
+                    }
+
+                    break;
+            }
+
+            return CommonEnums.REJECT_REASON.IS_VALID;
+        }
+
+        /// <summary>
+        /// Converts the day of week.
+        /// </summary>
+        /// <param name="dayOfWeek">The day of week.</param>
+        /// <returns></returns>
+        public static int ConvertDayOfWeek(DayOfWeek dayOfWeek)
+        {
+            switch (dayOfWeek)
+            {
+                case DayOfWeek.Monday:
+                    return 2;
+                case DayOfWeek.Tuesday:
+                    return 3;
+                case DayOfWeek.Wednesday:
+                    return 4;
+                case DayOfWeek.Thursday:
+                    return 5;
+                case DayOfWeek.Friday:
+                    return 6;
+                case DayOfWeek.Saturday:
+                    return 7;
+                case DayOfWeek.Sunday:
+                    return 8;
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// Check if checked date is working day or not
+        /// </summary>
+        /// <param name="checkedDate">Checked date</param>
+        /// <param name="dicHolidays">Holiday list</param>
+        /// <param name="dicWorkingDays">Working day list</param>
+        /// <returns></returns>
+        public static bool IsWorkingDay(DateTime checkedDate, Dictionary<string, DateTime> dicHolidays,
+            Dictionary<int, bool> dicWorkingDays)
+        {
+            // CheckedDate is a holiday
+            if (dicHolidays != null && dicHolidays.ContainsKey(checkedDate.ToString("yyyyMMdd")))
+            {
+                return false;
+            }
+            // CheckDate is working day or not
+            int dayOfWeek = ConvertDayOfWeek(checkedDate.DayOfWeek);
+            if (dicWorkingDays != null && dicWorkingDays.ContainsKey(dayOfWeek))
+            {
+                if (dicWorkingDays[dayOfWeek] == true)
+                {
+                    // If retVal is a working day
+                    return true;
+                }
+                if (dicWorkingDays[dayOfWeek] == false)
+                {
+                    ////If retVal is a day off
+                    return false;
+                }
+            }
+            return false;
+        }
+        /// <summary>
+        /// Decodes the UTF8.
+        /// </summary>
+        /// <param name="s_Input">The s_ input.</param>
+        /// <returns></returns>
+        public static string DecodeUtf8(string s_Input)
+        {
+            if (string.IsNullOrEmpty(s_Input))
+                return string.Empty;
+
+            byte[] u8_Utf = new byte[s_Input.Length];
+
+            for (int i = 0; i < s_Input.Length; i++)
+            {
+                // If there are characters above 255 it is IMPOSSIBLE that it is an UTF8 string.
+                // It is already in Unicode format, there is nothing to do!
+                if (s_Input[i] > 255)
+                    return s_Input;
+
+                u8_Utf[i] = (byte)s_Input[i];
+            }
+
+            return System.Text.Encoding.UTF8.GetString(u8_Utf);
+        }
+
+        /// <summary>
+        /// Get next working day from from date.
+        /// </summary>
+        /// <param name="fromDate">The date to begin checking.</param>
+        /// <param name="dicHolidays">Holiday list.</param>
+        /// <param name="dicWorkingDays">Working day list.</param>
+        /// <returns>A working day.</returns>
+        public static DateTime GetNextWorkingDay(DateTime fromDate, Dictionary<string, DateTime> dicHolidays,
+            Dictionary<int, bool> dicWorkingDays)
+        {
+            // Increase to next day if after 8h
+            if (fromDate.Hour >= 8)
+            {
+                fromDate = fromDate.AddDays(1);
+            }
+            while (!IsWorkingDay(fromDate, dicHolidays, dicWorkingDays))
+            {
+                fromDate = fromDate.AddDays(1);
+            }
+            return fromDate;
+        }
+
+        /// <summary>
+        /// Gets the culture info.
+        /// </summary>
+        /// <param name="languageId">The language id.</param>
+        /// <returns></returns>
+        public static CultureInfo GetCultureInfo(string languageId)
+        {
+            if (languageId.Equals(Constants.VIETNAMESE_ID) || languageId.Equals(Constants.VIETNAMESE_LANGUAGE_ID))
+                return new CultureInfo(Constants.VIETNAMESE_ID);
+            return new CultureInfo(Constants.ENGLISH_ID);
+        }
+    }
+
+}

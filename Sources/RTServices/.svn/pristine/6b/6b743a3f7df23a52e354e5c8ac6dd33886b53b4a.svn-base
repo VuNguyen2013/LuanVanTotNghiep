@@ -1,0 +1,251 @@
+﻿using System;
+using System.Threading;
+using ETradeCommon.Enums;
+
+namespace RTDataServices.Updater
+{
+    public static class RealTimeStockUpdater
+    {
+        private static bool _isReset;
+        private static bool _isUpdaterRunning;
+        private static Thread _updaterThread;
+
+        private static bool _enableUpdatingHOSE = true;
+        private static bool _enableUpdatingHNX = true;
+        private static bool _enableUpdatingUPCOM = true;
+
+        //private static bool _enableUpdatingIntraD = true;
+
+
+        private static bool _enableIntraDHNX = true;
+        private static bool _enableIntraDHOSE = true;
+        private static bool _enableIntraUPCOM = true;
+
+
+        private readonly static Boolean _enableIntraD = Boolean.Parse(Common.ReadFromWebConfig("EnableIntraD"));
+        private readonly static int _timeToReset = Int32.Parse(Common.ReadFromWebConfig("TimeToReset"));
+        private readonly static int _timeToEnableReset = Int32.Parse(Common.ReadFromWebConfig("TimeToEnableReset"));
+
+        public static void StartUpdater()
+        {
+            if (!_isUpdaterRunning)
+            {
+                _updaterThread = new Thread(UpdaterHandler);
+                _updaterThread.IsBackground = true;
+                _isUpdaterRunning = true;
+                _updaterThread.Start();
+            }
+        }
+
+        public static void StopUpdater()
+        {
+            _isUpdaterRunning = false;
+        }
+
+        public static void StartUpdater(int marketId)
+        {
+            switch (marketId)
+            {
+                case (short)CommonEnums.MARKET_ID.HOSE:
+                    EnableUpdatingHOSE = true;
+
+                    break;
+                case (short)CommonEnums.MARKET_ID.HNX:
+                    EnableUpdatingHNX = true;
+
+                    break;
+                case (short)CommonEnums.MARKET_ID.UPCoM:
+                    EnableUpdatingUPCOM = true;
+
+                    break;
+                default:
+                    return;
+            }
+        }
+
+        public static void StopUpdater(int marketId)
+        {
+            switch (marketId)
+            {
+                case (short)CommonEnums.MARKET_ID.HOSE:
+                    EnableUpdatingHOSE = false;
+
+                    break;
+                case (short)CommonEnums.MARKET_ID.HNX:
+                    EnableUpdatingHNX = false;
+
+                    break;
+                case (short)CommonEnums.MARKET_ID.UPCoM:
+                    EnableUpdatingUPCOM = false;
+
+                    break;
+                default:
+                    return;
+            }
+        }
+
+        public static bool UpdatingStatus(int marketId)
+        {
+            switch (marketId)
+            {
+                case (short)CommonEnums.MARKET_ID.HOSE:
+                    return EnableUpdatingHOSE;
+                case (short)CommonEnums.MARKET_ID.HNX:
+                    return EnableUpdatingHNX;
+                case (short)CommonEnums.MARKET_ID.UPCoM:
+                    return EnableUpdatingUPCOM;
+                default:
+                    return false;
+            }
+        }
+
+        public static bool EnableUpdatingHOSE
+        {
+            get
+            {
+                return _enableUpdatingHOSE;
+            }
+            set
+            {
+                _enableUpdatingHOSE = value;                
+            }
+        }
+
+        public static bool EnableUpdatingHNX
+        {
+            get
+            {
+                return _enableUpdatingHNX;
+            }
+            set
+            {
+                _enableUpdatingHNX = value;
+            }
+        }
+
+        public static bool EnableUpdatingUPCOM
+        {
+            get
+            {
+                return _enableUpdatingUPCOM;
+            }
+            set
+            {
+                _enableUpdatingUPCOM = value;
+            }
+        }
+
+        /*public static bool EnableUpdatingIntraD
+        {
+            get
+            {
+                return _enableUpdatingIntraD;
+            }
+            set
+            {
+                _enableUpdatingIntraD = value;
+            }
+        }*/
+
+
+        public static bool EnableIntraDHNX
+        {
+            get
+            {
+                return _enableIntraDHNX;
+            }
+            set
+            {
+                _enableIntraDHNX = value;
+            }
+        }
+
+        public static bool EnableIntraDHOSE
+        {
+            get
+            {
+                return _enableIntraDHOSE;
+            }
+            set
+            {
+                _enableIntraDHOSE = value;
+            }
+        }
+
+        public static bool EnableIntraDUPCOM
+        {
+            get
+            {
+                return _enableIntraUPCOM;
+            }
+            set
+            {
+                _enableIntraUPCOM = value;
+            }
+        }
+
+        private static void UpdaterHandler()
+        {
+            int currentTime;
+
+            while (_isUpdaterRunning)
+            {
+                try
+                {
+                    DBServices.ResetAllMarketData();
+
+                    DBServices.UpdateAllMarketInfo(_enableUpdatingHOSE, _enableUpdatingHNX, _enableUpdatingUPCOM);
+                    DBServices.UpdateAllStockInfo(_enableUpdatingHOSE, _enableUpdatingHNX, _enableUpdatingUPCOM);
+                    DBServices.UpdateIndexVn30();
+                    DBServices.UpdateIndexVn30History();
+                    if (_enableIntraD )
+                    {
+                        DBServices.UpdateTransactionInfo(_enableIntraDHOSE, _enableIntraDHNX, _enableIntraUPCOM);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Common.Log(ex.ToString());
+                }
+
+                Thread.Sleep(100);
+            }
+
+            return;
+        }
+
+        public static bool IsIntradayRunning(int marketId)
+        {
+            bool intraday = _isUpdaterRunning && _enableIntraD;
+            switch (marketId)
+            {
+                case (short)CommonEnums.MARKET_ID.HOSE:
+                    return (intraday && EnableIntraDHOSE);
+                case (short)CommonEnums.MARKET_ID.HNX:
+                    return (intraday && EnableIntraDHNX);
+                case (short)CommonEnums.MARKET_ID.UPCoM:
+                    return (intraday && EnableIntraDUPCOM);
+                default:
+                    return false;
+            }
+        }
+
+        public static bool RestartRTService()
+        {
+            try
+            {
+                StopUpdater();
+                DBServices.ResetRTData();
+                DBServices.CreateInMemDB();
+                StartUpdater();
+                return true;
+            }
+            catch(Exception exception)
+            {
+                Common.Log(exception.ToString());
+                return false;
+            }
+        }
+    }
+
+}

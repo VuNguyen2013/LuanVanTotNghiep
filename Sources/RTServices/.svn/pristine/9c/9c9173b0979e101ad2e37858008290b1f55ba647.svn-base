@@ -1,0 +1,203 @@
+<?xml version="1.0" standalone="yes"?>
+<DataSet>
+  <xs:schema id="DataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xs:element name="DataSet" msdata:IsDataSet="true">
+      <xs:complexType>
+        <xs:choice maxOccurs="unbounded">
+          <xs:element name="STS_MARKET_INFO">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="FLOOR_CODE" type="xs:string" minOccurs="0" />
+                <xs:element name="DATE_NO" type="xs:decimal" minOccurs="0" />
+                <xs:element name="TRADING_DATE" type="xs:dateTime" minOccurs="0" />
+                <xs:element name="CURRENT_STATUS" type="xs:decimal" minOccurs="0" />
+                <xs:element name="TIME" type="xs:string" minOccurs="0" />
+                <xs:element name="TOTAL_TRADE" type="xs:decimal" minOccurs="0" />
+                <xs:element name="TOTAL_STOCK" type="xs:decimal" minOccurs="0" />
+                <xs:element name="TOTAL_QTTY" type="xs:decimal" minOccurs="0" />
+                <xs:element name="TOTAL_VALUE" type="xs:decimal" minOccurs="0" />
+                <xs:element name="ADVANCES" type="xs:decimal" minOccurs="0" />
+                <xs:element name="NOCHANGE" type="xs:decimal" minOccurs="0" />
+                <xs:element name="DECLINES" type="xs:decimal" minOccurs="0" />
+                <xs:element name="PRIOR_MARKET_INDEX" type="xs:decimal" minOccurs="0" />
+                <xs:element name="CHG_INDEX" type="xs:decimal" minOccurs="0" />
+                <xs:element name="PCT_INDEX" type="xs:decimal" minOccurs="0" />
+                <xs:element name="CURRENT_INDEX" type="xs:decimal" minOccurs="0" />
+                <xs:element name="MARKET_INDEX" type="xs:decimal" minOccurs="0" />
+                <xs:element name="SESSION_NO" type="xs:string" minOccurs="0" />
+                <xs:element name="PRV_PRIOR_MARKET_INDEX" type="xs:decimal" minOccurs="0" />
+                <xs:element name="AVR_MARKET_INDEX" type="xs:decimal" minOccurs="0" />
+                <xs:element name="AVR_PRIOR_MARKET_INDEX" type="xs:decimal" minOccurs="0" />
+                <xs:element name="AVR_CHG_INDEX" type="xs:decimal" minOccurs="0" />
+                <xs:element name="AVR_PCT_INDEX" type="xs:decimal" minOccurs="0" />
+                <xs:element name="PT_TOTAL_QTTY" type="xs:decimal" minOccurs="0" />
+                <xs:element name="PT_TOTAL_VALUE" type="xs:decimal" minOccurs="0" />
+                <xs:element name="PT_TOTAL_TRADE" type="xs:decimal" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+    </xs:element>
+  </xs:schema>
+  <STS_MARKET_INFO>
+    <FLOOR_CODE>03</FLOOR_CODE>
+    <DATE_NO>693</DATE_NO>
+    <TRADING_DATE>2008-08-28T00:00:00.0000000+07:00</TRADING_DATE>
+    <CURRENT_STATUS>13</CURRENT_STATUS>
+    <TIME>11:00:29</TIME>
+    <TOTAL_TRADE>2</TOTAL_TRADE>
+    <TOTAL_STOCK>2</TOTAL_STOCK>
+    <TOTAL_QTTY>117200</TOTAL_QTTY>
+    <TOTAL_VALUE>10516367200</TOTAL_VALUE>
+    <ADVANCES>0</ADVANCES>
+    <NOCHANGE>486</NOCHANGE>
+    <DECLINES>0</DECLINES>
+    <PRIOR_MARKET_INDEX>100</PRIOR_MARKET_INDEX>
+    <CHG_INDEX>0</CHG_INDEX>
+    <PCT_INDEX>0</PCT_INDEX>
+    <CURRENT_INDEX>0</CURRENT_INDEX>
+    <MARKET_INDEX>100</MARKET_INDEX>
+    <PRV_PRIOR_MARKET_INDEX>100</PRV_PRIOR_MARKET_INDEX>
+    <AVR_MARKET_INDEX>0</AVR_MARKET_INDEX>
+    <AVR_PRIOR_MARKET_INDEX>0</AVR_PRIOR_MARKET_INDEX>
+    <AVR_CHG_INDEX>0</AVR_CHG_INDEX>
+    <AVR_PCT_INDEX>0</AVR_PCT_INDEX>
+    <PT_TOTAL_QTTY>117200</PT_TOTAL_QTTY>
+    <PT_TOTAL_VALUE>10516367200</PT_TOTAL_VALUE>
+    <PT_TOTAL_TRADE>2</PT_TOTAL_TRADE>
+  </STS_MARKET_INFO>
+  <STS_MARKET_INFO>
+    <FLOOR_CODE>02</FLOOR_CODE>
+    <DATE_NO>693</DATE_NO>
+    <TRADING_DATE>2008-08-28T00:00:00.0000000+07:00</TRADING_DATE>
+    <CURRENT_STATUS>13</CURRENT_STATUS>
+    <TIME>11:00:29</TIME>
+    <TOTAL_TRADE>16657</TOTAL_TRADE>
+    <TOTAL_STOCK>142</TOTAL_STOCK>
+    <TOTAL_QTTY>19953800</TOTAL_QTTY>
+    <TOTAL_VALUE>744405180000</TOTAL_VALUE>
+    <ADVANCES>42</ADVANCES>
+    <NOCHANGE>14</NOCHANGE>
+    <DECLINES>99</DECLINES>
+    <PRIOR_MARKET_INDEX>190.06</PRIOR_MARKET_INDEX>
+    <CHG_INDEX>-4.91</CHG_INDEX>
+    <PCT_INDEX>-2.58</PCT_INDEX>
+    <CURRENT_INDEX>0</CURRENT_INDEX>
+    <MARKET_INDEX>185.15</MARKET_INDEX>
+    <PRV_PRIOR_MARKET_INDEX>185.15</PRV_PRIOR_MARKET_INDEX>
+    <AVR_MARKET_INDEX>100</AVR_MARKET_INDEX>
+    <AVR_PRIOR_MARKET_INDEX>100</AVR_PRIOR_MARKET_INDEX>
+    <AVR_CHG_INDEX>0</AVR_CHG_INDEX>
+    <AVR_PCT_INDEX>0</AVR_PCT_INDEX>
+    <PT_TOTAL_QTTY>461800</PT_TOTAL_QTTY>
+    <PT_TOTAL_VALUE>13968670000</PT_TOTAL_VALUE>
+    <PT_TOTAL_TRADE>32</PT_TOTAL_TRADE>
+  </STS_MARKET_INFO>
+  <STS_MARKET_INFO>
+    <FLOOR_CODE>00</FLOOR_CODE>
+    <DATE_NO>693</DATE_NO>
+    <TRADING_DATE>2008-08-28T00:00:00.0000000+07:00</TRADING_DATE>
+    <CURRENT_STATUS>13</CURRENT_STATUS>
+    <TIME>11:00:29</TIME>
+    <TOTAL_TRADE>16657</TOTAL_TRADE>
+    <TOTAL_STOCK>142</TOTAL_STOCK>
+    <TOTAL_QTTY>19953800</TOTAL_QTTY>
+    <TOTAL_VALUE>744405180000</TOTAL_VALUE>
+    <ADVANCES>42</ADVANCES>
+    <NOCHANGE>14</NOCHANGE>
+    <DECLINES>99</DECLINES>
+    <PRIOR_MARKET_INDEX>153.88</PRIOR_MARKET_INDEX>
+    <CHG_INDEX>-3.64</CHG_INDEX>
+    <PCT_INDEX>-2.37</PCT_INDEX>
+    <CURRENT_INDEX>0</CURRENT_INDEX>
+    <MARKET_INDEX>150.24</MARKET_INDEX>
+    <PRV_PRIOR_MARKET_INDEX>153.88</PRV_PRIOR_MARKET_INDEX>
+    <AVR_MARKET_INDEX>0</AVR_MARKET_INDEX>
+    <AVR_PRIOR_MARKET_INDEX>0</AVR_PRIOR_MARKET_INDEX>
+    <AVR_CHG_INDEX>0</AVR_CHG_INDEX>
+    <AVR_PCT_INDEX>0</AVR_PCT_INDEX>
+    <PT_TOTAL_QTTY>0</PT_TOTAL_QTTY>
+    <PT_TOTAL_VALUE>0</PT_TOTAL_VALUE>
+  </STS_MARKET_INFO>
+  <STS_MARKET_INFO>
+    <FLOOR_CODE>01</FLOOR_CODE>
+    <DATE_NO>693</DATE_NO>
+    <TRADING_DATE>2008-08-28T00:00:00.0000000+07:00</TRADING_DATE>
+    <CURRENT_STATUS>13</CURRENT_STATUS>
+    <TIME>11:00:28</TIME>
+    <TOTAL_TRADE>0</TOTAL_TRADE>
+    <TOTAL_STOCK>0</TOTAL_STOCK>
+    <TOTAL_QTTY>0</TOTAL_QTTY>
+    <TOTAL_VALUE>0</TOTAL_VALUE>
+    <ADVANCES>0</ADVANCES>
+    <NOCHANGE>0</NOCHANGE>
+    <DECLINES>0</DECLINES>
+    <PRIOR_MARKET_INDEX>100</PRIOR_MARKET_INDEX>
+    <CHG_INDEX>0</CHG_INDEX>
+    <PCT_INDEX>0</PCT_INDEX>
+    <CURRENT_INDEX>0</CURRENT_INDEX>
+    <MARKET_INDEX>100</MARKET_INDEX>
+    <PRV_PRIOR_MARKET_INDEX>100</PRV_PRIOR_MARKET_INDEX>
+    <AVR_MARKET_INDEX>0</AVR_MARKET_INDEX>
+    <AVR_PRIOR_MARKET_INDEX>0</AVR_PRIOR_MARKET_INDEX>
+    <AVR_CHG_INDEX>0</AVR_CHG_INDEX>
+    <AVR_PCT_INDEX>0</AVR_PCT_INDEX>
+    <PT_TOTAL_QTTY>0</PT_TOTAL_QTTY>
+    <PT_TOTAL_VALUE>0</PT_TOTAL_VALUE>
+  </STS_MARKET_INFO>
+  <STS_MARKET_INFO>
+    <FLOOR_CODE>02</FLOOR_CODE>
+    <DATE_NO>692</DATE_NO>
+    <TRADING_DATE>2008-08-27T00:00:00.0000000+07:00</TRADING_DATE>
+    <CURRENT_STATUS>17</CURRENT_STATUS>
+    <TIME>11:01:08</TIME>
+    <TOTAL_TRADE>21454</TOTAL_TRADE>
+    <TOTAL_STOCK>146</TOTAL_STOCK>
+    <TOTAL_QTTY>20551400</TOTAL_QTTY>
+    <TOTAL_VALUE>1203342820000</TOTAL_VALUE>
+    <ADVANCES>112</ADVANCES>
+    <NOCHANGE>20</NOCHANGE>
+    <DECLINES>23</DECLINES>
+    <PRIOR_MARKET_INDEX>184.67</PRIOR_MARKET_INDEX>
+    <CHG_INDEX>5.39</CHG_INDEX>
+    <PCT_INDEX>2.92</PCT_INDEX>
+    <CURRENT_INDEX>0</CURRENT_INDEX>
+    <MARKET_INDEX>190.06</MARKET_INDEX>
+    <PRV_PRIOR_MARKET_INDEX>190.06</PRV_PRIOR_MARKET_INDEX>
+    <AVR_MARKET_INDEX>100</AVR_MARKET_INDEX>
+    <AVR_PRIOR_MARKET_INDEX>100</AVR_PRIOR_MARKET_INDEX>
+    <AVR_CHG_INDEX>0</AVR_CHG_INDEX>
+    <AVR_PCT_INDEX>0</AVR_PCT_INDEX>
+    <PT_TOTAL_QTTY>1494500</PT_TOTAL_QTTY>
+    <PT_TOTAL_VALUE>128148750000</PT_TOTAL_VALUE>
+    <PT_TOTAL_TRADE>0</PT_TOTAL_TRADE>
+  </STS_MARKET_INFO>
+  <STS_MARKET_INFO>
+    <FLOOR_CODE>03</FLOOR_CODE>
+    <DATE_NO>692</DATE_NO>
+    <TRADING_DATE>2008-08-27T00:00:00.0000000+07:00</TRADING_DATE>
+    <CURRENT_STATUS>17</CURRENT_STATUS>
+    <TIME>11:00:13</TIME>
+    <TOTAL_TRADE>8</TOTAL_TRADE>
+    <TOTAL_STOCK>7</TOTAL_STOCK>
+    <TOTAL_QTTY>4020000</TOTAL_QTTY>
+    <TOTAL_VALUE>392432450000</TOTAL_VALUE>
+    <ADVANCES>0</ADVANCES>
+    <NOCHANGE>486</NOCHANGE>
+    <DECLINES>0</DECLINES>
+    <PRIOR_MARKET_INDEX>100</PRIOR_MARKET_INDEX>
+    <CHG_INDEX>0</CHG_INDEX>
+    <PCT_INDEX>0</PCT_INDEX>
+    <CURRENT_INDEX>0</CURRENT_INDEX>
+    <MARKET_INDEX>100</MARKET_INDEX>
+    <PRV_PRIOR_MARKET_INDEX>100</PRV_PRIOR_MARKET_INDEX>
+    <AVR_MARKET_INDEX>0</AVR_MARKET_INDEX>
+    <AVR_PRIOR_MARKET_INDEX>0</AVR_PRIOR_MARKET_INDEX>
+    <AVR_CHG_INDEX>0</AVR_CHG_INDEX>
+    <AVR_PCT_INDEX>0</AVR_PCT_INDEX>
+    <PT_TOTAL_QTTY>4020000</PT_TOTAL_QTTY>
+    <PT_TOTAL_VALUE>392432450000</PT_TOTAL_VALUE>
+    <PT_TOTAL_TRADE>0</PT_TOTAL_TRADE>
+  </STS_MARKET_INFO>
+</DataSet>

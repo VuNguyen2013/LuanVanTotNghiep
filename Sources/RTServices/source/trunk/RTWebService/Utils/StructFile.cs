@@ -1,0 +1,147 @@
+using System;
+using System.IO;
+using System.Runtime.InteropServices;
+
+namespace RTWebService.Utils
+{
+    class StructFile
+    {
+        private object      m_oStruct = null;
+        private System.Type m_oType   = null;
+        private string      m_File    = null;
+        private FileStream  m_fs      = null;
+
+        public StructFile(string szFile, System.Type type)
+        {
+            m_File  = szFile;
+            m_oType = type;
+        }
+
+        private bool LoadFileStream(FileMode FileMode, FileAccess FileAccess, FileShare FileShare)
+        {
+            if (m_fs == null)
+            {
+                try
+                {
+                    m_fs = new FileStream(m_File, FileMode, FileAccess, FileShare);
+                }
+                catch (Exception ex)
+                {
+                    RTWebService.Utils.Common.Log("File: " + m_File + "open failed because: " + ex.ToString());
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public bool EOF				//End of File
+        {
+            get
+            {
+                if (m_fs != null)
+                {
+                    if (m_fs.Position >= m_fs.Length)
+                        Close();
+                }
+
+                return m_fs == null;
+            }
+        }
+
+        private byte[] StructToByteArray()
+        {
+            try
+            {
+                // This function copys the structure data into a byte[]
+                byte[] buffer = new byte[Marshal.SizeOf(m_oStruct)];						//Set the buffer ot the correct size
+
+                GCHandle h = GCHandle.Alloc(buffer, GCHandleType.Pinned);					//Allocate the buffer to memory and pin it so that GC cannot use the space (Disable GC)
+                Marshal.StructureToPtr(m_oStruct, h.AddrOfPinnedObject(), false);			// copy the struct into int byte[] mem alloc 
+                h.Free();																	//Allow GC to do its job
+
+                return buffer;																// return the byte[] . After all thats why we are here right.
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public bool WriteStructure(object oStruct)
+        {
+            m_oStruct = oStruct;
+            try
+            {
+                byte[] buf = StructToByteArray();
+
+                BinaryWriter bw = new BinaryWriter(m_fs);
+
+                bw.Write(buf);
+
+                bw.Close();
+                bw = null;
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public object GetNextStructureValue()
+        {
+            byte[] buffer = new byte[Marshal.SizeOf(m_oType)];
+
+            object oReturn = null;
+
+            try
+            {
+                if (EOF) return null;
+
+                m_fs.Read(buffer, 0, buffer.Length);
+
+                GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+                oReturn = (object)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), m_oType);
+                handle.Free();
+
+                if (m_fs.Position >= m_fs.Length)
+                    Close();
+
+                return oReturn;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool Seek(int postion)
+        {
+            if (EOF || postion >= m_fs.Length)
+            {
+                return false;
+            }
+
+            m_fs.Seek(postion, SeekOrigin.Begin);
+
+            return true;
+        }
+
+        public void Close()			//Close the file stream
+        {
+            if (m_fs != null)
+            {
+                m_fs.Close();
+                m_fs = null;
+            }
+            GC.Collect();
+        }
+
+        public bool Open(FileMode FileMode, FileAccess FileAccess, FileShare FileShare)
+        {
+            return LoadFileStream(FileMode, FileAccess, FileShare);
+        }
+    }
+}

@@ -1,0 +1,96 @@
+#ifndef __COMMON_H__
+#define __COMMON_H__
+
+#include <string>
+#include <iomanip>
+#include <sstream>
+
+using namespace std; 
+
+#include <time.h>
+
+typedef enum
+{ 
+    DATABASE_ERROR,
+    SOCK_ERROR,
+    PIPE_ERROR,
+    GENERAL_ERROR,
+    INFORMATION
+} ERROR_TYPE;
+
+typedef enum
+{
+    FROM_WEB = 'W',
+    FROM_BROKER = 'B',
+} ORDER_SOURCE;
+
+
+// Message Type
+#define TYPE_LOGON             "LI"
+#define TYPE_HEARTBEAT         "HB"
+#define TYPE_LOGOUT            "LO"
+#define TYPE_TEST              "TR"
+#define TYPE_RECOVERY          "RR"
+#define TYPE_RECOVERY_ACK      "RA"
+#define TYPE_RECOVERY_COMPLETE "RC"
+#define TYPE_DATA              "DT"
+
+// Data Type
+#define DATA_NEW_ORDER                "7a"
+#define DATA_NEW_CANCEL_ACK           "7b"
+#define DATA_EXEC_REPORT              "7e"
+#define DATA_CANCEL_ORDER             "7c"
+#define DATA_NEW_ORDER_FROM_BROKER    "6a"
+#define DATA_CHANGE_ORDER             "7d"
+#define DATA_CHANGE_ORDER_FROM_BROKER "6d"
+#define DATA_CANCEL_DEAL              "3D"
+
+#define NON_SEQ         "000000"
+#define NON_VOLUME      "00000000"
+#define NON_CHECKFLAG   "00000000"
+#define NON_TRADERID    "00000000000"
+#define ZERO_PRICE      "000000.000000"
+#define ZERO_REFORDERID "0000000000000000000000000000000000000000000000000000000000000000"
+#define RESULT_OK         '0'
+#define SPACE_CHAR		  ' '
+#define ETX_DEFAULT       0x03
+#define  PIPE_BUFFER_ZIZE 1024000
+#define BUFFER_LEN 1024
+
+
+#define DIR_SEND "SEND"
+#define DIR_RECV "RECV"
+
+#define SEQUENCE_LEN	 6
+#define PACKTYPE_LEN	 2
+#define PACKTIME_LEN	 15
+#define TRADERID_LEN     11
+#define ACCOUNT_LEN      10
+#define SECSYMBOL_LEN    8
+#define USER_LEN         20
+#define MESSAGE_TYPE_LEN 2
+#define REFORDERID_LEN   64
+#define HEARTBEAT_LEN	 4
+#define PRICE_LEN		 13
+#define FISORDERID_LEN   10
+// Data position
+#define MESSAGE_TYPE_POS 25
+#define REFORDERID_POS   27
+#define NUM_LEN			 65
+
+string Padding(string source, int newSize);
+string GetDate();
+string GetTimestamp();
+string Price2String(float price);
+string Int2String(int number, int length);
+string Int2String(const int& number);
+string Float2String(float number, int length);
+string GetRawMessage (char *message, int len);
+int    GetIntVal(string strConvert);
+int    GetIntVal(char * rawString, int len);
+float  GetFloatVal(char * rawString, int len);
+int    GetIntVal(char number);
+string GetString(char * rawString, int len);
+int    GetStatus(int status, int sourceID);
+
+#endif //__COMMON_H__

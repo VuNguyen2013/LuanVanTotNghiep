@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BUY" xml:space="preserve">
+    <value>Mua</value>
+  </data>
+  <data name="ERROR_ACCOUNT_NOT_BUY_PERMISSION" xml:space="preserve">
+    <value>Tai khoan cua quy khach khong co quyen mua.</value>
+  </data>
+  <data name="ERROR_ACCOUNT_NOT_SELL_PERMISSION" xml:space="preserve">
+    <value>Tai khoan cua quy khach khong co quyen ban.</value>
+  </data>
+  <data name="ERROR_ACCOUNT_NOT_TRADE_PERMISSION" xml:space="preserve">
+    <value>Tai khoan cua quy khach khong co quyen giao dich.</value>
+  </data>
+  <data name="ERROR_DEFAULT" xml:space="preserve">
+    <value>Xin vui long lien he {0} de biet them chi tiet.</value>
+  </data>
+  <data name="ERROR_HNX_NOT_USE_ATO_ATC" xml:space="preserve">
+    <value>Khong duoc phep dat ATO hoac ATC tren san HNX.</value>
+  </data>
+  <data name="ERROR_LOCK_ACCOUNT" xml:space="preserve">
+    <value>Tai khoan cua quy khach dang bi khoa.</value>
+  </data>
+  <data name="ERROR_MARKET_CLOSE" xml:space="preserve">
+    <value>Thi truong {0} da dong cua.</value>
+  </data>
+  <data name="ERROR_NOT_AVAILABLE_STOCK" xml:space="preserve">
+    <value>Khong du co phieu can giao dich.</value>
+  </data>
+  <data name="ERROR_PRICE_NOT_MULTIPLE_1000_FOR_HOSE" xml:space="preserve">
+    <value>Gia tri giao dich khong dung theo buoc gia cho phep.</value>
+  </data>
+  <data name="ERROR_PRICE_NOT_MULTIPLE_100_FOR_HNX" xml:space="preserve">
+    <value>Gia tri giao dich khong dung theo buoc gia cho phep.</value>
+  </data>
+  <data name="ERROR_PRICE_NOT_MULTIPLE_100_FOR_HOSE" xml:space="preserve">
+    <value>Gia tri giao dich khong dung theo buoc gia cho phep.</value>
+  </data>
+  <data name="ERROR_PRICE_NOT_MULTIPLE_100_FOR_UPCOM" xml:space="preserve">
+    <value>Gia tri giao dich khong dung theo buoc gia cho phep.</value>
+  </data>
+  <data name="ERROR_PRICE_NOT_MULTIPLE_500_FOR_HOSE" xml:space="preserve">
+    <value>Gia tri giao dich khong dung theo buoc gia cho phep.</value>
+  </data>
+  <data name="ERROR_UPCOM_NOT_USE_ATO_ATC" xml:space="preserve">
+    <value>Khong duoc phep dat ATO hoac ATC tren san UPCOM.</value>
+  </data>
+  <data name="INCORRECT_SIDE" xml:space="preserve">
+    <value>Chi co the mua hoac ban.</value>
+  </data>
+  <data name="INCORRECT_STOCK" xml:space="preserve">
+    <value>Chung khoan {0} khong ton tai.</value>
+  </data>
+  <data name="INCORRECT_VOL" xml:space="preserve">
+    <value>Khoi luong {0} khong dung.</value>
+  </data>
+  <data name="NOTICE_ADVANCE_ORDER" xml:space="preserve">
+    <value>{0} thong bao ket qua dat truoc:</value>
+  </data>
+  <data name="NOT_BUY_SELL_THE_SAME_STOCK" xml:space="preserve">
+    <value>Khong duoc phep mua va ban cung mot loai chung khoan.</value>
+  </data>
+  <data name="NOT_ENOUGH_CASH" xml:space="preserve">
+    <value>Quy khach khong du tien.</value>
+  </data>
+  <data name="NOT_ENOUGH_STOCK" xml:space="preserve">
+    <value>Quy khach khong du chung khoan.</value>
+  </data>
+  <data name="OVER_MAX_VOL" xml:space="preserve">
+    <value>Khoi luong giao dich cao hon gia tri toi da cho phep.</value>
+  </data>
+  <data name="OVER_REMAIN_VOLUME" xml:space="preserve">
+    <value>Khoi luong giao dich cao hon khoi luong cho phep.</value>
+  </data>
+  <data name="PLEASE_CHECK_AGAIN" xml:space="preserve">
+    <value>Quy khach vui long kiem tra lai.</value>
+  </data>
+  <data name="PRICE_ABOVE_CEILING" xml:space="preserve">
+    <value>Gia cua chung khoan cao hon gia tran.</value>
+  </data>
+  <data name="PRICE_BELOW_FLOOR" xml:space="preserve">
+    <value>Gia cua chung khoan duoi gia san.</value>
+  </data>
+  <data name="PUT_ORDER_NO_RESPONSE" xml:space="preserve">
+    <value>TCSC thong bao: TK {0} dat lenh truoc {1} {2}, KL {3}, GIA {4} chua nhan duoc xac nhan.</value>
+  </data>
+  <data name="PUT_ORDER_SUCCESS" xml:space="preserve">
+    <value>TCSC thong bao: TK {0} dat lenh truoc {1} {2}, KL {3}, GIA {4} da duoc dua vao he thong thanh cong.</value>
+  </data>
+  <data name="PUT_ORDER_UNSUCCESS" xml:space="preserve">
+    <value>TCSC thong bao: TK {0} dat lenh truoc {1} {2}, KL {3}, GIA {4} khong thanh cong.</value>
+  </data>
+  <data name="SELL" xml:space="preserve">
+    <value>Ban</value>
+  </data>
+  <data name="SMS_CASH_TRANSFER" xml:space="preserve">
+    <value>Co lenh chuyen rut tien moi.</value>
+  </data>
+  <data name="STOCK_IS_HALT" xml:space="preserve">
+    <value>Chung khoan {0} dang bi tam ngung giao dich.</value>
+  </data>
+</root>

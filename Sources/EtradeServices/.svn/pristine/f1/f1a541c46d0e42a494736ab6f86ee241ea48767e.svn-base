@@ -1,0 +1,382 @@
+#ifndef __IFISMessageInfo_H__
+#define __IFISMessageInfo_H__
+#include <string>
+#include <winsock.h>
+using namespace std; 
+
+#include "Common.h"
+
+typedef enum 
+{
+	LOGIN = 0,
+	LOGOUT,
+	TEST,
+	RECOVERY,
+	NEW_ORDER,
+	CHANGE_ORDER,
+	CANCEL_ORDER,
+}  PACKAGE_TYPE;
+
+typedef enum
+{
+	ORD_NOTHING = -1,
+	ORD_PENDING = 0,
+	ORD_WAITING = 1,
+	ORD_FINISHED = 2,
+	ORD_REJECTED = 3,
+	ORD_UNKNOWN,
+} ORDER_STATUS;
+
+typedef enum
+{ 
+	FROM_FIS = 0,
+	FROM_SET = 3
+} SOURCE_ID;
+
+typedef enum
+{ 
+	TRANS_NEW,
+	TRANS_CANCEL,
+	TRANS_CHANGE_ACC
+} TRANS_TYPE;
+
+typedef enum
+{
+	LOGIN_LEN        = 68,
+	LOGOUT_LEN       = 24,
+	TEST_LEN         = 34,
+	RECOVERY_LEN     = 42,
+	NEW_ORDER_LEN    = 161,
+	CANCEL_ORDER_LEN = 111,
+	CHANGE_ORDER_LEN = 124
+}  PACKAGE_LENGTH;
+
+
+#pragma pack(1) 
+
+typedef struct
+{
+    short Length;
+    char Sequence[SEQUENCE_LEN];
+    char PkgType[PACKTYPE_LEN];
+    char PkgTime[PACKTIME_LEN]; 
+} MessageHeader;
+
+typedef struct
+{
+    short Length;
+    char Sequence[SEQUENCE_LEN];
+    char PkgType[PACKTYPE_LEN];
+    char PkgTime[PACKTIME_LEN];
+    char MessageType[PACKTYPE_LEN];
+    char RefOrderID[REFORDERID_LEN];
+} DataHeader;
+
+// The logon message is used to authenticate a user attempting to establish
+// a connection from a remote system. The logon message must be the first 
+// message sent by the application requesting to initiate an XXX-FIS session.  
+class LoginInfo
+{
+private:
+    MessageHeader header;
+public:
+    char HeartBtInt[HEARTBEAT_LEN];
+    char LoginID[USER_LEN];
+    char Password[USER_LEN];
+    char ETX;
+
+    LoginInfo(string heartBtInt, string loginID, string password)
+    {
+        header.Length = htons((short)LOGIN_LEN);
+        memcpy(header.Sequence, NON_SEQ, SEQUENCE_LEN);
+        memcpy(header.PkgType,  TYPE_LOGON, PACKTYPE_LEN);
+        memcpy(header.PkgTime,  GetDate().c_str(), PACKTIME_LEN);
+        memcpy(HeartBtInt,		heartBtInt.c_str(), HEARTBEAT_LEN);
+        memcpy(LoginID,			Padding(loginID, USER_LEN).c_str(), USER_LEN);
+        memcpy(Password,		Padding(password, USER_LEN).c_str(), USER_LEN);
+        ETX = ETX_DEFAULT;
+    }
+};
+
+// The logout message is used to initiate or confirm the termination of the XXX-FIS session. 
+class LogoutInfo
+{
+private:
+    MessageHeader header;
+    char ETX;
+
+public:
+    LogoutInfo()
+    {
+		header.Length = htons((short)LOGOUT_LEN);
+        memcpy(header.Sequence, NON_SEQ, SEQUENCE_LEN);
+        memcpy(header.PkgType , TYPE_LOGOUT, PACKTYPE_LEN);
+        memcpy(header.PkgTime , GetDate().c_str(), PACKTIME_LEN);
+        ETX = ETX_DEFAULT;
+    }
+};
+
+// The test request message is used to force a heartbeat from the opposite side. 
+class TestRequestInfo
+{
+private:
+    MessageHeader header;
+    char TestReqID[ACCOUNT_LEN];
+    char ETX;
+public:
+    TestRequestInfo()
+    {
+		header.Length = htons((short)TEST_LEN);
+        memcpy(header.Sequence ,NON_SEQ, SEQUENCE_LEN);
+        memcpy(header.PkgType  ,TYPE_TEST, PACKTYPE_LEN);
+        memcpy(header.PkgTime  ,GetDate().c_str(), PACKTIME_LEN);
+        memcpy(TestReqID       ,GetTimestamp().c_str(), ACCOUNT_LEN);
+        ETX = ETX_DEFAULT;
+    }
+};
+
+// To do data recovery when some package are loss.
+class RecoveryRequestInfo
+{
+private:
+    MessageHeader header;
+public:
+    char LastSeqNum[SEQUENCE_LEN];
+    char BeginSeqNum[SEQUENCE_LEN];
+    char EndSeqNum[SEQUENCE_LEN];
+    char ETX;
+
+    RecoveryRequestInfo()
+    {
+		header.Length = htons((short)RECOVERY_LEN);
+        memcpy(header.Sequence ,NON_SEQ, SEQUENCE_LEN);
+        memcpy(header.PkgType  ,TYPE_RECOVERY, PACKTYPE_LEN);
+        memcpy(header.PkgTime  ,GetDate().c_str(), PACKTIME_LEN);
+        ETX = ETX_DEFAULT;
+    }
+
+    RecoveryRequestInfo(int lastSeqNum, int beginSeqNum, int endSeqNum)
+    {
+        header.Length = htons((short)RECOVERY_LEN);
+        memcpy(header.Sequence ,NON_SEQ, SEQUENCE_LEN);
+        memcpy(header.PkgType  ,TYPE_RECOVERY, PACKTYPE_LEN);
+        memcpy(header.PkgTime  ,GetDate().c_str(), PACKTIME_LEN);
+
+        memcpy(LastSeqNum  ,Int2String(lastSeqNum,  SEQUENCE_LEN).c_str(), SEQUENCE_LEN);
+        memcpy(BeginSeqNum ,Int2String(beginSeqNum, SEQUENCE_LEN).c_str(), SEQUENCE_LEN);
+        memcpy(EndSeqNum   ,Int2String(endSeqNum,   SEQUENCE_LEN).c_str(), SEQUENCE_LEN);
+        ETX = ETX_DEFAULT;
+    }
+};
+
+// Define for Data message.
+class NewOrderInfo
+{
+public:
+    DataHeader header;
+    char EnterID[TRADERID_LEN];
+    char SecSymbol[SECSYMBOL_LEN];
+    char Side;
+    char Price[PRICE_LEN];
+    char ConPrice;
+    char Volume[SECSYMBOL_LEN];
+    char PublishVol[SECSYMBOL_LEN];
+    char Condition;
+    char Account[ACCOUNT_LEN];
+    char TTF;
+    char ThaiOrderType;
+    char CheckFlag[SECSYMBOL_LEN];
+    char ETX;
+
+    NewOrderInfo()
+    {
+		header.Length = htons((short)NEW_ORDER_LEN);
+        memcpy(header.Sequence   , NON_SEQ, SEQUENCE_LEN);
+        memcpy(header.PkgType    , TYPE_DATA, PACKTYPE_LEN);
+        memcpy(header.PkgTime    , GetDate().c_str(), PACKTIME_LEN);
+        memcpy(header.MessageType, DATA_NEW_ORDER, PACKTYPE_LEN);
+ 		memcpy(CheckFlag         , NON_CHECKFLAG, SECSYMBOL_LEN);
+        Condition     = SPACE_CHAR;
+        TTF           = SPACE_CHAR;
+        ThaiOrderType = SPACE_CHAR;
+		ETX           = ETX_DEFAULT;
+    }
+};
+
+class ChangeOrderInfo
+{
+public:
+    DataHeader header;
+    char FISOrderID[ACCOUNT_LEN];
+    char EnterID[TRADERID_LEN];
+    char Account[ACCOUNT_LEN];
+    char PortOrClient;
+    char TTF;
+    char ThaiOrderType;
+    char ETX;
+
+    ChangeOrderInfo()
+    {
+		header.Length = htons((short)CHANGE_ORDER_LEN);
+        memcpy(header.Sequence    , NON_SEQ, SEQUENCE_LEN);
+        memcpy(header.PkgType     , TYPE_DATA, PACKTYPE_LEN);
+        memcpy(header.PkgTime     , GetDate().c_str(), PACKTIME_LEN);
+        memcpy(header.MessageType ,DATA_CHANGE_ORDER, PACKTYPE_LEN);
+        TTF           = SPACE_CHAR;
+        ThaiOrderType = SPACE_CHAR;
+        ETX           = ETX_DEFAULT;
+    }
+};
+
+class CancelOrderRequestInfo
+{
+public:
+    DataHeader header;
+    char FISOrderID[ACCOUNT_LEN];
+    char EnterID[TRADERID_LEN];
+    char ETX;
+
+    CancelOrderRequestInfo()
+    {
+		header.Length = htons((short)CANCEL_ORDER_LEN);
+        memcpy(header.Sequence    ,NON_SEQ, SEQUENCE_LEN);
+        memcpy(header.PkgType     ,TYPE_DATA, PACKTYPE_LEN);
+        memcpy(header.PkgTime     ,GetDate().c_str(), PACKTIME_LEN);
+        memcpy(header.MessageType ,DATA_CANCEL_ORDER, PACKTYPE_LEN);
+        ETX = ETX_DEFAULT;
+    }
+};
+
+// The HeartBtInt field is used to declare the timeout interval for
+// generating heartbeats. XXX will specify the interval.
+typedef struct
+{
+    MessageHeader header;
+    char RequestType[PACKTYPE_LEN];
+    char Reserve[ACCOUNT_LEN];
+    char ResultFlag;
+    char ETX;
+} HeartbeatInfo;
+
+typedef struct
+{
+    MessageHeader header;
+    char BeginSeqNum[SEQUENCE_LEN]; 
+    char EndSeqNum[SEQUENCE_LEN];
+    char ETX;
+} RecoveryAckInfo;
+
+typedef struct
+{
+    MessageHeader header;
+    char ETX;
+} RecoveryCompleteInfo;
+
+typedef struct
+{
+    DataHeader header;
+    char FISOrderID[ACCOUNT_LEN];
+    char EnterID[TRADERID_LEN];
+    char SecSymbol[SECSYMBOL_LEN];
+    char Side;
+    char Price[PRICE_LEN];
+    char ConPrice;
+    char Volume[SECSYMBOL_LEN];
+    char PublishVol[SECSYMBOL_LEN];
+    char Condition;
+    char Account[ACCOUNT_LEN];
+    char TTF;
+    char ThaiOrderType;
+    char CheckFlag[SECSYMBOL_LEN];
+	char ETX;
+} NewOrderFromBrokerInfo;
+
+typedef struct
+{
+    DataHeader header;
+    char FISOrderID[ACCOUNT_LEN];
+    char EnterID[TRADERID_LEN] ;
+    char Account[ACCOUNT_LEN];
+    char PortOrClient;
+    char TTF;
+    char ThaiOrderType;
+	char ETX;
+} ChangeOrderFromBrokerInfo;
+
+typedef struct
+{
+    DataHeader header;
+    char FISOrderID[ACCOUNT_LEN];
+    char ExecutionTransType;
+    char OrdStatus;
+    char OrdRejReason[PACKTYPE_LEN];
+    char SourceID;
+	char ETX;
+} NewOrderAckInfo;
+
+typedef struct
+{
+    DataHeader header;
+    char FISOrderID[ACCOUNT_LEN];
+    char ExecutionTransType;
+    char TransTime[PACKTIME_LEN];
+    char SecSymbol[SECSYMBOL_LEN];
+    char Side;
+    char Volume[SECSYMBOL_LEN];
+    char Price[PRICE_LEN];
+    char ConfirmNo[SEQUENCE_LEN];
+    char SourceID;
+    char ExecType;
+	char ETX;
+} ExecuteReportInfo;
+
+typedef struct
+{
+    DataHeader header;
+    char FISOrderID[ACCOUNT_LEN];
+    char TransTime[PACKTIME_LEN];
+    char SecSymbol[SECSYMBOL_LEN];
+    char Side;
+    char Volume[SECSYMBOL_LEN];
+    char ConfirmNo[SEQUENCE_LEN];
+    char SourceID;
+	char ETX;
+} CancelDealInfo;
+
+class  OrderInfo
+{
+public:
+    int Sequence;
+    string Time;
+    string Type;
+    string RefOrderID;
+    int FISOrderID;			// FIS order number 
+    string Symbol;			// Local Exchange Code 
+    char Side;				// B=Buy|S=Sell 
+    float Price;			// Range from 0.000001 to 999999.999999 %13.6f 
+    char ConPrice;			// ‘ ‘(blank)=no condition| A=ATO|M=MP|C=ATC 
+    int Volume;				// <= 1000000 
+    string Account;			// FIS Account ID 
+    int Status;				// 0=Accepted|8=Rejected|7=Warning 
+    string OrdRejReason;
+    int execTransType;		// 0=New|1=Cancel|2=Change Acc 
+    int sourceID;			// 0=FIS|3=SET
+
+	OrderInfo()
+	{
+		Symbol			= "";
+		Side			= SPACE_CHAR;
+		Price			= 0;
+		ConPrice		= SPACE_CHAR;
+		Volume			= 0;
+		Account			= "";
+		Status			= -1;
+		OrdRejReason	= "";
+		execTransType	= 0;
+		sourceID		= -1;
+	}
+
+};
+
+
+#endif

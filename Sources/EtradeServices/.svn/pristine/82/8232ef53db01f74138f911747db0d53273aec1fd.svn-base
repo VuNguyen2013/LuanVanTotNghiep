@@ -1,0 +1,40 @@
+﻿	
+
+#region Using Directives
+using System;
+using System.ComponentModel;
+using System.Collections;
+using System.Xml.Serialization;
+using System.Data;
+
+using ETradeFinance.Entities;
+using ETradeFinance.Entities.Validation;
+
+using ETradeFinance.DataAccess;
+using Microsoft.Practices.EnterpriseLibrary.Logging;
+
+#endregion
+
+namespace ETradeFinance.Services
+{		
+	/// <summary>
+	/// An component type implementation of the 'StockTransfer' table.
+	/// </summary>
+	/// <remarks>
+	/// All custom implementations should be done here.
+	/// </remarks>
+	[CLSCompliant(true)]
+	public partial class StockTransferService : ETradeFinance.Services.StockTransferServiceBase
+	{
+		#region Constructors
+		/// <summary>
+		/// Initializes a new instance of the StockTransferService class.
+		/// </summary>
+		public StockTransferService() : base()
+		{
+		}
+		#endregion Constructors
+		
+	}//End Class
+
+} // end namespace

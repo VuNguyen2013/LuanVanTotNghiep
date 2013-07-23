@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Name="MigrateDB" Class="MigrateDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=10.128.28.99;Initial Catalog=MigrateDB;Persist Security Info=True;User ID=sa" SettingsObjectName="MigrateDataTCSC.Properties.Settings" SettingsPropertyName="MigrateDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.MainCustAccount" Member="MainCustAccounts">
+    <Type Name="MainCustAccount">
+      <Column Name="MainCustAccountID" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FullName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Actived" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PIN" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PassLockReason" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PINLockReason" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LockReason" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TokenID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="TokenName" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="TokenActived" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="BrokerID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="PassIsNew" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="PINIsNew" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="PassExpDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PINExpDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CustomerType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AuthType" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="PinType" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="FailedLoginCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FailedLoginTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedUser" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="UpdatedUser" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="UpdatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="MainCustAccount_SubCustAccount" Member="SubCustAccounts" ThisKey="MainCustAccountID" OtherKey="MainCustAccountID" Type="SubCustAccount" />
+      <Association Name="BrokerAccount_MainCustAccount" Member="BrokerAccount" ThisKey="BrokerID" OtherKey="BrokerID" Type="BrokerAccount" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BrokerAccount" Member="BrokerAccounts">
+    <Type Name="BrokerAccount">
+      <Column Name="BrokerID" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="AccountType" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Actived" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="MobilePhone" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="EmailAddr" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedUser" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="UpdatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UpdatedUser" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Association Name="BrokerAccount_MainCustAccount" Member="MainCustAccounts" ThisKey="BrokerID" OtherKey="BrokerID" Type="MainCustAccount" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SubCustAccount" Member="SubCustAccounts">
+    <Type Name="SubCustAccount">
+      <Column Name="SubCustAccountID" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Actived" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="LockAccountReason" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="MainCustAccountID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreatedUser" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="UpdatedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UpdatedUser" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Association Name="SubCustAccount_SubCustAccountPermission" Member="SubCustAccountPermissions" ThisKey="SubCustAccountID" OtherKey="SubCustAccountID" Type="SubCustAccountPermission" />
+      <Association Name="MainCustAccount_SubCustAccount" Member="MainCustAccount" ThisKey="MainCustAccountID" OtherKey="MainCustAccountID" Type="MainCustAccount" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SubCustAccountPermission" Member="SubCustAccountPermissions">
+    <Type Name="SubCustAccountPermission">
+      <Column Name="SubCustAccountID" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CustServicesPermissionID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="SubCustAccount_SubCustAccountPermission" Member="SubCustAccount" ThisKey="SubCustAccountID" OtherKey="SubCustAccountID" Type="SubCustAccount" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

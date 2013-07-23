@@ -1,0 +1,2477 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet type='text/xsl' href="scriptsql.xsl"?>
+<root xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<database includeDrop="true">ETradeOrders</database>
+<procedures>
+		
+		<procedure owner="dbo" name="ConditionOrder_Get_List" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the ConditionOrder table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				SELECT
+					[ConditionOrderID],
+					[SecSymbol],
+					[Side],
+					[Price],
+					[Volume],
+					[MatchedVolume],
+					[SubCustAccountID],
+					[MainCustAccountID],
+					[Market],
+					[EffDate],
+					[ExpDate],
+					[TypeOfCond],
+					[MaxValue],
+					[MinValue],
+					[Status],
+					[TradeTime],
+					[DoneTime],
+					[RejectReason]
+				FROM
+					[dbo].[ConditionOrder]
+					
+				SELECT @@ROWCOUNT
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="ConditionOrder_GetPaged" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the ConditionOrder table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@WhereClause" type="nvarchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)" />
+				<parameter name="@OrderBy" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)"/>
+				<parameter name="@PageIndex" type="int" direction="Input" size="0" precision="10" scale="0" />
+				<parameter name="@PageSize" type="int" direction="Input" size="0" precision="10" scale="0" /> 
+			</parameters>
+			<body><![CDATA[
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[ConditionOrderID]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [ConditionOrderID]'
+				SET @SQL = @SQL + ', [SecSymbol]'
+				SET @SQL = @SQL + ', [Side]'
+				SET @SQL = @SQL + ', [Price]'
+				SET @SQL = @SQL + ', [Volume]'
+				SET @SQL = @SQL + ', [MatchedVolume]'
+				SET @SQL = @SQL + ', [SubCustAccountID]'
+				SET @SQL = @SQL + ', [MainCustAccountID]'
+				SET @SQL = @SQL + ', [Market]'
+				SET @SQL = @SQL + ', [EffDate]'
+				SET @SQL = @SQL + ', [ExpDate]'
+				SET @SQL = @SQL + ', [TypeOfCond]'
+				SET @SQL = @SQL + ', [MaxValue]'
+				SET @SQL = @SQL + ', [MinValue]'
+				SET @SQL = @SQL + ', [Status]'
+				SET @SQL = @SQL + ', [TradeTime]'
+				SET @SQL = @SQL + ', [DoneTime]'
+				SET @SQL = @SQL + ', [RejectReason]'
+				SET @SQL = @SQL + ' FROM [dbo].[ConditionOrder]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [ConditionOrderID],'
+				SET @SQL = @SQL + ' [SecSymbol],'
+				SET @SQL = @SQL + ' [Side],'
+				SET @SQL = @SQL + ' [Price],'
+				SET @SQL = @SQL + ' [Volume],'
+				SET @SQL = @SQL + ' [MatchedVolume],'
+				SET @SQL = @SQL + ' [SubCustAccountID],'
+				SET @SQL = @SQL + ' [MainCustAccountID],'
+				SET @SQL = @SQL + ' [Market],'
+				SET @SQL = @SQL + ' [EffDate],'
+				SET @SQL = @SQL + ' [ExpDate],'
+				SET @SQL = @SQL + ' [TypeOfCond],'
+				SET @SQL = @SQL + ' [MaxValue],'
+				SET @SQL = @SQL + ' [MinValue],'
+				SET @SQL = @SQL + ' [Status],'
+				SET @SQL = @SQL + ' [TradeTime],'
+				SET @SQL = @SQL + ' [DoneTime],'
+				SET @SQL = @SQL + ' [RejectReason]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[ConditionOrder]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			]]></body>
+		</procedure>
+		
+		<procedure owner="dbo" name="ConditionOrder_Insert" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the ConditionOrder table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@ConditionOrderId" type="bigint" direction="Output" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@SecSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault=""/>
+				<parameter name="@Side" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@Price" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@Volume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@MatchedVolume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@SubCustAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@MainCustAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@Market" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@EffDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@ExpDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@TypeOfCond" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault=""/>
+				<parameter name="@MaxValue" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@MinValue" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@Status" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@TradeTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@DoneTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@RejectReason" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				INSERT INTO [dbo].[ConditionOrder]
+					(
+					[SecSymbol]
+					,[Side]
+					,[Price]
+					,[Volume]
+					,[MatchedVolume]
+					,[SubCustAccountID]
+					,[MainCustAccountID]
+					,[Market]
+					,[EffDate]
+					,[ExpDate]
+					,[TypeOfCond]
+					,[MaxValue]
+					,[MinValue]
+					,[Status]
+					,[TradeTime]
+					,[DoneTime]
+					,[RejectReason]
+					)
+				VALUES
+					(
+					@SecSymbol
+					,@Side
+					,@Price
+					,@Volume
+					,@MatchedVolume
+					,@SubCustAccountId
+					,@MainCustAccountId
+					,@Market
+					,@EffDate
+					,@ExpDate
+					,@TypeOfCond
+					,@MaxValue
+					,@MinValue
+					,@Status
+					,@TradeTime
+					,@DoneTime
+					,@RejectReason
+					)
+				
+				-- Get the identity value
+				SET @ConditionOrderId = SCOPE_IDENTITY()
+									
+							
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="ConditionOrder_Update" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the ConditionOrder table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@ConditionOrderId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@SecSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault=""/>
+				<parameter name="@Side" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@Price" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@Volume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@MatchedVolume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@SubCustAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@MainCustAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@Market" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@EffDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@ExpDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@TypeOfCond" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault=""/>
+				<parameter name="@MaxValue" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@MinValue" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@Status" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@TradeTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@DoneTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@RejectReason" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[ConditionOrder]
+				SET
+					[SecSymbol] = @SecSymbol
+					,[Side] = @Side
+					,[Price] = @Price
+					,[Volume] = @Volume
+					,[MatchedVolume] = @MatchedVolume
+					,[SubCustAccountID] = @SubCustAccountId
+					,[MainCustAccountID] = @MainCustAccountId
+					,[Market] = @Market
+					,[EffDate] = @EffDate
+					,[ExpDate] = @ExpDate
+					,[TypeOfCond] = @TypeOfCond
+					,[MaxValue] = @MaxValue
+					,[MinValue] = @MinValue
+					,[Status] = @Status
+					,[TradeTime] = @TradeTime
+					,[DoneTime] = @DoneTime
+					,[RejectReason] = @RejectReason
+				WHERE
+[ConditionOrderID] = @ConditionOrderId 
+				
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="ConditionOrder_Delete" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the ConditionOrder table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@ConditionOrderId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				DELETE FROM [dbo].[ConditionOrder] WITH (ROWLOCK) 
+				WHERE
+					[ConditionOrderID] = @ConditionOrderId
+					
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="ConditionOrder_GetByConditionOrderId" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the ConditionOrder table through an index
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@ConditionOrderId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SELECT
+					[ConditionOrderID],
+					[SecSymbol],
+					[Side],
+					[Price],
+					[Volume],
+					[MatchedVolume],
+					[SubCustAccountID],
+					[MainCustAccountID],
+					[Market],
+					[EffDate],
+					[ExpDate],
+					[TypeOfCond],
+					[MaxValue],
+					[MinValue],
+					[Status],
+					[TradeTime],
+					[DoneTime],
+					[RejectReason]
+				FROM
+					[dbo].[ConditionOrder]
+				WHERE
+					[ConditionOrderID] = @ConditionOrderId
+				SELECT @@ROWCOUNT
+					
+			]]></body>
+			
+		</procedure>
+		<procedure owner="dbo" name="ConditionOrder_Find" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the ConditionOrder table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@SearchUsingOR" type="bit" direction="Input" size="0" precision="1" scale="0" param="" nulldefault="null"/>
+				<parameter name="@ConditionOrderId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault="null"/>
+				<parameter name="@SecSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault="null"/>
+				<parameter name="@Side" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault="null"/>
+				<parameter name="@Price" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault="null"/>
+				<parameter name="@Volume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@MatchedVolume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@SubCustAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault="null"/>
+				<parameter name="@MainCustAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault="null"/>
+				<parameter name="@Market" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault="null"/>
+				<parameter name="@EffDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@ExpDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@TypeOfCond" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault="null"/>
+				<parameter name="@MaxValue" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault="null"/>
+				<parameter name="@MinValue" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault="null"/>
+				<parameter name="@Status" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault="null"/>
+				<parameter name="@TradeTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@DoneTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@RejectReason" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+			</parameters>
+			<body><![CDATA[
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [ConditionOrderID]
+	, [SecSymbol]
+	, [Side]
+	, [Price]
+	, [Volume]
+	, [MatchedVolume]
+	, [SubCustAccountID]
+	, [MainCustAccountID]
+	, [Market]
+	, [EffDate]
+	, [ExpDate]
+	, [TypeOfCond]
+	, [MaxValue]
+	, [MinValue]
+	, [Status]
+	, [TradeTime]
+	, [DoneTime]
+	, [RejectReason]
+    FROM
+	[dbo].[ConditionOrder]
+    WHERE 
+	 ([ConditionOrderID] = @ConditionOrderId OR @ConditionOrderId IS NULL)
+	AND ([SecSymbol] = @SecSymbol OR @SecSymbol IS NULL)
+	AND ([Side] = @Side OR @Side IS NULL)
+	AND ([Price] = @Price OR @Price IS NULL)
+	AND ([Volume] = @Volume OR @Volume IS NULL)
+	AND ([MatchedVolume] = @MatchedVolume OR @MatchedVolume IS NULL)
+	AND ([SubCustAccountID] = @SubCustAccountId OR @SubCustAccountId IS NULL)
+	AND ([MainCustAccountID] = @MainCustAccountId OR @MainCustAccountId IS NULL)
+	AND ([Market] = @Market OR @Market IS NULL)
+	AND ([EffDate] = @EffDate OR @EffDate IS NULL)
+	AND ([ExpDate] = @ExpDate OR @ExpDate IS NULL)
+	AND ([TypeOfCond] = @TypeOfCond OR @TypeOfCond IS NULL)
+	AND ([MaxValue] = @MaxValue OR @MaxValue IS NULL)
+	AND ([MinValue] = @MinValue OR @MinValue IS NULL)
+	AND ([Status] = @Status OR @Status IS NULL)
+	AND ([TradeTime] = @TradeTime OR @TradeTime IS NULL)
+	AND ([DoneTime] = @DoneTime OR @DoneTime IS NULL)
+	AND ([RejectReason] = @RejectReason OR @RejectReason IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [ConditionOrderID]
+	, [SecSymbol]
+	, [Side]
+	, [Price]
+	, [Volume]
+	, [MatchedVolume]
+	, [SubCustAccountID]
+	, [MainCustAccountID]
+	, [Market]
+	, [EffDate]
+	, [ExpDate]
+	, [TypeOfCond]
+	, [MaxValue]
+	, [MinValue]
+	, [Status]
+	, [TradeTime]
+	, [DoneTime]
+	, [RejectReason]
+    FROM
+	[dbo].[ConditionOrder]
+    WHERE 
+	 ([ConditionOrderID] = @ConditionOrderId AND @ConditionOrderId is not null)
+	OR ([SecSymbol] = @SecSymbol AND @SecSymbol is not null)
+	OR ([Side] = @Side AND @Side is not null)
+	OR ([Price] = @Price AND @Price is not null)
+	OR ([Volume] = @Volume AND @Volume is not null)
+	OR ([MatchedVolume] = @MatchedVolume AND @MatchedVolume is not null)
+	OR ([SubCustAccountID] = @SubCustAccountId AND @SubCustAccountId is not null)
+	OR ([MainCustAccountID] = @MainCustAccountId AND @MainCustAccountId is not null)
+	OR ([Market] = @Market AND @Market is not null)
+	OR ([EffDate] = @EffDate AND @EffDate is not null)
+	OR ([ExpDate] = @ExpDate AND @ExpDate is not null)
+	OR ([TypeOfCond] = @TypeOfCond AND @TypeOfCond is not null)
+	OR ([MaxValue] = @MaxValue AND @MaxValue is not null)
+	OR ([MinValue] = @MinValue AND @MinValue is not null)
+	OR ([Status] = @Status AND @Status is not null)
+	OR ([TradeTime] = @TradeTime AND @TradeTime is not null)
+	OR ([DoneTime] = @DoneTime AND @DoneTime is not null)
+	OR ([RejectReason] = @RejectReason AND @RejectReason is not null)
+	SELECT @@ROWCOUNT			
+  END
+				]]></body>
+		</procedure>
+
+		
+		<procedure owner="dbo" name="ConditionOrder_Find_Dynamic"  skip="true">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the ConditionOrder table using a dynamically generated query.
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				BEGIN
+				
+				WITH PageIndex AS (
+					SELECT TOP {3} row_number() over (order by {1}) AS RowIndex
+					, [ConditionOrderID]
+					, [SecSymbol]
+					, [Side]
+					, [Price]
+					, [Volume]
+					, [MatchedVolume]
+					, [SubCustAccountID]
+					, [MainCustAccountID]
+					, [Market]
+					, [EffDate]
+					, [ExpDate]
+					, [TypeOfCond]
+					, [MaxValue]
+					, [MinValue]
+					, [Status]
+					, [TradeTime]
+					, [DoneTime]
+					, [RejectReason]
+					FROM [dbo].[ConditionOrder] {0}
+				)
+				SELECT
+				       [ConditionOrderID],
+				       [SecSymbol],
+				       [Side],
+				       [Price],
+				       [Volume],
+				       [MatchedVolume],
+				       [SubCustAccountID],
+				       [MainCustAccountID],
+				       [Market],
+				       [EffDate],
+				       [ExpDate],
+				       [TypeOfCond],
+				       [MaxValue],
+				       [MinValue],
+				       [Status],
+				       [TradeTime],
+				       [DoneTime],
+				       [RejectReason]
+				  FROM PageIndex
+				 WHERE RowIndex > {2}
+				   AND RowIndex <= {3}
+				ORDER BY {1};
+				
+
+				-- get total count
+				SELECT COUNT(*) AS TotalRowCount FROM [dbo].[ConditionOrder] {0};
+				
+				END
+			]]></body>
+		</procedure>
+		
+				
+		<procedure owner="dbo" name="_ConditionOrder_GetListTodayOrders"  skip="true">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Wednesday, November 17, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the ExecOrder table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+]]></comment>
+			<parameters>
+				<parameter name="@Market" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault="null"/>
+			</parameters>
+			<body><![CDATA[
+				
+
+  SELECT
+		[ConditionOrderID]
+		, [SecSymbol]
+		, [Side]
+		, [Price]
+		, [Volume]
+		, [MatchedVolume]
+		, [SubCustAccountID]
+		, [MainCustAccountID]
+		, [Market]
+		, [EffDate]
+		, [ExpDate]
+		, [TypeOfCond]
+		, [MaxValue]
+		, [MinValue]
+		, [Status]
+		, [TradeTime]
+		, [DoneTime]
+		, [RejectReason]
+	FROM
+		[dbo].[ConditionOrder]
+	WHERE EffDate <= CONVERT(DATETIME, FLOOR(CONVERT(FLOAT, GETDATE())))
+	AND ExpDate >= CONVERT(DATETIME, FLOOR(CONVERT(FLOAT, GETDATE())))
+	AND Status = 0
+	AND Market = @Market
+
+			]]></body>
+					</procedure>
+				
+		<procedure owner="dbo" name="_ConditionOrder_UpdateExpiredData"  skip="true">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Wednesday, November 17, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the ExecOrder table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+]]></comment>
+			<parameters>
+				<parameter name="@Condition" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+			</parameters>
+			<body><![CDATA[
+				
+
+	IF (@Condition = 1)
+	BEGIN
+		UPDATE dbo.ConditionOrder
+		SET Status = 0
+		WHERE Status = 5
+	END
+			
+	UPDATE dbo.ConditionOrder
+	SET Status = 3
+	WHERE ExpDate < CONVERT(DATETIME, FLOOR(CONVERT(FLOAT, GETDATE())))
+		AND Status = 0
+
+			]]></body>
+					</procedure>
+		
+		<procedure owner="dbo" name="QuickOrder_Get_List" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the QuickOrder table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				SELECT
+					[QuickOrderID],
+					[SecSymbol],
+					[Side],
+					[Volume],
+					[SubCustAccountID],
+					[Market],
+					[TradeTime],
+					[TypeOfQuick],
+					[Status]
+				FROM
+					[dbo].[QuickOrder]
+					
+				SELECT @@ROWCOUNT
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="QuickOrder_GetPaged" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the QuickOrder table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@WhereClause" type="nvarchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)" />
+				<parameter name="@OrderBy" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)"/>
+				<parameter name="@PageIndex" type="int" direction="Input" size="0" precision="10" scale="0" />
+				<parameter name="@PageSize" type="int" direction="Input" size="0" precision="10" scale="0" /> 
+			</parameters>
+			<body><![CDATA[
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[QuickOrderID]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [QuickOrderID]'
+				SET @SQL = @SQL + ', [SecSymbol]'
+				SET @SQL = @SQL + ', [Side]'
+				SET @SQL = @SQL + ', [Volume]'
+				SET @SQL = @SQL + ', [SubCustAccountID]'
+				SET @SQL = @SQL + ', [Market]'
+				SET @SQL = @SQL + ', [TradeTime]'
+				SET @SQL = @SQL + ', [TypeOfQuick]'
+				SET @SQL = @SQL + ', [Status]'
+				SET @SQL = @SQL + ' FROM [dbo].[QuickOrder]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [QuickOrderID],'
+				SET @SQL = @SQL + ' [SecSymbol],'
+				SET @SQL = @SQL + ' [Side],'
+				SET @SQL = @SQL + ' [Volume],'
+				SET @SQL = @SQL + ' [SubCustAccountID],'
+				SET @SQL = @SQL + ' [Market],'
+				SET @SQL = @SQL + ' [TradeTime],'
+				SET @SQL = @SQL + ' [TypeOfQuick],'
+				SET @SQL = @SQL + ' [Status]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[QuickOrder]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			]]></body>
+		</procedure>
+		
+		<procedure owner="dbo" name="QuickOrder_Insert" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the QuickOrder table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@QuickOrderId" type="int" direction="Output" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@SecSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault=""/>
+				<parameter name="@Side" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@Volume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@SubCustAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@Market" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@TradeTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@TypeOfQuick" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault=""/>
+				<parameter name="@Status" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				INSERT INTO [dbo].[QuickOrder]
+					(
+					[SecSymbol]
+					,[Side]
+					,[Volume]
+					,[SubCustAccountID]
+					,[Market]
+					,[TradeTime]
+					,[TypeOfQuick]
+					,[Status]
+					)
+				VALUES
+					(
+					@SecSymbol
+					,@Side
+					,@Volume
+					,@SubCustAccountId
+					,@Market
+					,@TradeTime
+					,@TypeOfQuick
+					,@Status
+					)
+				
+				-- Get the identity value
+				SET @QuickOrderId = SCOPE_IDENTITY()
+									
+							
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="QuickOrder_Update" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the QuickOrder table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@QuickOrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@SecSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault=""/>
+				<parameter name="@Side" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@Volume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@SubCustAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@Market" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@TradeTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@TypeOfQuick" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault=""/>
+				<parameter name="@Status" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[QuickOrder]
+				SET
+					[SecSymbol] = @SecSymbol
+					,[Side] = @Side
+					,[Volume] = @Volume
+					,[SubCustAccountID] = @SubCustAccountId
+					,[Market] = @Market
+					,[TradeTime] = @TradeTime
+					,[TypeOfQuick] = @TypeOfQuick
+					,[Status] = @Status
+				WHERE
+[QuickOrderID] = @QuickOrderId 
+				
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="QuickOrder_Delete" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the QuickOrder table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@QuickOrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				DELETE FROM [dbo].[QuickOrder] WITH (ROWLOCK) 
+				WHERE
+					[QuickOrderID] = @QuickOrderId
+					
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="QuickOrder_GetByQuickOrderId" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the QuickOrder table through an index
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@QuickOrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SELECT
+					[QuickOrderID],
+					[SecSymbol],
+					[Side],
+					[Volume],
+					[SubCustAccountID],
+					[Market],
+					[TradeTime],
+					[TypeOfQuick],
+					[Status]
+				FROM
+					[dbo].[QuickOrder]
+				WHERE
+					[QuickOrderID] = @QuickOrderId
+				SELECT @@ROWCOUNT
+					
+			]]></body>
+			
+		</procedure>
+		<procedure owner="dbo" name="QuickOrder_Find" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the QuickOrder table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@SearchUsingOR" type="bit" direction="Input" size="0" precision="1" scale="0" param="" nulldefault="null"/>
+				<parameter name="@QuickOrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@SecSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault="null"/>
+				<parameter name="@Side" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault="null"/>
+				<parameter name="@Volume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@SubCustAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault="null"/>
+				<parameter name="@Market" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault="null"/>
+				<parameter name="@TradeTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@TypeOfQuick" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Status" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault="null"/>
+			</parameters>
+			<body><![CDATA[
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [QuickOrderID]
+	, [SecSymbol]
+	, [Side]
+	, [Volume]
+	, [SubCustAccountID]
+	, [Market]
+	, [TradeTime]
+	, [TypeOfQuick]
+	, [Status]
+    FROM
+	[dbo].[QuickOrder]
+    WHERE 
+	 ([QuickOrderID] = @QuickOrderId OR @QuickOrderId IS NULL)
+	AND ([SecSymbol] = @SecSymbol OR @SecSymbol IS NULL)
+	AND ([Side] = @Side OR @Side IS NULL)
+	AND ([Volume] = @Volume OR @Volume IS NULL)
+	AND ([SubCustAccountID] = @SubCustAccountId OR @SubCustAccountId IS NULL)
+	AND ([Market] = @Market OR @Market IS NULL)
+	AND ([TradeTime] = @TradeTime OR @TradeTime IS NULL)
+	AND ([TypeOfQuick] = @TypeOfQuick OR @TypeOfQuick IS NULL)
+	AND ([Status] = @Status OR @Status IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [QuickOrderID]
+	, [SecSymbol]
+	, [Side]
+	, [Volume]
+	, [SubCustAccountID]
+	, [Market]
+	, [TradeTime]
+	, [TypeOfQuick]
+	, [Status]
+    FROM
+	[dbo].[QuickOrder]
+    WHERE 
+	 ([QuickOrderID] = @QuickOrderId AND @QuickOrderId is not null)
+	OR ([SecSymbol] = @SecSymbol AND @SecSymbol is not null)
+	OR ([Side] = @Side AND @Side is not null)
+	OR ([Volume] = @Volume AND @Volume is not null)
+	OR ([SubCustAccountID] = @SubCustAccountId AND @SubCustAccountId is not null)
+	OR ([Market] = @Market AND @Market is not null)
+	OR ([TradeTime] = @TradeTime AND @TradeTime is not null)
+	OR ([TypeOfQuick] = @TypeOfQuick AND @TypeOfQuick is not null)
+	OR ([Status] = @Status AND @Status is not null)
+	SELECT @@ROWCOUNT			
+  END
+				]]></body>
+		</procedure>
+
+		
+		<procedure owner="dbo" name="QuickOrder_Find_Dynamic"  skip="true">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the QuickOrder table using a dynamically generated query.
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				BEGIN
+				
+				WITH PageIndex AS (
+					SELECT TOP {3} row_number() over (order by {1}) AS RowIndex
+					, [QuickOrderID]
+					, [SecSymbol]
+					, [Side]
+					, [Volume]
+					, [SubCustAccountID]
+					, [Market]
+					, [TradeTime]
+					, [TypeOfQuick]
+					, [Status]
+					FROM [dbo].[QuickOrder] {0}
+				)
+				SELECT
+				       [QuickOrderID],
+				       [SecSymbol],
+				       [Side],
+				       [Volume],
+				       [SubCustAccountID],
+				       [Market],
+				       [TradeTime],
+				       [TypeOfQuick],
+				       [Status]
+				  FROM PageIndex
+				 WHERE RowIndex > {2}
+				   AND RowIndex <= {3}
+				ORDER BY {1};
+				
+
+				-- get total count
+				SELECT COUNT(*) AS TotalRowCount FROM [dbo].[QuickOrder] {0};
+				
+				END
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="ExecOrder_Get_List" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the ExecOrder table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				SELECT
+					[OrderID],
+					[RefOrderID],
+					[MessageType],
+					[FISOrderID],
+					[SecSymbol],
+					[Side],
+					[Price],
+					[AvgPrice],
+					[ConPrice],
+					[Volume],
+					[ExecutedVol],
+					[ExecutedPrice],
+					[CancelVolume],
+					[CancelledVolume],
+					[SubCustAccountID],
+					[ExecTransType],
+					[TradeTime],
+					[MatchedTime],
+					[CancelledTime],
+					[OrderStatus],
+					[OrdRejReason],
+					[ConfirmNo],
+					[CancelledConfirmNo],
+					[SourceID],
+					[ExecType],
+					[CancelledExecType],
+					[PortOrClient],
+					[Market],
+					[MarketStatus],
+					[OrderSource],
+					[IsNewOrder],
+					[Sequence],
+					[NumOfMatch],
+					[QuickOrderID],
+					[ConditionOrderID]
+				FROM
+					[dbo].[ExecOrder]
+					
+				SELECT @@ROWCOUNT
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="ExecOrder_GetPaged" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the ExecOrder table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@WhereClause" type="nvarchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)" />
+				<parameter name="@OrderBy" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)"/>
+				<parameter name="@PageIndex" type="int" direction="Input" size="0" precision="10" scale="0" />
+				<parameter name="@PageSize" type="int" direction="Input" size="0" precision="10" scale="0" /> 
+			</parameters>
+			<body><![CDATA[
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[OrderID]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [OrderID]'
+				SET @SQL = @SQL + ', [RefOrderID]'
+				SET @SQL = @SQL + ', [MessageType]'
+				SET @SQL = @SQL + ', [FISOrderID]'
+				SET @SQL = @SQL + ', [SecSymbol]'
+				SET @SQL = @SQL + ', [Side]'
+				SET @SQL = @SQL + ', [Price]'
+				SET @SQL = @SQL + ', [AvgPrice]'
+				SET @SQL = @SQL + ', [ConPrice]'
+				SET @SQL = @SQL + ', [Volume]'
+				SET @SQL = @SQL + ', [ExecutedVol]'
+				SET @SQL = @SQL + ', [ExecutedPrice]'
+				SET @SQL = @SQL + ', [CancelVolume]'
+				SET @SQL = @SQL + ', [CancelledVolume]'
+				SET @SQL = @SQL + ', [SubCustAccountID]'
+				SET @SQL = @SQL + ', [ExecTransType]'
+				SET @SQL = @SQL + ', [TradeTime]'
+				SET @SQL = @SQL + ', [MatchedTime]'
+				SET @SQL = @SQL + ', [CancelledTime]'
+				SET @SQL = @SQL + ', [OrderStatus]'
+				SET @SQL = @SQL + ', [OrdRejReason]'
+				SET @SQL = @SQL + ', [ConfirmNo]'
+				SET @SQL = @SQL + ', [CancelledConfirmNo]'
+				SET @SQL = @SQL + ', [SourceID]'
+				SET @SQL = @SQL + ', [ExecType]'
+				SET @SQL = @SQL + ', [CancelledExecType]'
+				SET @SQL = @SQL + ', [PortOrClient]'
+				SET @SQL = @SQL + ', [Market]'
+				SET @SQL = @SQL + ', [MarketStatus]'
+				SET @SQL = @SQL + ', [OrderSource]'
+				SET @SQL = @SQL + ', [IsNewOrder]'
+				SET @SQL = @SQL + ', [Sequence]'
+				SET @SQL = @SQL + ', [NumOfMatch]'
+				SET @SQL = @SQL + ', [QuickOrderID]'
+				SET @SQL = @SQL + ', [ConditionOrderID]'
+				SET @SQL = @SQL + ' FROM [dbo].[ExecOrder]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [OrderID],'
+				SET @SQL = @SQL + ' [RefOrderID],'
+				SET @SQL = @SQL + ' [MessageType],'
+				SET @SQL = @SQL + ' [FISOrderID],'
+				SET @SQL = @SQL + ' [SecSymbol],'
+				SET @SQL = @SQL + ' [Side],'
+				SET @SQL = @SQL + ' [Price],'
+				SET @SQL = @SQL + ' [AvgPrice],'
+				SET @SQL = @SQL + ' [ConPrice],'
+				SET @SQL = @SQL + ' [Volume],'
+				SET @SQL = @SQL + ' [ExecutedVol],'
+				SET @SQL = @SQL + ' [ExecutedPrice],'
+				SET @SQL = @SQL + ' [CancelVolume],'
+				SET @SQL = @SQL + ' [CancelledVolume],'
+				SET @SQL = @SQL + ' [SubCustAccountID],'
+				SET @SQL = @SQL + ' [ExecTransType],'
+				SET @SQL = @SQL + ' [TradeTime],'
+				SET @SQL = @SQL + ' [MatchedTime],'
+				SET @SQL = @SQL + ' [CancelledTime],'
+				SET @SQL = @SQL + ' [OrderStatus],'
+				SET @SQL = @SQL + ' [OrdRejReason],'
+				SET @SQL = @SQL + ' [ConfirmNo],'
+				SET @SQL = @SQL + ' [CancelledConfirmNo],'
+				SET @SQL = @SQL + ' [SourceID],'
+				SET @SQL = @SQL + ' [ExecType],'
+				SET @SQL = @SQL + ' [CancelledExecType],'
+				SET @SQL = @SQL + ' [PortOrClient],'
+				SET @SQL = @SQL + ' [Market],'
+				SET @SQL = @SQL + ' [MarketStatus],'
+				SET @SQL = @SQL + ' [OrderSource],'
+				SET @SQL = @SQL + ' [IsNewOrder],'
+				SET @SQL = @SQL + ' [Sequence],'
+				SET @SQL = @SQL + ' [NumOfMatch],'
+				SET @SQL = @SQL + ' [QuickOrderID],'
+				SET @SQL = @SQL + ' [ConditionOrderID]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[ExecOrder]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			]]></body>
+		</procedure>
+		
+		<procedure owner="dbo" name="ExecOrder_Insert" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the ExecOrder table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@OrderId" type="int" direction="Output" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@RefOrderId" type="varchar" direction="Input" size="64" precision="0" scale="0" param="(64)" nulldefault=""/>
+				<parameter name="@MessageType" type="varchar" direction="Input" size="2" precision="0" scale="0" param="(2)" nulldefault=""/>
+				<parameter name="@FisOrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@SecSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault=""/>
+				<parameter name="@Side" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@Price" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@AvgPrice" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@ConPrice" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@Volume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@ExecutedVol" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@ExecutedPrice" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@CancelVolume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@CancelledVolume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@SubCustAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@ExecTransType" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@TradeTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@MatchedTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@CancelledTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@OrderStatus" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault=""/>
+				<parameter name="@OrdRejReason" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@ConfirmNo" type="varchar" direction="Input" size="6" precision="0" scale="0" param="(6)" nulldefault=""/>
+				<parameter name="@CancelledConfirmNo" type="varchar" direction="Input" size="6" precision="0" scale="0" param="(6)" nulldefault=""/>
+				<parameter name="@SourceId" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault=""/>
+				<parameter name="@ExecType" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@CancelledExecType" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@PortOrClient" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@Market" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@MarketStatus" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@OrderSource" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@IsNewOrder" type="bit" direction="Input" size="1" precision="1" scale="0" param="" nulldefault=""/>
+				<parameter name="@Sequence" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@NumOfMatch" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@QuickOrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@ConditionOrderId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				INSERT INTO [dbo].[ExecOrder]
+					(
+					[RefOrderID]
+					,[MessageType]
+					,[FISOrderID]
+					,[SecSymbol]
+					,[Side]
+					,[Price]
+					,[AvgPrice]
+					,[ConPrice]
+					,[Volume]
+					,[ExecutedVol]
+					,[ExecutedPrice]
+					,[CancelVolume]
+					,[CancelledVolume]
+					,[SubCustAccountID]
+					,[ExecTransType]
+					,[TradeTime]
+					,[MatchedTime]
+					,[CancelledTime]
+					,[OrderStatus]
+					,[OrdRejReason]
+					,[ConfirmNo]
+					,[CancelledConfirmNo]
+					,[SourceID]
+					,[ExecType]
+					,[CancelledExecType]
+					,[PortOrClient]
+					,[Market]
+					,[MarketStatus]
+					,[OrderSource]
+					,[IsNewOrder]
+					,[Sequence]
+					,[NumOfMatch]
+					,[QuickOrderID]
+					,[ConditionOrderID]
+					)
+				VALUES
+					(
+					@RefOrderId
+					,@MessageType
+					,@FisOrderId
+					,@SecSymbol
+					,@Side
+					,@Price
+					,@AvgPrice
+					,@ConPrice
+					,@Volume
+					,@ExecutedVol
+					,@ExecutedPrice
+					,@CancelVolume
+					,@CancelledVolume
+					,@SubCustAccountId
+					,@ExecTransType
+					,@TradeTime
+					,@MatchedTime
+					,@CancelledTime
+					,@OrderStatus
+					,@OrdRejReason
+					,@ConfirmNo
+					,@CancelledConfirmNo
+					,@SourceId
+					,@ExecType
+					,@CancelledExecType
+					,@PortOrClient
+					,@Market
+					,@MarketStatus
+					,@OrderSource
+					,@IsNewOrder
+					,@Sequence
+					,@NumOfMatch
+					,@QuickOrderId
+					,@ConditionOrderId
+					)
+				
+				-- Get the identity value
+				SET @OrderId = SCOPE_IDENTITY()
+									
+							
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="ExecOrder_Update" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the ExecOrder table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@OrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@RefOrderId" type="varchar" direction="Input" size="64" precision="0" scale="0" param="(64)" nulldefault=""/>
+				<parameter name="@MessageType" type="varchar" direction="Input" size="2" precision="0" scale="0" param="(2)" nulldefault=""/>
+				<parameter name="@FisOrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@SecSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault=""/>
+				<parameter name="@Side" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@Price" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@AvgPrice" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@ConPrice" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@Volume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@ExecutedVol" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@ExecutedPrice" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@CancelVolume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@CancelledVolume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@SubCustAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@ExecTransType" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@TradeTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@MatchedTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@CancelledTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@OrderStatus" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault=""/>
+				<parameter name="@OrdRejReason" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@ConfirmNo" type="varchar" direction="Input" size="6" precision="0" scale="0" param="(6)" nulldefault=""/>
+				<parameter name="@CancelledConfirmNo" type="varchar" direction="Input" size="6" precision="0" scale="0" param="(6)" nulldefault=""/>
+				<parameter name="@SourceId" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault=""/>
+				<parameter name="@ExecType" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@CancelledExecType" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@PortOrClient" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@Market" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@MarketStatus" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@OrderSource" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@IsNewOrder" type="bit" direction="Input" size="1" precision="1" scale="0" param="" nulldefault=""/>
+				<parameter name="@Sequence" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@NumOfMatch" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@QuickOrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@ConditionOrderId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[ExecOrder]
+				SET
+					[RefOrderID] = @RefOrderId
+					,[MessageType] = @MessageType
+					,[FISOrderID] = @FisOrderId
+					,[SecSymbol] = @SecSymbol
+					,[Side] = @Side
+					,[Price] = @Price
+					,[AvgPrice] = @AvgPrice
+					,[ConPrice] = @ConPrice
+					,[Volume] = @Volume
+					,[ExecutedVol] = @ExecutedVol
+					,[ExecutedPrice] = @ExecutedPrice
+					,[CancelVolume] = @CancelVolume
+					,[CancelledVolume] = @CancelledVolume
+					,[SubCustAccountID] = @SubCustAccountId
+					,[ExecTransType] = @ExecTransType
+					,[TradeTime] = @TradeTime
+					,[MatchedTime] = @MatchedTime
+					,[CancelledTime] = @CancelledTime
+					,[OrderStatus] = @OrderStatus
+					,[OrdRejReason] = @OrdRejReason
+					,[ConfirmNo] = @ConfirmNo
+					,[CancelledConfirmNo] = @CancelledConfirmNo
+					,[SourceID] = @SourceId
+					,[ExecType] = @ExecType
+					,[CancelledExecType] = @CancelledExecType
+					,[PortOrClient] = @PortOrClient
+					,[Market] = @Market
+					,[MarketStatus] = @MarketStatus
+					,[OrderSource] = @OrderSource
+					,[IsNewOrder] = @IsNewOrder
+					,[Sequence] = @Sequence
+					,[NumOfMatch] = @NumOfMatch
+					,[QuickOrderID] = @QuickOrderId
+					,[ConditionOrderID] = @ConditionOrderId
+				WHERE
+[OrderID] = @OrderId 
+				
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="ExecOrder_Delete" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the ExecOrder table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@OrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				DELETE FROM [dbo].[ExecOrder] WITH (ROWLOCK) 
+				WHERE
+					[OrderID] = @OrderId
+					
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="ExecOrder_GetByConditionOrderId" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the ExecOrder table through a foreign key
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@ConditionOrderId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SET ANSI_NULLS OFF
+				
+				SELECT
+					[OrderID],
+					[RefOrderID],
+					[MessageType],
+					[FISOrderID],
+					[SecSymbol],
+					[Side],
+					[Price],
+					[AvgPrice],
+					[ConPrice],
+					[Volume],
+					[ExecutedVol],
+					[ExecutedPrice],
+					[CancelVolume],
+					[CancelledVolume],
+					[SubCustAccountID],
+					[ExecTransType],
+					[TradeTime],
+					[MatchedTime],
+					[CancelledTime],
+					[OrderStatus],
+					[OrdRejReason],
+					[ConfirmNo],
+					[CancelledConfirmNo],
+					[SourceID],
+					[ExecType],
+					[CancelledExecType],
+					[PortOrClient],
+					[Market],
+					[MarketStatus],
+					[OrderSource],
+					[IsNewOrder],
+					[Sequence],
+					[NumOfMatch],
+					[QuickOrderID],
+					[ConditionOrderID]
+				FROM
+					[dbo].[ExecOrder]
+				WHERE
+					[ConditionOrderID] = @ConditionOrderId
+				
+				SELECT @@ROWCOUNT
+				SET ANSI_NULLS ON
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="ExecOrder_GetByQuickOrderId" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the ExecOrder table through a foreign key
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@QuickOrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SET ANSI_NULLS OFF
+				
+				SELECT
+					[OrderID],
+					[RefOrderID],
+					[MessageType],
+					[FISOrderID],
+					[SecSymbol],
+					[Side],
+					[Price],
+					[AvgPrice],
+					[ConPrice],
+					[Volume],
+					[ExecutedVol],
+					[ExecutedPrice],
+					[CancelVolume],
+					[CancelledVolume],
+					[SubCustAccountID],
+					[ExecTransType],
+					[TradeTime],
+					[MatchedTime],
+					[CancelledTime],
+					[OrderStatus],
+					[OrdRejReason],
+					[ConfirmNo],
+					[CancelledConfirmNo],
+					[SourceID],
+					[ExecType],
+					[CancelledExecType],
+					[PortOrClient],
+					[Market],
+					[MarketStatus],
+					[OrderSource],
+					[IsNewOrder],
+					[Sequence],
+					[NumOfMatch],
+					[QuickOrderID],
+					[ConditionOrderID]
+				FROM
+					[dbo].[ExecOrder]
+				WHERE
+					[QuickOrderID] = @QuickOrderId
+				
+				SELECT @@ROWCOUNT
+				SET ANSI_NULLS ON
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="ExecOrder_GetByOrderId" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the ExecOrder table through an index
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@OrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SELECT
+					[OrderID],
+					[RefOrderID],
+					[MessageType],
+					[FISOrderID],
+					[SecSymbol],
+					[Side],
+					[Price],
+					[AvgPrice],
+					[ConPrice],
+					[Volume],
+					[ExecutedVol],
+					[ExecutedPrice],
+					[CancelVolume],
+					[CancelledVolume],
+					[SubCustAccountID],
+					[ExecTransType],
+					[TradeTime],
+					[MatchedTime],
+					[CancelledTime],
+					[OrderStatus],
+					[OrdRejReason],
+					[ConfirmNo],
+					[CancelledConfirmNo],
+					[SourceID],
+					[ExecType],
+					[CancelledExecType],
+					[PortOrClient],
+					[Market],
+					[MarketStatus],
+					[OrderSource],
+					[IsNewOrder],
+					[Sequence],
+					[NumOfMatch],
+					[QuickOrderID],
+					[ConditionOrderID]
+				FROM
+					[dbo].[ExecOrder]
+				WHERE
+					[OrderID] = @OrderId
+				SELECT @@ROWCOUNT
+					
+			]]></body>
+			
+		</procedure>
+		<procedure owner="dbo" name="ExecOrder_Find" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the ExecOrder table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@SearchUsingOR" type="bit" direction="Input" size="0" precision="1" scale="0" param="" nulldefault="null"/>
+				<parameter name="@OrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@RefOrderId" type="varchar" direction="Input" size="64" precision="0" scale="0" param="(64)" nulldefault="null"/>
+				<parameter name="@MessageType" type="varchar" direction="Input" size="2" precision="0" scale="0" param="(2)" nulldefault="null"/>
+				<parameter name="@FisOrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@SecSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault="null"/>
+				<parameter name="@Side" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault="null"/>
+				<parameter name="@Price" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault="null"/>
+				<parameter name="@AvgPrice" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault="null"/>
+				<parameter name="@ConPrice" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault="null"/>
+				<parameter name="@Volume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@ExecutedVol" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@ExecutedPrice" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault="null"/>
+				<parameter name="@CancelVolume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@CancelledVolume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@SubCustAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault="null"/>
+				<parameter name="@ExecTransType" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@TradeTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@MatchedTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@CancelledTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@OrderStatus" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault="null"/>
+				<parameter name="@OrdRejReason" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@ConfirmNo" type="varchar" direction="Input" size="6" precision="0" scale="0" param="(6)" nulldefault="null"/>
+				<parameter name="@CancelledConfirmNo" type="varchar" direction="Input" size="6" precision="0" scale="0" param="(6)" nulldefault="null"/>
+				<parameter name="@SourceId" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault="null"/>
+				<parameter name="@ExecType" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault="null"/>
+				<parameter name="@CancelledExecType" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault="null"/>
+				<parameter name="@PortOrClient" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault="null"/>
+				<parameter name="@Market" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault="null"/>
+				<parameter name="@MarketStatus" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault="null"/>
+				<parameter name="@OrderSource" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault="null"/>
+				<parameter name="@IsNewOrder" type="bit" direction="Input" size="1" precision="1" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Sequence" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@NumOfMatch" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@QuickOrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@ConditionOrderId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault="null"/>
+			</parameters>
+			<body><![CDATA[
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [OrderID]
+	, [RefOrderID]
+	, [MessageType]
+	, [FISOrderID]
+	, [SecSymbol]
+	, [Side]
+	, [Price]
+	, [AvgPrice]
+	, [ConPrice]
+	, [Volume]
+	, [ExecutedVol]
+	, [ExecutedPrice]
+	, [CancelVolume]
+	, [CancelledVolume]
+	, [SubCustAccountID]
+	, [ExecTransType]
+	, [TradeTime]
+	, [MatchedTime]
+	, [CancelledTime]
+	, [OrderStatus]
+	, [OrdRejReason]
+	, [ConfirmNo]
+	, [CancelledConfirmNo]
+	, [SourceID]
+	, [ExecType]
+	, [CancelledExecType]
+	, [PortOrClient]
+	, [Market]
+	, [MarketStatus]
+	, [OrderSource]
+	, [IsNewOrder]
+	, [Sequence]
+	, [NumOfMatch]
+	, [QuickOrderID]
+	, [ConditionOrderID]
+    FROM
+	[dbo].[ExecOrder]
+    WHERE 
+	 ([OrderID] = @OrderId OR @OrderId IS NULL)
+	AND ([RefOrderID] = @RefOrderId OR @RefOrderId IS NULL)
+	AND ([MessageType] = @MessageType OR @MessageType IS NULL)
+	AND ([FISOrderID] = @FisOrderId OR @FisOrderId IS NULL)
+	AND ([SecSymbol] = @SecSymbol OR @SecSymbol IS NULL)
+	AND ([Side] = @Side OR @Side IS NULL)
+	AND ([Price] = @Price OR @Price IS NULL)
+	AND ([AvgPrice] = @AvgPrice OR @AvgPrice IS NULL)
+	AND ([ConPrice] = @ConPrice OR @ConPrice IS NULL)
+	AND ([Volume] = @Volume OR @Volume IS NULL)
+	AND ([ExecutedVol] = @ExecutedVol OR @ExecutedVol IS NULL)
+	AND ([ExecutedPrice] = @ExecutedPrice OR @ExecutedPrice IS NULL)
+	AND ([CancelVolume] = @CancelVolume OR @CancelVolume IS NULL)
+	AND ([CancelledVolume] = @CancelledVolume OR @CancelledVolume IS NULL)
+	AND ([SubCustAccountID] = @SubCustAccountId OR @SubCustAccountId IS NULL)
+	AND ([ExecTransType] = @ExecTransType OR @ExecTransType IS NULL)
+	AND ([TradeTime] = @TradeTime OR @TradeTime IS NULL)
+	AND ([MatchedTime] = @MatchedTime OR @MatchedTime IS NULL)
+	AND ([CancelledTime] = @CancelledTime OR @CancelledTime IS NULL)
+	AND ([OrderStatus] = @OrderStatus OR @OrderStatus IS NULL)
+	AND ([OrdRejReason] = @OrdRejReason OR @OrdRejReason IS NULL)
+	AND ([ConfirmNo] = @ConfirmNo OR @ConfirmNo IS NULL)
+	AND ([CancelledConfirmNo] = @CancelledConfirmNo OR @CancelledConfirmNo IS NULL)
+	AND ([SourceID] = @SourceId OR @SourceId IS NULL)
+	AND ([ExecType] = @ExecType OR @ExecType IS NULL)
+	AND ([CancelledExecType] = @CancelledExecType OR @CancelledExecType IS NULL)
+	AND ([PortOrClient] = @PortOrClient OR @PortOrClient IS NULL)
+	AND ([Market] = @Market OR @Market IS NULL)
+	AND ([MarketStatus] = @MarketStatus OR @MarketStatus IS NULL)
+	AND ([OrderSource] = @OrderSource OR @OrderSource IS NULL)
+	AND ([IsNewOrder] = @IsNewOrder OR @IsNewOrder IS NULL)
+	AND ([Sequence] = @Sequence OR @Sequence IS NULL)
+	AND ([NumOfMatch] = @NumOfMatch OR @NumOfMatch IS NULL)
+	AND ([QuickOrderID] = @QuickOrderId OR @QuickOrderId IS NULL)
+	AND ([ConditionOrderID] = @ConditionOrderId OR @ConditionOrderId IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [OrderID]
+	, [RefOrderID]
+	, [MessageType]
+	, [FISOrderID]
+	, [SecSymbol]
+	, [Side]
+	, [Price]
+	, [AvgPrice]
+	, [ConPrice]
+	, [Volume]
+	, [ExecutedVol]
+	, [ExecutedPrice]
+	, [CancelVolume]
+	, [CancelledVolume]
+	, [SubCustAccountID]
+	, [ExecTransType]
+	, [TradeTime]
+	, [MatchedTime]
+	, [CancelledTime]
+	, [OrderStatus]
+	, [OrdRejReason]
+	, [ConfirmNo]
+	, [CancelledConfirmNo]
+	, [SourceID]
+	, [ExecType]
+	, [CancelledExecType]
+	, [PortOrClient]
+	, [Market]
+	, [MarketStatus]
+	, [OrderSource]
+	, [IsNewOrder]
+	, [Sequence]
+	, [NumOfMatch]
+	, [QuickOrderID]
+	, [ConditionOrderID]
+    FROM
+	[dbo].[ExecOrder]
+    WHERE 
+	 ([OrderID] = @OrderId AND @OrderId is not null)
+	OR ([RefOrderID] = @RefOrderId AND @RefOrderId is not null)
+	OR ([MessageType] = @MessageType AND @MessageType is not null)
+	OR ([FISOrderID] = @FisOrderId AND @FisOrderId is not null)
+	OR ([SecSymbol] = @SecSymbol AND @SecSymbol is not null)
+	OR ([Side] = @Side AND @Side is not null)
+	OR ([Price] = @Price AND @Price is not null)
+	OR ([AvgPrice] = @AvgPrice AND @AvgPrice is not null)
+	OR ([ConPrice] = @ConPrice AND @ConPrice is not null)
+	OR ([Volume] = @Volume AND @Volume is not null)
+	OR ([ExecutedVol] = @ExecutedVol AND @ExecutedVol is not null)
+	OR ([ExecutedPrice] = @ExecutedPrice AND @ExecutedPrice is not null)
+	OR ([CancelVolume] = @CancelVolume AND @CancelVolume is not null)
+	OR ([CancelledVolume] = @CancelledVolume AND @CancelledVolume is not null)
+	OR ([SubCustAccountID] = @SubCustAccountId AND @SubCustAccountId is not null)
+	OR ([ExecTransType] = @ExecTransType AND @ExecTransType is not null)
+	OR ([TradeTime] = @TradeTime AND @TradeTime is not null)
+	OR ([MatchedTime] = @MatchedTime AND @MatchedTime is not null)
+	OR ([CancelledTime] = @CancelledTime AND @CancelledTime is not null)
+	OR ([OrderStatus] = @OrderStatus AND @OrderStatus is not null)
+	OR ([OrdRejReason] = @OrdRejReason AND @OrdRejReason is not null)
+	OR ([ConfirmNo] = @ConfirmNo AND @ConfirmNo is not null)
+	OR ([CancelledConfirmNo] = @CancelledConfirmNo AND @CancelledConfirmNo is not null)
+	OR ([SourceID] = @SourceId AND @SourceId is not null)
+	OR ([ExecType] = @ExecType AND @ExecType is not null)
+	OR ([CancelledExecType] = @CancelledExecType AND @CancelledExecType is not null)
+	OR ([PortOrClient] = @PortOrClient AND @PortOrClient is not null)
+	OR ([Market] = @Market AND @Market is not null)
+	OR ([MarketStatus] = @MarketStatus AND @MarketStatus is not null)
+	OR ([OrderSource] = @OrderSource AND @OrderSource is not null)
+	OR ([IsNewOrder] = @IsNewOrder AND @IsNewOrder is not null)
+	OR ([Sequence] = @Sequence AND @Sequence is not null)
+	OR ([NumOfMatch] = @NumOfMatch AND @NumOfMatch is not null)
+	OR ([QuickOrderID] = @QuickOrderId AND @QuickOrderId is not null)
+	OR ([ConditionOrderID] = @ConditionOrderId AND @ConditionOrderId is not null)
+	SELECT @@ROWCOUNT			
+  END
+				]]></body>
+		</procedure>
+
+		
+		<procedure owner="dbo" name="ExecOrder_Find_Dynamic"  skip="true">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the ExecOrder table using a dynamically generated query.
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				BEGIN
+				
+				WITH PageIndex AS (
+					SELECT TOP {3} row_number() over (order by {1}) AS RowIndex
+					, [OrderID]
+					, [RefOrderID]
+					, [MessageType]
+					, [FISOrderID]
+					, [SecSymbol]
+					, [Side]
+					, [Price]
+					, [AvgPrice]
+					, [ConPrice]
+					, [Volume]
+					, [ExecutedVol]
+					, [ExecutedPrice]
+					, [CancelVolume]
+					, [CancelledVolume]
+					, [SubCustAccountID]
+					, [ExecTransType]
+					, [TradeTime]
+					, [MatchedTime]
+					, [CancelledTime]
+					, [OrderStatus]
+					, [OrdRejReason]
+					, [ConfirmNo]
+					, [CancelledConfirmNo]
+					, [SourceID]
+					, [ExecType]
+					, [CancelledExecType]
+					, [PortOrClient]
+					, [Market]
+					, [MarketStatus]
+					, [OrderSource]
+					, [IsNewOrder]
+					, [Sequence]
+					, [NumOfMatch]
+					, [QuickOrderID]
+					, [ConditionOrderID]
+					FROM [dbo].[ExecOrder] {0}
+				)
+				SELECT
+				       [OrderID],
+				       [RefOrderID],
+				       [MessageType],
+				       [FISOrderID],
+				       [SecSymbol],
+				       [Side],
+				       [Price],
+				       [AvgPrice],
+				       [ConPrice],
+				       [Volume],
+				       [ExecutedVol],
+				       [ExecutedPrice],
+				       [CancelVolume],
+				       [CancelledVolume],
+				       [SubCustAccountID],
+				       [ExecTransType],
+				       [TradeTime],
+				       [MatchedTime],
+				       [CancelledTime],
+				       [OrderStatus],
+				       [OrdRejReason],
+				       [ConfirmNo],
+				       [CancelledConfirmNo],
+				       [SourceID],
+				       [ExecType],
+				       [CancelledExecType],
+				       [PortOrClient],
+				       [Market],
+				       [MarketStatus],
+				       [OrderSource],
+				       [IsNewOrder],
+				       [Sequence],
+				       [NumOfMatch],
+				       [QuickOrderID],
+				       [ConditionOrderID]
+				  FROM PageIndex
+				 WHERE RowIndex > {2}
+				   AND RowIndex <= {3}
+				ORDER BY {1};
+				
+
+				-- get total count
+				SELECT COUNT(*) AS TotalRowCount FROM [dbo].[ExecOrder] {0};
+				
+				END
+			]]></body>
+		</procedure>
+		
+				
+		<procedure owner="dbo" name="_ExecOrder_GetMaxSequence"  skip="true">
+			<comment><![CDATA[]]></comment>
+			<parameters>
+			</parameters>
+			<body><![CDATA[
+				
+ 
+    SELECT MAX(Sequence) AS maxSequence FROM ExecOrder
+
+			]]></body>
+					</procedure>
+				
+		<procedure owner="dbo" name="_ExecOrder_DeleteOldData"  skip="true">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Wednesday, November 17, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the ExecOrder table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+]]></comment>
+			<parameters>
+			</parameters>
+			<body><![CDATA[
+				
+
+
+
+				DELETE FROM [dbo].[ExecOrder] WITH (ROWLOCK) 
+				WHERE
+					[TradeTime] < CONVERT(DATETIME, FLOOR(CONVERT(FLOAT, GETDATE())))
+
+			]]></body>
+					</procedure>
+		
+		<procedure owner="dbo" name="ConditionOrderDetail_Get_List" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the ConditionOrderDetail table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				SELECT
+					[DetailId],
+					[Volume],
+					[MatchedVolume],
+					[AvgPrice],
+					[OrderStatus],
+					[ConditionOrderID],
+					[FISOrderID],
+					[OrdRejReason],
+					[NumOfMatch],
+					[CancelledVol],
+					[CreatedDateTime],
+					[UpdatedDateTime]
+				FROM
+					[dbo].[ConditionOrderDetail]
+					
+				SELECT @@ROWCOUNT
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="ConditionOrderDetail_GetPaged" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the ConditionOrderDetail table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@WhereClause" type="nvarchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)" />
+				<parameter name="@OrderBy" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)"/>
+				<parameter name="@PageIndex" type="int" direction="Input" size="0" precision="10" scale="0" />
+				<parameter name="@PageSize" type="int" direction="Input" size="0" precision="10" scale="0" /> 
+			</parameters>
+			<body><![CDATA[
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[DetailId]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [DetailId]'
+				SET @SQL = @SQL + ', [Volume]'
+				SET @SQL = @SQL + ', [MatchedVolume]'
+				SET @SQL = @SQL + ', [AvgPrice]'
+				SET @SQL = @SQL + ', [OrderStatus]'
+				SET @SQL = @SQL + ', [ConditionOrderID]'
+				SET @SQL = @SQL + ', [FISOrderID]'
+				SET @SQL = @SQL + ', [OrdRejReason]'
+				SET @SQL = @SQL + ', [NumOfMatch]'
+				SET @SQL = @SQL + ', [CancelledVol]'
+				SET @SQL = @SQL + ', [CreatedDateTime]'
+				SET @SQL = @SQL + ', [UpdatedDateTime]'
+				SET @SQL = @SQL + ' FROM [dbo].[ConditionOrderDetail]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [DetailId],'
+				SET @SQL = @SQL + ' [Volume],'
+				SET @SQL = @SQL + ' [MatchedVolume],'
+				SET @SQL = @SQL + ' [AvgPrice],'
+				SET @SQL = @SQL + ' [OrderStatus],'
+				SET @SQL = @SQL + ' [ConditionOrderID],'
+				SET @SQL = @SQL + ' [FISOrderID],'
+				SET @SQL = @SQL + ' [OrdRejReason],'
+				SET @SQL = @SQL + ' [NumOfMatch],'
+				SET @SQL = @SQL + ' [CancelledVol],'
+				SET @SQL = @SQL + ' [CreatedDateTime],'
+				SET @SQL = @SQL + ' [UpdatedDateTime]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[ConditionOrderDetail]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			]]></body>
+		</procedure>
+		
+		<procedure owner="dbo" name="ConditionOrderDetail_Insert" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the ConditionOrderDetail table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@DetailId" type="bigint" direction="Output" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@Volume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@MatchedVolume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@AvgPrice" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@OrderStatus" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault=""/>
+				<parameter name="@ConditionOrderId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@FisOrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@OrdRejReason" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@NumOfMatch" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@CancelledVol" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@CreatedDateTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@UpdatedDateTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				INSERT INTO [dbo].[ConditionOrderDetail]
+					(
+					[Volume]
+					,[MatchedVolume]
+					,[AvgPrice]
+					,[OrderStatus]
+					,[ConditionOrderID]
+					,[FISOrderID]
+					,[OrdRejReason]
+					,[NumOfMatch]
+					,[CancelledVol]
+					,[CreatedDateTime]
+					,[UpdatedDateTime]
+					)
+				VALUES
+					(
+					@Volume
+					,@MatchedVolume
+					,@AvgPrice
+					,@OrderStatus
+					,@ConditionOrderId
+					,@FisOrderId
+					,@OrdRejReason
+					,@NumOfMatch
+					,@CancelledVol
+					,@CreatedDateTime
+					,@UpdatedDateTime
+					)
+				
+				-- Get the identity value
+				SET @DetailId = SCOPE_IDENTITY()
+									
+							
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="ConditionOrderDetail_Update" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the ConditionOrderDetail table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@DetailId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@Volume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@MatchedVolume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@AvgPrice" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@OrderStatus" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault=""/>
+				<parameter name="@ConditionOrderId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@FisOrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@OrdRejReason" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@NumOfMatch" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@CancelledVol" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@CreatedDateTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@UpdatedDateTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[ConditionOrderDetail]
+				SET
+					[Volume] = @Volume
+					,[MatchedVolume] = @MatchedVolume
+					,[AvgPrice] = @AvgPrice
+					,[OrderStatus] = @OrderStatus
+					,[ConditionOrderID] = @ConditionOrderId
+					,[FISOrderID] = @FisOrderId
+					,[OrdRejReason] = @OrdRejReason
+					,[NumOfMatch] = @NumOfMatch
+					,[CancelledVol] = @CancelledVol
+					,[CreatedDateTime] = @CreatedDateTime
+					,[UpdatedDateTime] = @UpdatedDateTime
+				WHERE
+[DetailId] = @DetailId 
+				
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="ConditionOrderDetail_Delete" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the ConditionOrderDetail table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@DetailId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				DELETE FROM [dbo].[ConditionOrderDetail] WITH (ROWLOCK) 
+				WHERE
+					[DetailId] = @DetailId
+					
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="ConditionOrderDetail_GetByConditionOrderId" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the ConditionOrderDetail table through a foreign key
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@ConditionOrderId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SET ANSI_NULLS OFF
+				
+				SELECT
+					[DetailId],
+					[Volume],
+					[MatchedVolume],
+					[AvgPrice],
+					[OrderStatus],
+					[ConditionOrderID],
+					[FISOrderID],
+					[OrdRejReason],
+					[NumOfMatch],
+					[CancelledVol],
+					[CreatedDateTime],
+					[UpdatedDateTime]
+				FROM
+					[dbo].[ConditionOrderDetail]
+				WHERE
+					[ConditionOrderID] = @ConditionOrderId
+				
+				SELECT @@ROWCOUNT
+				SET ANSI_NULLS ON
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="ConditionOrderDetail_GetByDetailId" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the ConditionOrderDetail table through an index
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@DetailId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SELECT
+					[DetailId],
+					[Volume],
+					[MatchedVolume],
+					[AvgPrice],
+					[OrderStatus],
+					[ConditionOrderID],
+					[FISOrderID],
+					[OrdRejReason],
+					[NumOfMatch],
+					[CancelledVol],
+					[CreatedDateTime],
+					[UpdatedDateTime]
+				FROM
+					[dbo].[ConditionOrderDetail]
+				WHERE
+					[DetailId] = @DetailId
+				SELECT @@ROWCOUNT
+					
+			]]></body>
+			
+		</procedure>
+		<procedure owner="dbo" name="ConditionOrderDetail_Find" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the ConditionOrderDetail table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@SearchUsingOR" type="bit" direction="Input" size="0" precision="1" scale="0" param="" nulldefault="null"/>
+				<parameter name="@DetailId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Volume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@MatchedVolume" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@AvgPrice" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault="null"/>
+				<parameter name="@OrderStatus" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault="null"/>
+				<parameter name="@ConditionOrderId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault="null"/>
+				<parameter name="@FisOrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@OrdRejReason" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@NumOfMatch" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@CancelledVol" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@CreatedDateTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@UpdatedDateTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+			</parameters>
+			<body><![CDATA[
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [DetailId]
+	, [Volume]
+	, [MatchedVolume]
+	, [AvgPrice]
+	, [OrderStatus]
+	, [ConditionOrderID]
+	, [FISOrderID]
+	, [OrdRejReason]
+	, [NumOfMatch]
+	, [CancelledVol]
+	, [CreatedDateTime]
+	, [UpdatedDateTime]
+    FROM
+	[dbo].[ConditionOrderDetail]
+    WHERE 
+	 ([DetailId] = @DetailId OR @DetailId IS NULL)
+	AND ([Volume] = @Volume OR @Volume IS NULL)
+	AND ([MatchedVolume] = @MatchedVolume OR @MatchedVolume IS NULL)
+	AND ([AvgPrice] = @AvgPrice OR @AvgPrice IS NULL)
+	AND ([OrderStatus] = @OrderStatus OR @OrderStatus IS NULL)
+	AND ([ConditionOrderID] = @ConditionOrderId OR @ConditionOrderId IS NULL)
+	AND ([FISOrderID] = @FisOrderId OR @FisOrderId IS NULL)
+	AND ([OrdRejReason] = @OrdRejReason OR @OrdRejReason IS NULL)
+	AND ([NumOfMatch] = @NumOfMatch OR @NumOfMatch IS NULL)
+	AND ([CancelledVol] = @CancelledVol OR @CancelledVol IS NULL)
+	AND ([CreatedDateTime] = @CreatedDateTime OR @CreatedDateTime IS NULL)
+	AND ([UpdatedDateTime] = @UpdatedDateTime OR @UpdatedDateTime IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [DetailId]
+	, [Volume]
+	, [MatchedVolume]
+	, [AvgPrice]
+	, [OrderStatus]
+	, [ConditionOrderID]
+	, [FISOrderID]
+	, [OrdRejReason]
+	, [NumOfMatch]
+	, [CancelledVol]
+	, [CreatedDateTime]
+	, [UpdatedDateTime]
+    FROM
+	[dbo].[ConditionOrderDetail]
+    WHERE 
+	 ([DetailId] = @DetailId AND @DetailId is not null)
+	OR ([Volume] = @Volume AND @Volume is not null)
+	OR ([MatchedVolume] = @MatchedVolume AND @MatchedVolume is not null)
+	OR ([AvgPrice] = @AvgPrice AND @AvgPrice is not null)
+	OR ([OrderStatus] = @OrderStatus AND @OrderStatus is not null)
+	OR ([ConditionOrderID] = @ConditionOrderId AND @ConditionOrderId is not null)
+	OR ([FISOrderID] = @FisOrderId AND @FisOrderId is not null)
+	OR ([OrdRejReason] = @OrdRejReason AND @OrdRejReason is not null)
+	OR ([NumOfMatch] = @NumOfMatch AND @NumOfMatch is not null)
+	OR ([CancelledVol] = @CancelledVol AND @CancelledVol is not null)
+	OR ([CreatedDateTime] = @CreatedDateTime AND @CreatedDateTime is not null)
+	OR ([UpdatedDateTime] = @UpdatedDateTime AND @UpdatedDateTime is not null)
+	SELECT @@ROWCOUNT			
+  END
+				]]></body>
+		</procedure>
+
+		
+		<procedure owner="dbo" name="ConditionOrderDetail_Find_Dynamic"  skip="true">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Tuesday, January 31, 2012
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the ConditionOrderDetail table using a dynamically generated query.
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				BEGIN
+				
+				WITH PageIndex AS (
+					SELECT TOP {3} row_number() over (order by {1}) AS RowIndex
+					, [DetailId]
+					, [Volume]
+					, [MatchedVolume]
+					, [AvgPrice]
+					, [OrderStatus]
+					, [ConditionOrderID]
+					, [FISOrderID]
+					, [OrdRejReason]
+					, [NumOfMatch]
+					, [CancelledVol]
+					, [CreatedDateTime]
+					, [UpdatedDateTime]
+					FROM [dbo].[ConditionOrderDetail] {0}
+				)
+				SELECT
+				       [DetailId],
+				       [Volume],
+				       [MatchedVolume],
+				       [AvgPrice],
+				       [OrderStatus],
+				       [ConditionOrderID],
+				       [FISOrderID],
+				       [OrdRejReason],
+				       [NumOfMatch],
+				       [CancelledVol],
+				       [CreatedDateTime],
+				       [UpdatedDateTime]
+				  FROM PageIndex
+				 WHERE RowIndex > {2}
+				   AND RowIndex <= {3}
+				ORDER BY {1};
+				
+
+				-- get total count
+				SELECT COUNT(*) AS TotalRowCount FROM [dbo].[ConditionOrderDetail] {0};
+				
+				END
+			]]></body>
+		</procedure>
+		
+</procedures>
+</root>

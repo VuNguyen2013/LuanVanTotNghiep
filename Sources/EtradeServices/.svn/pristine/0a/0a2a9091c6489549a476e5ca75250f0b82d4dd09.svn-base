@@ -1,0 +1,2183 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ETradeHistory.Services</name>
+    </assembly>
+    <members>
+        <member name="T:ETradeHistory.Services.ServiceViewBase`1">
+            <summary>
+            The base class that each component business domain service of the model implements.
+            </summary>
+        </member>
+        <member name="T:ETradeHistory.Services.ServiceViewBaseCore`1">
+            <summary>
+            The interface that each component business domain service of the model implements.
+            </summary>
+        </member>
+        <member name="T:ETradeHistory.Services.IComponentService">
+            <summary>
+            The interface that each component business domain service of the model implements.
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.IComponentService.ProcessorList">
+             <summary>
+            	Provides a List of Processors to execute business process logic in.
+             </summary>
+            <value>A list of business rule processors to execute</value>
+        </member>
+        <member name="P:ETradeHistory.Services.IComponentService.ServiceProcessResult">
+             <summary>
+            	Provides a Notification Pattern of Process Results.
+             </summary>
+            <value>A list of business rule processors to execute</value>
+        </member>
+        <member name="P:ETradeHistory.Services.IComponentService.AbortOnFailure">
+             <summary>
+            	Provides a way to terminate the Processor calls upon an exception. 
+             </summary>
+            <value>bool value determining to stop once an exceptions been thrown. </value>		
+        </member>
+        <member name="E:ETradeHistory.Services.IComponentService.ProcessStarting">
+            <summary>
+            Event to indicate that a processor is about to begin.
+            </summary>
+        </member>
+        <member name="E:ETradeHistory.Services.IComponentService.ProcessEnded">
+            <summary>
+            Event to indicate that a processor has just ended.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceViewBaseCore`1.Execute">
+             <summary>
+            	Provides the beginning
+             </summary>
+            <value>A list of business rule processors to execute</value>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceViewBaseCore`1.Execute(System.Boolean)">
+             <summary>
+            	Provides the beginning
+             </summary>
+            <value>A list of business rule processors to execute</value>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceViewBaseCore`1.OnProcessStarting(ETradeHistory.Services.ProcessorBase)">
+            <summary>
+            Provides the notification on the change of process state to interested parties.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceViewBaseCore`1.OnProcessEnded(ETradeHistory.Services.ProcessorBase)">
+            <summary>
+            Provides the notification on the change of process state to interested parties.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceViewBaseCore`1.Get">
+            <summary>
+            Gets a page of rows from the DataSource.
+            </summary>
+            <remarks></remarks>
+            <returns>Returns a typed collection of Entity objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceViewBaseCore`1.Get(System.Int32,System.Int32)">
+            <summary>
+            Gets a page of rows from the DataSource.
+            </summary>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of Entity objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceViewBaseCore`1.Get(System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets a page of rows from the DataSource.
+            </summary>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">The total number of rows in the data source.</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of Entity objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceViewBaseCore`1.Get(System.String,System.String)">
+            <summary>
+            Gets a page of rows from the DataSource.
+            </summary>
+            <param name="whereClause">.</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of Entity objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceViewBaseCore`1.Get(System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            Gets a page of rows from the DataSource.
+            </summary>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of Entity objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceViewBaseCore`1.Get(System.String,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets a page of rows from the DataSource.
+            </summary>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">The total number of rows in the data source.</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of Entity objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceViewBaseCore`1.GetAll(System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets All rows from the DataSource.
+            </summary>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">The total number of rows in the data source.</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of Entity objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceViewBaseCore`1.GetPaged(System.String,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets a page of rows from the DataSource.
+            </summary>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC).</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">Number of rows in the DataSource.</param>
+            <returns>Returns a VList of Entity objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceViewBaseCore`1.Find(ETradeHistory.DataAccess.IFilterParameterCollection,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Returns rows from the DataSource that meet the parameter conditions.
+            </summary>
+            <param name="parameters">A collection of <see cref="T:ETradeHistory.DataAccess.SqlFilterParameter"/> objects.</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <returns>Returns a typed collection of Entity objects.</returns>
+        </member>
+        <member name="P:ETradeHistory.Services.ServiceViewBaseCore`1.ProcessorList">
+             <summary>
+            	Provides a List of Processors to execute external business process logic in.
+             </summary>
+            <value>A list of business rule processors to execute</value>
+        </member>
+        <member name="P:ETradeHistory.Services.ServiceViewBaseCore`1.ServiceProcessResult">
+             <summary>
+            	Provides a Notification Pattern of Process Results.
+             </summary>
+            <value>A list of business rule processors to execute</value>
+        </member>
+        <member name="P:ETradeHistory.Services.ServiceViewBaseCore`1.AbortOnFailure">
+             <summary>
+            	Provides a way to terminate the Processor calls upon an exception. 
+             </summary>
+            <value>bool value determining to stop once an exceptions been thrown. </value>		
+        </member>
+        <member name="P:ETradeHistory.Services.ServiceViewBaseCore`1.CurrentProcessor">
+            <summary>
+            Current Processor being executed
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.ServiceViewBaseCore`1.ProcessCounter">
+            <summary>
+            Current Number of Processes completed thus far.
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.ServiceViewBaseCore`1.CurrentProcessorIndex">
+            <summary>
+            Current index of the processor currently or last executed 
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.ServiceViewBaseCore`1.TotalProcesses">
+            <summary>
+            Total Number of Processes currently enlisted in this service 
+            </summary>
+        </member>
+        <member name="E:ETradeHistory.Services.ServiceViewBaseCore`1.ProcessStarting">
+            <summary>
+            Event to indicate that a processor has began.
+            </summary>
+        </member>
+        <member name="E:ETradeHistory.Services.ServiceViewBaseCore`1.ProcessEnded">
+            <summary>
+            Event to indicate that a processor has ended.
+            </summary>
+        </member>
+        <member name="T:ETradeHistory.Services.IProcessorResult">
+            <summary>
+            The interface that each component business domain service of the model implements.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.IProcessorResult.AddBrokenRulesList(System.Type,ETradeHistory.Entities.Validation.BrokenRulesList)">
+            <summary>
+            Provides a method to aggregate BrokenRuleList Collections Based on their Type 
+            if they are invalid.
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.IProcessorResult.Result">
+             <summary>
+            	Provides a result of the current process.
+             </summary>
+            <value>A list of business rule processors to execute</value>
+        </member>
+        <member name="P:ETradeHistory.Services.IProcessorResult.BrokenRulesLists">
+             <summary>
+            	Provides a list of broken rules for the entire process.
+             </summary>
+            <value>A list of rules that were broken in the process</value>
+        </member>
+        <member name="P:ETradeHistory.Services.IProcessorResult.FinalProcessorState">
+            <summary>
+            Provides the final processor state the operation.
+            </summary>
+        </member>
+        <member name="T:ETradeHistory.Services.GenericProcessorResult">
+            <summary>
+            The interface that each component business domain service of the model implements.
+            </summary> 
+        </member>
+        <member name="M:ETradeHistory.Services.GenericProcessorResult.#ctor">
+            <summary>
+            Initializes a new instance of the GenericProcessorResult class.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.GenericProcessorResult.AddBrokenRulesList(System.Type,ETradeHistory.Entities.Validation.BrokenRulesList)">
+            <summary>
+            Provides a method to aggregate BrokenRuleList Collections Based on their Type 
+            if they are invalid.
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.GenericProcessorResult.Result">
+             <summary>
+            	Provides a result of the current process.
+             </summary>
+            <value>A list of business rule processors to execute</value>
+        </member>
+        <member name="P:ETradeHistory.Services.GenericProcessorResult.BrokenRulesLists">
+             <summary>
+            	Provides a list of broken rules for the entire process.
+             </summary>
+            <value>A list of rules that were broken in the process</value>
+        </member>
+        <member name="P:ETradeHistory.Services.GenericProcessorResult.FinalProcessorState">
+            <summary>
+            Provides the final processor state the operation. 
+            This is set by the processor.
+            </summary>
+        </member>
+        <member name="T:ETradeHistory.Services.IConnectionScope">
+            <summary>
+            Connection Scope Interface
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.IConnectionScope.ConnectionStringKey">
+            <summary>
+            Gets or sets the connection string key.
+            </summary>
+            <value>The connection string key.</value>
+        </member>
+        <member name="P:ETradeHistory.Services.IConnectionScope.DataProvider">
+            <summary>
+            Gets or sets the data provider.
+            </summary>
+            <value>The data provider.</value>
+        </member>
+        <member name="P:ETradeHistory.Services.IConnectionScope.DynamicConnectionString">
+            <summary>
+            Gets or sets the dynamic connection string.
+            </summary>
+            <value>The dynamic connection string.</value>
+        </member>
+        <member name="P:ETradeHistory.Services.IConnectionScope.HasTransaction">
+            <summary>
+            Gets a value indicating whether this instance has transaction.
+            </summary>
+            <value>
+            	<c>true</c> if this instance has transaction; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:ETradeHistory.Services.IConnectionScope.TransactionManager">
+            <summary>
+            Gets or sets the transaction manager.
+            </summary>
+            <value>The transaction manager.</value>
+        </member>
+        <member name="T:ETradeHistory.Services.ContextView`2">
+            <summary>
+            Used to create a general view of the current context.  
+            Useful for firing events and giving the UI a picture of 
+            current State of Operation.
+            </summary>
+            <typeparam name="Entity">The Entity object</typeparam>
+            <typeparam name="Domain">Type that holds </typeparam>
+        </member>
+        <member name="M:ETradeHistory.Services.ContextView`2.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ETradeHistory.Services.ContextView`2"/> class.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.ContextView`2.#ctor(`0,ETradeHistory.Services.SecurityContext{`0})">
+            <summary>
+            Initializes a new instance of the <see cref="T:ETradeHistory.Services.ContextView`2"/> class.
+            </summary>
+            <param name="persistingObject">The persisting object.</param>
+            <param name="securityContext">The security context.</param>
+        </member>
+        <member name="M:ETradeHistory.Services.ContextView`2.#ctor(`0,ETradeHistory.Services.SecurityContext{`0},ETradeHistory.DataAccess.TransactionManager)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ETradeHistory.Services.ContextView`2"/> class.
+            </summary>
+            <param name="persistingObject">The persisting object.</param>
+            <param name="securityContext">The security context.</param>
+            <param name="transactionManager">The transaction manager.</param>
+        </member>
+        <member name="P:ETradeHistory.Services.ContextView`2.PersistingObject">
+            <summary>
+            Gets or sets the persisting object.
+            </summary>
+            <value>The persisting object.</value>
+        </member>
+        <member name="P:ETradeHistory.Services.ContextView`2.SecurityContext">
+            <summary>
+            Gets or sets the security context.
+            </summary>
+            <value>The security context.</value>
+        </member>
+        <member name="P:ETradeHistory.Services.ContextView`2.TransactionManager">
+            <summary>
+            Gets or sets the transaction manager.
+            </summary>
+            <value>The transaction manager.</value>
+        </member>
+        <member name="T:ETradeHistory.Services.PnLhistoryService">
+            <summary>
+            An component type implementation of the 'PnLHistory' table.
+            </summary>
+            <remarks>
+            All custom implementations should be done here.
+            </remarks>
+        </member>
+        <member name="T:ETradeHistory.Services.PnLhistoryServiceBase">
+            <summary>
+             An object representation of the 'PnLHistory' table.
+            </summary>
+             <remarks>
+             IMPORTANT!!! You should not modify this partial  class, modify the PnLhistory.cs file instead.
+             All custom implementations should be done in the <see cref="T:ETradeHistory.Entities.PnLhistory"/> class.
+             </remarks>
+        </member>
+        <member name="T:ETradeHistory.Services.ServiceBase`2">
+            <summary>
+            The base class that each component business domain service of the model implements.
+            </summary>
+        </member>
+        <member name="T:ETradeHistory.Services.ServiceBaseCore`2">
+            <summary>
+            The interface that each component business domain service of the model implements.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceBaseCore`2.OnProcessStarting(ETradeHistory.Services.ProcessorBase)">
+            <summary>
+            Provides the notification on the change of process state to interested parties.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceBaseCore`2.OnProcessEnded(ETradeHistory.Services.ProcessorBase)">
+            <summary>
+            Provides the notification on the change of process state to interested parties.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceBaseCore`2.Execute">
+             <summary>
+            	Provides the beginning
+             <remarks>
+             If no AbortIfFailure parameter is passed then the process will not abort if there is a failure
+             </remarks>
+             </summary>
+            <value>A list of business rule processors to execute</value>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceBaseCore`2.Execute(System.Boolean)">
+             <summary>
+            	Executes the processors in the processor list
+             <remarks>
+             If abortIfFailure is set to true then the execution will halt on the first failure
+            </remarks>
+             </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceBaseCore`2.Get(`1)">
+            <summary>
+            Gets a row from the DataSource based on its primary key.
+            </summary>
+            <param name="key">The unique identifier of the row to retrieve.</param>
+            <returns>Returns an instance of the Entity class.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceBaseCore`2.GetAll">
+            <summary>
+            Gets all rows from the DataSource.
+            </summary>
+            <returns>Returns a TList of Entity objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceBaseCore`2.GetPaged(System.String,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets a page of rows from the DataSource.
+            </summary>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC).</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">Number of rows in the DataSource.</param>
+            <returns>Returns a TList of Entity objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceBaseCore`2.Find(System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Returns rows meeting the whereClause condition from the DataSource.
+            </summary>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out parameter to get total records for query</param>
+            <remarks>Operators must be capitalized (OR, AND)</remarks>
+            <returns>Returns a typed collection of Entity objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceBaseCore`2.Insert(`0)">
+            <summary>
+            Inserts a row into the DataSource.
+            </summary>
+            <param name="entity">The Entity object to insert.</param>
+            <returns>Returns true if the operation is successful.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceBaseCore`2.BulkInsert(ETradeHistory.Entities.TList{`0})">
+            <summary>
+            Efficiently inserts multiple rows into the DataSource.
+            </summary>
+            <param name="entities">TList of Entity objects to insert.</param>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceBaseCore`2.Update(`0)">
+            <summary>
+            Updates an existing row in the DataSource.
+            </summary>
+            <param name="entity">The Entity object to update.</param>
+            <returns>Returns true if the operation is successful.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceBaseCore`2.Delete(`0)">
+            <summary>
+            Deletes a row from the DataSource.
+            </summary>
+            <param name="entity">The Entity object to delete.</param>
+            <returns>Returns true if the operation is successful.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceBaseCore`2.Save(`0)">
+            <summary>
+            Saves row changes in the DataSource (insert, update ,delete).
+            </summary>
+            <param name="entity">The Entity object to save.</param>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceBaseCore`2.DeepLoad(`0,System.Boolean,ETradeHistory.DataAccess.DeepLoadType,System.Type[],ETradeHistory.DataAccess.Bases.DeepSession)">
+            <summary>
+            Deep Load the entire Entity object with criteria based on the child types array and the DeepLoadType.
+            </summary>
+            <remarks>
+            Use this method with caution as it is possible to DeepLoad with recursion and traverse an entire collection's object graph.
+            </remarks>
+            <param name="entity">The Entity object to load.</param>
+            <param name="deep">A flag that indicates whether to recursively load all Property Collections that are descendants of this instance. If True, loads the complete object graph below this object. If False, loads this object only.</param>
+            <param name="deepLoadType">DeepLoadType Enumeration to Include/Exclude object property collections from Load.</param>
+            <param name="childTypes">Entity Property Collection Type Array To Include or Exclude from Load.</param>
+            <param name="innerList">A collection of child types for easy access.</param>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceBaseCore`2.DeepLoad(ETradeHistory.Entities.TList{`0},System.Boolean,ETradeHistory.DataAccess.DeepLoadType,System.Type[])">
+            <summary>
+            Deep Loads the entire <see cref="T:ETradeHistory.Entities.TList`1"/> object with criteria based of the child 
+            property collections only N Levels Deep based on the DeepLoadType.
+            </summary>
+            <remarks>
+            Use this method with caution as it is possible to DeepLoad with Recursion and traverse an entire collection's object graph.
+            </remarks>
+            <param name="entities">TList of Entity objects to load.</param>
+            <param name="deep">A flag that indicates whether to recursively load all Property Collections that are descendants of this instance. If True, loads the complete object graph below this object. If False, loads this object only.</param>
+            <param name="deepLoadType">DeepLoadType Enumeration to Include/Exclude object property collections from Load.</param>
+            <param name="childTypes">Entity Property Collection Type Array To Include or Exclude from Load.</param>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceBaseCore`2.DeepSave(`0)">
+            <summary>
+            Deep Save the Entity object with all of the child property collections only 1 level deep.
+            </summary>
+            <param name="entity">The Entity object to save.</param>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceBaseCore`2.DeepSave(`0,ETradeHistory.DataAccess.DeepSaveType,System.Type[])">
+            <summary>
+            Deep Save the entire Entity object with criteria based on the child types array and the DeepSaveType.
+            </summary>
+            <param name="entity">The Entity object to save.</param>
+            <param name="deepSaveType">DeepSaveType Enumeration to Include/Exclude object property collections from Save.</param>
+            <param name="childTypes">Entity Property Collection Type Array To Include or Exclude from Save.</param>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceBaseCore`2.DeepSave(`0,ETradeHistory.DataAccess.DeepSaveType,System.Type[],System.Collections.Hashtable)">
+            <summary>
+            Deep Save the entire Entity object with criteria based on the child types array and the DeepSaveType.
+            </summary>
+            <remarks>
+            This method should be implemented by sub-classes to provide specific deep save functionality.
+            </remarks>
+            <param name="entity">The Entity object to save.</param>
+            <param name="deepSaveType">DeepSaveType Enumeration to Include/Exclude object property collections from Save.</param>
+            <param name="childTypes">Entity Property Collection Type Array To Include or Exclude from Save.</param>
+            <param name="innerList">A Hashtable of child types for easy access.</param>
+        </member>
+        <member name="M:ETradeHistory.Services.ServiceBaseCore`2.DeepSave(ETradeHistory.Entities.TList{`0},ETradeHistory.DataAccess.DeepSaveType,System.Type[])">
+            <summary>
+            Deep Save the Entity objects with criteria based on the child types array and the DeepSaveType.
+            </summary>
+            <param name="entities">TList of Entity objects to save.</param>
+            <param name="deepSaveType">DeepSaveType Enumeration to Include/Exclude object property collections from Save.</param>
+            <param name="childTypes">Entity Property Collection Type Array To Include or Exclude from Save.</param>
+        </member>
+        <member name="P:ETradeHistory.Services.ServiceBaseCore`2.ProcessorList">
+             <summary>
+            	Provides a List of Processors to execute external business process logic in.
+             </summary>
+            <value>A list of business rule processors to execute</value>
+        </member>
+        <member name="P:ETradeHistory.Services.ServiceBaseCore`2.ServiceProcessResult">
+             <summary>
+            	Provides a Notification Pattern of Process Results.
+             </summary>
+            <value>A list of business rule processors to execute</value>
+        </member>
+        <member name="P:ETradeHistory.Services.ServiceBaseCore`2.AbortOnFailure">
+             <summary>
+            	Provides a way to terminate the Processor calls upon an exception. 
+             </summary>
+            <value>bool value determining to stop once an exceptions been thrown. </value>		
+        </member>
+        <member name="P:ETradeHistory.Services.ServiceBaseCore`2.CurrentProcessor">
+            <summary>
+            Current Processor being executed
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.ServiceBaseCore`2.ProcessCounter">
+            <summary>
+            Current Number of Processes completed thus far.
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.ServiceBaseCore`2.CurrentProcessorIndex">
+            <summary>
+            Current index of the processor currently or last executed 
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.ServiceBaseCore`2.TotalProcesses">
+            <summary>
+            Total Number of Processes currently enlisted in this service 
+            </summary>
+        </member>
+        <member name="E:ETradeHistory.Services.ServiceBaseCore`2.ProcessStarting">
+            <summary>
+            Event to indicate that a processor has began.
+            </summary>
+        </member>
+        <member name="E:ETradeHistory.Services.ServiceBaseCore`2.ProcessEnded">
+            <summary>
+            Event to indicate that a processor has ended.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.#ctor">
+            <summary>
+             Creates a new <see cref="T:ETradeHistory.Entities.PnLhistory"/> instance .
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.CreatePnLhistory(System.DateTime,System.String,System.Nullable{System.Int32},System.String,System.Decimal,System.Nullable{System.Decimal},System.Int32,System.Nullable{System.Decimal},System.Nullable{System.Decimal},System.String,System.String)">
+            <summary>
+             A simple factory method to create a new <see cref="T:ETradeHistory.Entities.PnLhistory"/> instance.
+            </summary>
+            <param name="_tradeTime">Thoi gian hien thuc TSSL</param>
+            <param name="_refOrderId">RefOrderID is of PnLHistory </param>
+            <param name="_fisOrderId">order id sinh ra tu FIS</param>
+            <param name="_secSymbol">Ma chung khoan</param>
+            <param name="_price">Gia chung khoan</param>
+            <param name="_avgPrice">Gia trung binh tinh den thoi diem ban</param>
+            <param name="_volume">Khoi luong co phieu mua hay ban</param>
+            <param name="_profit">So tien sinh loi</param>
+            <param name="_profitabilityRatio">Ti suat sinh loi</param>
+            <param name="_subCustAccountId">Tai khoan thuc hien giao dich</param>
+            <param name="_market">Thi truong</param>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.Get(ETradeHistory.Entities.PnLhistoryKey)">
+            <summary>
+            	Gets a row from the DataSource based on its primary key.
+            </summary>
+            <param name="key">The unique identifier of the row to retrieve.</param>
+            <returns>Returns an instance of the Entity class.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.GetById(System.Int64)">
+            <summary>
+             method that Gets rows in a <see cref="T:ETradeHistory.Entities.TList`1"/> from the datasource based on the primary key PK_PnLHistory index.
+            </summary>
+            <param name="_id">ID identifies PnLHistory</param>
+            <returns>Returns an instance of the <see cref="T:ETradeHistory.Entities.PnLhistory"/> class.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.GetById(System.Int64,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+             Method that Gets rows in a <see cref="T:ETradeHistory.Entities.TList`1"/> from the datasource based on the primary key PK_PnLHistory index.
+            </summary>
+            <param name="_id">ID identifies PnLHistory</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Page length of records you would like to retrieve</param>
+            <param name="totalCount">out parameter, number of total rows in given query.</param>
+            <returns>Returns an instance of the <see cref="T:ETradeHistory.Entities.PnLhistory"/> class.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.GetAll">
+            <summary>
+            Get a complete collection of <see cref="T:ETradeHistory.Entities.PnLhistory"/> entities.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.GetAll(System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Get a set portion of a complete list of <see cref="T:ETradeHistory.Entities.PnLhistory"/> entities
+            </summary>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="totalCount">out parameter, number of total rows in given query.</param>
+            <returns>a <see cref="T:ETradeHistory.Entities.TList`1"/> </returns>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.GetPaged(System.Int32@)">
+            <summary>
+            Gets a page of <see cref="T:ETradeHistory.Entities.TList`1"/> rows from the DataSource.
+            </summary>
+            <param name="totalCount">Out Parameter, Number of rows in the DataSource.</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of <c>PnLhistory</c> objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.GetPaged(System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets a page of <see cref="T:ETradeHistory.Entities.TList`1"/> rows from the DataSource.
+            </summary>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="totalCount">Number of rows in the DataSource.</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of <c>PnLhistory</c> objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.GetPaged(System.String,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets a page of entity rows with a <see cref="T:ETradeHistory.Entities.TList`1"/> from the DataSource with a where clause and order by clause.
+            </summary>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC).</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="totalCount">Out Parameter, Number of rows in the DataSource.</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of <c>PnLhistory</c> objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.GetTotalItems(System.String,System.Int32@)">
+            <summary>
+            Gets the number of rows in the DataSource that match the specified whereClause.
+            This method is only provided as a workaround for the ObjectDataSource's need to 
+            execute another method to discover the total count instead of using another param, like our out param.  
+            This method should be avoided if using the ObjectDataSource or another method.
+            </summary>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="totalCount">Number of rows in the DataSource.</param>
+            <returns>Returns the number of rows.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.Find(System.String)">
+            <summary>
+            Attempts to do a parameterized version of a simple whereclause. 
+            Returns rows meeting the whereClause condition from the DataSource.
+            </summary>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <remarks>Does NOT Support Advanced Operations such as SubSelects.  See GetPaged for that functionality.</remarks>
+            <returns>Returns a typed collection of Entity objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.Find(System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Returns rows meeting the whereClause condition from the DataSource.
+            </summary>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="totalCount">out parameter to get total records for query</param>
+            <remarks>Does NOT Support Advanced Operations such as SubSelects.  See GetPaged for that functionality.</remarks>
+            <returns>Returns a typed collection TList{PnLhistory} of <c>PnLhistory</c> objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.Find(ETradeHistory.DataAccess.IFilterParameterCollection)">
+            <summary>
+            Returns rows from the DataSource that meet the parameter conditions.
+            </summary>
+            <param name="parameters">A collection of <see cref="T:ETradeHistory.DataAccess.SqlFilterParameter"/> objects.</param>
+            <returns>Returns a typed collection of <c>PnLhistory</c> objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.Find(ETradeHistory.DataAccess.IFilterParameterCollection,ETradeHistory.DataAccess.ISortColumnCollection)">
+            <summary>
+            Returns rows from the DataSource that meet the parameter conditions.
+            </summary>
+            <param name="parameters">A collection of <see cref="T:ETradeHistory.DataAccess.SqlFilterParameter"/> objects.</param>
+            <param name="sortColumns">A collection of <see cref="T:ETradeHistory.DataAccess.SqlSortColumn"/> objects.</param>
+            <returns>Returns a typed collection of <c>PnLhistory</c> objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.Find(ETradeHistory.DataAccess.IFilterParameterCollection,System.String)">
+            <summary>
+            	Returns rows from the DataSource that meet the parameter conditions.
+            </summary>
+            <param name="parameters">A collection of <see cref="T:ETradeHistory.DataAccess.SqlFilterParameter"/> objects.</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <returns>Returns a typed collection of <c>PnLhistory</c> objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.Find(ETradeHistory.DataAccess.IFilterParameterCollection,ETradeHistory.DataAccess.ISortColumnCollection,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Returns rows from the DataSource that meet the parameter conditions.
+            </summary>
+            <param name="parameters">A collection of <see cref="T:ETradeHistory.DataAccess.SqlFilterParameter"/> objects.</param>
+            <param name="sortColumns">A collection of <see cref="T:ETradeHistory.DataAccess.SqlSortColumn"/> objects.</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <returns>Returns a typed collection of <c>PnLhistory</c> objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.Find(ETradeHistory.DataAccess.IFilterParameterCollection,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Returns rows from the DataSource that meet the parameter conditions.
+            </summary>
+            <param name="parameters">A collection of <see cref="T:ETradeHistory.DataAccess.SqlFilterParameter"/> objects.</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <returns>Returns a typed collection of <c>PnLhistory</c> objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.Insert(ETradeHistory.Entities.PnLhistory)">
+            <summary>
+            public virtual method that Inserts a PnLhistory object into the datasource using a transaction.
+            </summary>
+            <param name="entity">PnLhistory object to Insert.</param>
+            <remarks>After Inserting into the datasource, the PnLhistory object will be updated
+            to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+            <returns>Returns bool that the operation is successful.</returns>
+            <example>
+            The following code shows the usage of the Insert Method with an already open transaction.
+            <code>
+            PnLhistory entity = new PnLhistory();
+            entity.StringProperty = "foo";
+            entity.IntProperty = 12;
+            entity.ChildObjectSource.StringProperty = "bar";
+            TransactionManager tm = null;
+            try
+            {
+            	tm = ConnectionContext.CreateTransaction();
+            	//Insert Child entity, Then Parent Entity
+            	ChildObjectTypeService.Insert(entity.ChildObjectSource);
+            	PnLhistoryService.Insert(entity);
+            }
+            catch (Exception e)
+            {
+            	if (tm != null &amp;&amp; tm.IsOpen) tm.Rollback();
+            	if (DomainUtil.HandleException(e, name)) throw;
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.Insert(ETradeHistory.Entities.TList{ETradeHistory.Entities.PnLhistory})">
+             <summary>
+             public virtual method that Inserts rows in <see cref="T:ETradeHistory.Entities.TList`1"/> to the datasource.
+             </summary>
+             <param name="entityCollection"><c>PnLhistory</c> objects in a <see cref="T:ETradeHistory.Entities.TList`1"/> object to Insert.</param>
+             <remarks>
+            		This function will only Insert entity objects marked as dirty
+            		and have an identity field equal to zero.
+            		Upon Inserting the objects, each dirty object will have the public
+            		method <c>Object.AcceptChanges()</c> called to make it clean.
+             	After Inserting into the datasource, the <c>PnLhistory</c> objects will be updated
+             	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+             <returns>Returns the number of successful Insert.</returns>
+             <example>
+             The following code shows the usage of the Insert Method with a collection of PnLhistory.
+             <code><![CDATA[
+             TList<PnLhistory> list = new TList<PnLhistory>();
+             PnLhistory entity = new PnLhistory();
+             entity.StringProperty = "foo";
+             PnLhistory entity2 = new PnLhistory();
+             entity.StringProperty = "bar";
+             list.Add(entity);
+             list.Add(entity2);
+            	PnLhistoryService.Insert(list);
+            	}
+            	catch (Exception e)
+            	{
+            		if (DomainUtil.HandleException(e, name)) throw;
+            	}
+             ]]></code>
+             </example>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.Update(ETradeHistory.Entities.PnLhistory)">
+            <summary>
+            public virtual method that Updates a PnLhistory object into the datasource using a transaction.
+            </summary>
+            <param name="entity">PnLhistory object to Update.</param>
+            <remarks>After Updateing into the datasource, the PnLhistory object will be updated
+            to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+            <returns>Returns bool that the operation is successful.</returns>
+            <example>
+            The following code shows the usage of the Update Method with an already open transaction.
+            <code>
+            PnLhistory entity = PnLhistoryService.GetByPrimaryKeyColumn(1234);
+            entity.StringProperty = "foo";
+            entity.IntProperty = 12;
+            entity.ChildObjectSource.StringProperty = "bar";
+            TransactionManager tm = null;
+            try
+            {
+            	tm = ConnectionContext.CreateTransaction();
+            	//Update Child entity, Then Parent Entity
+            	ChildObjectTypeService.Update(entity.ChildObjectSource);
+            	PnLhistoryService.Update(entity);
+            }
+            catch (Exception e)
+            {
+            	if (tm != null &amp;&amp; tm.IsOpen) tm.Rollback();
+            	if (DomainUtil.HandleException(e, name)) throw;
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.Update(ETradeHistory.Entities.TList{ETradeHistory.Entities.PnLhistory})">
+             <summary>
+             public virtual method that Updates rows in <see cref="T:ETradeHistory.Entities.TList`1"/> to the datasource.
+             </summary>
+             <param name="entityCollection"><c>PnLhistory</c> objects in a <see cref="T:ETradeHistory.Entities.TList`1"/> object to Update.</param>
+             <remarks>
+            		This function will only Update entity objects marked as dirty
+            		and have an identity field equal to zero.
+            		Upon Updateing the objects, each dirty object will have the public
+            		method <c>Object.AcceptChanges()</c> called to make it clean.
+             	After Updateing into the datasource, the <c>PnLhistory</c> objects will be updated
+             	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+             <returns>Returns the number of successful Update.</returns>
+             <example>
+             The following code shows the usage of the Update Method with a collection of PnLhistory.
+             <code><![CDATA[
+             TList<PnLhistory> list = new TList<PnLhistory>();
+             PnLhistory entity = new PnLhistory();
+             entity.StringProperty = "foo";
+             PnLhistory entity2 = new PnLhistory();
+             entity.StringProperty = "bar";
+             list.Add(entity);
+             list.Add(entity2);
+            	PnLhistoryService.Update(list);
+            	}
+            	catch (Exception e)
+            	{
+            		if (DomainUtil.HandleException(e, name)) throw;
+            	}
+             ]]></code>
+             </example>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.Save(ETradeHistory.Entities.PnLhistory)">
+            <summary>
+            public virtual method that Saves a PnLhistory object into the datasource using a transaction.
+            </summary>
+            <param name="entity">PnLhistory object to Save.</param>
+            <remarks>After Saveing into the datasource, the PnLhistory object will be updated
+            to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+            <returns>Returns bool that the operation is successful.</returns>
+            <example>
+            The following code shows the usage of the Save Method with an already open transaction.
+            <code>
+            PnLhistory entity = PnLhistoryService.GetByPrimaryKeyColumn(1234);
+            entity.StringProperty = "foo";
+            entity.IntProperty = 12;
+            entity.ChildObjectSource.StringProperty = "bar";
+            TransactionManager tm = null;
+            try
+            {
+            	tm = ConnectionContext.CreateTransaction();
+            	//Save Child entity, Then Parent Entity
+            	ChildObjectTypeService.Save(entity.ChildObjectSource);
+            	PnLhistoryService.Save(entity);
+            }
+            catch (Exception e)
+            {
+            	if (tm != null &amp;&amp; tm.IsOpen) tm.Rollback();
+            	if (DomainUtil.HandleException(e, name)) throw;
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.Save(ETradeHistory.Entities.TList{ETradeHistory.Entities.PnLhistory})">
+             <summary>
+             public virtual method that Saves rows in <see cref="T:ETradeHistory.Entities.TList`1"/> to the datasource.
+             </summary>
+             <param name="entityCollection"><c>PnLhistory</c> objects in a <see cref="T:ETradeHistory.Entities.TList`1"/> object to Save.</param>
+             <remarks>
+            		This function will only Save entity objects marked as dirty
+            		and have an identity field equal to zero.
+            		Upon Saveing the objects, each dirty object will have the public
+            		method <c>Object.AcceptChanges()</c> called to make it clean.
+             	After Saveing into the datasource, the <c>PnLhistory</c> objects will be updated
+             	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+             <returns>Returns the number of successful Save.</returns>
+             <example>
+             The following code shows the usage of the Save Method with a collection of PnLhistory.
+             <code><![CDATA[
+             TList<PnLhistory> list = new TList<PnLhistory>();
+             PnLhistory entity = new PnLhistory();
+             entity.StringProperty = "foo";
+             PnLhistory entity2 = new PnLhistory();
+             entity.StringProperty = "bar";
+             list.Add(entity);
+             list.Add(entity2);
+            	PnLhistoryService.Save(list);
+            	}
+            	catch (Exception e)
+            	{
+            		if (DomainUtil.HandleException(e, name)) throw;
+            	}
+             ]]></code>
+             </example>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.Delete(ETradeHistory.Entities.PnLhistory)">
+            <summary>
+            public virtual method that Deletes a PnLhistory object into the datasource using a transaction.
+            </summary>
+            <param name="entity">PnLhistory object to Delete.</param>
+            <remarks>After Deleteing into the datasource, the PnLhistory object will be updated
+            to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+            <returns>Returns bool that the operation is successful.</returns>
+            <example>
+            The following code shows the usage of the Delete Method with an already open transaction.
+            <code>
+            PnLhistory entity = PnLhistoryService.GetByPrimaryKeyColumn(1234);
+            entity.StringProperty = "foo";
+            entity.IntProperty = 12;
+            entity.ChildObjectSource.StringProperty = "bar";
+            TransactionManager tm = null;
+            try
+            {
+            	tm = ConnectionContext.CreateTransaction();
+            	//Delete Child entity, Then Parent Entity
+            	ChildObjectTypeService.Delete(entity.ChildObjectSource);
+            	PnLhistoryService.Delete(entity);
+            }
+            catch (Exception e)
+            {
+            	if (tm != null &amp;&amp; tm.IsOpen) tm.Rollback();
+            	if (DomainUtil.HandleException(e, name)) throw;
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.Delete(ETradeHistory.Entities.TList{ETradeHistory.Entities.PnLhistory})">
+             <summary>
+             public virtual method that Deletes rows in <see cref="T:ETradeHistory.Entities.TList`1"/> to the datasource.
+             </summary>
+             <param name="entityCollection"><c>PnLhistory</c> objects in a <see cref="T:ETradeHistory.Entities.TList`1"/> object to Delete.</param>
+             <remarks>
+            		This function will only Delete entity objects marked as dirty
+            		and have an identity field equal to zero.
+            		Upon Deleteing the objects, each dirty object will have the public
+            		method <c>Object.AcceptChanges()</c> called to make it clean.
+             	After Deleteing into the datasource, the <c>PnLhistory</c> objects will be updated
+             	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+             <returns>Returns the number of successful Delete.</returns>
+             <example>
+             The following code shows the usage of the Delete Method with a collection of PnLhistory.
+             <code><![CDATA[
+             TList<PnLhistory> list = new TList<PnLhistory>();
+             PnLhistory entity = new PnLhistory();
+             entity.StringProperty = "foo";
+             PnLhistory entity2 = new PnLhistory();
+             entity.StringProperty = "bar";
+             list.Add(entity);
+             list.Add(entity2);
+            	PnLhistoryService.Delete(list);
+            	}
+            	catch (Exception e)
+            	{
+            		if (DomainUtil.HandleException(e, name)) throw;
+            	}
+             ]]></code>
+             </example>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.Delete(ETradeHistory.Entities.PnLhistoryKey)">
+            <summary>
+            	Deletes a row from the DataSource.
+            </summary>
+            <param name="key">The unique identifier of the row to delete.</param>
+            <returns>Returns true if operation suceeded.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.Delete(System.Int64)">
+            <summary>
+            	Deletes a row from the DataSource based on the PK'S long _id
+            </summary>
+            <param name="_id">PnLhistory pk id.</param>
+            <remarks>Deletes based on primary key(s).</remarks>
+            <returns>Returns true if operation suceeded.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.DeepLoadById(System.Int64,System.Boolean,ETradeHistory.DataAccess.DeepLoadType,System.Type[])">
+            <summary>
+            public virtualDeep Loads the requested <see cref="T:ETradeHistory.Entities.PnLhistory"/> by the entity keys.  The criteria of the child 
+            property collections only N Levels Deep based on the <see cref="T:ETradeHistory.DataAccess.DeepLoadType"/>.
+            </summary>
+            <param name="_id">ID identifies PnLHistory</param>
+            <param name="deep">Boolean. A flag that indicates whether to recursively save all Property Collection that are descendants of this instance. If True, saves the complete object graph below this object. If False, saves this object only. </param>
+            <param name="deepLoadType">DeepLoadType Enumeration to Include/Exclude object property collections from Load.</param>
+            <param name="childTypes">PnLhistory Property Collection Type Array To Include or Exclude from Load</param>
+            <returns>Returns an instance of the <see cref="T:ETradeHistory.Entities.PnLhistory"/> class and DeepLoaded.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.DeepLoad(ETradeHistory.Entities.PnLhistory)">
+            <summary>
+            public virtualDeep Load the IEntity object with all of the child 
+            property collections only 1 Level Deep.
+            </summary>
+            <param name="entity">PnLhistory Object</param>
+            <remarks>
+            <seealso cref="M:ETradeHistory.Services.PnLhistoryServiceBase.DeepLoad(ETradeHistory.Entities.PnLhistory)"/> overloaded methods for a recursive N Level deep loading method.
+            </remarks>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.DeepLoad(ETradeHistory.Entities.PnLhistory,System.Boolean)">
+            <summary>
+            public virtualDeep Load the IEntity object with all of the child 
+            property collections only 1 Level Deep.
+            </summary>
+            <remarks>
+            <seealso cref="M:ETradeHistory.Services.PnLhistoryServiceBase.DeepLoad(ETradeHistory.Entities.PnLhistory)"/> overloaded methods for a recursive N Level deep loading method.
+            </remarks>
+            <param name="entity">PnLhistory Object</param>
+            <param name="deep">Boolean. A flag that indicates whether to recursively save all Property Collection that are descendants of this instance. If True, saves the complete object graph below this object. If False, saves this object only. </param>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.DeepLoad(ETradeHistory.Entities.PnLhistory,System.Boolean,ETradeHistory.DataAccess.DeepLoadType,System.Type[])">
+            <summary>
+            public virtualDeep Loads the <see cref="T:ETradeHistory.Entities.IEntity"/> object with criteria based of the child 
+            property collections only N Levels Deep based on the <see cref="T:ETradeHistory.DataAccess.DeepLoadType"/>.
+            </summary>
+            <remarks>
+            Use this method with caution as it is possible to DeepLoad with Recursion and traverse an entire object graph.
+            </remarks>
+            <param name="entity">The <see cref="T:ETradeHistory.Entities.PnLhistory"/> object to load.</param>
+            <param name="deep">Boolean. A flag that indicates whether to recursively load all Property Collections that are descendants of this instance. 
+            If True, saves the complete object graph below this object. If False, saves this object only. </param>
+            <param name="deepLoadType">DeepLoadType Enumeration to Include/Exclude object property collections from Load.</param>
+            <param name="childTypes">PnLhistory Property Collection Type Array To Include or Exclude from Load</param>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.DeepLoad(ETradeHistory.Entities.TList{ETradeHistory.Entities.PnLhistory})">
+            <summary>
+            Deep Loads the <see cref="T:ETradeHistory.Entities.TList`1"/> object with all of the child 
+            property collections only 1 Level Deep.
+            </summary>
+            <remarks>
+            <seealso cref="M:ETradeHistory.Services.PnLhistoryServiceBase.DeepLoad(ETradeHistory.Entities.PnLhistory)"/> overloaded methods for a recursive N Level deep loading method.
+            </remarks>
+            <param name="entityCollection">the <see cref="T:ETradeHistory.Entities.TList`1"/> Object to deep loads.</param>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.DeepLoad(ETradeHistory.Entities.TList{ETradeHistory.Entities.PnLhistory},System.Boolean)">
+            <summary>
+            Deep Loads the <see cref="T:ETradeHistory.Entities.TList`1"/> object.
+            </summary>
+            <remarks>
+            <seealso cref="M:ETradeHistory.Services.PnLhistoryServiceBase.DeepLoad(ETradeHistory.Entities.PnLhistory)"/> overloaded methods for a recursive N Level deep loading method.
+            </remarks>
+            <param name="entityCollection">the <see cref="T:ETradeHistory.Entities.TList`1"/> Object to deep loads.</param>
+            <param name="deep">Boolean. A flag that indicates whether to recursively save all Property Collection that are descendants of this instance. If True, saves the complete object graph below this object. If False, saves this object only. </param>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.DeepLoad(ETradeHistory.Entities.TList{ETradeHistory.Entities.PnLhistory},System.Boolean,ETradeHistory.DataAccess.DeepLoadType,System.Type[])">
+            <summary>
+            Deep Loads the entire <see cref="T:ETradeHistory.Entities.TList`1"/> object with criteria based of the child 
+            property collections only N Levels Deep based on the DeepLoadType.
+            </summary>
+            <remarks>
+            Use this method with caution as it is possible to DeepLoad with Recursion and traverse an entire collection's object graph.
+            </remarks>
+            <param name="entityCollection">The <see cref="T:ETradeHistory.Entities.TList`1"/> instance to load.</param>
+            <param name="deep">Boolean. A flag that indicates whether to recursively save all Property Collection that are descendants of this instance. If True, saves the complete object graph below this object. If False, saves this object only. </param>
+            <param name="deepLoadType"><see cref="T:ETradeHistory.DataAccess.DeepLoadType"/> Enumeration to Include/Exclude object property collections from Load.
+            	Use DeepLoadType.IncludeChildren, ExcludeChildren to traverse the entire object graph.
+            </param>
+            <param name="childTypes"><see cref="T:ETradeHistory.Entities.PnLhistory"/> Property Collection Type Array To Include or Exclude from Load</param>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.DeepSave(ETradeHistory.Entities.PnLhistory)">
+            <summary>
+            public virtualDeep Saves the <see cref="T:ETradeHistory.Entities.PnLhistory"/> object with all of the child
+            property collections N Levels Deep.
+            </summary>
+            <param name="entity">PnLhistory Object</param>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.DeepSave(ETradeHistory.Entities.PnLhistory,ETradeHistory.DataAccess.DeepSaveType,System.Type[])">
+            <summary>
+            public virtualDeep Saves the entire object graph of the PnLhistory object with criteria based of the child 
+            Type property array and DeepSaveType.
+            </summary>
+            <param name="entity">PnLhistory Object</param>
+            <param name="deepSaveType">DeepSaveType Enumeration to Include/Exclude object property collections from Save.</param>
+            <param name="childTypes"><c>PnLhistory</c> property Type Array To Include or Exclude from Save</param>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.DeepSave(ETradeHistory.Entities.TList{ETradeHistory.Entities.PnLhistory})">
+            <summary>
+            Deep Save the entire <see cref="T:ETradeHistory.Entities.TList`1"/> object with all of the child 
+            property collections.
+            </summary>
+            <param name="entityCollection">TList{PnLhistory} Object</param>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryServiceBase.DeepSave(ETradeHistory.Entities.TList{ETradeHistory.Entities.PnLhistory},ETradeHistory.DataAccess.DeepSaveType,System.Type[])">
+            <summary>
+            Deep Save the entire object graph of the <see cref="T:ETradeHistory.Entities.TList`1"/> object with criteria based of the child 
+            property collections.
+            </summary>
+            <param name="entityCollection"><see cref="T:ETradeHistory.Entities.TList`1"/> Object</param>
+            <param name="deepSaveType">DeepSaveType Enumeration to Include/Exclude object property collections from Save.</param>
+            <param name="childTypes">PnLhistory Property Collection Type Array To Include or Exclude from Save</param>
+        </member>
+        <member name="P:ETradeHistory.Services.PnLhistoryServiceBase.SecurityContext">
+            <summary>
+             Contains all necessary information to validate and authorize the 
+             call of the method with the Principal and Roles of the current user.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryService.#ctor">
+            <summary>
+            Initializes a new instance of the PnLhistoryService class.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.PnLhistoryService.GetList(System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            </summary>
+            <param name="accountNo"></param>
+            <param name="fromDate"></param>
+            <param name="toDate"></param>
+            <param name="symbol"></param>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="count"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ETradeHistory.Services.ProcessorBase">
+            <summary>
+            The interface that each complex business unit of work processor will use.
+            </summary>
+        </member>
+        <member name="T:ETradeHistory.Services.IProcessor">
+            <summary>
+            The interface that each component business domain service of the model implements.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.IProcessor.Process">
+             <summary>
+            	Provides a name of the current processor to execute business process logic in.
+             </summary>
+            <value>A list of business rule processors to execute</value>
+        </member>
+        <member name="M:ETradeHistory.Services.IProcessor.ChangeProcessorState(ETradeHistory.Services.ProcessorState)">
+            <summary>
+            Provides the notification on the change of process state to interested parties.
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.IProcessor.ProcessName">
+             <summary>
+            	Provides a name of the current processor to execute business process logic in.
+             </summary>
+            <value>A list of business rule processors to execute</value>
+        </member>
+        <member name="P:ETradeHistory.Services.IProcessor.CurrentProcessorState">
+            <summary>
+            Provides the current process state of operation.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.ProcessorBase.Process">
+             <summary>
+            	Provides a List of Processors to execute business process logic in.
+             </summary>
+            <value>A list of business rule processors to execute</value>
+        </member>
+        <member name="M:ETradeHistory.Services.ProcessorBase.ChangeProcessorState(ETradeHistory.Services.ProcessorState)">
+            <summary>
+            Provides the notification on the change of process state to interested parties.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.ProcessorBase.OnNotifyProcessorStateChanging(ETradeHistory.Services.ProcessorState)">
+            <summary>
+            Raises the ProcessorStateChanging event.
+            </summary>
+            <param name="newProcessorState"></param>
+        </member>
+        <member name="P:ETradeHistory.Services.ProcessorBase.ProcessResult">
+            <summary>
+            Provides the current process result of it's operation.
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.ProcessorBase.ProcessName">
+             <summary>
+            	Provides a name of the current processor to execute business process logic in.
+             </summary>
+            <value>The name of the type of the processors to execute</value>
+        </member>
+        <member name="P:ETradeHistory.Services.ProcessorBase.CurrentProcessorState">
+            <summary>
+            Provides the current process state of operation.
+            </summary>
+        </member>
+        <member name="E:ETradeHistory.Services.ProcessorBase.ProcessorStateChanging">
+            <summary>
+            The ProcessorStateChanging event.
+            </summary>
+        </member>
+        <member name="T:ETradeHistory.Services.ProcessorBase.ProcessorStateChangingEventHandler">
+            <summary>
+            The ProcessorStateChangingEventHandler event handler.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:ETradeHistory.Services.ProcessorState">
+            <summary>
+            ProcessorState enumeration.
+            </summary>
+        </member>
+        <member name="F:ETradeHistory.Services.ProcessorState.Unknown">
+            <summary>
+            Unknown
+            </summary>
+        </member>
+        <member name="F:ETradeHistory.Services.ProcessorState.Running">
+            <summary>
+            Running
+            </summary>
+        </member>
+        <member name="F:ETradeHistory.Services.ProcessorState.Stopped">
+            <summary>
+            Stopped
+            </summary>
+        </member>
+        <member name="F:ETradeHistory.Services.ProcessorState.Completed">
+            <summary>
+            Completed
+            </summary>
+        </member>
+        <member name="T:ETradeHistory.Services.TradedHistoryServiceBase">
+            <summary>
+             An object representation of the 'TradedHistory' table.
+            </summary>
+             <remarks>
+             IMPORTANT!!! You should not modify this partial  class, modify the TradedHistory.cs file instead.
+             All custom implementations should be done in the <see cref="T:ETradeHistory.Entities.TradedHistory"/> class.
+             </remarks>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.#ctor">
+            <summary>
+             Creates a new <see cref="T:ETradeHistory.Entities.TradedHistory"/> instance .
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.CreateTradedHistory(System.DateTime,System.String,System.String,System.Nullable{System.Int32},System.String,System.String,System.Decimal,System.String,System.Int64,System.Nullable{System.Int64},System.Nullable{System.Decimal},System.Nullable{System.Int64},System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int16},System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Decimal},System.Nullable{System.Decimal})">
+            <summary>
+             A simple factory method to create a new <see cref="T:ETradeHistory.Entities.TradedHistory"/> instance.
+            </summary>
+            <param name="_tradeTime"></param>
+            <param name="_subCustAccountId"></param>
+            <param name="_type">Loai log (NEW_ORDER, LOGON, LOGOUT, CANCEL_ORD, CHANGE_ORD)</param>
+            <param name="_fisOrderId">order id sinh ra tu FIS</param>
+            <param name="_secSymbol">Ma chung khoan</param>
+            <param name="_side">B = Mua, S = Ban</param>
+            <param name="_price">Gia chung khoan</param>
+            <param name="_conPrice">Dieu kien lenh, A = preOpen, C = closeOpen</param>
+            <param name="_volume">Khoi luong co phieu mua hay ban</param>
+            <param name="_executedVol">Khoi luong khop</param>
+            <param name="_executedPrice">Gia khop</param>
+            <param name="_cancelledVolume">Khoi luong duoc huy</param>
+            <param name="_matchedTime">Thoi gian khop</param>
+            <param name="_cancelledTime">Thoi gian lenh duoc huy</param>
+            <param name="_ordRejReason">nguyen nhan lenh bi tu choi</param>
+            <param name="_cancelledRejReason">Nguyen nhan viec huy lenh bi tu choi</param>
+            <param name="_sourceId">0=SET, 1 = FIS</param>
+            <param name="_market">Thi truong</param>
+            <param name="_refOrderId">RefOrderID is of TradedHistory</param>
+            <param name="_effDate">Ngày hi?u l?c c?a l?nh ÐK.</param>
+            <param name="_expDate">Ngày h?t h?n c?a l?nh ÐK</param>
+            <param name="_minValue">Giá tr? nhò nh?t c?a l?nh ÐK</param>
+            <param name="_maxValue">Giá tr? l?n nh?t c?a l?nh ÐK</param>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.Get(ETradeHistory.Entities.TradedHistoryKey)">
+            <summary>
+            	Gets a row from the DataSource based on its primary key.
+            </summary>
+            <param name="key">The unique identifier of the row to retrieve.</param>
+            <returns>Returns an instance of the Entity class.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.GetById(System.Int64)">
+            <summary>
+             method that Gets rows in a <see cref="T:ETradeHistory.Entities.TList`1"/> from the datasource based on the primary key PK_TradedHistory index.
+            </summary>
+            <param name="_id">ID identifies TradedHistory</param>
+            <returns>Returns an instance of the <see cref="T:ETradeHistory.Entities.TradedHistory"/> class.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.GetById(System.Int64,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+             Method that Gets rows in a <see cref="T:ETradeHistory.Entities.TList`1"/> from the datasource based on the primary key PK_TradedHistory index.
+            </summary>
+            <param name="_id">ID identifies TradedHistory</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Page length of records you would like to retrieve</param>
+            <param name="totalCount">out parameter, number of total rows in given query.</param>
+            <returns>Returns an instance of the <see cref="T:ETradeHistory.Entities.TradedHistory"/> class.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.GetAll">
+            <summary>
+            Get a complete collection of <see cref="T:ETradeHistory.Entities.TradedHistory"/> entities.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.GetAll(System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Get a set portion of a complete list of <see cref="T:ETradeHistory.Entities.TradedHistory"/> entities
+            </summary>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="totalCount">out parameter, number of total rows in given query.</param>
+            <returns>a <see cref="T:ETradeHistory.Entities.TList`1"/> </returns>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.GetPaged(System.Int32@)">
+            <summary>
+            Gets a page of <see cref="T:ETradeHistory.Entities.TList`1"/> rows from the DataSource.
+            </summary>
+            <param name="totalCount">Out Parameter, Number of rows in the DataSource.</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of <c>TradedHistory</c> objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.GetPaged(System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets a page of <see cref="T:ETradeHistory.Entities.TList`1"/> rows from the DataSource.
+            </summary>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="totalCount">Number of rows in the DataSource.</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of <c>TradedHistory</c> objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.GetPaged(System.String,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets a page of entity rows with a <see cref="T:ETradeHistory.Entities.TList`1"/> from the DataSource with a where clause and order by clause.
+            </summary>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC).</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="totalCount">Out Parameter, Number of rows in the DataSource.</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of <c>TradedHistory</c> objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.GetTotalItems(System.String,System.Int32@)">
+            <summary>
+            Gets the number of rows in the DataSource that match the specified whereClause.
+            This method is only provided as a workaround for the ObjectDataSource's need to 
+            execute another method to discover the total count instead of using another param, like our out param.  
+            This method should be avoided if using the ObjectDataSource or another method.
+            </summary>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="totalCount">Number of rows in the DataSource.</param>
+            <returns>Returns the number of rows.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.Find(System.String)">
+            <summary>
+            Attempts to do a parameterized version of a simple whereclause. 
+            Returns rows meeting the whereClause condition from the DataSource.
+            </summary>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <remarks>Does NOT Support Advanced Operations such as SubSelects.  See GetPaged for that functionality.</remarks>
+            <returns>Returns a typed collection of Entity objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.Find(System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Returns rows meeting the whereClause condition from the DataSource.
+            </summary>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="totalCount">out parameter to get total records for query</param>
+            <remarks>Does NOT Support Advanced Operations such as SubSelects.  See GetPaged for that functionality.</remarks>
+            <returns>Returns a typed collection TList{TradedHistory} of <c>TradedHistory</c> objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.Find(ETradeHistory.DataAccess.IFilterParameterCollection)">
+            <summary>
+            Returns rows from the DataSource that meet the parameter conditions.
+            </summary>
+            <param name="parameters">A collection of <see cref="T:ETradeHistory.DataAccess.SqlFilterParameter"/> objects.</param>
+            <returns>Returns a typed collection of <c>TradedHistory</c> objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.Find(ETradeHistory.DataAccess.IFilterParameterCollection,ETradeHistory.DataAccess.ISortColumnCollection)">
+            <summary>
+            Returns rows from the DataSource that meet the parameter conditions.
+            </summary>
+            <param name="parameters">A collection of <see cref="T:ETradeHistory.DataAccess.SqlFilterParameter"/> objects.</param>
+            <param name="sortColumns">A collection of <see cref="T:ETradeHistory.DataAccess.SqlSortColumn"/> objects.</param>
+            <returns>Returns a typed collection of <c>TradedHistory</c> objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.Find(ETradeHistory.DataAccess.IFilterParameterCollection,System.String)">
+            <summary>
+            	Returns rows from the DataSource that meet the parameter conditions.
+            </summary>
+            <param name="parameters">A collection of <see cref="T:ETradeHistory.DataAccess.SqlFilterParameter"/> objects.</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <returns>Returns a typed collection of <c>TradedHistory</c> objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.Find(ETradeHistory.DataAccess.IFilterParameterCollection,ETradeHistory.DataAccess.ISortColumnCollection,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Returns rows from the DataSource that meet the parameter conditions.
+            </summary>
+            <param name="parameters">A collection of <see cref="T:ETradeHistory.DataAccess.SqlFilterParameter"/> objects.</param>
+            <param name="sortColumns">A collection of <see cref="T:ETradeHistory.DataAccess.SqlSortColumn"/> objects.</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <returns>Returns a typed collection of <c>TradedHistory</c> objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.Find(ETradeHistory.DataAccess.IFilterParameterCollection,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Returns rows from the DataSource that meet the parameter conditions.
+            </summary>
+            <param name="parameters">A collection of <see cref="T:ETradeHistory.DataAccess.SqlFilterParameter"/> objects.</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <returns>Returns a typed collection of <c>TradedHistory</c> objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.Insert(ETradeHistory.Entities.TradedHistory)">
+            <summary>
+            public virtual method that Inserts a TradedHistory object into the datasource using a transaction.
+            </summary>
+            <param name="entity">TradedHistory object to Insert.</param>
+            <remarks>After Inserting into the datasource, the TradedHistory object will be updated
+            to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+            <returns>Returns bool that the operation is successful.</returns>
+            <example>
+            The following code shows the usage of the Insert Method with an already open transaction.
+            <code>
+            TradedHistory entity = new TradedHistory();
+            entity.StringProperty = "foo";
+            entity.IntProperty = 12;
+            entity.ChildObjectSource.StringProperty = "bar";
+            TransactionManager tm = null;
+            try
+            {
+            	tm = ConnectionContext.CreateTransaction();
+            	//Insert Child entity, Then Parent Entity
+            	ChildObjectTypeService.Insert(entity.ChildObjectSource);
+            	TradedHistoryService.Insert(entity);
+            }
+            catch (Exception e)
+            {
+            	if (tm != null &amp;&amp; tm.IsOpen) tm.Rollback();
+            	if (DomainUtil.HandleException(e, name)) throw;
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.Insert(ETradeHistory.Entities.TList{ETradeHistory.Entities.TradedHistory})">
+             <summary>
+             public virtual method that Inserts rows in <see cref="T:ETradeHistory.Entities.TList`1"/> to the datasource.
+             </summary>
+             <param name="entityCollection"><c>TradedHistory</c> objects in a <see cref="T:ETradeHistory.Entities.TList`1"/> object to Insert.</param>
+             <remarks>
+            		This function will only Insert entity objects marked as dirty
+            		and have an identity field equal to zero.
+            		Upon Inserting the objects, each dirty object will have the public
+            		method <c>Object.AcceptChanges()</c> called to make it clean.
+             	After Inserting into the datasource, the <c>TradedHistory</c> objects will be updated
+             	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+             <returns>Returns the number of successful Insert.</returns>
+             <example>
+             The following code shows the usage of the Insert Method with a collection of TradedHistory.
+             <code><![CDATA[
+             TList<TradedHistory> list = new TList<TradedHistory>();
+             TradedHistory entity = new TradedHistory();
+             entity.StringProperty = "foo";
+             TradedHistory entity2 = new TradedHistory();
+             entity.StringProperty = "bar";
+             list.Add(entity);
+             list.Add(entity2);
+            	TradedHistoryService.Insert(list);
+            	}
+            	catch (Exception e)
+            	{
+            		if (DomainUtil.HandleException(e, name)) throw;
+            	}
+             ]]></code>
+             </example>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.Update(ETradeHistory.Entities.TradedHistory)">
+            <summary>
+            public virtual method that Updates a TradedHistory object into the datasource using a transaction.
+            </summary>
+            <param name="entity">TradedHistory object to Update.</param>
+            <remarks>After Updateing into the datasource, the TradedHistory object will be updated
+            to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+            <returns>Returns bool that the operation is successful.</returns>
+            <example>
+            The following code shows the usage of the Update Method with an already open transaction.
+            <code>
+            TradedHistory entity = TradedHistoryService.GetByPrimaryKeyColumn(1234);
+            entity.StringProperty = "foo";
+            entity.IntProperty = 12;
+            entity.ChildObjectSource.StringProperty = "bar";
+            TransactionManager tm = null;
+            try
+            {
+            	tm = ConnectionContext.CreateTransaction();
+            	//Update Child entity, Then Parent Entity
+            	ChildObjectTypeService.Update(entity.ChildObjectSource);
+            	TradedHistoryService.Update(entity);
+            }
+            catch (Exception e)
+            {
+            	if (tm != null &amp;&amp; tm.IsOpen) tm.Rollback();
+            	if (DomainUtil.HandleException(e, name)) throw;
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.Update(ETradeHistory.Entities.TList{ETradeHistory.Entities.TradedHistory})">
+             <summary>
+             public virtual method that Updates rows in <see cref="T:ETradeHistory.Entities.TList`1"/> to the datasource.
+             </summary>
+             <param name="entityCollection"><c>TradedHistory</c> objects in a <see cref="T:ETradeHistory.Entities.TList`1"/> object to Update.</param>
+             <remarks>
+            		This function will only Update entity objects marked as dirty
+            		and have an identity field equal to zero.
+            		Upon Updateing the objects, each dirty object will have the public
+            		method <c>Object.AcceptChanges()</c> called to make it clean.
+             	After Updateing into the datasource, the <c>TradedHistory</c> objects will be updated
+             	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+             <returns>Returns the number of successful Update.</returns>
+             <example>
+             The following code shows the usage of the Update Method with a collection of TradedHistory.
+             <code><![CDATA[
+             TList<TradedHistory> list = new TList<TradedHistory>();
+             TradedHistory entity = new TradedHistory();
+             entity.StringProperty = "foo";
+             TradedHistory entity2 = new TradedHistory();
+             entity.StringProperty = "bar";
+             list.Add(entity);
+             list.Add(entity2);
+            	TradedHistoryService.Update(list);
+            	}
+            	catch (Exception e)
+            	{
+            		if (DomainUtil.HandleException(e, name)) throw;
+            	}
+             ]]></code>
+             </example>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.Save(ETradeHistory.Entities.TradedHistory)">
+            <summary>
+            public virtual method that Saves a TradedHistory object into the datasource using a transaction.
+            </summary>
+            <param name="entity">TradedHistory object to Save.</param>
+            <remarks>After Saveing into the datasource, the TradedHistory object will be updated
+            to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+            <returns>Returns bool that the operation is successful.</returns>
+            <example>
+            The following code shows the usage of the Save Method with an already open transaction.
+            <code>
+            TradedHistory entity = TradedHistoryService.GetByPrimaryKeyColumn(1234);
+            entity.StringProperty = "foo";
+            entity.IntProperty = 12;
+            entity.ChildObjectSource.StringProperty = "bar";
+            TransactionManager tm = null;
+            try
+            {
+            	tm = ConnectionContext.CreateTransaction();
+            	//Save Child entity, Then Parent Entity
+            	ChildObjectTypeService.Save(entity.ChildObjectSource);
+            	TradedHistoryService.Save(entity);
+            }
+            catch (Exception e)
+            {
+            	if (tm != null &amp;&amp; tm.IsOpen) tm.Rollback();
+            	if (DomainUtil.HandleException(e, name)) throw;
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.Save(ETradeHistory.Entities.TList{ETradeHistory.Entities.TradedHistory})">
+             <summary>
+             public virtual method that Saves rows in <see cref="T:ETradeHistory.Entities.TList`1"/> to the datasource.
+             </summary>
+             <param name="entityCollection"><c>TradedHistory</c> objects in a <see cref="T:ETradeHistory.Entities.TList`1"/> object to Save.</param>
+             <remarks>
+            		This function will only Save entity objects marked as dirty
+            		and have an identity field equal to zero.
+            		Upon Saveing the objects, each dirty object will have the public
+            		method <c>Object.AcceptChanges()</c> called to make it clean.
+             	After Saveing into the datasource, the <c>TradedHistory</c> objects will be updated
+             	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+             <returns>Returns the number of successful Save.</returns>
+             <example>
+             The following code shows the usage of the Save Method with a collection of TradedHistory.
+             <code><![CDATA[
+             TList<TradedHistory> list = new TList<TradedHistory>();
+             TradedHistory entity = new TradedHistory();
+             entity.StringProperty = "foo";
+             TradedHistory entity2 = new TradedHistory();
+             entity.StringProperty = "bar";
+             list.Add(entity);
+             list.Add(entity2);
+            	TradedHistoryService.Save(list);
+            	}
+            	catch (Exception e)
+            	{
+            		if (DomainUtil.HandleException(e, name)) throw;
+            	}
+             ]]></code>
+             </example>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.Delete(ETradeHistory.Entities.TradedHistory)">
+            <summary>
+            public virtual method that Deletes a TradedHistory object into the datasource using a transaction.
+            </summary>
+            <param name="entity">TradedHistory object to Delete.</param>
+            <remarks>After Deleteing into the datasource, the TradedHistory object will be updated
+            to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+            <returns>Returns bool that the operation is successful.</returns>
+            <example>
+            The following code shows the usage of the Delete Method with an already open transaction.
+            <code>
+            TradedHistory entity = TradedHistoryService.GetByPrimaryKeyColumn(1234);
+            entity.StringProperty = "foo";
+            entity.IntProperty = 12;
+            entity.ChildObjectSource.StringProperty = "bar";
+            TransactionManager tm = null;
+            try
+            {
+            	tm = ConnectionContext.CreateTransaction();
+            	//Delete Child entity, Then Parent Entity
+            	ChildObjectTypeService.Delete(entity.ChildObjectSource);
+            	TradedHistoryService.Delete(entity);
+            }
+            catch (Exception e)
+            {
+            	if (tm != null &amp;&amp; tm.IsOpen) tm.Rollback();
+            	if (DomainUtil.HandleException(e, name)) throw;
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.Delete(ETradeHistory.Entities.TList{ETradeHistory.Entities.TradedHistory})">
+             <summary>
+             public virtual method that Deletes rows in <see cref="T:ETradeHistory.Entities.TList`1"/> to the datasource.
+             </summary>
+             <param name="entityCollection"><c>TradedHistory</c> objects in a <see cref="T:ETradeHistory.Entities.TList`1"/> object to Delete.</param>
+             <remarks>
+            		This function will only Delete entity objects marked as dirty
+            		and have an identity field equal to zero.
+            		Upon Deleteing the objects, each dirty object will have the public
+            		method <c>Object.AcceptChanges()</c> called to make it clean.
+             	After Deleteing into the datasource, the <c>TradedHistory</c> objects will be updated
+             	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+             <returns>Returns the number of successful Delete.</returns>
+             <example>
+             The following code shows the usage of the Delete Method with a collection of TradedHistory.
+             <code><![CDATA[
+             TList<TradedHistory> list = new TList<TradedHistory>();
+             TradedHistory entity = new TradedHistory();
+             entity.StringProperty = "foo";
+             TradedHistory entity2 = new TradedHistory();
+             entity.StringProperty = "bar";
+             list.Add(entity);
+             list.Add(entity2);
+            	TradedHistoryService.Delete(list);
+            	}
+            	catch (Exception e)
+            	{
+            		if (DomainUtil.HandleException(e, name)) throw;
+            	}
+             ]]></code>
+             </example>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.Delete(ETradeHistory.Entities.TradedHistoryKey)">
+            <summary>
+            	Deletes a row from the DataSource.
+            </summary>
+            <param name="key">The unique identifier of the row to delete.</param>
+            <returns>Returns true if operation suceeded.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.Delete(System.Int64)">
+            <summary>
+            	Deletes a row from the DataSource based on the PK'S long _id
+            </summary>
+            <param name="_id">TradedHistory pk id.</param>
+            <remarks>Deletes based on primary key(s).</remarks>
+            <returns>Returns true if operation suceeded.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.DeepLoadById(System.Int64,System.Boolean,ETradeHistory.DataAccess.DeepLoadType,System.Type[])">
+            <summary>
+            public virtualDeep Loads the requested <see cref="T:ETradeHistory.Entities.TradedHistory"/> by the entity keys.  The criteria of the child 
+            property collections only N Levels Deep based on the <see cref="T:ETradeHistory.DataAccess.DeepLoadType"/>.
+            </summary>
+            <param name="_id">ID identifies TradedHistory</param>
+            <param name="deep">Boolean. A flag that indicates whether to recursively save all Property Collection that are descendants of this instance. If True, saves the complete object graph below this object. If False, saves this object only. </param>
+            <param name="deepLoadType">DeepLoadType Enumeration to Include/Exclude object property collections from Load.</param>
+            <param name="childTypes">TradedHistory Property Collection Type Array To Include or Exclude from Load</param>
+            <returns>Returns an instance of the <see cref="T:ETradeHistory.Entities.TradedHistory"/> class and DeepLoaded.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.DeepLoad(ETradeHistory.Entities.TradedHistory)">
+            <summary>
+            public virtualDeep Load the IEntity object with all of the child 
+            property collections only 1 Level Deep.
+            </summary>
+            <param name="entity">TradedHistory Object</param>
+            <remarks>
+            <seealso cref="M:ETradeHistory.Services.TradedHistoryServiceBase.DeepLoad(ETradeHistory.Entities.TradedHistory)"/> overloaded methods for a recursive N Level deep loading method.
+            </remarks>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.DeepLoad(ETradeHistory.Entities.TradedHistory,System.Boolean)">
+            <summary>
+            public virtualDeep Load the IEntity object with all of the child 
+            property collections only 1 Level Deep.
+            </summary>
+            <remarks>
+            <seealso cref="M:ETradeHistory.Services.TradedHistoryServiceBase.DeepLoad(ETradeHistory.Entities.TradedHistory)"/> overloaded methods for a recursive N Level deep loading method.
+            </remarks>
+            <param name="entity">TradedHistory Object</param>
+            <param name="deep">Boolean. A flag that indicates whether to recursively save all Property Collection that are descendants of this instance. If True, saves the complete object graph below this object. If False, saves this object only. </param>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.DeepLoad(ETradeHistory.Entities.TradedHistory,System.Boolean,ETradeHistory.DataAccess.DeepLoadType,System.Type[])">
+            <summary>
+            public virtualDeep Loads the <see cref="T:ETradeHistory.Entities.IEntity"/> object with criteria based of the child 
+            property collections only N Levels Deep based on the <see cref="T:ETradeHistory.DataAccess.DeepLoadType"/>.
+            </summary>
+            <remarks>
+            Use this method with caution as it is possible to DeepLoad with Recursion and traverse an entire object graph.
+            </remarks>
+            <param name="entity">The <see cref="T:ETradeHistory.Entities.TradedHistory"/> object to load.</param>
+            <param name="deep">Boolean. A flag that indicates whether to recursively load all Property Collections that are descendants of this instance. 
+            If True, saves the complete object graph below this object. If False, saves this object only. </param>
+            <param name="deepLoadType">DeepLoadType Enumeration to Include/Exclude object property collections from Load.</param>
+            <param name="childTypes">TradedHistory Property Collection Type Array To Include or Exclude from Load</param>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.DeepLoad(ETradeHistory.Entities.TList{ETradeHistory.Entities.TradedHistory})">
+            <summary>
+            Deep Loads the <see cref="T:ETradeHistory.Entities.TList`1"/> object with all of the child 
+            property collections only 1 Level Deep.
+            </summary>
+            <remarks>
+            <seealso cref="M:ETradeHistory.Services.TradedHistoryServiceBase.DeepLoad(ETradeHistory.Entities.TradedHistory)"/> overloaded methods for a recursive N Level deep loading method.
+            </remarks>
+            <param name="entityCollection">the <see cref="T:ETradeHistory.Entities.TList`1"/> Object to deep loads.</param>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.DeepLoad(ETradeHistory.Entities.TList{ETradeHistory.Entities.TradedHistory},System.Boolean)">
+            <summary>
+            Deep Loads the <see cref="T:ETradeHistory.Entities.TList`1"/> object.
+            </summary>
+            <remarks>
+            <seealso cref="M:ETradeHistory.Services.TradedHistoryServiceBase.DeepLoad(ETradeHistory.Entities.TradedHistory)"/> overloaded methods for a recursive N Level deep loading method.
+            </remarks>
+            <param name="entityCollection">the <see cref="T:ETradeHistory.Entities.TList`1"/> Object to deep loads.</param>
+            <param name="deep">Boolean. A flag that indicates whether to recursively save all Property Collection that are descendants of this instance. If True, saves the complete object graph below this object. If False, saves this object only. </param>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.DeepLoad(ETradeHistory.Entities.TList{ETradeHistory.Entities.TradedHistory},System.Boolean,ETradeHistory.DataAccess.DeepLoadType,System.Type[])">
+            <summary>
+            Deep Loads the entire <see cref="T:ETradeHistory.Entities.TList`1"/> object with criteria based of the child 
+            property collections only N Levels Deep based on the DeepLoadType.
+            </summary>
+            <remarks>
+            Use this method with caution as it is possible to DeepLoad with Recursion and traverse an entire collection's object graph.
+            </remarks>
+            <param name="entityCollection">The <see cref="T:ETradeHistory.Entities.TList`1"/> instance to load.</param>
+            <param name="deep">Boolean. A flag that indicates whether to recursively save all Property Collection that are descendants of this instance. If True, saves the complete object graph below this object. If False, saves this object only. </param>
+            <param name="deepLoadType"><see cref="T:ETradeHistory.DataAccess.DeepLoadType"/> Enumeration to Include/Exclude object property collections from Load.
+            	Use DeepLoadType.IncludeChildren, ExcludeChildren to traverse the entire object graph.
+            </param>
+            <param name="childTypes"><see cref="T:ETradeHistory.Entities.TradedHistory"/> Property Collection Type Array To Include or Exclude from Load</param>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.DeepSave(ETradeHistory.Entities.TradedHistory)">
+            <summary>
+            public virtualDeep Saves the <see cref="T:ETradeHistory.Entities.TradedHistory"/> object with all of the child
+            property collections N Levels Deep.
+            </summary>
+            <param name="entity">TradedHistory Object</param>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.DeepSave(ETradeHistory.Entities.TradedHistory,ETradeHistory.DataAccess.DeepSaveType,System.Type[])">
+            <summary>
+            public virtualDeep Saves the entire object graph of the TradedHistory object with criteria based of the child 
+            Type property array and DeepSaveType.
+            </summary>
+            <param name="entity">TradedHistory Object</param>
+            <param name="deepSaveType">DeepSaveType Enumeration to Include/Exclude object property collections from Save.</param>
+            <param name="childTypes"><c>TradedHistory</c> property Type Array To Include or Exclude from Save</param>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.DeepSave(ETradeHistory.Entities.TList{ETradeHistory.Entities.TradedHistory})">
+            <summary>
+            Deep Save the entire <see cref="T:ETradeHistory.Entities.TList`1"/> object with all of the child 
+            property collections.
+            </summary>
+            <param name="entityCollection">TList{TradedHistory} Object</param>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryServiceBase.DeepSave(ETradeHistory.Entities.TList{ETradeHistory.Entities.TradedHistory},ETradeHistory.DataAccess.DeepSaveType,System.Type[])">
+            <summary>
+            Deep Save the entire object graph of the <see cref="T:ETradeHistory.Entities.TList`1"/> object with criteria based of the child 
+            property collections.
+            </summary>
+            <param name="entityCollection"><see cref="T:ETradeHistory.Entities.TList`1"/> Object</param>
+            <param name="deepSaveType">DeepSaveType Enumeration to Include/Exclude object property collections from Save.</param>
+            <param name="childTypes">TradedHistory Property Collection Type Array To Include or Exclude from Save</param>
+        </member>
+        <member name="P:ETradeHistory.Services.TradedHistoryServiceBase.SecurityContext">
+            <summary>
+             Contains all necessary information to validate and authorize the 
+             call of the method with the Principal and Roles of the current user.
+            </summary>
+        </member>
+        <member name="T:ETradeHistory.Services.ProcessStartingHandler">
+            <summary>
+            ProcessStartingHandler
+            </summary>
+            <param name="sender"></param>
+            <param name="args"></param>
+        </member>
+        <member name="T:ETradeHistory.Services.ProcessEndedHandler">
+            <summary>
+            ProcessEndedHandler
+            </summary>
+            <param name="sender"></param>
+            <param name="args"></param>
+        </member>
+        <member name="T:ETradeHistory.Services.ProcessorEventArgs">
+            <summary>
+            Processor Event Args
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.ProcessorEventArgs.#ctor(ETradeHistory.Services.ProcessorBase)">
+            <summary>
+            Initializes a new instance of the ProcessorEventArgs class.
+            </summary>
+            <param name="processor"></param>
+        </member>
+        <member name="P:ETradeHistory.Services.ProcessorEventArgs.Processor">
+            <summary>
+            Gets or sets the processor.
+            </summary>
+            <value>The processor.</value>
+        </member>
+        <member name="T:ETradeHistory.Services.SecurityContext`1">
+            <summary>
+            The class that is available in case role based security is required at runtime.  
+            It will be made availabe through the entities themselves.
+            </summary>
+        </member>
+        <member name="T:ETradeHistory.Services.SecurityContextBase`1">
+            <summary>
+            The class that is available in case role based security is required at runtime.  
+            It will be made availabe through the entities themselves.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.SecurityContextBase`1.#ctor">
+            <summary>
+            Initializes a new instance of the SecurityContext class.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.SecurityContextBase`1.IsAuthorized(System.String)">
+            <summary>
+            Determine whether user is authorized for the rule based on the rule provider
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.SecurityContextBase`1.Identity">
+            <summary>
+            The Current IIdentity.
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.SecurityContextBase`1.Profile">
+            <summary>
+            The Current Profile .
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.SecurityContextBase`1.Principal">
+            <summary>
+             The Current IPrincipal .
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.SecurityContextBase`1.RuleProvider">
+            <summary>
+             The Current Authorization Rule Provider
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.SecurityContext`1.#ctor">
+            <summary>
+             Creates a new <see cref="T:System.Security.SecurityContext"/> instance.
+            </summary>
+        </member>
+        <member name="T:ETradeHistory.Services.ConnectionScopeBase">
+            <summary>
+            Provides storage of global database connection information.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.ConnectionScopeBase.#ctor">
+            <summary>
+            Initializes a new instance of the ConnectionScope class.
+            </summary>
+        </member>
+        <member name="F:ETradeHistory.Services.ConnectionScopeBase.connectionStringKey">
+            <summary>
+            The ConnectionStringKey member variable.
+            </summary>
+        </member>
+        <member name="F:ETradeHistory.Services.ConnectionScopeBase.dynamicConnectionString">
+            <summary>
+            The DynamicConnectionString member variable.
+            </summary>
+        </member>
+        <member name="F:ETradeHistory.Services.ConnectionScopeBase.transactionManager">
+            <summary>
+            The TransactionManager member variable.
+            </summary>
+        </member>
+        <member name="F:ETradeHistory.Services.ConnectionScopeBase.dataProvider">
+            <summary>
+            The NetTiersProvider member variable.
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.ConnectionScopeBase.ConnectionStringKey">
+            <summary>
+            Gets or sets the ConnectionStringKey property.
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.ConnectionScopeBase.DynamicConnectionString">
+            <summary>
+            Gets or sets the DynamicConnectionString property.
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.ConnectionScopeBase.TransactionManager">
+            <summary>
+            Gets or sets the TransactionManager property.
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.ConnectionScopeBase.DataProvider">
+             <summary>
+             Gets or Sets the Current DataProvider property of the <c>ConnectionScope</c> Object.
+             </summary>
+             <remarks>
+             To use a dynamic connection, you must set both the 
+             DynamicConnectionString and a unique ConnectionStringKey properties;
+            </remarks>
+        </member>
+        <member name="P:ETradeHistory.Services.ConnectionScopeBase.HasTransaction">
+            <summary>
+            Determines if Current Connections is in a Transaction.
+            </summary>
+        </member>
+        <member name="T:ETradeHistory.Services.DomainUtil">
+            <summary>
+            DomainUtil class.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.DomainUtil.GetErrorsFromList``1(ETradeHistory.Entities.TList{``0})">
+            <summary>
+            Aggregates all the errors in a collection
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.DomainUtil.HandleException(System.Exception,System.String)">
+            <summary>
+            Wraps call to tohe <see cref="T:Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.ExceptionPolicy"/> class which handles all exceptions based on the security policy.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.DomainUtil.GetDefaultByType(System.Data.DbType)">
+            <summary>
+            Get a default value for a given data type
+            </summary>
+            <param name="dataType">Data type for which to get the default value</param>
+            <returns>An object of the default value.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.DomainUtil.GetDataValue(System.Data.IDataParameter)">
+            <summary>
+            Get Value or Default Value from an IDataParamater
+            Based on DbType
+            </summary>
+            <param name="p">The IDataParameter instance type is used to determine the default value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.Services.DomainUtil.DefaultToDBNull(System.Object,System.Data.DbType)">
+            <summary>
+            Checks to see if the Default Value has been set to the parameter.
+            If it's the default value, then create.
+            </summary>
+            <param name="val">The value we want to check.</param>
+            <param name="dbtype">The DbType from wich we take the default value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.Services.DomainUtil.GetParameterValue``1(System.Data.IDataParameter)">
+            <summary>
+            Generic method to return the value of a nullable parameter
+            </summary>
+            <typeparam name="T">Type of value to return</typeparam>
+            <param name="parameter">Parameter from which to extract the value</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.Services.DomainUtil.ConvertDataReaderToDataSet(System.Data.IDataReader)">
+            <summary>
+            Converts a IDataReader to a DataSet.  For use when a custom stored procedure returns an <see cref="T:System.Data.IDataReader"/>, it will
+            convert all result sets returned as a DataSet.
+            </summary>
+            <param name="reader">The reader to convert</param>
+            <returns>A dataset with one table per result in the reader</returns>
+        </member>
+        <member name="T:ETradeHistory.Services.ConnectionScope">
+            <summary>
+            Provides storage of global database connection information.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.ConnectionScope.#ctor">
+            <summary>
+            Private constructor.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.ConnectionScope.NewThread(System.Threading.ThreadStart)">
+            <summary>
+            Creates a new <see cref="T:System.Threading.Thread"/> object and copies
+            the current <see cref="T:ETradeHistory.Services.ConnectionScope"/> parameters.
+            </summary>
+            <param name="start">A delegate specifying which method to run
+            when the <see cref="T:System.Threading.Thread"/> is started.</param>
+            <returns>Returns a new <see cref="T:System.Threading.Thread"/> object.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.ConnectionScope.NewThread(System.Threading.ParameterizedThreadStart)">
+            <summary>
+            Creates a new <see cref="T:System.Threading.Thread"/> object and copies
+            the current <see cref="T:ETradeHistory.Services.ConnectionScope"/> parameters.
+            </summary>
+            <param name="start">A delegate specifying which method to run
+            when the <see cref="T:System.Threading.Thread"/> is started.</param>
+            <returns>Returns a new <see cref="T:System.Threading.Thread"/> object.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.ConnectionScope.EnqueueOnThreadPool(System.Threading.ThreadStart)">
+            <summary>
+            Queues a method for execution. The method executes
+            when a thread pool thread becomes available.
+            </summary>
+            <param name="start">A delegate specifying which method to run
+            when the <see cref="T:System.Threading.Thread"/> is started.</param>
+            <returns>Returns true if the method is successfully queued.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.ConnectionScope.EnqueueOnThreadPool(System.Threading.ParameterizedThreadStart,System.Object)">
+            <summary>
+            Queues a method for execution. The method executes
+            when a thread pool thread becomes available.
+            </summary>
+            <param name="start">A delegate specifying which method to run
+            when the <see cref="T:System.Threading.Thread"/> is started.</param>
+            <param name="state">An object containing data to be used by the method.</param>
+            <returns>Returns true if the method is successfully queued.</returns>
+        </member>
+        <member name="M:ETradeHistory.Services.ConnectionScope.Copy(ETradeHistory.Services.ConnectionScope)">
+            <summary>
+            Copies the values from the specified <paramref name="scope"/> object
+            to the <see cref="T:ETradeHistory.Services.ConnectionScope"/> used by the current thread.
+            </summary>
+            <param name="scope">A <see cref="T:ETradeHistory.Services.ConnectionScope"/> object.</param>
+        </member>
+        <member name="M:ETradeHistory.Services.ConnectionScope.ValidateOrCreateTransaction">
+            <summary>
+            Validates an existing <c cref="T:ETradeHistory.DataAccess.TransactionManager"/> if one exists,
+            otherwise creates a new <c cref="T:ETradeHistory.DataAccess.TransactionManager"/> to use.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.ConnectionScope.ValidateOrCreateTransaction(System.Boolean)">
+            <summary>
+            Validates an existing <c cref="T:ETradeHistory.DataAccess.TransactionManager"/> if one exists,
+            otherwise creates a new <c cref="T:ETradeHistory.DataAccess.TransactionManager"/> to use.
+            </summary>
+            <param name="createTransaction">determines whether to create a new transaction</param>
+        </member>
+        <member name="M:ETradeHistory.Services.ConnectionScope.CreateTransaction">
+            <summary>
+            Creates a new transaction on the current <c>ConnectionScope</c>.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.Services.ConnectionScope.CreateTransaction(System.Data.IsolationLevel)">
+            <summary>
+            Creates a new transaction on the current <c>ConnectionScope</c>
+            with the specified <c cref="T:System.Data.IsolationLevel"/>.
+            </summary>
+            <param name="level">Determines which <c cref="T:System.Data.IsolationLevel"/> to use for the transaction.</param>
+        </member>
+        <member name="M:ETradeHistory.Services.ConnectionScope.Complete">
+            <summary>
+            Completes this transaction.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.Services.ConnectionScope.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.ConnectionScope.Current">
+            <summary>
+            Gets a reference to the ConnectionScope object for the current thread.
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.ConnectionScope.HasTransaction">
+            <summary>
+            Determines if Current Connections is in a Transaction.
+            </summary>
+        </member>
+        <member name="T:ETradeHistory.Services.TradedHistoryService">
+            <summary>
+            An component type implementation of the 'TradedHistory' table.
+            </summary>
+            <remarks>
+            All custom implementations should be done here.
+            </remarks>
+        </member>
+        <member name="M:ETradeHistory.Services.TradedHistoryService.#ctor">
+            <summary>
+            Initializes a new instance of the TradedHistoryService class.
+            </summary>
+        </member>
+        <member name="T:ETradeHistory.Services.ServiceResult">
+            <summary>
+            The class provides a notification pattern for the processor execution.
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.ServiceResult.HasErrors">
+            <summary>
+               Determines whethere the containing service, has errors.
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.ServiceResult.Error">
+            <summary>
+               Provides a string of errors accumulated with a new line of delimeted errors.
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.ServiceResult.ProcessBrokenRuleLists">
+            <summary>
+               Provides an aggregated group of BrokenRuleList for each of the executed processes.
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.ServiceResult.ProcessorResultList">
+            <summary>
+               Determines whethere the containing processs results that were enlisted in the service.
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.Services.ServiceResult.ExceptionList">
+             <summary>
+            	Provides the List of UnHandled Exceptions that occured during processing.
+             </summary>
+            <value>A list of rules that were broken in the process</value>		
+        </member>
+    </members>
+</doc>

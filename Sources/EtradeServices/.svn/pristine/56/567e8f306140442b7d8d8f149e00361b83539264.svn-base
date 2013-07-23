@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ETradeWebServices.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ETradeWebServices_AMServices_AccountManagerServices" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://172.16.1.30:2010/AMServices/AccountManagerServices.asmx</Value>
+    </Setting>
+    <Setting Name="ETradeWebServices_RTServices_Service" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://172.16.68.9/RTServiceTest/Service.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -1,0 +1,66 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BankServices.cs" company="OTS">
+//   2010
+// </copyright>
+// <summary>
+//   Defines the StockServices type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System.Linq;
+
+namespace ETradeCore.Services
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+
+    using ETradeCommon;
+    using ETradeCommon.Enums;
+
+    using DataAccess;
+    using DataAccess.SqlClient;
+    using Entities;
+
+    public class MarginServices
+    {
+        private readonly IFisCoreProvider iFisCoreProvider = new SqlDb2Provider();
+
+        #region Get Margin Ratio
+        /// <summary>
+        /// Gets the margin ratio.
+        /// </summary>
+        /// <param name="accountNo">The account no from SBA.</param>
+        /// <returns></returns>
+        public MarginRatioInfo GetMarginRatio(string accountNo)
+        {
+            MarginRatioInfo marginRatioInfo = iFisCoreProvider.GetMarginRatio(accountNo);
+            if(marginRatioInfo==null)
+            {
+                LogHandler.Log("GetMarginRatio: " + accountNo + " there no result", GetType() + ".GetMarginRatio()", TraceEventType.Information);
+                return null;
+            }
+            return marginRatioInfo;
+        }
+        #endregion
+
+        #region Get Margin Portfolio
+
+        /// <summary>
+        /// Gets the margin portfolio.
+        /// </summary>
+        /// <param name="accountNo">The account no.</param>
+        /// <returns></returns>
+        public List<MarginPortfolio> GetMarginPortfolio(string accountNo)
+        {
+            List<MarginPortfolio> listMarginPortfolio = iFisCoreProvider.GetMarginPortfolio(accountNo);
+            if(listMarginPortfolio==null)
+            {
+                return null;
+            }
+            return listMarginPortfolio;
+        }
+
+        #endregion
+    }
+}

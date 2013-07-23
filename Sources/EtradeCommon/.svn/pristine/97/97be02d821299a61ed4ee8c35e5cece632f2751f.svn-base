@@ -1,0 +1,27 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="StockAvailable.cs" company="OTS">
+//   2010
+// </copyright>
+// <summary>
+//   Defines the StockBalance type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ETradeCore.Entities
+{
+    public class StockAvailable
+    {
+        /// <summary>
+        /// Gets or sets the avai volume.
+        /// </summary>
+        /// <value>The avai volume.</value>
+        public System.Decimal AvaiVolume { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets the avg price.
+        /// </summary>
+        /// <value>The avg price.</value>
+        public System.Decimal AvgPrice { get; set; }
+    }
+}

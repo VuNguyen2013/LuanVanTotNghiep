@@ -1,0 +1,20 @@
+﻿namespace ETradeAutomation
+{
+    class Constants
+    {
+        public const string ACTIVATION_TASK = "ETrade Automation Activation";
+        public const string CONDITION_ORDER_TASK = "ETrade Automation Condition Order";
+        public const string CURRENCIES_TASK = "ETrade Currencies Updater";
+        public const string EXECUTION_FILENAME = "ETradeAutomation.exe";
+        public const string ACTIVATION_TASK_FILE = "ActivateService.bat";
+        public const string CONDITION_ORDER_TASK_FILE = "PutConditionOrders.bat";
+        public const string CURRENCIES_TASK_FILE = "UpdateCurrencies.bat";
+
+        public enum TaskId
+        {
+            ACTIVATION = 1,
+            CONDITION_ORDER,
+            CURRENCIES
+        }
+    }
+}

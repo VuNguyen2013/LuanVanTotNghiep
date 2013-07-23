@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Name="InnoAMDB" Class="InnoDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=10.128.28.99;Initial Catalog=InnoAMDB;User ID=sa" SettingsObjectName="MigrateDataTCSC.Properties.Settings" SettingsPropertyName="InnoAMDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.AccountInfo" Member="AccountInfoFromInnos">
+    <Type Name="AccountInfoFromInno">
+      <Column Name="AccountID" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="OrderPin" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="OneTimePassword" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ReceiveNotificationByEmail" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="SecretQuestionID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SecretAnswer" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Actived" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="TradeActived" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CustomerType" Type="System.String" DbType="VarChar(1)" CanBeNull="true" />
+      <Column Name="LockAccountReason" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="LockTradeReason" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="AccountType" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="AuthType" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="ActivedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="BrokerID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="EP_Password" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="EP_Enable" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="EP_FirstLogon" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

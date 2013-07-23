@@ -1,0 +1,133 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BankServices.cs" company="OTS">
+//   2010
+// </copyright>
+// <summary>
+//   Defines the StockServices type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System.Linq;
+
+namespace ETradeCore.Services
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+
+    using ETradeCommon;
+    using ETradeCommon.Enums;
+
+    using DataAccess;
+    using DataAccess.SqlClient;
+    using Entities;
+
+    public class MarginServices
+    {
+        private readonly IFisCoreProvider iFisCoreProvider = new SqlDb2Provider();
+        private readonly ISbaCoreProvider _sbaProvider = new SqlInformixProvider();
+        /// <summary>
+        /// Gets the margin ratio.
+        /// </summary>
+        /// <param name="accountNo">The account no from SBA.</param>
+        /// <returns>Margin ration information.</returns>
+        public MarginRatioInfo GetMarginRatio(string accountNo)
+        {
+            MarginRatioInfo marginRatioInfo = iFisCoreProvider.GetMarginRatio(accountNo);
+            if(marginRatioInfo==null)
+            {
+                LogHandler.Log("GetMarginRatio: " + accountNo + " there no result", GetType() + ".GetMarginRatio()", TraceEventType.Information);
+                return null;
+            }
+
+            return marginRatioInfo;
+        }
+
+        /// <summary>
+        /// Determines whether [is call margin] [the specified account no].
+        /// </summary>
+        /// <param name="accountNo">The account no.</param>
+        /// <returns>
+        /// 	<c>true</c> if this account is call margin; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsCallMargin(string accountNo)
+        {
+            MarginRatioInfo marginRatioInfo = iFisCoreProvider.GetMarginRatio(accountNo);
+            if (marginRatioInfo == null)
+                return false;
+            if(marginRatioInfo.Equity-marginRatioInfo.CallMargin<0)
+                return true;
+            return false;
+        }
+
+        /// <summary>
+        /// Determines whether [is call force sell] [the specified account no].
+        /// </summary>
+        /// <param name="accountNo">The account no.</param>
+        /// <returns>
+        /// 	<c>true</c> if this account is call force sell; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsCallForceSell(string accountNo)
+        {
+            MarginRatioInfo marginRatioInfo = iFisCoreProvider.GetMarginRatio(accountNo);
+            if (marginRatioInfo == null)
+                return false;
+            if(marginRatioInfo.Equity-marginRatioInfo.CallMargin<0 && marginRatioInfo.Equity-marginRatioInfo.CalForce<0)
+                return true;
+            return false;            
+        }
+
+        /// <summary>
+        /// Gets the margin portfolio.
+        /// </summary>
+        /// <param name="accountNo">The account no.</param>
+        /// <returns>List of MarginPortfolio objects.</returns>
+        public List<MarginPortfolio> GetMarginPortfolio(string accountNo)
+        {
+            List<MarginPortfolio> listMarginPortfolio=iFisCoreProvider.GetMarginPortfolio(accountNo);            
+            if(listMarginPortfolio!=null && listMarginPortfolio.Count>0)
+            {
+                listMarginPortfolio = listMarginPortfolio.Where(maginPortfolio => maginPortfolio.Actual_Vol > 0).ToList();
+                foreach (var marginPortfolio in listMarginPortfolio)
+                {
+                    //type
+                    try
+                    {
+                        CommonEnums.MARGIN_PORTFOLIO_TYPE marginPortfolioType = (CommonEnums.MARGIN_PORTFOLIO_TYPE)Enum.Parse(typeof(CommonEnums.MARGIN_PORTFOLIO_TYPE), "TYPE_" + marginPortfolio.TY, false);
+                        marginPortfolio.TY = Convert.ToString((char)marginPortfolioType);
+                    }
+                    catch{}
+                    
+                    //rate
+                    MaginSecInfo maginSecInfo = GetMaginSecInfo(DateTime.Now.ToString("yyyyMMdd"), marginPortfolio.Stock);                    
+                    marginPortfolio.Rate = maginSecInfo.IM;
+                }
+                
+            }
+            return listMarginPortfolio;
+        }
+
+        /// <summary>
+        /// Gets the list magin sec info.
+        /// </summary>
+        /// <param name="tradeDate">The trade date.</param>
+        /// <param name="symbol">Stock symbol.</param>
+        /// <returns>Margin security information.</returns>
+        public MaginSecInfo GetMaginSecInfo(string tradeDate,string symbol)
+        {
+            MaginSecInfo maginSecInfo=_sbaProvider.GetMaginSecInfo(tradeDate,symbol);
+            if(maginSecInfo!=null)
+                maginSecInfo.IM /= 100;
+            return maginSecInfo;
+        }
+
+        /// <summary>
+        /// Gets the cap fund info.
+        /// </summary>
+        /// <returns>Cap fund information</returns>
+        public CapFundInfo GetCapFundInfo()
+        {
+            return _sbaProvider.GetCapFundInfo();
+        }
+    }
+}

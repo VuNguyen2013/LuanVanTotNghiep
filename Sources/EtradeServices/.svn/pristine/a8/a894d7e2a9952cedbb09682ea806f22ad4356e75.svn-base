@@ -1,0 +1,1413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetMarketInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="marketID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMarketInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMarketInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MarketStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="marketID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MarketStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MarketStatusResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AllMarketInfoAndStatus">
+        <s:complexType />
+      </s:element>
+      <s:element name="AllMarketInfoAndStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AllMarketInfoAndStatusResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetMatketStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="marketId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="marketStatus" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetMatketStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SetMatketStatusResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListCompany">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="marketID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListCompanyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetListCompanyResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNewestWorkingDates">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetNewestWorkingDatesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetNewestWorkingDatesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllStockFromMarket">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="marketID" type="s:short" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllStockFromMarketResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllStockFromMarketResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStockInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="symbol" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStockInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStockInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStockInfoByLanguge">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="symbol" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="languageId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStockInfoByLangugeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStockInfoByLangugeResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListStockInfos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="listCodes" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="languageId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListStockInfosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetListStockInfosResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTransactions">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="symbol" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="marketID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTransactionsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTransactionsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetHOSEPutAd">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetHOSEPutAdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetHOSEPutAdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetHOSEPutExec">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetHOSEPutExecResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetHOSEPutExecResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="StartUpdater">
+        <s:complexType />
+      </s:element>
+      <s:element name="StartUpdaterResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="StartUpdaterResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="StopUpdater">
+        <s:complexType />
+      </s:element>
+      <s:element name="StopUpdaterResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="StopUpdaterResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStaticStockInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="listCodes" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStaticStockInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStaticStockInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDynamicStockInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="listCodes" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="languageId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDynamicStockInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDynamicStockInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string" />
+      <s:element name="int" type="s:int" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetMarketInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMarketInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetMarketInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMarketInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="MarketStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:MarketStatus" />
+  </wsdl:message>
+  <wsdl:message name="MarketStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:MarketStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="AllMarketInfoAndStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:AllMarketInfoAndStatus" />
+  </wsdl:message>
+  <wsdl:message name="AllMarketInfoAndStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:AllMarketInfoAndStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetMatketStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:SetMatketStatus" />
+  </wsdl:message>
+  <wsdl:message name="SetMatketStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:SetMatketStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListCompanySoapIn">
+    <wsdl:part name="parameters" element="tns:GetListCompany" />
+  </wsdl:message>
+  <wsdl:message name="GetListCompanySoapOut">
+    <wsdl:part name="parameters" element="tns:GetListCompanyResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetNewestWorkingDatesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetNewestWorkingDates" />
+  </wsdl:message>
+  <wsdl:message name="GetNewestWorkingDatesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetNewestWorkingDatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllStockFromMarketSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllStockFromMarket" />
+  </wsdl:message>
+  <wsdl:message name="GetAllStockFromMarketSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllStockFromMarketResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStockInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStockInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetStockInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStockInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStockInfoByLangugeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStockInfoByLanguge" />
+  </wsdl:message>
+  <wsdl:message name="GetStockInfoByLangugeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStockInfoByLangugeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListStockInfosSoapIn">
+    <wsdl:part name="parameters" element="tns:GetListStockInfos" />
+  </wsdl:message>
+  <wsdl:message name="GetListStockInfosSoapOut">
+    <wsdl:part name="parameters" element="tns:GetListStockInfosResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTransactionsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTransactions" />
+  </wsdl:message>
+  <wsdl:message name="GetTransactionsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTransactionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetHOSEPutAdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetHOSEPutAd" />
+  </wsdl:message>
+  <wsdl:message name="GetHOSEPutAdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetHOSEPutAdResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetHOSEPutExecSoapIn">
+    <wsdl:part name="parameters" element="tns:GetHOSEPutExec" />
+  </wsdl:message>
+  <wsdl:message name="GetHOSEPutExecSoapOut">
+    <wsdl:part name="parameters" element="tns:GetHOSEPutExecResponse" />
+  </wsdl:message>
+  <wsdl:message name="StartUpdaterSoapIn">
+    <wsdl:part name="parameters" element="tns:StartUpdater" />
+  </wsdl:message>
+  <wsdl:message name="StartUpdaterSoapOut">
+    <wsdl:part name="parameters" element="tns:StartUpdaterResponse" />
+  </wsdl:message>
+  <wsdl:message name="StopUpdaterSoapIn">
+    <wsdl:part name="parameters" element="tns:StopUpdater" />
+  </wsdl:message>
+  <wsdl:message name="StopUpdaterSoapOut">
+    <wsdl:part name="parameters" element="tns:StopUpdaterResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStaticStockInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStaticStockInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetStaticStockInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStaticStockInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDynamicStockInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDynamicStockInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetDynamicStockInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDynamicStockInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMarketInfoHttpGetIn">
+    <wsdl:part name="marketID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMarketInfoHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="MarketStatusHttpGetIn">
+    <wsdl:part name="marketID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="MarketStatusHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="AllMarketInfoAndStatusHttpGetIn" />
+  <wsdl:message name="AllMarketInfoAndStatusHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="SetMatketStatusHttpGetIn">
+    <wsdl:part name="marketId" type="s:string" />
+    <wsdl:part name="marketStatus" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SetMatketStatusHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetListCompanyHttpGetIn">
+    <wsdl:part name="marketID" type="s:string" />
+    <wsdl:part name="languageId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetListCompanyHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetNewestWorkingDatesHttpGetIn" />
+  <wsdl:message name="GetNewestWorkingDatesHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAllStockFromMarketHttpGetIn">
+    <wsdl:part name="marketID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAllStockFromMarketHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStockInfoHttpGetIn">
+    <wsdl:part name="symbol" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStockInfoHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStockInfoByLangugeHttpGetIn">
+    <wsdl:part name="symbol" type="s:string" />
+    <wsdl:part name="languageId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStockInfoByLangugeHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetListStockInfosHttpGetIn">
+    <wsdl:part name="listCodes" type="s:string" />
+    <wsdl:part name="languageId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetListStockInfosHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetTransactionsHttpGetIn">
+    <wsdl:part name="symbol" type="s:string" />
+    <wsdl:part name="marketID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetTransactionsHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetHOSEPutAdHttpGetIn" />
+  <wsdl:message name="GetHOSEPutAdHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetHOSEPutExecHttpGetIn" />
+  <wsdl:message name="GetHOSEPutExecHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="StartUpdaterHttpGetIn" />
+  <wsdl:message name="StartUpdaterHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="StopUpdaterHttpGetIn" />
+  <wsdl:message name="StopUpdaterHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetStaticStockInfoHttpGetIn">
+    <wsdl:part name="listCodes" type="s:string" />
+    <wsdl:part name="languageId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStaticStockInfoHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDynamicStockInfoHttpGetIn">
+    <wsdl:part name="listCodes" type="s:string" />
+    <wsdl:part name="languageId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDynamicStockInfoHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMarketInfoHttpPostIn">
+    <wsdl:part name="marketID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMarketInfoHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="MarketStatusHttpPostIn">
+    <wsdl:part name="marketID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="MarketStatusHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="AllMarketInfoAndStatusHttpPostIn" />
+  <wsdl:message name="AllMarketInfoAndStatusHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="SetMatketStatusHttpPostIn">
+    <wsdl:part name="marketId" type="s:string" />
+    <wsdl:part name="marketStatus" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SetMatketStatusHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetListCompanyHttpPostIn">
+    <wsdl:part name="marketID" type="s:string" />
+    <wsdl:part name="languageId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetListCompanyHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetNewestWorkingDatesHttpPostIn" />
+  <wsdl:message name="GetNewestWorkingDatesHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAllStockFromMarketHttpPostIn">
+    <wsdl:part name="marketID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAllStockFromMarketHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStockInfoHttpPostIn">
+    <wsdl:part name="symbol" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStockInfoHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStockInfoByLangugeHttpPostIn">
+    <wsdl:part name="symbol" type="s:string" />
+    <wsdl:part name="languageId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStockInfoByLangugeHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetListStockInfosHttpPostIn">
+    <wsdl:part name="listCodes" type="s:string" />
+    <wsdl:part name="languageId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetListStockInfosHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetTransactionsHttpPostIn">
+    <wsdl:part name="symbol" type="s:string" />
+    <wsdl:part name="marketID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetTransactionsHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetHOSEPutAdHttpPostIn" />
+  <wsdl:message name="GetHOSEPutAdHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetHOSEPutExecHttpPostIn" />
+  <wsdl:message name="GetHOSEPutExecHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="StartUpdaterHttpPostIn" />
+  <wsdl:message name="StartUpdaterHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="StopUpdaterHttpPostIn" />
+  <wsdl:message name="StopUpdaterHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetStaticStockInfoHttpPostIn">
+    <wsdl:part name="listCodes" type="s:string" />
+    <wsdl:part name="languageId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStaticStockInfoHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDynamicStockInfoHttpPostIn">
+    <wsdl:part name="listCodes" type="s:string" />
+    <wsdl:part name="languageId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDynamicStockInfoHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:portType name="ServiceSoap">
+    <wsdl:operation name="GetMarketInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Market Info</wsdl:documentation>
+      <wsdl:input message="tns:GetMarketInfoSoapIn" />
+      <wsdl:output message="tns:GetMarketInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MarketStatus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Market Status</wsdl:documentation>
+      <wsdl:input message="tns:MarketStatusSoapIn" />
+      <wsdl:output message="tns:MarketStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AllMarketInfoAndStatus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get all Market Status</wsdl:documentation>
+      <wsdl:input message="tns:AllMarketInfoAndStatusSoapIn" />
+      <wsdl:output message="tns:AllMarketInfoAndStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetMatketStatus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Set Market Status</wsdl:documentation>
+      <wsdl:input message="tns:SetMatketStatusSoapIn" />
+      <wsdl:output message="tns:SetMatketStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListCompany">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Company List</wsdl:documentation>
+      <wsdl:input message="tns:GetListCompanySoapIn" />
+      <wsdl:output message="tns:GetListCompanySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNewestWorkingDates">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get NewestWorkingDates</wsdl:documentation>
+      <wsdl:input message="tns:GetNewestWorkingDatesSoapIn" />
+      <wsdl:output message="tns:GetNewestWorkingDatesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllStockFromMarket">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get All Stock From Market</wsdl:documentation>
+      <wsdl:input message="tns:GetAllStockFromMarketSoapIn" />
+      <wsdl:output message="tns:GetAllStockFromMarketSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStockInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Stock Info</wsdl:documentation>
+      <wsdl:input message="tns:GetStockInfoSoapIn" />
+      <wsdl:output message="tns:GetStockInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStockInfoByLanguge">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Stock Info</wsdl:documentation>
+      <wsdl:input message="tns:GetStockInfoByLangugeSoapIn" />
+      <wsdl:output message="tns:GetStockInfoByLangugeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListStockInfos">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get List Stock</wsdl:documentation>
+      <wsdl:input message="tns:GetListStockInfosSoapIn" />
+      <wsdl:output message="tns:GetListStockInfosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactions">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get All Transaction</wsdl:documentation>
+      <wsdl:input message="tns:GetTransactionsSoapIn" />
+      <wsdl:output message="tns:GetTransactionsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHOSEPutAd">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Put Ad</wsdl:documentation>
+      <wsdl:input message="tns:GetHOSEPutAdSoapIn" />
+      <wsdl:output message="tns:GetHOSEPutAdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHOSEPutExec">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Put Exec</wsdl:documentation>
+      <wsdl:input message="tns:GetHOSEPutExecSoapIn" />
+      <wsdl:output message="tns:GetHOSEPutExecSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="StartUpdater">
+      <wsdl:input message="tns:StartUpdaterSoapIn" />
+      <wsdl:output message="tns:StartUpdaterSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="StopUpdater">
+      <wsdl:input message="tns:StopUpdaterSoapIn" />
+      <wsdl:output message="tns:StopUpdaterSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStaticStockInfo">
+      <wsdl:input message="tns:GetStaticStockInfoSoapIn" />
+      <wsdl:output message="tns:GetStaticStockInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDynamicStockInfo">
+      <wsdl:input message="tns:GetDynamicStockInfoSoapIn" />
+      <wsdl:output message="tns:GetDynamicStockInfoSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ServiceHttpGet">
+    <wsdl:operation name="GetMarketInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Market Info</wsdl:documentation>
+      <wsdl:input message="tns:GetMarketInfoHttpGetIn" />
+      <wsdl:output message="tns:GetMarketInfoHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MarketStatus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Market Status</wsdl:documentation>
+      <wsdl:input message="tns:MarketStatusHttpGetIn" />
+      <wsdl:output message="tns:MarketStatusHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AllMarketInfoAndStatus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get all Market Status</wsdl:documentation>
+      <wsdl:input message="tns:AllMarketInfoAndStatusHttpGetIn" />
+      <wsdl:output message="tns:AllMarketInfoAndStatusHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetMatketStatus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Set Market Status</wsdl:documentation>
+      <wsdl:input message="tns:SetMatketStatusHttpGetIn" />
+      <wsdl:output message="tns:SetMatketStatusHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListCompany">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Company List</wsdl:documentation>
+      <wsdl:input message="tns:GetListCompanyHttpGetIn" />
+      <wsdl:output message="tns:GetListCompanyHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNewestWorkingDates">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get NewestWorkingDates</wsdl:documentation>
+      <wsdl:input message="tns:GetNewestWorkingDatesHttpGetIn" />
+      <wsdl:output message="tns:GetNewestWorkingDatesHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllStockFromMarket">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get All Stock From Market</wsdl:documentation>
+      <wsdl:input message="tns:GetAllStockFromMarketHttpGetIn" />
+      <wsdl:output message="tns:GetAllStockFromMarketHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStockInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Stock Info</wsdl:documentation>
+      <wsdl:input message="tns:GetStockInfoHttpGetIn" />
+      <wsdl:output message="tns:GetStockInfoHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStockInfoByLanguge">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Stock Info</wsdl:documentation>
+      <wsdl:input message="tns:GetStockInfoByLangugeHttpGetIn" />
+      <wsdl:output message="tns:GetStockInfoByLangugeHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListStockInfos">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get List Stock</wsdl:documentation>
+      <wsdl:input message="tns:GetListStockInfosHttpGetIn" />
+      <wsdl:output message="tns:GetListStockInfosHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactions">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get All Transaction</wsdl:documentation>
+      <wsdl:input message="tns:GetTransactionsHttpGetIn" />
+      <wsdl:output message="tns:GetTransactionsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHOSEPutAd">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Put Ad</wsdl:documentation>
+      <wsdl:input message="tns:GetHOSEPutAdHttpGetIn" />
+      <wsdl:output message="tns:GetHOSEPutAdHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHOSEPutExec">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Put Exec</wsdl:documentation>
+      <wsdl:input message="tns:GetHOSEPutExecHttpGetIn" />
+      <wsdl:output message="tns:GetHOSEPutExecHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="StartUpdater">
+      <wsdl:input message="tns:StartUpdaterHttpGetIn" />
+      <wsdl:output message="tns:StartUpdaterHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="StopUpdater">
+      <wsdl:input message="tns:StopUpdaterHttpGetIn" />
+      <wsdl:output message="tns:StopUpdaterHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStaticStockInfo">
+      <wsdl:input message="tns:GetStaticStockInfoHttpGetIn" />
+      <wsdl:output message="tns:GetStaticStockInfoHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDynamicStockInfo">
+      <wsdl:input message="tns:GetDynamicStockInfoHttpGetIn" />
+      <wsdl:output message="tns:GetDynamicStockInfoHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ServiceHttpPost">
+    <wsdl:operation name="GetMarketInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Market Info</wsdl:documentation>
+      <wsdl:input message="tns:GetMarketInfoHttpPostIn" />
+      <wsdl:output message="tns:GetMarketInfoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MarketStatus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Market Status</wsdl:documentation>
+      <wsdl:input message="tns:MarketStatusHttpPostIn" />
+      <wsdl:output message="tns:MarketStatusHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AllMarketInfoAndStatus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get all Market Status</wsdl:documentation>
+      <wsdl:input message="tns:AllMarketInfoAndStatusHttpPostIn" />
+      <wsdl:output message="tns:AllMarketInfoAndStatusHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetMatketStatus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Set Market Status</wsdl:documentation>
+      <wsdl:input message="tns:SetMatketStatusHttpPostIn" />
+      <wsdl:output message="tns:SetMatketStatusHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListCompany">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Company List</wsdl:documentation>
+      <wsdl:input message="tns:GetListCompanyHttpPostIn" />
+      <wsdl:output message="tns:GetListCompanyHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNewestWorkingDates">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get NewestWorkingDates</wsdl:documentation>
+      <wsdl:input message="tns:GetNewestWorkingDatesHttpPostIn" />
+      <wsdl:output message="tns:GetNewestWorkingDatesHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllStockFromMarket">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get All Stock From Market</wsdl:documentation>
+      <wsdl:input message="tns:GetAllStockFromMarketHttpPostIn" />
+      <wsdl:output message="tns:GetAllStockFromMarketHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStockInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Stock Info</wsdl:documentation>
+      <wsdl:input message="tns:GetStockInfoHttpPostIn" />
+      <wsdl:output message="tns:GetStockInfoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStockInfoByLanguge">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Stock Info</wsdl:documentation>
+      <wsdl:input message="tns:GetStockInfoByLangugeHttpPostIn" />
+      <wsdl:output message="tns:GetStockInfoByLangugeHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListStockInfos">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get List Stock</wsdl:documentation>
+      <wsdl:input message="tns:GetListStockInfosHttpPostIn" />
+      <wsdl:output message="tns:GetListStockInfosHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactions">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get All Transaction</wsdl:documentation>
+      <wsdl:input message="tns:GetTransactionsHttpPostIn" />
+      <wsdl:output message="tns:GetTransactionsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHOSEPutAd">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Put Ad</wsdl:documentation>
+      <wsdl:input message="tns:GetHOSEPutAdHttpPostIn" />
+      <wsdl:output message="tns:GetHOSEPutAdHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHOSEPutExec">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Put Exec</wsdl:documentation>
+      <wsdl:input message="tns:GetHOSEPutExecHttpPostIn" />
+      <wsdl:output message="tns:GetHOSEPutExecHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="StartUpdater">
+      <wsdl:input message="tns:StartUpdaterHttpPostIn" />
+      <wsdl:output message="tns:StartUpdaterHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="StopUpdater">
+      <wsdl:input message="tns:StopUpdaterHttpPostIn" />
+      <wsdl:output message="tns:StopUpdaterHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStaticStockInfo">
+      <wsdl:input message="tns:GetStaticStockInfoHttpPostIn" />
+      <wsdl:output message="tns:GetStaticStockInfoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDynamicStockInfo">
+      <wsdl:input message="tns:GetDynamicStockInfoHttpPostIn" />
+      <wsdl:output message="tns:GetDynamicStockInfoHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServiceSoap" type="tns:ServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetMarketInfo">
+      <soap:operation soapAction="http://tempuri.org/GetMarketInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MarketStatus">
+      <soap:operation soapAction="http://tempuri.org/MarketStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AllMarketInfoAndStatus">
+      <soap:operation soapAction="http://tempuri.org/AllMarketInfoAndStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetMatketStatus">
+      <soap:operation soapAction="http://tempuri.org/SetMatketStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListCompany">
+      <soap:operation soapAction="http://tempuri.org/GetListCompany" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNewestWorkingDates">
+      <soap:operation soapAction="http://tempuri.org/GetNewestWorkingDates" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllStockFromMarket">
+      <soap:operation soapAction="http://tempuri.org/GetAllStockFromMarket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockInfo">
+      <soap:operation soapAction="http://tempuri.org/GetStockInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockInfoByLanguge">
+      <soap:operation soapAction="http://tempuri.org/GetStockInfoByLanguge" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListStockInfos">
+      <soap:operation soapAction="http://tempuri.org/GetListStockInfos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactions">
+      <soap:operation soapAction="http://tempuri.org/GetTransactions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHOSEPutAd">
+      <soap:operation soapAction="http://tempuri.org/GetHOSEPutAd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHOSEPutExec">
+      <soap:operation soapAction="http://tempuri.org/GetHOSEPutExec" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartUpdater">
+      <soap:operation soapAction="http://tempuri.org/StartUpdater" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StopUpdater">
+      <soap:operation soapAction="http://tempuri.org/StopUpdater" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStaticStockInfo">
+      <soap:operation soapAction="http://tempuri.org/GetStaticStockInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDynamicStockInfo">
+      <soap:operation soapAction="http://tempuri.org/GetDynamicStockInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServiceSoap12" type="tns:ServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetMarketInfo">
+      <soap12:operation soapAction="http://tempuri.org/GetMarketInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MarketStatus">
+      <soap12:operation soapAction="http://tempuri.org/MarketStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AllMarketInfoAndStatus">
+      <soap12:operation soapAction="http://tempuri.org/AllMarketInfoAndStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetMatketStatus">
+      <soap12:operation soapAction="http://tempuri.org/SetMatketStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListCompany">
+      <soap12:operation soapAction="http://tempuri.org/GetListCompany" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNewestWorkingDates">
+      <soap12:operation soapAction="http://tempuri.org/GetNewestWorkingDates" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllStockFromMarket">
+      <soap12:operation soapAction="http://tempuri.org/GetAllStockFromMarket" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockInfo">
+      <soap12:operation soapAction="http://tempuri.org/GetStockInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockInfoByLanguge">
+      <soap12:operation soapAction="http://tempuri.org/GetStockInfoByLanguge" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListStockInfos">
+      <soap12:operation soapAction="http://tempuri.org/GetListStockInfos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactions">
+      <soap12:operation soapAction="http://tempuri.org/GetTransactions" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHOSEPutAd">
+      <soap12:operation soapAction="http://tempuri.org/GetHOSEPutAd" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHOSEPutExec">
+      <soap12:operation soapAction="http://tempuri.org/GetHOSEPutExec" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartUpdater">
+      <soap12:operation soapAction="http://tempuri.org/StartUpdater" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StopUpdater">
+      <soap12:operation soapAction="http://tempuri.org/StopUpdater" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStaticStockInfo">
+      <soap12:operation soapAction="http://tempuri.org/GetStaticStockInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDynamicStockInfo">
+      <soap12:operation soapAction="http://tempuri.org/GetDynamicStockInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServiceHttpGet" type="tns:ServiceHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="GetMarketInfo">
+      <http:operation location="/GetMarketInfo" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MarketStatus">
+      <http:operation location="/MarketStatus" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AllMarketInfoAndStatus">
+      <http:operation location="/AllMarketInfoAndStatus" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetMatketStatus">
+      <http:operation location="/SetMatketStatus" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListCompany">
+      <http:operation location="/GetListCompany" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNewestWorkingDates">
+      <http:operation location="/GetNewestWorkingDates" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllStockFromMarket">
+      <http:operation location="/GetAllStockFromMarket" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockInfo">
+      <http:operation location="/GetStockInfo" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockInfoByLanguge">
+      <http:operation location="/GetStockInfoByLanguge" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListStockInfos">
+      <http:operation location="/GetListStockInfos" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactions">
+      <http:operation location="/GetTransactions" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHOSEPutAd">
+      <http:operation location="/GetHOSEPutAd" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHOSEPutExec">
+      <http:operation location="/GetHOSEPutExec" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartUpdater">
+      <http:operation location="/StartUpdater" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StopUpdater">
+      <http:operation location="/StopUpdater" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStaticStockInfo">
+      <http:operation location="/GetStaticStockInfo" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDynamicStockInfo">
+      <http:operation location="/GetDynamicStockInfo" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServiceHttpPost" type="tns:ServiceHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="GetMarketInfo">
+      <http:operation location="/GetMarketInfo" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MarketStatus">
+      <http:operation location="/MarketStatus" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AllMarketInfoAndStatus">
+      <http:operation location="/AllMarketInfoAndStatus" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetMatketStatus">
+      <http:operation location="/SetMatketStatus" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListCompany">
+      <http:operation location="/GetListCompany" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNewestWorkingDates">
+      <http:operation location="/GetNewestWorkingDates" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllStockFromMarket">
+      <http:operation location="/GetAllStockFromMarket" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockInfo">
+      <http:operation location="/GetStockInfo" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockInfoByLanguge">
+      <http:operation location="/GetStockInfoByLanguge" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListStockInfos">
+      <http:operation location="/GetListStockInfos" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransactions">
+      <http:operation location="/GetTransactions" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHOSEPutAd">
+      <http:operation location="/GetHOSEPutAd" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHOSEPutExec">
+      <http:operation location="/GetHOSEPutExec" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartUpdater">
+      <http:operation location="/StartUpdater" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StopUpdater">
+      <http:operation location="/StopUpdater" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStaticStockInfo">
+      <http:operation location="/GetStaticStockInfo" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDynamicStockInfo">
+      <http:operation location="/GetDynamicStockInfo" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service">
+    <wsdl:port name="ServiceSoap" binding="tns:ServiceSoap">
+      <soap:address location="http://172.16.68.9/RTServiceTest/Service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServiceSoap12" binding="tns:ServiceSoap12">
+      <soap12:address location="http://172.16.68.9/RTServiceTest/Service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServiceHttpGet" binding="tns:ServiceHttpGet">
+      <http:address location="http://172.16.68.9/RTServiceTest/Service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServiceHttpPost" binding="tns:ServiceHttpPost">
+      <http:address location="http://172.16.68.9/RTServiceTest/Service.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

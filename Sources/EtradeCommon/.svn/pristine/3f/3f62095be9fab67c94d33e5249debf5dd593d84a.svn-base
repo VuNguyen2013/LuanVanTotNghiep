@@ -1,0 +1,86 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="StockDueInfo.cs" company="OTS">
+//   2010
+// </copyright>
+// <summary>
+//   Defines the StockDueInfo type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ETradeCore.Entities
+{
+    public class StockDueInfo
+    {
+        /// <summary>
+        /// Gets or sets the symbol.
+        /// </summary>
+        /// <value>The symbol.</value>
+        public System.String Symbol { get; set; }
+
+        /// <summary>
+        /// Gets or sets the WTR_T1.
+        /// </summary>
+        /// <value>The t1.</value>
+        public System.Decimal WTR_T1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the WTR_T2.
+        /// </summary>
+        /// <value>The t2.</value>
+        public System.Decimal WTR_T2 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the WTR_T3.
+        /// </summary>
+        /// <value>The t3.</value>
+        public System.Decimal WTR_T3 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the WTS_T1.
+        /// </summary>
+        /// <value>The t1.</value>
+        public System.Decimal WTS_T1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the WTS_T2.
+        /// </summary>
+        /// <value>The t2.</value>
+        public System.Decimal WTS_T2 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the WTS_T3.
+        /// </summary>
+        /// <value>The t3.</value>
+        public System.Decimal WTS_T3 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the WTS.
+        /// </summary>
+        /// <value>The WTS.</value>
+        public System.Decimal WTS { get; set; }
+
+        /// <summary>
+        /// Gets or sets the WTR.
+        /// </summary>
+        /// <value>The WTR.</value>
+        public System.Decimal WTR { get; set; }
+
+        /// <summary>
+        /// Gets or sets the market price.
+        /// </summary>
+        /// <value>The market price.</value>
+        public System.Decimal MarketPrice { get; set; }
+
+        /// <summary>
+        /// Gets or sets the due avg price.
+        /// </summary>
+        /// <value>The due avg price.</value>
+        public System.Decimal DueAvgPrice { get; set; }
+
+        /// <summary>
+        /// Gets or sets the NET.
+        /// </summary>
+        /// <value>The NET.</value>
+        public System.Decimal NET { get; set; }
+    }
+}

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <configSections>
+    </configSections>
+    <connectionStrings>
+        <add name="MigrateDataTCSC.Properties.Settings.InnoAMDBConnectionString"
+            connectionString="Data Source=10.128.28.99;Initial Catalog=InnoAMDB;User ID=sa;Password=etrade123456"
+            providerName="System.Data.SqlClient" />
+        <add name="MigrateDataTCSC.Properties.Settings.MigrateDBConnectionString"
+            connectionString="Data Source=10.128.28.99;Initial Catalog=MigrateDB;Persist Security Info=True;User ID=sa;Password=etrade123456"
+            providerName="System.Data.SqlClient" />
+    </connectionStrings>
+  <appSettings>
+    <add key="MultipleLogin" value="false" />
+    <!-- If the period between 2 login is longer than this ContinuousLoginPerid, the invalid login time will be reset-->
+    <add key="ContinuousLoginPeriod" value="10"/>
+    <!-- Number of failed login to send SMS -->
+    <add key="FailedLoginSMSTime" value="3"/>
+    <!-- Number of failed login to show captchar -->
+    <add key="FailedLoginCaptchar" value="3"/>
+    <!-- Number of failed login to lock account -->
+    <add key="FailedLoginLock" value="6"/>
+
+    <add key="PasswordMinLength" value="8" />
+    <add key="PasswordMaxLength" value="12" />
+    <add key="GeneratedPasswordLength" value="8" />
+    <add key="AliasInformix" value="BA_VIEW"/>
+
+    <add key="SMSServicesID" value="8064"/>
+    <add key="SMSServicesUserName" value="CMCT_TCSC"/>
+    <add key="SMSServicesPassword" value="cmctelecom"/>
+  </appSettings>
+</configuration>

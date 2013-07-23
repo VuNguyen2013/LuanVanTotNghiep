@@ -1,0 +1,195 @@
+#include <process.h> 
+#include "Log.h"
+#include "Common.h"
+#include "SockException.h"
+#include "HostInfo.h"
+#include "SocketClient.h"
+
+Log winLog;
+
+static void ReadThread(void* lp);
+
+string serverName;
+
+
+SocketClient::SocketClient()
+{
+#ifdef WIN32
+	WSADATA wsaData;
+
+	try 
+	{
+		if (WSAStartup(0x101, &wsaData))
+		{
+			SockException* initializationException = new SockException(0,"Error: calling WSAStartup()");
+
+			throw initializationException;
+        }
+	}
+	catch(SockException* excp)
+	{
+		delete excp;
+
+		exit(1);
+	}
+#endif
+
+	Connected(0);
+}
+
+void SocketClient::InitLog(char * fileName)
+{
+	winLog.init(fileName);	
+}
+
+bool SocketClient::Connect(string serverIPAddress, int port)
+{
+    if (Connected())
+    {
+        winLog << "Connected already !\n";
+
+        return true;
+    }
+
+	winLog << "Connect to " << serverIPAddress << "on port " << port << endl;
+
+	tcpSocket    = new TcpSocket(port);
+
+    // connect to the server.
+	winLog << "connecting to the server [" << serverIPAddress << "] ... " << endl;
+
+    try
+    {
+	    tcpSocket->connectToServer(serverIPAddress, ADDRESS);
+    }
+    catch (SockException * excp)
+    {
+       Connected(true);
+        
+        winLog << "Can not connect to server!\n";
+
+        excp->response();
+
+		tcpSocket->disconnectFromServer();
+
+        return false;    
+    }
+
+	winLog << "The server [" << serverIPAddress << "] connected! " << endl;
+    Connected(true);
+
+	return true;
+}
+
+bool SocketClient::Disconnect()
+{
+    try
+    {
+        if (!Connected())
+        {
+            winLog << "Disconnected already!\n";
+
+            return true;
+        }
+
+        Connected(false);
+
+        tcpSocket->disconnectFromServer();
+        
+        return true;
+    }
+    catch(SockException * excp)
+    {
+        excp->response();
+
+        return false;
+    }
+}
+
+bool SocketClient::SendMessage (char *message, int length)
+{
+    if (!Connected())
+    {
+        return false;
+    }
+    
+    try
+    {
+		winLog << "[SEND]:--> " << GetRawMessage(message, length) << endl;
+
+	    tcpSocket->sendMessage(message, length);
+    }
+	catch(SockException* excp)
+	{
+        winLog << "Error when sending\n";
+		excp->response();
+
+		delete excp;
+
+        return false;
+	}
+
+	return true;
+}
+
+bool SocketClient::ReceiveMessage (char *message, int *length)
+{
+    if (!Connected())
+    {
+        return false;
+    }
+    
+    try
+    {
+		int recvBytes = 0; 
+     
+		char msgRecv[MAX_RECV_LEN];
+
+	    recvBytes = tcpSocket->RecieveMessage(msgRecv);
+
+		if (recvBytes > 0)
+		{
+			memcpy(message, (char *)msgRecv, recvBytes); 
+		}
+
+		*length = recvBytes;
+    }
+	catch(SockException* excp)
+	{
+        winLog << "Error in ReadThread\n";
+        Connected(false);
+        excp->response();
+
+        return false;
+	}
+
+	return true;
+}
+
+SocketClient::~SocketClient()
+{
+#ifdef WIN32
+	winLog << endl << "system shut down ...";		
+	
+	try 
+	{
+		if (WSACleanup())
+		{
+			SockException* cleanupException = new SockException(0,"Error: calling WSACleanup()");
+
+			throw cleanupException;
+        }
+	}
+	catch(SockException* excp)
+	{
+		excp->response();
+		delete excp;
+
+		exit(1);
+	}
+
+	winLog << "successful" << endl;
+
+#endif
+}
+

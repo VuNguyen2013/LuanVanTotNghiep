@@ -1,0 +1,6857 @@
+
+USE [AccountManager]
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerAccount_Get_List procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerAccount_Get_List') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerAccount_Get_List
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the BrokerAccount table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerAccount_Get_List
+
+AS
+
+
+				
+				SELECT
+					[BrokerID],
+					[Name],
+					[Password],
+					[AccountType],
+					[Actived],
+					[MobilePhone],
+					[EmailAddr],
+					[CreatedDate],
+					[CreatedUser],
+					[UpdatedDate],
+					[UpdatedUser]
+				FROM
+					[dbo].[BrokerAccount]
+					
+				SELECT @@ROWCOUNT
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerAccount_GetPaged procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerAccount_GetPaged') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerAccount_GetPaged
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the BrokerAccount table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerAccount_GetPaged
+(
+
+	@WhereClause varchar (2000)  ,
+
+	@OrderBy varchar (2000)  ,
+
+	@PageIndex int   ,
+
+	@PageSize int   
+)
+AS
+
+
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[BrokerID]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [BrokerID]'
+				SET @SQL = @SQL + ', [Name]'
+				SET @SQL = @SQL + ', [Password]'
+				SET @SQL = @SQL + ', [AccountType]'
+				SET @SQL = @SQL + ', [Actived]'
+				SET @SQL = @SQL + ', [MobilePhone]'
+				SET @SQL = @SQL + ', [EmailAddr]'
+				SET @SQL = @SQL + ', [CreatedDate]'
+				SET @SQL = @SQL + ', [CreatedUser]'
+				SET @SQL = @SQL + ', [UpdatedDate]'
+				SET @SQL = @SQL + ', [UpdatedUser]'
+				SET @SQL = @SQL + ' FROM [dbo].[BrokerAccount]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [BrokerID],'
+				SET @SQL = @SQL + ' [Name],'
+				SET @SQL = @SQL + ' [Password],'
+				SET @SQL = @SQL + ' [AccountType],'
+				SET @SQL = @SQL + ' [Actived],'
+				SET @SQL = @SQL + ' [MobilePhone],'
+				SET @SQL = @SQL + ' [EmailAddr],'
+				SET @SQL = @SQL + ' [CreatedDate],'
+				SET @SQL = @SQL + ' [CreatedUser],'
+				SET @SQL = @SQL + ' [UpdatedDate],'
+				SET @SQL = @SQL + ' [UpdatedUser]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[BrokerAccount]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerAccount_Insert procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerAccount_Insert') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerAccount_Insert
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the BrokerAccount table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerAccount_Insert
+(
+
+	@BrokerId varchar (20)  ,
+
+	@Name nvarchar (50)  ,
+
+	@Password varchar (50)  ,
+
+	@AccountType smallint   ,
+
+	@Actived bit   ,
+
+	@MobilePhone varchar (20)  ,
+
+	@EmailAddr varchar (30)  ,
+
+	@CreatedDate datetime   ,
+
+	@CreatedUser varchar (20)  ,
+
+	@UpdatedDate datetime   ,
+
+	@UpdatedUser varchar (20)  
+)
+AS
+
+
+				
+				INSERT INTO [dbo].[BrokerAccount]
+					(
+					[BrokerID]
+					,[Name]
+					,[Password]
+					,[AccountType]
+					,[Actived]
+					,[MobilePhone]
+					,[EmailAddr]
+					,[CreatedDate]
+					,[CreatedUser]
+					,[UpdatedDate]
+					,[UpdatedUser]
+					)
+				VALUES
+					(
+					@BrokerId
+					,@Name
+					,@Password
+					,@AccountType
+					,@Actived
+					,@MobilePhone
+					,@EmailAddr
+					,@CreatedDate
+					,@CreatedUser
+					,@UpdatedDate
+					,@UpdatedUser
+					)
+				
+									
+							
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerAccount_Update procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerAccount_Update') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerAccount_Update
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the BrokerAccount table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerAccount_Update
+(
+
+	@BrokerId varchar (20)  ,
+
+	@OriginalBrokerId varchar (20)  ,
+
+	@Name nvarchar (50)  ,
+
+	@Password varchar (50)  ,
+
+	@AccountType smallint   ,
+
+	@Actived bit   ,
+
+	@MobilePhone varchar (20)  ,
+
+	@EmailAddr varchar (30)  ,
+
+	@CreatedDate datetime   ,
+
+	@CreatedUser varchar (20)  ,
+
+	@UpdatedDate datetime   ,
+
+	@UpdatedUser varchar (20)  
+)
+AS
+
+
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[BrokerAccount]
+				SET
+					[BrokerID] = @BrokerId
+					,[Name] = @Name
+					,[Password] = @Password
+					,[AccountType] = @AccountType
+					,[Actived] = @Actived
+					,[MobilePhone] = @MobilePhone
+					,[EmailAddr] = @EmailAddr
+					,[CreatedDate] = @CreatedDate
+					,[CreatedUser] = @CreatedUser
+					,[UpdatedDate] = @UpdatedDate
+					,[UpdatedUser] = @UpdatedUser
+				WHERE
+[BrokerID] = @OriginalBrokerId 
+				
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerAccount_Delete procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerAccount_Delete') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerAccount_Delete
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the BrokerAccount table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerAccount_Delete
+(
+
+	@BrokerId varchar (20)  
+)
+AS
+
+
+				DELETE FROM [dbo].[BrokerAccount] WITH (ROWLOCK) 
+				WHERE
+					[BrokerID] = @BrokerId
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerAccount_GetByBrokerId procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerAccount_GetByBrokerId') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerAccount_GetByBrokerId
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the BrokerAccount table through an index
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerAccount_GetByBrokerId
+(
+
+	@BrokerId varchar (20)  
+)
+AS
+
+
+				SELECT
+					[BrokerID],
+					[Name],
+					[Password],
+					[AccountType],
+					[Actived],
+					[MobilePhone],
+					[EmailAddr],
+					[CreatedDate],
+					[CreatedUser],
+					[UpdatedDate],
+					[UpdatedUser]
+				FROM
+					[dbo].[BrokerAccount]
+				WHERE
+					[BrokerID] = @BrokerId
+				SELECT @@ROWCOUNT
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerAccount_GetByPermissionIdFromBrokerPermission procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerAccount_GetByPermissionIdFromBrokerPermission') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerAccount_GetByPermissionIdFromBrokerPermission
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records through a junction table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerAccount_GetByPermissionIdFromBrokerPermission
+(
+
+	@PermissionId int   
+)
+AS
+
+
+SELECT dbo.[BrokerAccount].[BrokerID]
+       ,dbo.[BrokerAccount].[Name]
+       ,dbo.[BrokerAccount].[Password]
+       ,dbo.[BrokerAccount].[AccountType]
+       ,dbo.[BrokerAccount].[Actived]
+       ,dbo.[BrokerAccount].[MobilePhone]
+       ,dbo.[BrokerAccount].[EmailAddr]
+       ,dbo.[BrokerAccount].[CreatedDate]
+       ,dbo.[BrokerAccount].[CreatedUser]
+       ,dbo.[BrokerAccount].[UpdatedDate]
+       ,dbo.[BrokerAccount].[UpdatedUser]
+  FROM dbo.[BrokerAccount]
+ WHERE EXISTS (SELECT 1
+                 FROM dbo.[BrokerPermission] 
+                WHERE dbo.[BrokerPermission].[PermissionID] = @PermissionId
+                  AND dbo.[BrokerPermission].[BrokerID] = dbo.[BrokerAccount].[BrokerID]
+                  )
+				SELECT @@ROWCOUNT			
+				
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerAccount_Find procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerAccount_Find') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerAccount_Find
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the BrokerAccount table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerAccount_Find
+(
+
+	@SearchUsingOR bit   = null ,
+
+	@BrokerId varchar (20)  = null ,
+
+	@Name nvarchar (50)  = null ,
+
+	@Password varchar (50)  = null ,
+
+	@AccountType smallint   = null ,
+
+	@Actived bit   = null ,
+
+	@MobilePhone varchar (20)  = null ,
+
+	@EmailAddr varchar (30)  = null ,
+
+	@CreatedDate datetime   = null ,
+
+	@CreatedUser varchar (20)  = null ,
+
+	@UpdatedDate datetime   = null ,
+
+	@UpdatedUser varchar (20)  = null 
+)
+AS
+
+
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [BrokerID]
+	, [Name]
+	, [Password]
+	, [AccountType]
+	, [Actived]
+	, [MobilePhone]
+	, [EmailAddr]
+	, [CreatedDate]
+	, [CreatedUser]
+	, [UpdatedDate]
+	, [UpdatedUser]
+    FROM
+	[dbo].[BrokerAccount]
+    WHERE 
+	 ([BrokerID] = @BrokerId OR @BrokerId IS NULL)
+	AND ([Name] = @Name OR @Name IS NULL)
+	AND ([Password] = @Password OR @Password IS NULL)
+	AND ([AccountType] = @AccountType OR @AccountType IS NULL)
+	AND ([Actived] = @Actived OR @Actived IS NULL)
+	AND ([MobilePhone] = @MobilePhone OR @MobilePhone IS NULL)
+	AND ([EmailAddr] = @EmailAddr OR @EmailAddr IS NULL)
+	AND ([CreatedDate] = @CreatedDate OR @CreatedDate IS NULL)
+	AND ([CreatedUser] = @CreatedUser OR @CreatedUser IS NULL)
+	AND ([UpdatedDate] = @UpdatedDate OR @UpdatedDate IS NULL)
+	AND ([UpdatedUser] = @UpdatedUser OR @UpdatedUser IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [BrokerID]
+	, [Name]
+	, [Password]
+	, [AccountType]
+	, [Actived]
+	, [MobilePhone]
+	, [EmailAddr]
+	, [CreatedDate]
+	, [CreatedUser]
+	, [UpdatedDate]
+	, [UpdatedUser]
+    FROM
+	[dbo].[BrokerAccount]
+    WHERE 
+	 ([BrokerID] = @BrokerId AND @BrokerId is not null)
+	OR ([Name] = @Name AND @Name is not null)
+	OR ([Password] = @Password AND @Password is not null)
+	OR ([AccountType] = @AccountType AND @AccountType is not null)
+	OR ([Actived] = @Actived AND @Actived is not null)
+	OR ([MobilePhone] = @MobilePhone AND @MobilePhone is not null)
+	OR ([EmailAddr] = @EmailAddr AND @EmailAddr is not null)
+	OR ([CreatedDate] = @CreatedDate AND @CreatedDate is not null)
+	OR ([CreatedUser] = @CreatedUser AND @CreatedUser is not null)
+	OR ([UpdatedDate] = @UpdatedDate AND @UpdatedDate is not null)
+	OR ([UpdatedUser] = @UpdatedUser AND @UpdatedUser is not null)
+	SELECT @@ROWCOUNT			
+  END
+				
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.OpenCustAccount_Get_List procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.OpenCustAccount_Get_List') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.OpenCustAccount_Get_List
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the OpenCustAccount table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.OpenCustAccount_Get_List
+
+AS
+
+
+				
+				SELECT
+					[OpenID],
+					[RegisterDate],
+					[CardID],
+					[CardIssue],
+					[PlaceIssue],
+					[Name],
+					[Birthday],
+					[Sex],
+					[Occupation],
+					[Nationality],
+					[Address1],
+					[Telephone1],
+					[Fax1],
+					[Address2],
+					[Telephone2],
+					[Fax2],
+					[Address3],
+					[Telephone3],
+					[Fax3],
+					[Email],
+					[BranchCode],
+					[BranchName],
+					[Custodian],
+					[CustomerType],
+					[TradeAtCompany],
+					[TradeByTelephone],
+					[TradeOnline],
+					[ExistedAccount]
+				FROM
+					[dbo].[OpenCustAccount]
+					
+				SELECT @@ROWCOUNT
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.OpenCustAccount_GetPaged procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.OpenCustAccount_GetPaged') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.OpenCustAccount_GetPaged
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the OpenCustAccount table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.OpenCustAccount_GetPaged
+(
+
+	@WhereClause varchar (2000)  ,
+
+	@OrderBy varchar (2000)  ,
+
+	@PageIndex int   ,
+
+	@PageSize int   
+)
+AS
+
+
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[OpenID]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [OpenID]'
+				SET @SQL = @SQL + ', [RegisterDate]'
+				SET @SQL = @SQL + ', [CardID]'
+				SET @SQL = @SQL + ', [CardIssue]'
+				SET @SQL = @SQL + ', [PlaceIssue]'
+				SET @SQL = @SQL + ', [Name]'
+				SET @SQL = @SQL + ', [Birthday]'
+				SET @SQL = @SQL + ', [Sex]'
+				SET @SQL = @SQL + ', [Occupation]'
+				SET @SQL = @SQL + ', [Nationality]'
+				SET @SQL = @SQL + ', [Address1]'
+				SET @SQL = @SQL + ', [Telephone1]'
+				SET @SQL = @SQL + ', [Fax1]'
+				SET @SQL = @SQL + ', [Address2]'
+				SET @SQL = @SQL + ', [Telephone2]'
+				SET @SQL = @SQL + ', [Fax2]'
+				SET @SQL = @SQL + ', [Address3]'
+				SET @SQL = @SQL + ', [Telephone3]'
+				SET @SQL = @SQL + ', [Fax3]'
+				SET @SQL = @SQL + ', [Email]'
+				SET @SQL = @SQL + ', [BranchCode]'
+				SET @SQL = @SQL + ', [BranchName]'
+				SET @SQL = @SQL + ', [Custodian]'
+				SET @SQL = @SQL + ', [CustomerType]'
+				SET @SQL = @SQL + ', [TradeAtCompany]'
+				SET @SQL = @SQL + ', [TradeByTelephone]'
+				SET @SQL = @SQL + ', [TradeOnline]'
+				SET @SQL = @SQL + ', [ExistedAccount]'
+				SET @SQL = @SQL + ' FROM [dbo].[OpenCustAccount]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [OpenID],'
+				SET @SQL = @SQL + ' [RegisterDate],'
+				SET @SQL = @SQL + ' [CardID],'
+				SET @SQL = @SQL + ' [CardIssue],'
+				SET @SQL = @SQL + ' [PlaceIssue],'
+				SET @SQL = @SQL + ' [Name],'
+				SET @SQL = @SQL + ' [Birthday],'
+				SET @SQL = @SQL + ' [Sex],'
+				SET @SQL = @SQL + ' [Occupation],'
+				SET @SQL = @SQL + ' [Nationality],'
+				SET @SQL = @SQL + ' [Address1],'
+				SET @SQL = @SQL + ' [Telephone1],'
+				SET @SQL = @SQL + ' [Fax1],'
+				SET @SQL = @SQL + ' [Address2],'
+				SET @SQL = @SQL + ' [Telephone2],'
+				SET @SQL = @SQL + ' [Fax2],'
+				SET @SQL = @SQL + ' [Address3],'
+				SET @SQL = @SQL + ' [Telephone3],'
+				SET @SQL = @SQL + ' [Fax3],'
+				SET @SQL = @SQL + ' [Email],'
+				SET @SQL = @SQL + ' [BranchCode],'
+				SET @SQL = @SQL + ' [BranchName],'
+				SET @SQL = @SQL + ' [Custodian],'
+				SET @SQL = @SQL + ' [CustomerType],'
+				SET @SQL = @SQL + ' [TradeAtCompany],'
+				SET @SQL = @SQL + ' [TradeByTelephone],'
+				SET @SQL = @SQL + ' [TradeOnline],'
+				SET @SQL = @SQL + ' [ExistedAccount]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[OpenCustAccount]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.OpenCustAccount_Insert procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.OpenCustAccount_Insert') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.OpenCustAccount_Insert
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the OpenCustAccount table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.OpenCustAccount_Insert
+(
+
+	@OpenId varchar (20)  ,
+
+	@RegisterDate datetime   ,
+
+	@CardId varchar (20)  ,
+
+	@CardIssue datetime   ,
+
+	@PlaceIssue varchar (100)  ,
+
+	@Name nvarchar (50)  ,
+
+	@Birthday datetime   ,
+
+	@Sex bit   ,
+
+	@Occupation varchar (100)  ,
+
+	@Nationality varchar (100)  ,
+
+	@Address1 nvarchar (100)  ,
+
+	@Telephone1 varchar (20)  ,
+
+	@Fax1 varchar (20)  ,
+
+	@Address2 varchar (100)  ,
+
+	@Telephone2 varchar (20)  ,
+
+	@Fax2 varchar (20)  ,
+
+	@Address3 varchar (100)  ,
+
+	@Telephone3 varchar (20)  ,
+
+	@Fax3 varchar (20)  ,
+
+	@Email varchar (30)  ,
+
+	@BranchCode varchar (30)  ,
+
+	@BranchName nvarchar (100)  ,
+
+	@Custodian bit   ,
+
+	@CustomerType varchar (1)  ,
+
+	@TradeAtCompany bit   ,
+
+	@TradeByTelephone bit   ,
+
+	@TradeOnline bit   ,
+
+	@ExistedAccount bit   
+)
+AS
+
+
+				
+				INSERT INTO [dbo].[OpenCustAccount]
+					(
+					[OpenID]
+					,[RegisterDate]
+					,[CardID]
+					,[CardIssue]
+					,[PlaceIssue]
+					,[Name]
+					,[Birthday]
+					,[Sex]
+					,[Occupation]
+					,[Nationality]
+					,[Address1]
+					,[Telephone1]
+					,[Fax1]
+					,[Address2]
+					,[Telephone2]
+					,[Fax2]
+					,[Address3]
+					,[Telephone3]
+					,[Fax3]
+					,[Email]
+					,[BranchCode]
+					,[BranchName]
+					,[Custodian]
+					,[CustomerType]
+					,[TradeAtCompany]
+					,[TradeByTelephone]
+					,[TradeOnline]
+					,[ExistedAccount]
+					)
+				VALUES
+					(
+					@OpenId
+					,@RegisterDate
+					,@CardId
+					,@CardIssue
+					,@PlaceIssue
+					,@Name
+					,@Birthday
+					,@Sex
+					,@Occupation
+					,@Nationality
+					,@Address1
+					,@Telephone1
+					,@Fax1
+					,@Address2
+					,@Telephone2
+					,@Fax2
+					,@Address3
+					,@Telephone3
+					,@Fax3
+					,@Email
+					,@BranchCode
+					,@BranchName
+					,@Custodian
+					,@CustomerType
+					,@TradeAtCompany
+					,@TradeByTelephone
+					,@TradeOnline
+					,@ExistedAccount
+					)
+				
+									
+							
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.OpenCustAccount_Update procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.OpenCustAccount_Update') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.OpenCustAccount_Update
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the OpenCustAccount table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.OpenCustAccount_Update
+(
+
+	@OpenId varchar (20)  ,
+
+	@OriginalOpenId varchar (20)  ,
+
+	@RegisterDate datetime   ,
+
+	@CardId varchar (20)  ,
+
+	@CardIssue datetime   ,
+
+	@PlaceIssue varchar (100)  ,
+
+	@Name nvarchar (50)  ,
+
+	@Birthday datetime   ,
+
+	@Sex bit   ,
+
+	@Occupation varchar (100)  ,
+
+	@Nationality varchar (100)  ,
+
+	@Address1 nvarchar (100)  ,
+
+	@Telephone1 varchar (20)  ,
+
+	@Fax1 varchar (20)  ,
+
+	@Address2 varchar (100)  ,
+
+	@Telephone2 varchar (20)  ,
+
+	@Fax2 varchar (20)  ,
+
+	@Address3 varchar (100)  ,
+
+	@Telephone3 varchar (20)  ,
+
+	@Fax3 varchar (20)  ,
+
+	@Email varchar (30)  ,
+
+	@BranchCode varchar (30)  ,
+
+	@BranchName nvarchar (100)  ,
+
+	@Custodian bit   ,
+
+	@CustomerType varchar (1)  ,
+
+	@TradeAtCompany bit   ,
+
+	@TradeByTelephone bit   ,
+
+	@TradeOnline bit   ,
+
+	@ExistedAccount bit   
+)
+AS
+
+
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[OpenCustAccount]
+				SET
+					[OpenID] = @OpenId
+					,[RegisterDate] = @RegisterDate
+					,[CardID] = @CardId
+					,[CardIssue] = @CardIssue
+					,[PlaceIssue] = @PlaceIssue
+					,[Name] = @Name
+					,[Birthday] = @Birthday
+					,[Sex] = @Sex
+					,[Occupation] = @Occupation
+					,[Nationality] = @Nationality
+					,[Address1] = @Address1
+					,[Telephone1] = @Telephone1
+					,[Fax1] = @Fax1
+					,[Address2] = @Address2
+					,[Telephone2] = @Telephone2
+					,[Fax2] = @Fax2
+					,[Address3] = @Address3
+					,[Telephone3] = @Telephone3
+					,[Fax3] = @Fax3
+					,[Email] = @Email
+					,[BranchCode] = @BranchCode
+					,[BranchName] = @BranchName
+					,[Custodian] = @Custodian
+					,[CustomerType] = @CustomerType
+					,[TradeAtCompany] = @TradeAtCompany
+					,[TradeByTelephone] = @TradeByTelephone
+					,[TradeOnline] = @TradeOnline
+					,[ExistedAccount] = @ExistedAccount
+				WHERE
+[OpenID] = @OriginalOpenId 
+				
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.OpenCustAccount_Delete procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.OpenCustAccount_Delete') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.OpenCustAccount_Delete
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the OpenCustAccount table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.OpenCustAccount_Delete
+(
+
+	@OpenId varchar (20)  
+)
+AS
+
+
+				DELETE FROM [dbo].[OpenCustAccount] WITH (ROWLOCK) 
+				WHERE
+					[OpenID] = @OpenId
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.OpenCustAccount_GetByOpenId procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.OpenCustAccount_GetByOpenId') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.OpenCustAccount_GetByOpenId
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the OpenCustAccount table through an index
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.OpenCustAccount_GetByOpenId
+(
+
+	@OpenId varchar (20)  
+)
+AS
+
+
+				SELECT
+					[OpenID],
+					[RegisterDate],
+					[CardID],
+					[CardIssue],
+					[PlaceIssue],
+					[Name],
+					[Birthday],
+					[Sex],
+					[Occupation],
+					[Nationality],
+					[Address1],
+					[Telephone1],
+					[Fax1],
+					[Address2],
+					[Telephone2],
+					[Fax2],
+					[Address3],
+					[Telephone3],
+					[Fax3],
+					[Email],
+					[BranchCode],
+					[BranchName],
+					[Custodian],
+					[CustomerType],
+					[TradeAtCompany],
+					[TradeByTelephone],
+					[TradeOnline],
+					[ExistedAccount]
+				FROM
+					[dbo].[OpenCustAccount]
+				WHERE
+					[OpenID] = @OpenId
+				SELECT @@ROWCOUNT
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.OpenCustAccount_Find procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.OpenCustAccount_Find') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.OpenCustAccount_Find
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the OpenCustAccount table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.OpenCustAccount_Find
+(
+
+	@SearchUsingOR bit   = null ,
+
+	@OpenId varchar (20)  = null ,
+
+	@RegisterDate datetime   = null ,
+
+	@CardId varchar (20)  = null ,
+
+	@CardIssue datetime   = null ,
+
+	@PlaceIssue varchar (100)  = null ,
+
+	@Name nvarchar (50)  = null ,
+
+	@Birthday datetime   = null ,
+
+	@Sex bit   = null ,
+
+	@Occupation varchar (100)  = null ,
+
+	@Nationality varchar (100)  = null ,
+
+	@Address1 nvarchar (100)  = null ,
+
+	@Telephone1 varchar (20)  = null ,
+
+	@Fax1 varchar (20)  = null ,
+
+	@Address2 varchar (100)  = null ,
+
+	@Telephone2 varchar (20)  = null ,
+
+	@Fax2 varchar (20)  = null ,
+
+	@Address3 varchar (100)  = null ,
+
+	@Telephone3 varchar (20)  = null ,
+
+	@Fax3 varchar (20)  = null ,
+
+	@Email varchar (30)  = null ,
+
+	@BranchCode varchar (30)  = null ,
+
+	@BranchName nvarchar (100)  = null ,
+
+	@Custodian bit   = null ,
+
+	@CustomerType varchar (1)  = null ,
+
+	@TradeAtCompany bit   = null ,
+
+	@TradeByTelephone bit   = null ,
+
+	@TradeOnline bit   = null ,
+
+	@ExistedAccount bit   = null 
+)
+AS
+
+
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [OpenID]
+	, [RegisterDate]
+	, [CardID]
+	, [CardIssue]
+	, [PlaceIssue]
+	, [Name]
+	, [Birthday]
+	, [Sex]
+	, [Occupation]
+	, [Nationality]
+	, [Address1]
+	, [Telephone1]
+	, [Fax1]
+	, [Address2]
+	, [Telephone2]
+	, [Fax2]
+	, [Address3]
+	, [Telephone3]
+	, [Fax3]
+	, [Email]
+	, [BranchCode]
+	, [BranchName]
+	, [Custodian]
+	, [CustomerType]
+	, [TradeAtCompany]
+	, [TradeByTelephone]
+	, [TradeOnline]
+	, [ExistedAccount]
+    FROM
+	[dbo].[OpenCustAccount]
+    WHERE 
+	 ([OpenID] = @OpenId OR @OpenId IS NULL)
+	AND ([RegisterDate] = @RegisterDate OR @RegisterDate IS NULL)
+	AND ([CardID] = @CardId OR @CardId IS NULL)
+	AND ([CardIssue] = @CardIssue OR @CardIssue IS NULL)
+	AND ([PlaceIssue] = @PlaceIssue OR @PlaceIssue IS NULL)
+	AND ([Name] = @Name OR @Name IS NULL)
+	AND ([Birthday] = @Birthday OR @Birthday IS NULL)
+	AND ([Sex] = @Sex OR @Sex IS NULL)
+	AND ([Occupation] = @Occupation OR @Occupation IS NULL)
+	AND ([Nationality] = @Nationality OR @Nationality IS NULL)
+	AND ([Address1] = @Address1 OR @Address1 IS NULL)
+	AND ([Telephone1] = @Telephone1 OR @Telephone1 IS NULL)
+	AND ([Fax1] = @Fax1 OR @Fax1 IS NULL)
+	AND ([Address2] = @Address2 OR @Address2 IS NULL)
+	AND ([Telephone2] = @Telephone2 OR @Telephone2 IS NULL)
+	AND ([Fax2] = @Fax2 OR @Fax2 IS NULL)
+	AND ([Address3] = @Address3 OR @Address3 IS NULL)
+	AND ([Telephone3] = @Telephone3 OR @Telephone3 IS NULL)
+	AND ([Fax3] = @Fax3 OR @Fax3 IS NULL)
+	AND ([Email] = @Email OR @Email IS NULL)
+	AND ([BranchCode] = @BranchCode OR @BranchCode IS NULL)
+	AND ([BranchName] = @BranchName OR @BranchName IS NULL)
+	AND ([Custodian] = @Custodian OR @Custodian IS NULL)
+	AND ([CustomerType] = @CustomerType OR @CustomerType IS NULL)
+	AND ([TradeAtCompany] = @TradeAtCompany OR @TradeAtCompany IS NULL)
+	AND ([TradeByTelephone] = @TradeByTelephone OR @TradeByTelephone IS NULL)
+	AND ([TradeOnline] = @TradeOnline OR @TradeOnline IS NULL)
+	AND ([ExistedAccount] = @ExistedAccount OR @ExistedAccount IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [OpenID]
+	, [RegisterDate]
+	, [CardID]
+	, [CardIssue]
+	, [PlaceIssue]
+	, [Name]
+	, [Birthday]
+	, [Sex]
+	, [Occupation]
+	, [Nationality]
+	, [Address1]
+	, [Telephone1]
+	, [Fax1]
+	, [Address2]
+	, [Telephone2]
+	, [Fax2]
+	, [Address3]
+	, [Telephone3]
+	, [Fax3]
+	, [Email]
+	, [BranchCode]
+	, [BranchName]
+	, [Custodian]
+	, [CustomerType]
+	, [TradeAtCompany]
+	, [TradeByTelephone]
+	, [TradeOnline]
+	, [ExistedAccount]
+    FROM
+	[dbo].[OpenCustAccount]
+    WHERE 
+	 ([OpenID] = @OpenId AND @OpenId is not null)
+	OR ([RegisterDate] = @RegisterDate AND @RegisterDate is not null)
+	OR ([CardID] = @CardId AND @CardId is not null)
+	OR ([CardIssue] = @CardIssue AND @CardIssue is not null)
+	OR ([PlaceIssue] = @PlaceIssue AND @PlaceIssue is not null)
+	OR ([Name] = @Name AND @Name is not null)
+	OR ([Birthday] = @Birthday AND @Birthday is not null)
+	OR ([Sex] = @Sex AND @Sex is not null)
+	OR ([Occupation] = @Occupation AND @Occupation is not null)
+	OR ([Nationality] = @Nationality AND @Nationality is not null)
+	OR ([Address1] = @Address1 AND @Address1 is not null)
+	OR ([Telephone1] = @Telephone1 AND @Telephone1 is not null)
+	OR ([Fax1] = @Fax1 AND @Fax1 is not null)
+	OR ([Address2] = @Address2 AND @Address2 is not null)
+	OR ([Telephone2] = @Telephone2 AND @Telephone2 is not null)
+	OR ([Fax2] = @Fax2 AND @Fax2 is not null)
+	OR ([Address3] = @Address3 AND @Address3 is not null)
+	OR ([Telephone3] = @Telephone3 AND @Telephone3 is not null)
+	OR ([Fax3] = @Fax3 AND @Fax3 is not null)
+	OR ([Email] = @Email AND @Email is not null)
+	OR ([BranchCode] = @BranchCode AND @BranchCode is not null)
+	OR ([BranchName] = @BranchName AND @BranchName is not null)
+	OR ([Custodian] = @Custodian AND @Custodian is not null)
+	OR ([CustomerType] = @CustomerType AND @CustomerType is not null)
+	OR ([TradeAtCompany] = @TradeAtCompany AND @TradeAtCompany is not null)
+	OR ([TradeByTelephone] = @TradeByTelephone AND @TradeByTelephone is not null)
+	OR ([TradeOnline] = @TradeOnline AND @TradeOnline is not null)
+	OR ([ExistedAccount] = @ExistedAccount AND @ExistedAccount is not null)
+	SELECT @@ROWCOUNT			
+  END
+				
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.Research_Get_List procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.Research_Get_List') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.Research_Get_List
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the Research table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.Research_Get_List
+
+AS
+
+
+				
+				SELECT
+					[ResearchID],
+					[UploadedDate],
+					[Tittle],
+					[Path],
+					[Downloads],
+					[Actived],
+					[UploadedUser]
+				FROM
+					[dbo].[Research]
+					
+				SELECT @@ROWCOUNT
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.Research_GetPaged procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.Research_GetPaged') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.Research_GetPaged
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the Research table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.Research_GetPaged
+(
+
+	@WhereClause varchar (2000)  ,
+
+	@OrderBy varchar (2000)  ,
+
+	@PageIndex int   ,
+
+	@PageSize int   
+)
+AS
+
+
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[ResearchID]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [ResearchID]'
+				SET @SQL = @SQL + ', [UploadedDate]'
+				SET @SQL = @SQL + ', [Tittle]'
+				SET @SQL = @SQL + ', [Path]'
+				SET @SQL = @SQL + ', [Downloads]'
+				SET @SQL = @SQL + ', [Actived]'
+				SET @SQL = @SQL + ', [UploadedUser]'
+				SET @SQL = @SQL + ' FROM [dbo].[Research]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [ResearchID],'
+				SET @SQL = @SQL + ' [UploadedDate],'
+				SET @SQL = @SQL + ' [Tittle],'
+				SET @SQL = @SQL + ' [Path],'
+				SET @SQL = @SQL + ' [Downloads],'
+				SET @SQL = @SQL + ' [Actived],'
+				SET @SQL = @SQL + ' [UploadedUser]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[Research]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.Research_Insert procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.Research_Insert') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.Research_Insert
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the Research table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.Research_Insert
+(
+
+	@ResearchId varchar (20)  ,
+
+	@UploadedDate datetime   ,
+
+	@Tittle text   ,
+
+	@Path varchar (255)  ,
+
+	@Downloads int   ,
+
+	@Actived bit   ,
+
+	@UploadedUser varchar (20)  
+)
+AS
+
+
+				
+				INSERT INTO [dbo].[Research]
+					(
+					[ResearchID]
+					,[UploadedDate]
+					,[Tittle]
+					,[Path]
+					,[Downloads]
+					,[Actived]
+					,[UploadedUser]
+					)
+				VALUES
+					(
+					@ResearchId
+					,@UploadedDate
+					,@Tittle
+					,@Path
+					,@Downloads
+					,@Actived
+					,@UploadedUser
+					)
+				
+									
+							
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.Research_Update procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.Research_Update') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.Research_Update
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the Research table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.Research_Update
+(
+
+	@ResearchId varchar (20)  ,
+
+	@OriginalResearchId varchar (20)  ,
+
+	@UploadedDate datetime   ,
+
+	@Tittle text   ,
+
+	@Path varchar (255)  ,
+
+	@Downloads int   ,
+
+	@Actived bit   ,
+
+	@UploadedUser varchar (20)  
+)
+AS
+
+
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[Research]
+				SET
+					[ResearchID] = @ResearchId
+					,[UploadedDate] = @UploadedDate
+					,[Tittle] = @Tittle
+					,[Path] = @Path
+					,[Downloads] = @Downloads
+					,[Actived] = @Actived
+					,[UploadedUser] = @UploadedUser
+				WHERE
+[ResearchID] = @OriginalResearchId 
+				
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.Research_Delete procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.Research_Delete') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.Research_Delete
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the Research table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.Research_Delete
+(
+
+	@ResearchId varchar (20)  
+)
+AS
+
+
+				DELETE FROM [dbo].[Research] WITH (ROWLOCK) 
+				WHERE
+					[ResearchID] = @ResearchId
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.Research_GetByResearchId procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.Research_GetByResearchId') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.Research_GetByResearchId
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the Research table through an index
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.Research_GetByResearchId
+(
+
+	@ResearchId varchar (20)  
+)
+AS
+
+
+				SELECT
+					[ResearchID],
+					[UploadedDate],
+					[Tittle],
+					[Path],
+					[Downloads],
+					[Actived],
+					[UploadedUser]
+				FROM
+					[dbo].[Research]
+				WHERE
+					[ResearchID] = @ResearchId
+				SELECT @@ROWCOUNT
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.Research_Find procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.Research_Find') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.Research_Find
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the Research table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.Research_Find
+(
+
+	@SearchUsingOR bit   = null ,
+
+	@ResearchId varchar (20)  = null ,
+
+	@UploadedDate datetime   = null ,
+
+	@Tittle text   = null ,
+
+	@Path varchar (255)  = null ,
+
+	@Downloads int   = null ,
+
+	@Actived bit   = null ,
+
+	@UploadedUser varchar (20)  = null 
+)
+AS
+
+
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [ResearchID]
+	, [UploadedDate]
+	, [Tittle]
+	, [Path]
+	, [Downloads]
+	, [Actived]
+	, [UploadedUser]
+    FROM
+	[dbo].[Research]
+    WHERE 
+	 ([ResearchID] = @ResearchId OR @ResearchId IS NULL)
+	AND ([UploadedDate] = @UploadedDate OR @UploadedDate IS NULL)
+	AND ([Path] = @Path OR @Path IS NULL)
+	AND ([Downloads] = @Downloads OR @Downloads IS NULL)
+	AND ([Actived] = @Actived OR @Actived IS NULL)
+	AND ([UploadedUser] = @UploadedUser OR @UploadedUser IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [ResearchID]
+	, [UploadedDate]
+	, [Tittle]
+	, [Path]
+	, [Downloads]
+	, [Actived]
+	, [UploadedUser]
+    FROM
+	[dbo].[Research]
+    WHERE 
+	 ([ResearchID] = @ResearchId AND @ResearchId is not null)
+	OR ([UploadedDate] = @UploadedDate AND @UploadedDate is not null)
+	OR ([Path] = @Path AND @Path is not null)
+	OR ([Downloads] = @Downloads AND @Downloads is not null)
+	OR ([Actived] = @Actived AND @Actived is not null)
+	OR ([UploadedUser] = @UploadedUser AND @UploadedUser is not null)
+	SELECT @@ROWCOUNT			
+  END
+				
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.MainCustAccount_Get_List procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.MainCustAccount_Get_List') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.MainCustAccount_Get_List
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the MainCustAccount table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.MainCustAccount_Get_List
+
+AS
+
+
+				
+				SELECT
+					[MainCustAccountID],
+					[FullName],
+					[Email],
+					[Phone],
+					[Actived],
+					[Password],
+					[PIN],
+					[PassLockReason],
+					[PINLockReason],
+					[LockReason],
+					[TokenID],
+					[TokenName],
+					[TokenActived],
+					[BrokerID],
+					[PassIsNew],
+					[PINIsNew],
+					[PassExpDate],
+					[PINExpDate],
+					[CustomerType],
+					[AuthType],
+					[PinType],
+					[FailedLoginCount],
+					[FailedLoginTime],
+					[CreatedDate],
+					[CreatedUser],
+					[UpdatedUser],
+					[UpdatedDate]
+				FROM
+					[dbo].[MainCustAccount]
+					
+				SELECT @@ROWCOUNT
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.MainCustAccount_GetPaged procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.MainCustAccount_GetPaged') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.MainCustAccount_GetPaged
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the MainCustAccount table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.MainCustAccount_GetPaged
+(
+
+	@WhereClause varchar (2000)  ,
+
+	@OrderBy varchar (2000)  ,
+
+	@PageIndex int   ,
+
+	@PageSize int   
+)
+AS
+
+
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[MainCustAccountID]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [MainCustAccountID]'
+				SET @SQL = @SQL + ', [FullName]'
+				SET @SQL = @SQL + ', [Email]'
+				SET @SQL = @SQL + ', [Phone]'
+				SET @SQL = @SQL + ', [Actived]'
+				SET @SQL = @SQL + ', [Password]'
+				SET @SQL = @SQL + ', [PIN]'
+				SET @SQL = @SQL + ', [PassLockReason]'
+				SET @SQL = @SQL + ', [PINLockReason]'
+				SET @SQL = @SQL + ', [LockReason]'
+				SET @SQL = @SQL + ', [TokenID]'
+				SET @SQL = @SQL + ', [TokenName]'
+				SET @SQL = @SQL + ', [TokenActived]'
+				SET @SQL = @SQL + ', [BrokerID]'
+				SET @SQL = @SQL + ', [PassIsNew]'
+				SET @SQL = @SQL + ', [PINIsNew]'
+				SET @SQL = @SQL + ', [PassExpDate]'
+				SET @SQL = @SQL + ', [PINExpDate]'
+				SET @SQL = @SQL + ', [CustomerType]'
+				SET @SQL = @SQL + ', [AuthType]'
+				SET @SQL = @SQL + ', [PinType]'
+				SET @SQL = @SQL + ', [FailedLoginCount]'
+				SET @SQL = @SQL + ', [FailedLoginTime]'
+				SET @SQL = @SQL + ', [CreatedDate]'
+				SET @SQL = @SQL + ', [CreatedUser]'
+				SET @SQL = @SQL + ', [UpdatedUser]'
+				SET @SQL = @SQL + ', [UpdatedDate]'
+				SET @SQL = @SQL + ' FROM [dbo].[MainCustAccount]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [MainCustAccountID],'
+				SET @SQL = @SQL + ' [FullName],'
+				SET @SQL = @SQL + ' [Email],'
+				SET @SQL = @SQL + ' [Phone],'
+				SET @SQL = @SQL + ' [Actived],'
+				SET @SQL = @SQL + ' [Password],'
+				SET @SQL = @SQL + ' [PIN],'
+				SET @SQL = @SQL + ' [PassLockReason],'
+				SET @SQL = @SQL + ' [PINLockReason],'
+				SET @SQL = @SQL + ' [LockReason],'
+				SET @SQL = @SQL + ' [TokenID],'
+				SET @SQL = @SQL + ' [TokenName],'
+				SET @SQL = @SQL + ' [TokenActived],'
+				SET @SQL = @SQL + ' [BrokerID],'
+				SET @SQL = @SQL + ' [PassIsNew],'
+				SET @SQL = @SQL + ' [PINIsNew],'
+				SET @SQL = @SQL + ' [PassExpDate],'
+				SET @SQL = @SQL + ' [PINExpDate],'
+				SET @SQL = @SQL + ' [CustomerType],'
+				SET @SQL = @SQL + ' [AuthType],'
+				SET @SQL = @SQL + ' [PinType],'
+				SET @SQL = @SQL + ' [FailedLoginCount],'
+				SET @SQL = @SQL + ' [FailedLoginTime],'
+				SET @SQL = @SQL + ' [CreatedDate],'
+				SET @SQL = @SQL + ' [CreatedUser],'
+				SET @SQL = @SQL + ' [UpdatedUser],'
+				SET @SQL = @SQL + ' [UpdatedDate]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[MainCustAccount]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.MainCustAccount_Insert procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.MainCustAccount_Insert') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.MainCustAccount_Insert
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the MainCustAccount table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.MainCustAccount_Insert
+(
+
+	@MainCustAccountId varchar (20)  ,
+
+	@FullName nvarchar (50)  ,
+
+	@Email varchar (30)  ,
+
+	@Phone varchar (20)  ,
+
+	@Actived bit   ,
+
+	@Password varchar (50)  ,
+
+	@Pin varchar (50)  ,
+
+	@PassLockReason int   ,
+
+	@PinLockReason int   ,
+
+	@LockReason int   ,
+
+	@TokenId varchar (20)  ,
+
+	@TokenName varchar (20)  ,
+
+	@TokenActived varchar (10)  ,
+
+	@BrokerId varchar (20)  ,
+
+	@PassIsNew bit   ,
+
+	@PinIsNew bit   ,
+
+	@PassExpDate datetime   ,
+
+	@PinExpDate datetime   ,
+
+	@CustomerType int   ,
+
+	@AuthType smallint   ,
+
+	@PinType smallint   ,
+
+	@FailedLoginCount int   ,
+
+	@FailedLoginTime datetime   ,
+
+	@CreatedDate datetime   ,
+
+	@CreatedUser varchar (20)  ,
+
+	@UpdatedUser varchar (20)  ,
+
+	@UpdatedDate datetime   
+)
+AS
+
+
+				
+				INSERT INTO [dbo].[MainCustAccount]
+					(
+					[MainCustAccountID]
+					,[FullName]
+					,[Email]
+					,[Phone]
+					,[Actived]
+					,[Password]
+					,[PIN]
+					,[PassLockReason]
+					,[PINLockReason]
+					,[LockReason]
+					,[TokenID]
+					,[TokenName]
+					,[TokenActived]
+					,[BrokerID]
+					,[PassIsNew]
+					,[PINIsNew]
+					,[PassExpDate]
+					,[PINExpDate]
+					,[CustomerType]
+					,[AuthType]
+					,[PinType]
+					,[FailedLoginCount]
+					,[FailedLoginTime]
+					,[CreatedDate]
+					,[CreatedUser]
+					,[UpdatedUser]
+					,[UpdatedDate]
+					)
+				VALUES
+					(
+					@MainCustAccountId
+					,@FullName
+					,@Email
+					,@Phone
+					,@Actived
+					,@Password
+					,@Pin
+					,@PassLockReason
+					,@PinLockReason
+					,@LockReason
+					,@TokenId
+					,@TokenName
+					,@TokenActived
+					,@BrokerId
+					,@PassIsNew
+					,@PinIsNew
+					,@PassExpDate
+					,@PinExpDate
+					,@CustomerType
+					,@AuthType
+					,@PinType
+					,@FailedLoginCount
+					,@FailedLoginTime
+					,@CreatedDate
+					,@CreatedUser
+					,@UpdatedUser
+					,@UpdatedDate
+					)
+				
+									
+							
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.MainCustAccount_Update procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.MainCustAccount_Update') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.MainCustAccount_Update
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the MainCustAccount table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.MainCustAccount_Update
+(
+
+	@MainCustAccountId varchar (20)  ,
+
+	@OriginalMainCustAccountId varchar (20)  ,
+
+	@FullName nvarchar (50)  ,
+
+	@Email varchar (30)  ,
+
+	@Phone varchar (20)  ,
+
+	@Actived bit   ,
+
+	@Password varchar (50)  ,
+
+	@Pin varchar (50)  ,
+
+	@PassLockReason int   ,
+
+	@PinLockReason int   ,
+
+	@LockReason int   ,
+
+	@TokenId varchar (20)  ,
+
+	@TokenName varchar (20)  ,
+
+	@TokenActived varchar (10)  ,
+
+	@BrokerId varchar (20)  ,
+
+	@PassIsNew bit   ,
+
+	@PinIsNew bit   ,
+
+	@PassExpDate datetime   ,
+
+	@PinExpDate datetime   ,
+
+	@CustomerType int   ,
+
+	@AuthType smallint   ,
+
+	@PinType smallint   ,
+
+	@FailedLoginCount int   ,
+
+	@FailedLoginTime datetime   ,
+
+	@CreatedDate datetime   ,
+
+	@CreatedUser varchar (20)  ,
+
+	@UpdatedUser varchar (20)  ,
+
+	@UpdatedDate datetime   
+)
+AS
+
+
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[MainCustAccount]
+				SET
+					[MainCustAccountID] = @MainCustAccountId
+					,[FullName] = @FullName
+					,[Email] = @Email
+					,[Phone] = @Phone
+					,[Actived] = @Actived
+					,[Password] = @Password
+					,[PIN] = @Pin
+					,[PassLockReason] = @PassLockReason
+					,[PINLockReason] = @PinLockReason
+					,[LockReason] = @LockReason
+					,[TokenID] = @TokenId
+					,[TokenName] = @TokenName
+					,[TokenActived] = @TokenActived
+					,[BrokerID] = @BrokerId
+					,[PassIsNew] = @PassIsNew
+					,[PINIsNew] = @PinIsNew
+					,[PassExpDate] = @PassExpDate
+					,[PINExpDate] = @PinExpDate
+					,[CustomerType] = @CustomerType
+					,[AuthType] = @AuthType
+					,[PinType] = @PinType
+					,[FailedLoginCount] = @FailedLoginCount
+					,[FailedLoginTime] = @FailedLoginTime
+					,[CreatedDate] = @CreatedDate
+					,[CreatedUser] = @CreatedUser
+					,[UpdatedUser] = @UpdatedUser
+					,[UpdatedDate] = @UpdatedDate
+				WHERE
+[MainCustAccountID] = @OriginalMainCustAccountId 
+				
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.MainCustAccount_Delete procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.MainCustAccount_Delete') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.MainCustAccount_Delete
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the MainCustAccount table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.MainCustAccount_Delete
+(
+
+	@MainCustAccountId varchar (20)  
+)
+AS
+
+
+				DELETE FROM [dbo].[MainCustAccount] WITH (ROWLOCK) 
+				WHERE
+					[MainCustAccountID] = @MainCustAccountId
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.MainCustAccount_GetByBrokerId procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.MainCustAccount_GetByBrokerId') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.MainCustAccount_GetByBrokerId
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the MainCustAccount table through a foreign key
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.MainCustAccount_GetByBrokerId
+(
+
+	@BrokerId varchar (20)  
+)
+AS
+
+
+				SET ANSI_NULLS OFF
+				
+				SELECT
+					[MainCustAccountID],
+					[FullName],
+					[Email],
+					[Phone],
+					[Actived],
+					[Password],
+					[PIN],
+					[PassLockReason],
+					[PINLockReason],
+					[LockReason],
+					[TokenID],
+					[TokenName],
+					[TokenActived],
+					[BrokerID],
+					[PassIsNew],
+					[PINIsNew],
+					[PassExpDate],
+					[PINExpDate],
+					[CustomerType],
+					[AuthType],
+					[PinType],
+					[FailedLoginCount],
+					[FailedLoginTime],
+					[CreatedDate],
+					[CreatedUser],
+					[UpdatedUser],
+					[UpdatedDate]
+				FROM
+					[dbo].[MainCustAccount]
+				WHERE
+					[BrokerID] = @BrokerId
+				
+				SELECT @@ROWCOUNT
+				SET ANSI_NULLS ON
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.MainCustAccount_GetByMainCustAccountId procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.MainCustAccount_GetByMainCustAccountId') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.MainCustAccount_GetByMainCustAccountId
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the MainCustAccount table through an index
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.MainCustAccount_GetByMainCustAccountId
+(
+
+	@MainCustAccountId varchar (20)  
+)
+AS
+
+
+				SELECT
+					[MainCustAccountID],
+					[FullName],
+					[Email],
+					[Phone],
+					[Actived],
+					[Password],
+					[PIN],
+					[PassLockReason],
+					[PINLockReason],
+					[LockReason],
+					[TokenID],
+					[TokenName],
+					[TokenActived],
+					[BrokerID],
+					[PassIsNew],
+					[PINIsNew],
+					[PassExpDate],
+					[PINExpDate],
+					[CustomerType],
+					[AuthType],
+					[PinType],
+					[FailedLoginCount],
+					[FailedLoginTime],
+					[CreatedDate],
+					[CreatedUser],
+					[UpdatedUser],
+					[UpdatedDate]
+				FROM
+					[dbo].[MainCustAccount]
+				WHERE
+					[MainCustAccountID] = @MainCustAccountId
+				SELECT @@ROWCOUNT
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.MainCustAccount_Find procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.MainCustAccount_Find') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.MainCustAccount_Find
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the MainCustAccount table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.MainCustAccount_Find
+(
+
+	@SearchUsingOR bit   = null ,
+
+	@MainCustAccountId varchar (20)  = null ,
+
+	@FullName nvarchar (50)  = null ,
+
+	@Email varchar (30)  = null ,
+
+	@Phone varchar (20)  = null ,
+
+	@Actived bit   = null ,
+
+	@Password varchar (50)  = null ,
+
+	@Pin varchar (50)  = null ,
+
+	@PassLockReason int   = null ,
+
+	@PinLockReason int   = null ,
+
+	@LockReason int   = null ,
+
+	@TokenId varchar (20)  = null ,
+
+	@TokenName varchar (20)  = null ,
+
+	@TokenActived varchar (10)  = null ,
+
+	@BrokerId varchar (20)  = null ,
+
+	@PassIsNew bit   = null ,
+
+	@PinIsNew bit   = null ,
+
+	@PassExpDate datetime   = null ,
+
+	@PinExpDate datetime   = null ,
+
+	@CustomerType int   = null ,
+
+	@AuthType smallint   = null ,
+
+	@PinType smallint   = null ,
+
+	@FailedLoginCount int   = null ,
+
+	@FailedLoginTime datetime   = null ,
+
+	@CreatedDate datetime   = null ,
+
+	@CreatedUser varchar (20)  = null ,
+
+	@UpdatedUser varchar (20)  = null ,
+
+	@UpdatedDate datetime   = null 
+)
+AS
+
+
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [MainCustAccountID]
+	, [FullName]
+	, [Email]
+	, [Phone]
+	, [Actived]
+	, [Password]
+	, [PIN]
+	, [PassLockReason]
+	, [PINLockReason]
+	, [LockReason]
+	, [TokenID]
+	, [TokenName]
+	, [TokenActived]
+	, [BrokerID]
+	, [PassIsNew]
+	, [PINIsNew]
+	, [PassExpDate]
+	, [PINExpDate]
+	, [CustomerType]
+	, [AuthType]
+	, [PinType]
+	, [FailedLoginCount]
+	, [FailedLoginTime]
+	, [CreatedDate]
+	, [CreatedUser]
+	, [UpdatedUser]
+	, [UpdatedDate]
+    FROM
+	[dbo].[MainCustAccount]
+    WHERE 
+	 ([MainCustAccountID] = @MainCustAccountId OR @MainCustAccountId IS NULL)
+	AND ([FullName] = @FullName OR @FullName IS NULL)
+	AND ([Email] = @Email OR @Email IS NULL)
+	AND ([Phone] = @Phone OR @Phone IS NULL)
+	AND ([Actived] = @Actived OR @Actived IS NULL)
+	AND ([Password] = @Password OR @Password IS NULL)
+	AND ([PIN] = @Pin OR @Pin IS NULL)
+	AND ([PassLockReason] = @PassLockReason OR @PassLockReason IS NULL)
+	AND ([PINLockReason] = @PinLockReason OR @PinLockReason IS NULL)
+	AND ([LockReason] = @LockReason OR @LockReason IS NULL)
+	AND ([TokenID] = @TokenId OR @TokenId IS NULL)
+	AND ([TokenName] = @TokenName OR @TokenName IS NULL)
+	AND ([TokenActived] = @TokenActived OR @TokenActived IS NULL)
+	AND ([BrokerID] = @BrokerId OR @BrokerId IS NULL)
+	AND ([PassIsNew] = @PassIsNew OR @PassIsNew IS NULL)
+	AND ([PINIsNew] = @PinIsNew OR @PinIsNew IS NULL)
+	AND ([PassExpDate] = @PassExpDate OR @PassExpDate IS NULL)
+	AND ([PINExpDate] = @PinExpDate OR @PinExpDate IS NULL)
+	AND ([CustomerType] = @CustomerType OR @CustomerType IS NULL)
+	AND ([AuthType] = @AuthType OR @AuthType IS NULL)
+	AND ([PinType] = @PinType OR @PinType IS NULL)
+	AND ([FailedLoginCount] = @FailedLoginCount OR @FailedLoginCount IS NULL)
+	AND ([FailedLoginTime] = @FailedLoginTime OR @FailedLoginTime IS NULL)
+	AND ([CreatedDate] = @CreatedDate OR @CreatedDate IS NULL)
+	AND ([CreatedUser] = @CreatedUser OR @CreatedUser IS NULL)
+	AND ([UpdatedUser] = @UpdatedUser OR @UpdatedUser IS NULL)
+	AND ([UpdatedDate] = @UpdatedDate OR @UpdatedDate IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [MainCustAccountID]
+	, [FullName]
+	, [Email]
+	, [Phone]
+	, [Actived]
+	, [Password]
+	, [PIN]
+	, [PassLockReason]
+	, [PINLockReason]
+	, [LockReason]
+	, [TokenID]
+	, [TokenName]
+	, [TokenActived]
+	, [BrokerID]
+	, [PassIsNew]
+	, [PINIsNew]
+	, [PassExpDate]
+	, [PINExpDate]
+	, [CustomerType]
+	, [AuthType]
+	, [PinType]
+	, [FailedLoginCount]
+	, [FailedLoginTime]
+	, [CreatedDate]
+	, [CreatedUser]
+	, [UpdatedUser]
+	, [UpdatedDate]
+    FROM
+	[dbo].[MainCustAccount]
+    WHERE 
+	 ([MainCustAccountID] = @MainCustAccountId AND @MainCustAccountId is not null)
+	OR ([FullName] = @FullName AND @FullName is not null)
+	OR ([Email] = @Email AND @Email is not null)
+	OR ([Phone] = @Phone AND @Phone is not null)
+	OR ([Actived] = @Actived AND @Actived is not null)
+	OR ([Password] = @Password AND @Password is not null)
+	OR ([PIN] = @Pin AND @Pin is not null)
+	OR ([PassLockReason] = @PassLockReason AND @PassLockReason is not null)
+	OR ([PINLockReason] = @PinLockReason AND @PinLockReason is not null)
+	OR ([LockReason] = @LockReason AND @LockReason is not null)
+	OR ([TokenID] = @TokenId AND @TokenId is not null)
+	OR ([TokenName] = @TokenName AND @TokenName is not null)
+	OR ([TokenActived] = @TokenActived AND @TokenActived is not null)
+	OR ([BrokerID] = @BrokerId AND @BrokerId is not null)
+	OR ([PassIsNew] = @PassIsNew AND @PassIsNew is not null)
+	OR ([PINIsNew] = @PinIsNew AND @PinIsNew is not null)
+	OR ([PassExpDate] = @PassExpDate AND @PassExpDate is not null)
+	OR ([PINExpDate] = @PinExpDate AND @PinExpDate is not null)
+	OR ([CustomerType] = @CustomerType AND @CustomerType is not null)
+	OR ([AuthType] = @AuthType AND @AuthType is not null)
+	OR ([PinType] = @PinType AND @PinType is not null)
+	OR ([FailedLoginCount] = @FailedLoginCount AND @FailedLoginCount is not null)
+	OR ([FailedLoginTime] = @FailedLoginTime AND @FailedLoginTime is not null)
+	OR ([CreatedDate] = @CreatedDate AND @CreatedDate is not null)
+	OR ([CreatedUser] = @CreatedUser AND @CreatedUser is not null)
+	OR ([UpdatedUser] = @UpdatedUser AND @UpdatedUser is not null)
+	OR ([UpdatedDate] = @UpdatedDate AND @UpdatedDate is not null)
+	SELECT @@ROWCOUNT			
+  END
+				
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.SubCustAccount_Get_List procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.SubCustAccount_Get_List') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.SubCustAccount_Get_List
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the SubCustAccount table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.SubCustAccount_Get_List
+
+AS
+
+
+				
+				SELECT
+					[SubCustAccountID],
+					[Name],
+					[Actived],
+					[LockAccountReason],
+					[MainCustAccountID],
+					[CreatedDate],
+					[CreatedUser],
+					[UpdatedDate],
+					[UpdatedUser]
+				FROM
+					[dbo].[SubCustAccount]
+					
+				SELECT @@ROWCOUNT
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.SubCustAccount_GetPaged procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.SubCustAccount_GetPaged') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.SubCustAccount_GetPaged
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the SubCustAccount table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.SubCustAccount_GetPaged
+(
+
+	@WhereClause varchar (2000)  ,
+
+	@OrderBy varchar (2000)  ,
+
+	@PageIndex int   ,
+
+	@PageSize int   
+)
+AS
+
+
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[SubCustAccountID]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [SubCustAccountID]'
+				SET @SQL = @SQL + ', [Name]'
+				SET @SQL = @SQL + ', [Actived]'
+				SET @SQL = @SQL + ', [LockAccountReason]'
+				SET @SQL = @SQL + ', [MainCustAccountID]'
+				SET @SQL = @SQL + ', [CreatedDate]'
+				SET @SQL = @SQL + ', [CreatedUser]'
+				SET @SQL = @SQL + ', [UpdatedDate]'
+				SET @SQL = @SQL + ', [UpdatedUser]'
+				SET @SQL = @SQL + ' FROM [dbo].[SubCustAccount]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [SubCustAccountID],'
+				SET @SQL = @SQL + ' [Name],'
+				SET @SQL = @SQL + ' [Actived],'
+				SET @SQL = @SQL + ' [LockAccountReason],'
+				SET @SQL = @SQL + ' [MainCustAccountID],'
+				SET @SQL = @SQL + ' [CreatedDate],'
+				SET @SQL = @SQL + ' [CreatedUser],'
+				SET @SQL = @SQL + ' [UpdatedDate],'
+				SET @SQL = @SQL + ' [UpdatedUser]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[SubCustAccount]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.SubCustAccount_Insert procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.SubCustAccount_Insert') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.SubCustAccount_Insert
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the SubCustAccount table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.SubCustAccount_Insert
+(
+
+	@SubCustAccountId varchar (20)  ,
+
+	@Name nvarchar (50)  ,
+
+	@Actived bit   ,
+
+	@LockAccountReason smallint   ,
+
+	@MainCustAccountId varchar (20)  ,
+
+	@CreatedDate datetime   ,
+
+	@CreatedUser varchar (20)  ,
+
+	@UpdatedDate datetime   ,
+
+	@UpdatedUser varchar (20)  
+)
+AS
+
+
+				
+				INSERT INTO [dbo].[SubCustAccount]
+					(
+					[SubCustAccountID]
+					,[Name]
+					,[Actived]
+					,[LockAccountReason]
+					,[MainCustAccountID]
+					,[CreatedDate]
+					,[CreatedUser]
+					,[UpdatedDate]
+					,[UpdatedUser]
+					)
+				VALUES
+					(
+					@SubCustAccountId
+					,@Name
+					,@Actived
+					,@LockAccountReason
+					,@MainCustAccountId
+					,@CreatedDate
+					,@CreatedUser
+					,@UpdatedDate
+					,@UpdatedUser
+					)
+				
+									
+							
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.SubCustAccount_Update procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.SubCustAccount_Update') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.SubCustAccount_Update
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the SubCustAccount table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.SubCustAccount_Update
+(
+
+	@SubCustAccountId varchar (20)  ,
+
+	@OriginalSubCustAccountId varchar (20)  ,
+
+	@Name nvarchar (50)  ,
+
+	@Actived bit   ,
+
+	@LockAccountReason smallint   ,
+
+	@MainCustAccountId varchar (20)  ,
+
+	@CreatedDate datetime   ,
+
+	@CreatedUser varchar (20)  ,
+
+	@UpdatedDate datetime   ,
+
+	@UpdatedUser varchar (20)  
+)
+AS
+
+
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[SubCustAccount]
+				SET
+					[SubCustAccountID] = @SubCustAccountId
+					,[Name] = @Name
+					,[Actived] = @Actived
+					,[LockAccountReason] = @LockAccountReason
+					,[MainCustAccountID] = @MainCustAccountId
+					,[CreatedDate] = @CreatedDate
+					,[CreatedUser] = @CreatedUser
+					,[UpdatedDate] = @UpdatedDate
+					,[UpdatedUser] = @UpdatedUser
+				WHERE
+[SubCustAccountID] = @OriginalSubCustAccountId 
+				
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.SubCustAccount_Delete procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.SubCustAccount_Delete') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.SubCustAccount_Delete
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the SubCustAccount table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.SubCustAccount_Delete
+(
+
+	@SubCustAccountId varchar (20)  
+)
+AS
+
+
+				DELETE FROM [dbo].[SubCustAccount] WITH (ROWLOCK) 
+				WHERE
+					[SubCustAccountID] = @SubCustAccountId
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.SubCustAccount_GetByMainCustAccountId procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.SubCustAccount_GetByMainCustAccountId') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.SubCustAccount_GetByMainCustAccountId
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the SubCustAccount table through a foreign key
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.SubCustAccount_GetByMainCustAccountId
+(
+
+	@MainCustAccountId varchar (20)  
+)
+AS
+
+
+				SET ANSI_NULLS OFF
+				
+				SELECT
+					[SubCustAccountID],
+					[Name],
+					[Actived],
+					[LockAccountReason],
+					[MainCustAccountID],
+					[CreatedDate],
+					[CreatedUser],
+					[UpdatedDate],
+					[UpdatedUser]
+				FROM
+					[dbo].[SubCustAccount]
+				WHERE
+					[MainCustAccountID] = @MainCustAccountId
+				
+				SELECT @@ROWCOUNT
+				SET ANSI_NULLS ON
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.SubCustAccount_GetBySubCustAccountId procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.SubCustAccount_GetBySubCustAccountId') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.SubCustAccount_GetBySubCustAccountId
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the SubCustAccount table through an index
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.SubCustAccount_GetBySubCustAccountId
+(
+
+	@SubCustAccountId varchar (20)  
+)
+AS
+
+
+				SELECT
+					[SubCustAccountID],
+					[Name],
+					[Actived],
+					[LockAccountReason],
+					[MainCustAccountID],
+					[CreatedDate],
+					[CreatedUser],
+					[UpdatedDate],
+					[UpdatedUser]
+				FROM
+					[dbo].[SubCustAccount]
+				WHERE
+					[SubCustAccountID] = @SubCustAccountId
+				SELECT @@ROWCOUNT
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.SubCustAccount_GetByCustServicesPermissionIdFromSubCustAccountPermission procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.SubCustAccount_GetByCustServicesPermissionIdFromSubCustAccountPermission') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.SubCustAccount_GetByCustServicesPermissionIdFromSubCustAccountPermission
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records through a junction table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.SubCustAccount_GetByCustServicesPermissionIdFromSubCustAccountPermission
+(
+
+	@CustServicesPermissionId int   
+)
+AS
+
+
+SELECT dbo.[SubCustAccount].[SubCustAccountID]
+       ,dbo.[SubCustAccount].[Name]
+       ,dbo.[SubCustAccount].[Actived]
+       ,dbo.[SubCustAccount].[LockAccountReason]
+       ,dbo.[SubCustAccount].[MainCustAccountID]
+       ,dbo.[SubCustAccount].[CreatedDate]
+       ,dbo.[SubCustAccount].[CreatedUser]
+       ,dbo.[SubCustAccount].[UpdatedDate]
+       ,dbo.[SubCustAccount].[UpdatedUser]
+  FROM dbo.[SubCustAccount]
+ WHERE EXISTS (SELECT 1
+                 FROM dbo.[SubCustAccountPermission] 
+                WHERE dbo.[SubCustAccountPermission].[CustServicesPermissionID] = @CustServicesPermissionId
+                  AND dbo.[SubCustAccountPermission].[SubCustAccountID] = dbo.[SubCustAccount].[SubCustAccountID]
+                  )
+				SELECT @@ROWCOUNT			
+				
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.SubCustAccount_Find procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.SubCustAccount_Find') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.SubCustAccount_Find
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the SubCustAccount table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.SubCustAccount_Find
+(
+
+	@SearchUsingOR bit   = null ,
+
+	@SubCustAccountId varchar (20)  = null ,
+
+	@Name nvarchar (50)  = null ,
+
+	@Actived bit   = null ,
+
+	@LockAccountReason smallint   = null ,
+
+	@MainCustAccountId varchar (20)  = null ,
+
+	@CreatedDate datetime   = null ,
+
+	@CreatedUser varchar (20)  = null ,
+
+	@UpdatedDate datetime   = null ,
+
+	@UpdatedUser varchar (20)  = null 
+)
+AS
+
+
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [SubCustAccountID]
+	, [Name]
+	, [Actived]
+	, [LockAccountReason]
+	, [MainCustAccountID]
+	, [CreatedDate]
+	, [CreatedUser]
+	, [UpdatedDate]
+	, [UpdatedUser]
+    FROM
+	[dbo].[SubCustAccount]
+    WHERE 
+	 ([SubCustAccountID] = @SubCustAccountId OR @SubCustAccountId IS NULL)
+	AND ([Name] = @Name OR @Name IS NULL)
+	AND ([Actived] = @Actived OR @Actived IS NULL)
+	AND ([LockAccountReason] = @LockAccountReason OR @LockAccountReason IS NULL)
+	AND ([MainCustAccountID] = @MainCustAccountId OR @MainCustAccountId IS NULL)
+	AND ([CreatedDate] = @CreatedDate OR @CreatedDate IS NULL)
+	AND ([CreatedUser] = @CreatedUser OR @CreatedUser IS NULL)
+	AND ([UpdatedDate] = @UpdatedDate OR @UpdatedDate IS NULL)
+	AND ([UpdatedUser] = @UpdatedUser OR @UpdatedUser IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [SubCustAccountID]
+	, [Name]
+	, [Actived]
+	, [LockAccountReason]
+	, [MainCustAccountID]
+	, [CreatedDate]
+	, [CreatedUser]
+	, [UpdatedDate]
+	, [UpdatedUser]
+    FROM
+	[dbo].[SubCustAccount]
+    WHERE 
+	 ([SubCustAccountID] = @SubCustAccountId AND @SubCustAccountId is not null)
+	OR ([Name] = @Name AND @Name is not null)
+	OR ([Actived] = @Actived AND @Actived is not null)
+	OR ([LockAccountReason] = @LockAccountReason AND @LockAccountReason is not null)
+	OR ([MainCustAccountID] = @MainCustAccountId AND @MainCustAccountId is not null)
+	OR ([CreatedDate] = @CreatedDate AND @CreatedDate is not null)
+	OR ([CreatedUser] = @CreatedUser AND @CreatedUser is not null)
+	OR ([UpdatedDate] = @UpdatedDate AND @UpdatedDate is not null)
+	OR ([UpdatedUser] = @UpdatedUser AND @UpdatedUser is not null)
+	SELECT @@ROWCOUNT			
+  END
+				
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.SubCustAccountPermission_Get_List procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.SubCustAccountPermission_Get_List') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.SubCustAccountPermission_Get_List
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the SubCustAccountPermission table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.SubCustAccountPermission_Get_List
+
+AS
+
+
+				
+				SELECT
+					[SubCustAccountID],
+					[CustServicesPermissionID]
+				FROM
+					[dbo].[SubCustAccountPermission]
+					
+				SELECT @@ROWCOUNT
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.SubCustAccountPermission_GetPaged procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.SubCustAccountPermission_GetPaged') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.SubCustAccountPermission_GetPaged
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the SubCustAccountPermission table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.SubCustAccountPermission_GetPaged
+(
+
+	@WhereClause varchar (2000)  ,
+
+	@OrderBy varchar (2000)  ,
+
+	@PageIndex int   ,
+
+	@PageSize int   
+)
+AS
+
+
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[SubCustAccountID]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [SubCustAccountID]'
+				SET @SQL = @SQL + ', [CustServicesPermissionID]'
+				SET @SQL = @SQL + ' FROM [dbo].[SubCustAccountPermission]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [SubCustAccountID],'
+				SET @SQL = @SQL + ' [CustServicesPermissionID]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[SubCustAccountPermission]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.SubCustAccountPermission_Insert procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.SubCustAccountPermission_Insert') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.SubCustAccountPermission_Insert
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the SubCustAccountPermission table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.SubCustAccountPermission_Insert
+(
+
+	@SubCustAccountId varchar (20)  ,
+
+	@CustServicesPermissionId int   
+)
+AS
+
+
+				
+				INSERT INTO [dbo].[SubCustAccountPermission]
+					(
+					[SubCustAccountID]
+					,[CustServicesPermissionID]
+					)
+				VALUES
+					(
+					@SubCustAccountId
+					,@CustServicesPermissionId
+					)
+				
+									
+							
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.SubCustAccountPermission_Update procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.SubCustAccountPermission_Update') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.SubCustAccountPermission_Update
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the SubCustAccountPermission table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.SubCustAccountPermission_Update
+(
+
+	@SubCustAccountId varchar (20)  ,
+
+	@OriginalSubCustAccountId varchar (20)  ,
+
+	@CustServicesPermissionId int   ,
+
+	@OriginalCustServicesPermissionId int   
+)
+AS
+
+
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[SubCustAccountPermission]
+				SET
+					[SubCustAccountID] = @SubCustAccountId
+					,[CustServicesPermissionID] = @CustServicesPermissionId
+				WHERE
+[SubCustAccountID] = @OriginalSubCustAccountId 
+AND [CustServicesPermissionID] = @OriginalCustServicesPermissionId 
+				
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.SubCustAccountPermission_Delete procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.SubCustAccountPermission_Delete') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.SubCustAccountPermission_Delete
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the SubCustAccountPermission table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.SubCustAccountPermission_Delete
+(
+
+	@SubCustAccountId varchar (20)  ,
+
+	@CustServicesPermissionId int   
+)
+AS
+
+
+				DELETE FROM [dbo].[SubCustAccountPermission] WITH (ROWLOCK) 
+				WHERE
+					[SubCustAccountID] = @SubCustAccountId
+					AND [CustServicesPermissionID] = @CustServicesPermissionId
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.SubCustAccountPermission_GetByCustServicesPermissionId procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.SubCustAccountPermission_GetByCustServicesPermissionId') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.SubCustAccountPermission_GetByCustServicesPermissionId
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the SubCustAccountPermission table through a foreign key
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.SubCustAccountPermission_GetByCustServicesPermissionId
+(
+
+	@CustServicesPermissionId int   
+)
+AS
+
+
+				SET ANSI_NULLS OFF
+				
+				SELECT
+					[SubCustAccountID],
+					[CustServicesPermissionID]
+				FROM
+					[dbo].[SubCustAccountPermission]
+				WHERE
+					[CustServicesPermissionID] = @CustServicesPermissionId
+				
+				SELECT @@ROWCOUNT
+				SET ANSI_NULLS ON
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.SubCustAccountPermission_GetBySubCustAccountId procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.SubCustAccountPermission_GetBySubCustAccountId') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.SubCustAccountPermission_GetBySubCustAccountId
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the SubCustAccountPermission table through a foreign key
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.SubCustAccountPermission_GetBySubCustAccountId
+(
+
+	@SubCustAccountId varchar (20)  
+)
+AS
+
+
+				SET ANSI_NULLS OFF
+				
+				SELECT
+					[SubCustAccountID],
+					[CustServicesPermissionID]
+				FROM
+					[dbo].[SubCustAccountPermission]
+				WHERE
+					[SubCustAccountID] = @SubCustAccountId
+				
+				SELECT @@ROWCOUNT
+				SET ANSI_NULLS ON
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.SubCustAccountPermission_GetBySubCustAccountIdCustServicesPermissionId procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.SubCustAccountPermission_GetBySubCustAccountIdCustServicesPermissionId') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.SubCustAccountPermission_GetBySubCustAccountIdCustServicesPermissionId
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the SubCustAccountPermission table through an index
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.SubCustAccountPermission_GetBySubCustAccountIdCustServicesPermissionId
+(
+
+	@SubCustAccountId varchar (20)  ,
+
+	@CustServicesPermissionId int   
+)
+AS
+
+
+				SELECT
+					[SubCustAccountID],
+					[CustServicesPermissionID]
+				FROM
+					[dbo].[SubCustAccountPermission]
+				WHERE
+					[SubCustAccountID] = @SubCustAccountId
+					AND [CustServicesPermissionID] = @CustServicesPermissionId
+				SELECT @@ROWCOUNT
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.SubCustAccountPermission_Find procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.SubCustAccountPermission_Find') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.SubCustAccountPermission_Find
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the SubCustAccountPermission table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.SubCustAccountPermission_Find
+(
+
+	@SearchUsingOR bit   = null ,
+
+	@SubCustAccountId varchar (20)  = null ,
+
+	@CustServicesPermissionId int   = null 
+)
+AS
+
+
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [SubCustAccountID]
+	, [CustServicesPermissionID]
+    FROM
+	[dbo].[SubCustAccountPermission]
+    WHERE 
+	 ([SubCustAccountID] = @SubCustAccountId OR @SubCustAccountId IS NULL)
+	AND ([CustServicesPermissionID] = @CustServicesPermissionId OR @CustServicesPermissionId IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [SubCustAccountID]
+	, [CustServicesPermissionID]
+    FROM
+	[dbo].[SubCustAccountPermission]
+    WHERE 
+	 ([SubCustAccountID] = @SubCustAccountId AND @SubCustAccountId is not null)
+	OR ([CustServicesPermissionID] = @CustServicesPermissionId AND @CustServicesPermissionId is not null)
+	SELECT @@ROWCOUNT			
+  END
+				
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.Holidays_Get_List procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.Holidays_Get_List') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.Holidays_Get_List
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the Holidays table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.Holidays_Get_List
+
+AS
+
+
+				
+				SELECT
+					[Holiday],
+					[Note]
+				FROM
+					[dbo].[Holidays]
+					
+				SELECT @@ROWCOUNT
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.Holidays_GetPaged procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.Holidays_GetPaged') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.Holidays_GetPaged
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the Holidays table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.Holidays_GetPaged
+(
+
+	@WhereClause varchar (2000)  ,
+
+	@OrderBy varchar (2000)  ,
+
+	@PageIndex int   ,
+
+	@PageSize int   
+)
+AS
+
+
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[Holiday]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [Holiday]'
+				SET @SQL = @SQL + ', [Note]'
+				SET @SQL = @SQL + ' FROM [dbo].[Holidays]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [Holiday],'
+				SET @SQL = @SQL + ' [Note]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[Holidays]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.Holidays_Insert procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.Holidays_Insert') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.Holidays_Insert
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the Holidays table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.Holidays_Insert
+(
+
+	@Holiday datetime   ,
+
+	@Note nvarchar (255)  
+)
+AS
+
+
+				
+				INSERT INTO [dbo].[Holidays]
+					(
+					[Holiday]
+					,[Note]
+					)
+				VALUES
+					(
+					@Holiday
+					,@Note
+					)
+				
+									
+							
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.Holidays_Update procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.Holidays_Update') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.Holidays_Update
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the Holidays table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.Holidays_Update
+(
+
+	@Holiday datetime   ,
+
+	@OriginalHoliday datetime   ,
+
+	@Note nvarchar (255)  
+)
+AS
+
+
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[Holidays]
+				SET
+					[Holiday] = @Holiday
+					,[Note] = @Note
+				WHERE
+[Holiday] = @OriginalHoliday 
+				
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.Holidays_Delete procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.Holidays_Delete') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.Holidays_Delete
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the Holidays table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.Holidays_Delete
+(
+
+	@Holiday datetime   
+)
+AS
+
+
+				DELETE FROM [dbo].[Holidays] WITH (ROWLOCK) 
+				WHERE
+					[Holiday] = @Holiday
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.Holidays_GetByHoliday procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.Holidays_GetByHoliday') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.Holidays_GetByHoliday
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the Holidays table through an index
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.Holidays_GetByHoliday
+(
+
+	@Holiday datetime   
+)
+AS
+
+
+				SELECT
+					[Holiday],
+					[Note]
+				FROM
+					[dbo].[Holidays]
+				WHERE
+					[Holiday] = @Holiday
+				SELECT @@ROWCOUNT
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.Holidays_Find procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.Holidays_Find') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.Holidays_Find
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the Holidays table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.Holidays_Find
+(
+
+	@SearchUsingOR bit   = null ,
+
+	@Holiday datetime   = null ,
+
+	@Note nvarchar (255)  = null 
+)
+AS
+
+
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [Holiday]
+	, [Note]
+    FROM
+	[dbo].[Holidays]
+    WHERE 
+	 ([Holiday] = @Holiday OR @Holiday IS NULL)
+	AND ([Note] = @Note OR @Note IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [Holiday]
+	, [Note]
+    FROM
+	[dbo].[Holidays]
+    WHERE 
+	 ([Holiday] = @Holiday AND @Holiday is not null)
+	OR ([Note] = @Note AND @Note is not null)
+	SELECT @@ROWCOUNT			
+  END
+				
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.CustServicesPermission_Get_List procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.CustServicesPermission_Get_List') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.CustServicesPermission_Get_List
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the CustServicesPermission table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.CustServicesPermission_Get_List
+
+AS
+
+
+				
+				SELECT
+					[CustServicesPermissionID],
+					[PermissionName]
+				FROM
+					[dbo].[CustServicesPermission]
+					
+				SELECT @@ROWCOUNT
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.CustServicesPermission_GetPaged procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.CustServicesPermission_GetPaged') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.CustServicesPermission_GetPaged
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the CustServicesPermission table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.CustServicesPermission_GetPaged
+(
+
+	@WhereClause varchar (2000)  ,
+
+	@OrderBy varchar (2000)  ,
+
+	@PageIndex int   ,
+
+	@PageSize int   
+)
+AS
+
+
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[CustServicesPermissionID]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [CustServicesPermissionID]'
+				SET @SQL = @SQL + ', [PermissionName]'
+				SET @SQL = @SQL + ' FROM [dbo].[CustServicesPermission]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [CustServicesPermissionID],'
+				SET @SQL = @SQL + ' [PermissionName]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[CustServicesPermission]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.CustServicesPermission_Insert procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.CustServicesPermission_Insert') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.CustServicesPermission_Insert
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the CustServicesPermission table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.CustServicesPermission_Insert
+(
+
+	@CustServicesPermissionId int   ,
+
+	@PermissionName nvarchar (100)  
+)
+AS
+
+
+				
+				INSERT INTO [dbo].[CustServicesPermission]
+					(
+					[CustServicesPermissionID]
+					,[PermissionName]
+					)
+				VALUES
+					(
+					@CustServicesPermissionId
+					,@PermissionName
+					)
+				
+									
+							
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.CustServicesPermission_Update procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.CustServicesPermission_Update') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.CustServicesPermission_Update
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the CustServicesPermission table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.CustServicesPermission_Update
+(
+
+	@CustServicesPermissionId int   ,
+
+	@OriginalCustServicesPermissionId int   ,
+
+	@PermissionName nvarchar (100)  
+)
+AS
+
+
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[CustServicesPermission]
+				SET
+					[CustServicesPermissionID] = @CustServicesPermissionId
+					,[PermissionName] = @PermissionName
+				WHERE
+[CustServicesPermissionID] = @OriginalCustServicesPermissionId 
+				
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.CustServicesPermission_Delete procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.CustServicesPermission_Delete') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.CustServicesPermission_Delete
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the CustServicesPermission table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.CustServicesPermission_Delete
+(
+
+	@CustServicesPermissionId int   
+)
+AS
+
+
+				DELETE FROM [dbo].[CustServicesPermission] WITH (ROWLOCK) 
+				WHERE
+					[CustServicesPermissionID] = @CustServicesPermissionId
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.CustServicesPermission_GetByCustServicesPermissionId procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.CustServicesPermission_GetByCustServicesPermissionId') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.CustServicesPermission_GetByCustServicesPermissionId
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the CustServicesPermission table through an index
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.CustServicesPermission_GetByCustServicesPermissionId
+(
+
+	@CustServicesPermissionId int   
+)
+AS
+
+
+				SELECT
+					[CustServicesPermissionID],
+					[PermissionName]
+				FROM
+					[dbo].[CustServicesPermission]
+				WHERE
+					[CustServicesPermissionID] = @CustServicesPermissionId
+				SELECT @@ROWCOUNT
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.CustServicesPermission_GetBySubCustAccountIdFromSubCustAccountPermission procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.CustServicesPermission_GetBySubCustAccountIdFromSubCustAccountPermission') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.CustServicesPermission_GetBySubCustAccountIdFromSubCustAccountPermission
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records through a junction table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.CustServicesPermission_GetBySubCustAccountIdFromSubCustAccountPermission
+(
+
+	@SubCustAccountId varchar (20)  
+)
+AS
+
+
+SELECT dbo.[CustServicesPermission].[CustServicesPermissionID]
+       ,dbo.[CustServicesPermission].[PermissionName]
+  FROM dbo.[CustServicesPermission]
+ WHERE EXISTS (SELECT 1
+                 FROM dbo.[SubCustAccountPermission] 
+                WHERE dbo.[SubCustAccountPermission].[SubCustAccountID] = @SubCustAccountId
+                  AND dbo.[SubCustAccountPermission].[CustServicesPermissionID] = dbo.[CustServicesPermission].[CustServicesPermissionID]
+                  )
+				SELECT @@ROWCOUNT			
+				
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.CustServicesPermission_Find procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.CustServicesPermission_Find') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.CustServicesPermission_Find
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the CustServicesPermission table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.CustServicesPermission_Find
+(
+
+	@SearchUsingOR bit   = null ,
+
+	@CustServicesPermissionId int   = null ,
+
+	@PermissionName nvarchar (100)  = null 
+)
+AS
+
+
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [CustServicesPermissionID]
+	, [PermissionName]
+    FROM
+	[dbo].[CustServicesPermission]
+    WHERE 
+	 ([CustServicesPermissionID] = @CustServicesPermissionId OR @CustServicesPermissionId IS NULL)
+	AND ([PermissionName] = @PermissionName OR @PermissionName IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [CustServicesPermissionID]
+	, [PermissionName]
+    FROM
+	[dbo].[CustServicesPermission]
+    WHERE 
+	 ([CustServicesPermissionID] = @CustServicesPermissionId AND @CustServicesPermissionId is not null)
+	OR ([PermissionName] = @PermissionName AND @PermissionName is not null)
+	SELECT @@ROWCOUNT			
+  END
+				
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerAMPermission_Get_List procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerAMPermission_Get_List') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerAMPermission_Get_List
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the BrokerAMPermission table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerAMPermission_Get_List
+
+AS
+
+
+				
+				SELECT
+					[PermissionID],
+					[PermissionName]
+				FROM
+					[dbo].[BrokerAMPermission]
+					
+				SELECT @@ROWCOUNT
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerAMPermission_GetPaged procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerAMPermission_GetPaged') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerAMPermission_GetPaged
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the BrokerAMPermission table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerAMPermission_GetPaged
+(
+
+	@WhereClause varchar (2000)  ,
+
+	@OrderBy varchar (2000)  ,
+
+	@PageIndex int   ,
+
+	@PageSize int   
+)
+AS
+
+
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[PermissionID]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [PermissionID]'
+				SET @SQL = @SQL + ', [PermissionName]'
+				SET @SQL = @SQL + ' FROM [dbo].[BrokerAMPermission]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [PermissionID],'
+				SET @SQL = @SQL + ' [PermissionName]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[BrokerAMPermission]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerAMPermission_Insert procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerAMPermission_Insert') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerAMPermission_Insert
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the BrokerAMPermission table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerAMPermission_Insert
+(
+
+	@PermissionId int   ,
+
+	@PermissionName nvarchar (100)  
+)
+AS
+
+
+				
+				INSERT INTO [dbo].[BrokerAMPermission]
+					(
+					[PermissionID]
+					,[PermissionName]
+					)
+				VALUES
+					(
+					@PermissionId
+					,@PermissionName
+					)
+				
+									
+							
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerAMPermission_Update procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerAMPermission_Update') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerAMPermission_Update
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the BrokerAMPermission table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerAMPermission_Update
+(
+
+	@PermissionId int   ,
+
+	@OriginalPermissionId int   ,
+
+	@PermissionName nvarchar (100)  
+)
+AS
+
+
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[BrokerAMPermission]
+				SET
+					[PermissionID] = @PermissionId
+					,[PermissionName] = @PermissionName
+				WHERE
+[PermissionID] = @OriginalPermissionId 
+				
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerAMPermission_Delete procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerAMPermission_Delete') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerAMPermission_Delete
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the BrokerAMPermission table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerAMPermission_Delete
+(
+
+	@PermissionId int   
+)
+AS
+
+
+				DELETE FROM [dbo].[BrokerAMPermission] WITH (ROWLOCK) 
+				WHERE
+					[PermissionID] = @PermissionId
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerAMPermission_GetByPermissionId procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerAMPermission_GetByPermissionId') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerAMPermission_GetByPermissionId
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the BrokerAMPermission table through an index
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerAMPermission_GetByPermissionId
+(
+
+	@PermissionId int   
+)
+AS
+
+
+				SELECT
+					[PermissionID],
+					[PermissionName]
+				FROM
+					[dbo].[BrokerAMPermission]
+				WHERE
+					[PermissionID] = @PermissionId
+				SELECT @@ROWCOUNT
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerAMPermission_GetByBrokerIdFromBrokerPermission procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerAMPermission_GetByBrokerIdFromBrokerPermission') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerAMPermission_GetByBrokerIdFromBrokerPermission
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records through a junction table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerAMPermission_GetByBrokerIdFromBrokerPermission
+(
+
+	@BrokerId varchar (20)  
+)
+AS
+
+
+SELECT dbo.[BrokerAMPermission].[PermissionID]
+       ,dbo.[BrokerAMPermission].[PermissionName]
+  FROM dbo.[BrokerAMPermission]
+ WHERE EXISTS (SELECT 1
+                 FROM dbo.[BrokerPermission] 
+                WHERE dbo.[BrokerPermission].[BrokerID] = @BrokerId
+                  AND dbo.[BrokerPermission].[PermissionID] = dbo.[BrokerAMPermission].[PermissionID]
+                  )
+				SELECT @@ROWCOUNT			
+				
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerAMPermission_Find procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerAMPermission_Find') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerAMPermission_Find
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the BrokerAMPermission table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerAMPermission_Find
+(
+
+	@SearchUsingOR bit   = null ,
+
+	@PermissionId int   = null ,
+
+	@PermissionName nvarchar (100)  = null 
+)
+AS
+
+
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [PermissionID]
+	, [PermissionName]
+    FROM
+	[dbo].[BrokerAMPermission]
+    WHERE 
+	 ([PermissionID] = @PermissionId OR @PermissionId IS NULL)
+	AND ([PermissionName] = @PermissionName OR @PermissionName IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [PermissionID]
+	, [PermissionName]
+    FROM
+	[dbo].[BrokerAMPermission]
+    WHERE 
+	 ([PermissionID] = @PermissionId AND @PermissionId is not null)
+	OR ([PermissionName] = @PermissionName AND @PermissionName is not null)
+	SELECT @@ROWCOUNT			
+  END
+				
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerPermission_Get_List procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerPermission_Get_List') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerPermission_Get_List
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the BrokerPermission table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerPermission_Get_List
+
+AS
+
+
+				
+				SELECT
+					[BrokerID],
+					[PermissionID]
+				FROM
+					[dbo].[BrokerPermission]
+					
+				SELECT @@ROWCOUNT
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerPermission_GetPaged procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerPermission_GetPaged') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerPermission_GetPaged
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the BrokerPermission table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerPermission_GetPaged
+(
+
+	@WhereClause varchar (2000)  ,
+
+	@OrderBy varchar (2000)  ,
+
+	@PageIndex int   ,
+
+	@PageSize int   
+)
+AS
+
+
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[BrokerID]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [BrokerID]'
+				SET @SQL = @SQL + ', [PermissionID]'
+				SET @SQL = @SQL + ' FROM [dbo].[BrokerPermission]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [BrokerID],'
+				SET @SQL = @SQL + ' [PermissionID]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[BrokerPermission]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerPermission_Insert procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerPermission_Insert') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerPermission_Insert
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the BrokerPermission table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerPermission_Insert
+(
+
+	@BrokerId varchar (20)  ,
+
+	@PermissionId int   
+)
+AS
+
+
+				
+				INSERT INTO [dbo].[BrokerPermission]
+					(
+					[BrokerID]
+					,[PermissionID]
+					)
+				VALUES
+					(
+					@BrokerId
+					,@PermissionId
+					)
+				
+									
+							
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerPermission_Update procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerPermission_Update') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerPermission_Update
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the BrokerPermission table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerPermission_Update
+(
+
+	@BrokerId varchar (20)  ,
+
+	@OriginalBrokerId varchar (20)  ,
+
+	@PermissionId int   ,
+
+	@OriginalPermissionId int   
+)
+AS
+
+
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[BrokerPermission]
+				SET
+					[BrokerID] = @BrokerId
+					,[PermissionID] = @PermissionId
+				WHERE
+[BrokerID] = @OriginalBrokerId 
+AND [PermissionID] = @OriginalPermissionId 
+				
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerPermission_Delete procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerPermission_Delete') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerPermission_Delete
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the BrokerPermission table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerPermission_Delete
+(
+
+	@BrokerId varchar (20)  ,
+
+	@PermissionId int   
+)
+AS
+
+
+				DELETE FROM [dbo].[BrokerPermission] WITH (ROWLOCK) 
+				WHERE
+					[BrokerID] = @BrokerId
+					AND [PermissionID] = @PermissionId
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerPermission_GetByBrokerId procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerPermission_GetByBrokerId') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerPermission_GetByBrokerId
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the BrokerPermission table through a foreign key
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerPermission_GetByBrokerId
+(
+
+	@BrokerId varchar (20)  
+)
+AS
+
+
+				SET ANSI_NULLS OFF
+				
+				SELECT
+					[BrokerID],
+					[PermissionID]
+				FROM
+					[dbo].[BrokerPermission]
+				WHERE
+					[BrokerID] = @BrokerId
+				
+				SELECT @@ROWCOUNT
+				SET ANSI_NULLS ON
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerPermission_GetByPermissionId procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerPermission_GetByPermissionId') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerPermission_GetByPermissionId
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the BrokerPermission table through a foreign key
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerPermission_GetByPermissionId
+(
+
+	@PermissionId int   
+)
+AS
+
+
+				SET ANSI_NULLS OFF
+				
+				SELECT
+					[BrokerID],
+					[PermissionID]
+				FROM
+					[dbo].[BrokerPermission]
+				WHERE
+					[PermissionID] = @PermissionId
+				
+				SELECT @@ROWCOUNT
+				SET ANSI_NULLS ON
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerPermission_GetByBrokerIdPermissionId procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerPermission_GetByBrokerIdPermissionId') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerPermission_GetByBrokerIdPermissionId
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the BrokerPermission table through an index
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerPermission_GetByBrokerIdPermissionId
+(
+
+	@BrokerId varchar (20)  ,
+
+	@PermissionId int   
+)
+AS
+
+
+				SELECT
+					[BrokerID],
+					[PermissionID]
+				FROM
+					[dbo].[BrokerPermission]
+				WHERE
+					[BrokerID] = @BrokerId
+					AND [PermissionID] = @PermissionId
+				SELECT @@ROWCOUNT
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.BrokerPermission_Find procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.BrokerPermission_Find') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.BrokerPermission_Find
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the BrokerPermission table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.BrokerPermission_Find
+(
+
+	@SearchUsingOR bit   = null ,
+
+	@BrokerId varchar (20)  = null ,
+
+	@PermissionId int   = null 
+)
+AS
+
+
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [BrokerID]
+	, [PermissionID]
+    FROM
+	[dbo].[BrokerPermission]
+    WHERE 
+	 ([BrokerID] = @BrokerId OR @BrokerId IS NULL)
+	AND ([PermissionID] = @PermissionId OR @PermissionId IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [BrokerID]
+	, [PermissionID]
+    FROM
+	[dbo].[BrokerPermission]
+    WHERE 
+	 ([BrokerID] = @BrokerId AND @BrokerId is not null)
+	OR ([PermissionID] = @PermissionId AND @PermissionId is not null)
+	SELECT @@ROWCOUNT			
+  END
+				
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.ChangedPassHistory_Get_List procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.ChangedPassHistory_Get_List') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.ChangedPassHistory_Get_List
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the ChangedPassHistory table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.ChangedPassHistory_Get_List
+
+AS
+
+
+				
+				SELECT
+					[ID],
+					[BrokerID],
+					[BrokerName],
+					[MainAccountName],
+					[ChangedTime],
+					[MainCustAccountID],
+					[PINorPass]
+				FROM
+					[dbo].[ChangedPassHistory]
+					
+				SELECT @@ROWCOUNT
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.ChangedPassHistory_GetPaged procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.ChangedPassHistory_GetPaged') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.ChangedPassHistory_GetPaged
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the ChangedPassHistory table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.ChangedPassHistory_GetPaged
+(
+
+	@WhereClause varchar (2000)  ,
+
+	@OrderBy varchar (2000)  ,
+
+	@PageIndex int   ,
+
+	@PageSize int   
+)
+AS
+
+
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[ID]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [ID]'
+				SET @SQL = @SQL + ', [BrokerID]'
+				SET @SQL = @SQL + ', [BrokerName]'
+				SET @SQL = @SQL + ', [MainAccountName]'
+				SET @SQL = @SQL + ', [ChangedTime]'
+				SET @SQL = @SQL + ', [MainCustAccountID]'
+				SET @SQL = @SQL + ', [PINorPass]'
+				SET @SQL = @SQL + ' FROM [dbo].[ChangedPassHistory]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [ID],'
+				SET @SQL = @SQL + ' [BrokerID],'
+				SET @SQL = @SQL + ' [BrokerName],'
+				SET @SQL = @SQL + ' [MainAccountName],'
+				SET @SQL = @SQL + ' [ChangedTime],'
+				SET @SQL = @SQL + ' [MainCustAccountID],'
+				SET @SQL = @SQL + ' [PINorPass]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[ChangedPassHistory]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.ChangedPassHistory_Insert procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.ChangedPassHistory_Insert') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.ChangedPassHistory_Insert
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the ChangedPassHistory table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.ChangedPassHistory_Insert
+(
+
+	@Id int   ,
+
+	@BrokerId varchar (20)  ,
+
+	@BrokerName nvarchar (50)  ,
+
+	@MainAccountName nvarchar (50)  ,
+
+	@ChangedTime datetime   ,
+
+	@MainCustAccountId varchar (20)  ,
+
+	@PiNorPass bit   
+)
+AS
+
+
+				
+				INSERT INTO [dbo].[ChangedPassHistory]
+					(
+					[ID]
+					,[BrokerID]
+					,[BrokerName]
+					,[MainAccountName]
+					,[ChangedTime]
+					,[MainCustAccountID]
+					,[PINorPass]
+					)
+				VALUES
+					(
+					@Id
+					,@BrokerId
+					,@BrokerName
+					,@MainAccountName
+					,@ChangedTime
+					,@MainCustAccountId
+					,@PiNorPass
+					)
+				
+									
+							
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.ChangedPassHistory_Update procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.ChangedPassHistory_Update') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.ChangedPassHistory_Update
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the ChangedPassHistory table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.ChangedPassHistory_Update
+(
+
+	@Id int   ,
+
+	@OriginalId int   ,
+
+	@BrokerId varchar (20)  ,
+
+	@BrokerName nvarchar (50)  ,
+
+	@MainAccountName nvarchar (50)  ,
+
+	@ChangedTime datetime   ,
+
+	@MainCustAccountId varchar (20)  ,
+
+	@PiNorPass bit   
+)
+AS
+
+
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[ChangedPassHistory]
+				SET
+					[ID] = @Id
+					,[BrokerID] = @BrokerId
+					,[BrokerName] = @BrokerName
+					,[MainAccountName] = @MainAccountName
+					,[ChangedTime] = @ChangedTime
+					,[MainCustAccountID] = @MainCustAccountId
+					,[PINorPass] = @PiNorPass
+				WHERE
+[ID] = @OriginalId 
+				
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.ChangedPassHistory_Delete procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.ChangedPassHistory_Delete') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.ChangedPassHistory_Delete
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the ChangedPassHistory table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.ChangedPassHistory_Delete
+(
+
+	@Id int   
+)
+AS
+
+
+				DELETE FROM [dbo].[ChangedPassHistory] WITH (ROWLOCK) 
+				WHERE
+					[ID] = @Id
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.ChangedPassHistory_GetByMainCustAccountId procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.ChangedPassHistory_GetByMainCustAccountId') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.ChangedPassHistory_GetByMainCustAccountId
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the ChangedPassHistory table through a foreign key
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.ChangedPassHistory_GetByMainCustAccountId
+(
+
+	@MainCustAccountId varchar (20)  
+)
+AS
+
+
+				SET ANSI_NULLS OFF
+				
+				SELECT
+					[ID],
+					[BrokerID],
+					[BrokerName],
+					[MainAccountName],
+					[ChangedTime],
+					[MainCustAccountID],
+					[PINorPass]
+				FROM
+					[dbo].[ChangedPassHistory]
+				WHERE
+					[MainCustAccountID] = @MainCustAccountId
+				
+				SELECT @@ROWCOUNT
+				SET ANSI_NULLS ON
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.ChangedPassHistory_GetById procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.ChangedPassHistory_GetById') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.ChangedPassHistory_GetById
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the ChangedPassHistory table through an index
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.ChangedPassHistory_GetById
+(
+
+	@Id int   
+)
+AS
+
+
+				SELECT
+					[ID],
+					[BrokerID],
+					[BrokerName],
+					[MainAccountName],
+					[ChangedTime],
+					[MainCustAccountID],
+					[PINorPass]
+				FROM
+					[dbo].[ChangedPassHistory]
+				WHERE
+					[ID] = @Id
+				SELECT @@ROWCOUNT
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.ChangedPassHistory_Find procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.ChangedPassHistory_Find') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.ChangedPassHistory_Find
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the ChangedPassHistory table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.ChangedPassHistory_Find
+(
+
+	@SearchUsingOR bit   = null ,
+
+	@Id int   = null ,
+
+	@BrokerId varchar (20)  = null ,
+
+	@BrokerName nvarchar (50)  = null ,
+
+	@MainAccountName nvarchar (50)  = null ,
+
+	@ChangedTime datetime   = null ,
+
+	@MainCustAccountId varchar (20)  = null ,
+
+	@PiNorPass bit   = null 
+)
+AS
+
+
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [ID]
+	, [BrokerID]
+	, [BrokerName]
+	, [MainAccountName]
+	, [ChangedTime]
+	, [MainCustAccountID]
+	, [PINorPass]
+    FROM
+	[dbo].[ChangedPassHistory]
+    WHERE 
+	 ([ID] = @Id OR @Id IS NULL)
+	AND ([BrokerID] = @BrokerId OR @BrokerId IS NULL)
+	AND ([BrokerName] = @BrokerName OR @BrokerName IS NULL)
+	AND ([MainAccountName] = @MainAccountName OR @MainAccountName IS NULL)
+	AND ([ChangedTime] = @ChangedTime OR @ChangedTime IS NULL)
+	AND ([MainCustAccountID] = @MainCustAccountId OR @MainCustAccountId IS NULL)
+	AND ([PINorPass] = @PiNorPass OR @PiNorPass IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [ID]
+	, [BrokerID]
+	, [BrokerName]
+	, [MainAccountName]
+	, [ChangedTime]
+	, [MainCustAccountID]
+	, [PINorPass]
+    FROM
+	[dbo].[ChangedPassHistory]
+    WHERE 
+	 ([ID] = @Id AND @Id is not null)
+	OR ([BrokerID] = @BrokerId AND @BrokerId is not null)
+	OR ([BrokerName] = @BrokerName AND @BrokerName is not null)
+	OR ([MainAccountName] = @MainAccountName AND @MainAccountName is not null)
+	OR ([ChangedTime] = @ChangedTime AND @ChangedTime is not null)
+	OR ([MainCustAccountID] = @MainCustAccountId AND @MainCustAccountId is not null)
+	OR ([PINorPass] = @PiNorPass AND @PiNorPass is not null)
+	SELECT @@ROWCOUNT			
+  END
+				
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.Configurations_Get_List procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.Configurations_Get_List') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.Configurations_Get_List
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the Configurations table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.Configurations_Get_List
+
+AS
+
+
+				
+				SELECT
+					[Name],
+					[Value]
+				FROM
+					[dbo].[Configurations]
+					
+				SELECT @@ROWCOUNT
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.Configurations_GetPaged procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.Configurations_GetPaged') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.Configurations_GetPaged
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the Configurations table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.Configurations_GetPaged
+(
+
+	@WhereClause varchar (2000)  ,
+
+	@OrderBy varchar (2000)  ,
+
+	@PageIndex int   ,
+
+	@PageSize int   
+)
+AS
+
+
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[Name]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [Name]'
+				SET @SQL = @SQL + ', [Value]'
+				SET @SQL = @SQL + ' FROM [dbo].[Configurations]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [Name],'
+				SET @SQL = @SQL + ' [Value]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[Configurations]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.Configurations_Insert procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.Configurations_Insert') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.Configurations_Insert
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the Configurations table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.Configurations_Insert
+(
+
+	@Name varchar (20)  ,
+
+	@Value varchar (50)  
+)
+AS
+
+
+				
+				INSERT INTO [dbo].[Configurations]
+					(
+					[Name]
+					,[Value]
+					)
+				VALUES
+					(
+					@Name
+					,@Value
+					)
+				
+									
+							
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.Configurations_Update procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.Configurations_Update') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.Configurations_Update
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the Configurations table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.Configurations_Update
+(
+
+	@Name varchar (20)  ,
+
+	@OriginalName varchar (20)  ,
+
+	@Value varchar (50)  
+)
+AS
+
+
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[Configurations]
+				SET
+					[Name] = @Name
+					,[Value] = @Value
+				WHERE
+[Name] = @OriginalName 
+				
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.Configurations_Delete procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.Configurations_Delete') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.Configurations_Delete
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the Configurations table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.Configurations_Delete
+(
+
+	@Name varchar (20)  
+)
+AS
+
+
+				DELETE FROM [dbo].[Configurations] WITH (ROWLOCK) 
+				WHERE
+					[Name] = @Name
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.Configurations_GetByName procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.Configurations_GetByName') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.Configurations_GetByName
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the Configurations table through an index
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.Configurations_GetByName
+(
+
+	@Name varchar (20)  
+)
+AS
+
+
+				SELECT
+					[Name],
+					[Value]
+				FROM
+					[dbo].[Configurations]
+				WHERE
+					[Name] = @Name
+				SELECT @@ROWCOUNT
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.Configurations_Find procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.Configurations_Find') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.Configurations_Find
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the Configurations table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.Configurations_Find
+(
+
+	@SearchUsingOR bit   = null ,
+
+	@Name varchar (20)  = null ,
+
+	@Value varchar (50)  = null 
+)
+AS
+
+
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [Name]
+	, [Value]
+    FROM
+	[dbo].[Configurations]
+    WHERE 
+	 ([Name] = @Name OR @Name IS NULL)
+	AND ([Value] = @Value OR @Value IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [Name]
+	, [Value]
+    FROM
+	[dbo].[Configurations]
+    WHERE 
+	 ([Name] = @Name AND @Name is not null)
+	OR ([Value] = @Value AND @Value is not null)
+	SELECT @@ROWCOUNT			
+  END
+				
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.WorkingDays_Get_List procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.WorkingDays_Get_List') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.WorkingDays_Get_List
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the WorkingDays table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.WorkingDays_Get_List
+
+AS
+
+
+				
+				SELECT
+					[DateId],
+					[IsWorkingDay]
+				FROM
+					[dbo].[WorkingDays]
+					
+				SELECT @@ROWCOUNT
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.WorkingDays_GetPaged procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.WorkingDays_GetPaged') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.WorkingDays_GetPaged
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the WorkingDays table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.WorkingDays_GetPaged
+(
+
+	@WhereClause varchar (2000)  ,
+
+	@OrderBy varchar (2000)  ,
+
+	@PageIndex int   ,
+
+	@PageSize int   
+)
+AS
+
+
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[DateId]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [DateId]'
+				SET @SQL = @SQL + ', [IsWorkingDay]'
+				SET @SQL = @SQL + ' FROM [dbo].[WorkingDays]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [DateId],'
+				SET @SQL = @SQL + ' [IsWorkingDay]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[WorkingDays]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.WorkingDays_Insert procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.WorkingDays_Insert') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.WorkingDays_Insert
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the WorkingDays table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.WorkingDays_Insert
+(
+
+	@DateId int   ,
+
+	@IsWorkingDay bit   
+)
+AS
+
+
+				
+				INSERT INTO [dbo].[WorkingDays]
+					(
+					[DateId]
+					,[IsWorkingDay]
+					)
+				VALUES
+					(
+					@DateId
+					,@IsWorkingDay
+					)
+				
+									
+							
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.WorkingDays_Update procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.WorkingDays_Update') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.WorkingDays_Update
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the WorkingDays table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.WorkingDays_Update
+(
+
+	@DateId int   ,
+
+	@OriginalDateId int   ,
+
+	@IsWorkingDay bit   
+)
+AS
+
+
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[WorkingDays]
+				SET
+					[DateId] = @DateId
+					,[IsWorkingDay] = @IsWorkingDay
+				WHERE
+[DateId] = @OriginalDateId 
+				
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.WorkingDays_Delete procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.WorkingDays_Delete') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.WorkingDays_Delete
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the WorkingDays table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.WorkingDays_Delete
+(
+
+	@DateId int   
+)
+AS
+
+
+				DELETE FROM [dbo].[WorkingDays] WITH (ROWLOCK) 
+				WHERE
+					[DateId] = @DateId
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.WorkingDays_GetByDateId procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.WorkingDays_GetByDateId') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.WorkingDays_GetByDateId
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the WorkingDays table through an index
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.WorkingDays_GetByDateId
+(
+
+	@DateId int   
+)
+AS
+
+
+				SELECT
+					[DateId],
+					[IsWorkingDay]
+				FROM
+					[dbo].[WorkingDays]
+				WHERE
+					[DateId] = @DateId
+				SELECT @@ROWCOUNT
+					
+			
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+
+	
+
+-- Drop the dbo.WorkingDays_Find procedure
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'dbo.WorkingDays_Find') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE dbo.WorkingDays_Find
+GO
+
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Friday, November 19, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the WorkingDays table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+
+
+CREATE PROCEDURE dbo.WorkingDays_Find
+(
+
+	@SearchUsingOR bit   = null ,
+
+	@DateId int   = null ,
+
+	@IsWorkingDay bit   = null 
+)
+AS
+
+
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [DateId]
+	, [IsWorkingDay]
+    FROM
+	[dbo].[WorkingDays]
+    WHERE 
+	 ([DateId] = @DateId OR @DateId IS NULL)
+	AND ([IsWorkingDay] = @IsWorkingDay OR @IsWorkingDay IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [DateId]
+	, [IsWorkingDay]
+    FROM
+	[dbo].[WorkingDays]
+    WHERE 
+	 ([DateId] = @DateId AND @DateId is not null)
+	OR ([IsWorkingDay] = @IsWorkingDay AND @IsWorkingDay is not null)
+	SELECT @@ROWCOUNT			
+  END
+				
+
+GO
+SET QUOTED_IDENTIFIER ON 
+GO
+SET NOCOUNT ON
+GO
+SET ANSI_NULLS OFF 
+GO
+

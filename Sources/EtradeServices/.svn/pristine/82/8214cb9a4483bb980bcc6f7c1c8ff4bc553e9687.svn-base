@@ -1,0 +1,194 @@
+using System;
+using System.Configuration;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using ETradeCommon;
+
+namespace ETradeGWServices
+{
+    class MessageHandler
+    {
+        private static int _linkOPSHandle = 0;
+
+        #region LinkOPS Import
+        [DllImport("LinkOPS.dll", EntryPoint = "CreateLinkOPS",
+             ExactSpelling = false, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int CreateLinkOPS();
+
+        [DllImport("LinkOPS.dll", EntryPoint = "DestroyLinkOPS",
+             ExactSpelling = false, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void DestroyLinkOPS(int handle);
+
+        [DllImport("LinkOPS.dll", EntryPoint = "LinkOPSInitLog",
+            ExactSpelling = false, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void LinkOPSInitLog(int handle, string logFile);
+
+        [DllImport("LinkOPS.dll", EntryPoint = "LinkOPSConnect",
+            ExactSpelling = false, CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool LinkOPSConnect(int handle, string server, int port);
+
+        [DllImport("LinkOPS.dll", EntryPoint = "LinkOPSDisconnect",
+            ExactSpelling = false, CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool LinkOPSDisconnect(int handle);
+
+        [DllImport("LinkOPS.dll", EntryPoint = "LinkOPSIsConnected",
+            ExactSpelling = false, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int LinkOPSIsConnected(int handle);
+
+        [DllImport("LinkOPS.dll", EntryPoint = "LinkOPSLogon",
+            ExactSpelling = false, CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool LinkOPSLogon(int handle, int heartBeatDuration, string username, string password);
+
+        [DllImport("LinkOPS.dll", EntryPoint = "LinkOPSLogout",
+            ExactSpelling = false, CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool LinkOPSLogout(int handle);
+
+        [DllImport("LinkOPS.dll", EntryPoint = "LinkOPSIsLogged",
+            ExactSpelling = false, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int LinkOPSIsLogged(int handle);
+
+        [DllImport("LinkOPS.dll", EntryPoint = "LinkOPSKeepAlive",
+            ExactSpelling = false, CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool LinkOPSKeepAlive(int handle);
+
+        [DllImport("LinkOPS.dll", EntryPoint = "LinkOPSRecovery",
+            ExactSpelling = false, CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool LinkOPSRecovery(int handle, int lastSeq, int beginSeq, int endSeq);
+
+        [DllImport("LinkOPS.dll", EntryPoint = "LinkOPSNewOrder",
+            ExactSpelling = false, CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool LinkOPSNewOrder(int handle, string refOrderID, string enterID, string secSymbol, char side, float price, char conPrice, int volume, string account);
+
+        [DllImport("LinkOPS.dll", EntryPoint = "LinkOPSCancelOrder",
+            ExactSpelling = false, CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool LinkOPSCancelOrder(int handle, string refOrderID, string enterID, int fisOrderID);
+
+        [DllImport("LinkOPS.dll", EntryPoint = "LinkOPSChangeOrder",
+            ExactSpelling = false, CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool LinkOPSChangeOrder(int handle, string refOrderID, string enterID, int fisOrderID, string account, char portOrClient);
+
+        [DllImport("LinkOPS.dll", EntryPoint = "LinkOPSHasOrder",
+            ExactSpelling = false, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int LinkOPSHasOrder(int handle);
+
+        [DllImport("LinkOPS.dll", EntryPoint = "LinkOPSGetOrder",
+            ExactSpelling = false, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int LinkOPSGetOrder(int handle, ref int seq, ref string time, ref string type, ref string refOrderID, ref int fisOrderID,
+                                                 ref string symbol, ref char side, ref float price, ref char conPrice, ref int volume,
+                                                 ref string account, ref int status, ref string ordRejReason, ref int execType, ref int sourceID);
+        #endregion
+        #region Methods
+        public void InitLinkOPS()
+        {
+            LogHandler.Log("Init LinkOPS start: " + _linkOPSHandle + " " + ConfigurationManager.AppSettings["LinkOPSLogFolder"],
+                           "InitLinkOPS", TraceEventType.Information);
+            //Moved from MessageHandler.cs
+            DateTime currentTime = DateTime.Now;
+
+            _linkOPSHandle = CreateLinkOPS();
+            //LinkOPSInitLog(_linkOPSHandle, Common.Config.Log_Folder + "LinkOPS." + currentTime.ToString("yyyyMMdd-HHmmss") + ".log");
+            LinkOPSInitLog(_linkOPSHandle, ConfigurationManager.AppSettings["LinkOPSLogFolder"] + "LinkOPS." + currentTime.ToString("yyyyMMdd-HHmmss") + ".log");
+            LogHandler.Log("Init LinkOPS end: " + _linkOPSHandle + " " + ConfigurationManager.AppSettings["LinkOPSLogFolder"],
+                           "InitLinkOPS", TraceEventType.Information);
+        }
+
+        public bool Connect(string ipAddress, string port)
+        {
+            try
+            {
+                //LinkOPSDisconnect(_linkOPSHandle);
+                LinkOPSConnect(_linkOPSHandle, ipAddress, Int32.Parse(port));
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                //_frmMain.Log(ERROR_TYPE.SOCKET_ERROR, ex.ToString());
+
+                return false;
+            }
+        }
+
+        public bool Disconnect()
+        {
+            try
+            {
+                LinkOPSDisconnect(_linkOPSHandle);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                //_frmMain.Log(ERROR_TYPE.SOCKET_ERROR, ex.ToString());
+
+                return false;
+            }
+        }
+
+        public bool IsConnected()
+        {
+            return (LinkOPSIsConnected(_linkOPSHandle) == 1);
+        }
+
+        public bool IsLogged()
+        {
+            return (LinkOPSIsLogged(_linkOPSHandle) == 1);
+        }
+
+        public bool Logon(int heartBeatDuration, string username, string password)
+        {
+            return LinkOPSLogon(_linkOPSHandle, heartBeatDuration, username, password);
+        }
+
+        public bool KeepAlive()
+        {
+            return LinkOPSKeepAlive(_linkOPSHandle);
+        }
+
+        public bool Logout()
+        {
+            return LinkOPSLogout(_linkOPSHandle);
+        }
+
+        public bool Recovery(int lastSeq, int beginSeq, int endSeq)
+        {
+            return LinkOPSRecovery(_linkOPSHandle, lastSeq, beginSeq, endSeq);
+        }
+
+        public bool NewOrder(string refOrderID, string enterID, string secSymbol, char side, float price, char conPrice, int volume, string account)
+        {
+            return LinkOPSNewOrder(_linkOPSHandle, refOrderID, enterID, secSymbol, side, price, conPrice, volume, account);
+        }
+
+        public bool CancelOrder(string refOrderID, string enterID, int fisOrderID)
+        {
+            return LinkOPSCancelOrder(_linkOPSHandle, refOrderID, enterID, fisOrderID);
+        }
+
+        public bool ChangeOrder(string refOrderID, string enterID, int fisOrderID, string account, char portOrClient)
+        {
+            return LinkOPSChangeOrder(_linkOPSHandle, refOrderID, enterID, fisOrderID, account, portOrClient);
+        }
+
+        public bool HasOrder()
+        {
+            return (LinkOPSHasOrder(_linkOPSHandle) == 1);
+        }
+
+        public bool GetOrder(ref int seq, ref string time, ref string type, ref string refOrderID, ref int fisOrderID,
+                             ref string symbol, ref char side, ref float price, ref char conPrice, ref int volume,
+                             ref string account, ref int status, ref string ordRejReason, ref int execType, ref int sourceID)
+        {
+            try
+            {
+                return (LinkOPSGetOrder(_linkOPSHandle, ref seq, ref time, ref type, ref refOrderID, ref fisOrderID, ref symbol, ref side, ref price,
+                                                        ref conPrice, ref volume, ref account, ref status, ref ordRejReason, ref execType, ref sourceID) == 1);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        #endregion
+    }
+}

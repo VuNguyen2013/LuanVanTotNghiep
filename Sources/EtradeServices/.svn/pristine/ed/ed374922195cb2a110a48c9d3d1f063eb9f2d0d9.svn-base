@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="SocketClient">
+</Property><Property Name="Solution File" Value="D:\References\Network Programming\Client\SocketClient.sln">
+</Property><Property Name="Date" Value="Saturday, December 25, 2010">
+</Property><Property Name="Time" Value="0:03 AM">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="SocketClient.sln" Description="File successfully backed up as D:\References\Network Programming\Client\Backup\SocketClient.sln">
+</Event><Event ErrorLevel="0" Project="SocketClientProj" Source="SocketClientProj.csproj" Description="Project file successfully backed up as D:\References\Network Programming\Client\Backup\SocketClientProj.csproj">
+</Event><Event ErrorLevel="0" Project="SocketClientProj" Source="SocketClientProj.csproj.user" Description="Project user file successfully backed up as D:\References\Network Programming\Client\Backup\SocketClientProj.csproj.user">
+</Event><Event ErrorLevel="0" Project="SocketClientProj" Source="AssemblyInfo.cs" Description="File successfully backed up as D:\References\Network Programming\Client\Backup\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="SocketClientProj" Source="SocketClientForm.cs" Description="File successfully backed up as D:\References\Network Programming\Client\Backup\SocketClientForm.cs">
+</Event><Event ErrorLevel="0" Project="SocketClientProj" Source="App.ico" Description="File successfully backed up as D:\References\Network Programming\Client\Backup\App.ico">
+</Event><Event ErrorLevel="0" Project="SocketClientProj" Source="SocketClientForm.resx" Description="File successfully backed up as D:\References\Network Programming\Client\Backup\SocketClientForm.resx">
+</Event><Event ErrorLevel="0" Project="SocketClientProj" Source="SocketClientProj.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="SocketClientProj" Source="SocketClientProj.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="SocketClient.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="SocketClient.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="SocketClientProj" Source="SocketClientProj.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>

@@ -1,0 +1,786 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ETradeHistory.DataAccess.SqlClient</name>
+    </assembly>
+    <members>
+        <member name="T:ETradeHistory.DataAccess.SqlClient.StoredProcedureProvider">
+            <summary>
+            Summary description for Procedures.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.StoredProcedureProvider.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeHistory.DataAccess.SqlClient.StoredProcedureProvider"/> instance.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.StoredProcedureProvider.Serialize(System.String)">
+            <summary>
+            Serializes the specified filename.
+            </summary>
+            <param name="filename">Filename.</param>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.StoredProcedureProvider.Deserialize">
+            <summary>
+            Deserializes this instance.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.StoredProcedureProvider.GetProcedureBodyFromEmbeddedResource(System.String)">
+            <summary>
+            Get the query text from the embedded xml file.
+            </summary>
+            <param name="name">The name of the query.</param>
+            <returns>the text of the query</returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.StoredProcedureProvider.GetCommandWrapper(Microsoft.Practices.EnterpriseLibrary.Data.Database,System.String,System.Boolean)">
+            <summary>
+            Get the command wrapper, either from the stored procedures or from the embedded queries.
+            </summary>
+            <param name="database">The database instance.</param>
+            <param name="commandName">the name of the sp.</param>
+            <param name="useStoredProcedure">Indicates if we want stored procedure.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.StoredProcedureProvider.GetCommandWrapper(Microsoft.Practices.EnterpriseLibrary.Data.Database,System.String,System.Type,ETradeHistory.DataAccess.SqlFilterParameterCollection,System.String,System.Int32,System.Int32)">
+            <summary>
+            Gets the command wrapper for a dynamically generated query and
+            optionally includes server-side paging.
+            </summary>
+            <param name="database"></param>
+            <param name="commandName"></param>
+            <param name="columnEnum"></param>
+            <param name="parameters"></param>
+            <param name="orderBy"></param>
+            <param name="start"></param>
+            <param name="pageLength"></param>
+            <returns></returns>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.StoredProcedureProvider.Current">
+            <summary>
+            Gets the current <see cref="T:ETradeHistory.DataAccess.SqlClient.StoredProcedureProvider"/> singleton instance.
+            </summary>
+            <value><see cref="T:ETradeHistory.DataAccess.SqlClient.StoredProcedureProvider"/></value>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.StoredProcedureProvider.Procedures">
+            <summary>
+            Gets or sets the procedures.
+            </summary>
+            <value>An <see cref="T:System.Collections.ArrayList"/> of <see cref="T:ETradeHistory.DataAccess.SqlClient.Procedure"/> objects.</value>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.StoredProcedureProvider.Item(System.String)">
+            <summary>
+            Gets or sets the <see cref="T:ETradeHistory.DataAccess.SqlClient.Procedure"/> instance with the specified name.
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.StoredProcedureProvider.Item(System.Int32)">
+            <summary>
+            Gets or sets the <see cref="T:ETradeHistory.DataAccess.SqlClient.Procedure"/> instance at the specified index.
+            </summary>
+        </member>
+        <member name="T:ETradeHistory.DataAccess.SqlClient.Procedure">
+            <summary>
+            Represents a sql query.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.Procedure.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeHistory.DataAccess.SqlClient.Procedure"/> instance.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.Procedure.Parameter(System.String)">
+            <summary>
+            Get the parameter from the specified name of the param.
+            </summary>
+            <param name="paramName">Name of the param.</param>
+            <returns></returns>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.Procedure.Parameters">
+            <summary>
+            Gets or sets the parameters.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.Procedure.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.Procedure.Owner">
+            <summary>
+            Gets or sets the owner.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.Procedure.Comment">
+            <summary>
+            Gets or sets the comment.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.Procedure.Body">
+            <summary>
+            Gets or sets the body.
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:ETradeHistory.DataAccess.SqlClient.Parameter">
+            <summary>
+            Respresents a query parameter.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.Parameter.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeHistory.DataAccess.SqlClient.Parameter"/> instance.
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.Parameter.Name">
+            <summary>
+            Gets or sets the Name.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.Parameter.SqlType">
+            <summary>
+            Gets or sets the SqlType.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.Parameter.Direction">
+            <summary>
+            Gets or sets the Direction.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.Parameter.Size">
+            <summary>
+            Gets or sets the size.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.Parameter.Precision">
+            <summary>
+            Gets or sets the precision.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.Parameter.Scale">
+            <summary>
+            Gets or sets the scale.
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:ETradeHistory.DataAccess.SqlClient.SqlTradedHistoryProviderBase">
+            <summary>
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeHistory.Entities.TradedHistory"/> entity.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlTradedHistoryProviderBase.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeHistory.DataAccess.SqlClient.SqlTradedHistoryProviderBase"/> instance.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlTradedHistoryProviderBase.#ctor(System.String,System.Boolean,System.String)">
+            <summary>
+            Creates a new <see cref="T:ETradeHistory.DataAccess.SqlClient.SqlTradedHistoryProviderBase"/> instance.
+            Uses connection string to connect to datasource.
+            </summary>
+            <param name="connectionString">The connection string to the database.</param>
+            <param name="useStoredProcedure">A boolean value that indicates if we should use stored procedures or embedded queries.</param>
+            <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlTradedHistoryProviderBase.Delete(ETradeHistory.DataAccess.TransactionManager,System.Int64)">
+            <summary>
+            	Deletes a row from the DataSource.
+            </summary>
+            <param name="_id">ID identifies TradedHistory. Primary Key.</param>	
+            <param name="transactionManager"><see cref="T:ETradeHistory.DataAccess.TransactionManager"/> object</param>
+            <remarks>Deletes based on primary key(s).</remarks>
+            <returns>Returns true if operation suceeded.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlTradedHistoryProviderBase.Find(ETradeHistory.DataAccess.TransactionManager,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Returns rows meeting the whereClause condition from the DataSource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeHistory.DataAccess.TransactionManager"/> object</param>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <remarks>Operators must be capitalized (OR, AND).</remarks>
+            <returns>Returns a typed collection of ETradeHistory.Entities.TradedHistory objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlTradedHistoryProviderBase.Find(ETradeHistory.DataAccess.TransactionManager,ETradeHistory.DataAccess.IFilterParameterCollection,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Returns rows from the DataSource that meet the parameter conditions.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeHistory.DataAccess.TransactionManager"/> object</param>
+            <param name="parameters">A collection of <see cref="T:ETradeHistory.DataAccess.SqlFilterParameter"/> objects.</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <returns>Returns a typed collection of ETradeHistory.Entities.TradedHistory objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlTradedHistoryProviderBase.GetAll(ETradeHistory.DataAccess.TransactionManager,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Gets All rows from the DataSource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeHistory.DataAccess.TransactionManager"/> object</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of ETradeHistory.Entities.TradedHistory objects.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlTradedHistoryProviderBase.GetPaged(ETradeHistory.DataAccess.TransactionManager,System.String,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets a page of rows from the DataSource.
+            </summary>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">Number of rows in the DataSource.</param>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="transactionManager"><see cref="T:ETradeHistory.DataAccess.TransactionManager"/> object</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of ETradeHistory.Entities.TradedHistory objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlTradedHistoryProviderBase.GetById(ETradeHistory.DataAccess.TransactionManager,System.Int64,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Gets rows from the datasource based on the PK_TradedHistory index.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeHistory.DataAccess.TransactionManager"/> object</param>
+            <param name="_id">ID identifies TradedHistory</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out parameter to get total records for query.</param>
+            <returns>Returns an instance of the <see cref="T:ETradeHistory.Entities.TradedHistory"/> class.</returns>
+            <remarks></remarks>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlTradedHistoryProviderBase.BulkInsert(ETradeHistory.DataAccess.TransactionManager,ETradeHistory.Entities.TList{ETradeHistory.Entities.TradedHistory})">
+            <summary>
+            Lets you efficiently bulk insert many entities to the database.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="entities">The entities.</param>
+            <remarks>
+            	After inserting into the datasource, the ETradeHistory.Entities.TradedHistory object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>	
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlTradedHistoryProviderBase.Insert(ETradeHistory.DataAccess.TransactionManager,ETradeHistory.Entities.TradedHistory)">
+            <summary>
+            	Inserts a ETradeHistory.Entities.TradedHistory object into the datasource using a transaction.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeHistory.DataAccess.TransactionManager"/> object</param>
+            <param name="entity">ETradeHistory.Entities.TradedHistory object to insert.</param>
+            <remarks>
+            	After inserting into the datasource, the ETradeHistory.Entities.TradedHistory object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>	
+            <returns>Returns true if operation is successful.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlTradedHistoryProviderBase.Update(ETradeHistory.DataAccess.TransactionManager,ETradeHistory.Entities.TradedHistory)">
+            <summary>
+            	Update an existing row in the datasource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeHistory.DataAccess.TransactionManager"/> object</param>
+            <param name="entity">ETradeHistory.Entities.TradedHistory object to update.</param>
+            <remarks>
+            	After updating the datasource, the ETradeHistory.Entities.TradedHistory object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+            <returns>Returns true if operation is successful.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.SqlTradedHistoryProviderBase.ConnectionString">
+            <summary>
+            Gets or sets the connection string.
+            </summary>
+            <value>The connection string.</value>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.SqlTradedHistoryProviderBase.UseStoredProcedure">
+            <summary>
+            Gets or sets a value indicating whether to use stored procedures.
+            </summary>
+            <value><c>true</c> if we choose to use use stored procedures; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.SqlTradedHistoryProviderBase.ProviderInvariantName">
+            <summary>
+            Gets or sets the invariant provider name listed in the DbProviderFactories machine.config section.
+            </summary>
+            <value>The name of the provider invariant.</value>
+        </member>
+        <member name="T:ETradeHistory.DataAccess.SqlClient.SqlTradedHistoryProvider">
+            <summary>
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeHistory.Entities.TradedHistory"/> entity.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlTradedHistoryProvider.#ctor(System.String,System.Boolean,System.String)">
+            <summary>
+            Creates a new <see cref="T:ETradeHistory.DataAccess.SqlClient.SqlTradedHistoryProvider"/> instance.
+            Uses connection string to connect to datasource.
+            </summary>
+            <param name="connectionString">The connection string to the database.</param>
+            <param name="useStoredProcedure">A boolean value that indicates if we use the stored procedures or embedded queries.</param>
+            <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
+        </member>
+        <member name="T:ETradeHistory.DataAccess.SqlClient.SqlPnLhistoryProvider">
+            <summary>
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeHistory.Entities.PnLhistory"/> entity.
+            </summary>
+        </member>
+        <member name="T:ETradeHistory.DataAccess.SqlClient.SqlPnLhistoryProviderBase">
+            <summary>
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeHistory.Entities.PnLhistory"/> entity.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlPnLhistoryProviderBase.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeHistory.DataAccess.SqlClient.SqlPnLhistoryProviderBase"/> instance.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlPnLhistoryProviderBase.#ctor(System.String,System.Boolean,System.String)">
+            <summary>
+            Creates a new <see cref="T:ETradeHistory.DataAccess.SqlClient.SqlPnLhistoryProviderBase"/> instance.
+            Uses connection string to connect to datasource.
+            </summary>
+            <param name="connectionString">The connection string to the database.</param>
+            <param name="useStoredProcedure">A boolean value that indicates if we should use stored procedures or embedded queries.</param>
+            <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlPnLhistoryProviderBase.Delete(ETradeHistory.DataAccess.TransactionManager,System.Int64)">
+            <summary>
+            	Deletes a row from the DataSource.
+            </summary>
+            <param name="_id">ID identifies PnLHistory. Primary Key.</param>	
+            <param name="transactionManager"><see cref="T:ETradeHistory.DataAccess.TransactionManager"/> object</param>
+            <remarks>Deletes based on primary key(s).</remarks>
+            <returns>Returns true if operation suceeded.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlPnLhistoryProviderBase.Find(ETradeHistory.DataAccess.TransactionManager,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Returns rows meeting the whereClause condition from the DataSource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeHistory.DataAccess.TransactionManager"/> object</param>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <remarks>Operators must be capitalized (OR, AND).</remarks>
+            <returns>Returns a typed collection of ETradeHistory.Entities.PnLhistory objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlPnLhistoryProviderBase.Find(ETradeHistory.DataAccess.TransactionManager,ETradeHistory.DataAccess.IFilterParameterCollection,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Returns rows from the DataSource that meet the parameter conditions.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeHistory.DataAccess.TransactionManager"/> object</param>
+            <param name="parameters">A collection of <see cref="T:ETradeHistory.DataAccess.SqlFilterParameter"/> objects.</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <returns>Returns a typed collection of ETradeHistory.Entities.PnLhistory objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlPnLhistoryProviderBase.GetAll(ETradeHistory.DataAccess.TransactionManager,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Gets All rows from the DataSource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeHistory.DataAccess.TransactionManager"/> object</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of ETradeHistory.Entities.PnLhistory objects.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlPnLhistoryProviderBase.GetPaged(ETradeHistory.DataAccess.TransactionManager,System.String,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets a page of rows from the DataSource.
+            </summary>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">Number of rows in the DataSource.</param>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="transactionManager"><see cref="T:ETradeHistory.DataAccess.TransactionManager"/> object</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of ETradeHistory.Entities.PnLhistory objects.</returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlPnLhistoryProviderBase.GetById(ETradeHistory.DataAccess.TransactionManager,System.Int64,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Gets rows from the datasource based on the PK_PnLHistory index.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeHistory.DataAccess.TransactionManager"/> object</param>
+            <param name="_id">ID identifies PnLHistory</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out parameter to get total records for query.</param>
+            <returns>Returns an instance of the <see cref="T:ETradeHistory.Entities.PnLhistory"/> class.</returns>
+            <remarks></remarks>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlPnLhistoryProviderBase.BulkInsert(ETradeHistory.DataAccess.TransactionManager,ETradeHistory.Entities.TList{ETradeHistory.Entities.PnLhistory})">
+            <summary>
+            Lets you efficiently bulk insert many entities to the database.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="entities">The entities.</param>
+            <remarks>
+            	After inserting into the datasource, the ETradeHistory.Entities.PnLhistory object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>	
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlPnLhistoryProviderBase.Insert(ETradeHistory.DataAccess.TransactionManager,ETradeHistory.Entities.PnLhistory)">
+            <summary>
+            	Inserts a ETradeHistory.Entities.PnLhistory object into the datasource using a transaction.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeHistory.DataAccess.TransactionManager"/> object</param>
+            <param name="entity">ETradeHistory.Entities.PnLhistory object to insert.</param>
+            <remarks>
+            	After inserting into the datasource, the ETradeHistory.Entities.PnLhistory object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>	
+            <returns>Returns true if operation is successful.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlPnLhistoryProviderBase.Update(ETradeHistory.DataAccess.TransactionManager,ETradeHistory.Entities.PnLhistory)">
+            <summary>
+            	Update an existing row in the datasource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeHistory.DataAccess.TransactionManager"/> object</param>
+            <param name="entity">ETradeHistory.Entities.PnLhistory object to update.</param>
+            <remarks>
+            	After updating the datasource, the ETradeHistory.Entities.PnLhistory object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+            <returns>Returns true if operation is successful.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.SqlPnLhistoryProviderBase.ConnectionString">
+            <summary>
+            Gets or sets the connection string.
+            </summary>
+            <value>The connection string.</value>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.SqlPnLhistoryProviderBase.UseStoredProcedure">
+            <summary>
+            Gets or sets a value indicating whether to use stored procedures.
+            </summary>
+            <value><c>true</c> if we choose to use use stored procedures; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.SqlPnLhistoryProviderBase.ProviderInvariantName">
+            <summary>
+            Gets or sets the invariant provider name listed in the DbProviderFactories machine.config section.
+            </summary>
+            <value>The name of the provider invariant.</value>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlPnLhistoryProvider.#ctor(System.String,System.Boolean,System.String)">
+            <summary>
+            Creates a new <see cref="T:ETradeHistory.DataAccess.SqlClient.SqlPnLhistoryProvider"/> instance.
+            Uses connection string to connect to datasource.
+            </summary>
+            <param name="connectionString">The connection string to the database.</param>
+            <param name="useStoredProcedure">A boolean value that indicates if we use the stored procedures or embedded queries.</param>
+            <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
+        </member>
+        <member name="T:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider">
+            <summary>
+            This class is the Sql implementation of the NetTiersProvider.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.#ctor">
+             <summary>
+             Initializes a new instance of the <see cref="T:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider"/> class.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.Initialize(System.String,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Initializes the provider.
+            </summary>
+            <param name="name">The friendly name of the provider.</param>
+            <param name="config">A collection of the name/value pairs representing the provider-specific attributes specified in the configuration for this provider.</param>
+            <exception cref="T:System.ArgumentNullException">The name of the provider is null.</exception>
+            <exception cref="T:System.InvalidOperationException">An attempt is made to call <see cref="M:System.Configuration.Provider.ProviderBase.Initialize(System.String,System.Collections.Specialized.NameValueCollection)"></see> on a provider after the provider has already been initialized.</exception>
+            <exception cref="T:System.ArgumentException">The name of the provider has a length of zero.</exception>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.CreateTransaction">
+            <summary>
+            Creates a new <c cref="T:ETradeHistory.DataAccess.TransactionManager"/> instance from the current datasource.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteNonQuery(System.String,System.Object[])">
+            <summary>
+            Executes the non query.
+            </summary>
+            <param name="storedProcedureName">Name of the stored procedure.</param>
+            <param name="parameterValues">The parameter values.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteNonQuery(ETradeHistory.DataAccess.TransactionManager,System.String,System.Object[])">
+            <summary>
+            Executes the non query.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="storedProcedureName">Name of the stored procedure.</param>
+            <param name="parameterValues">The parameter values.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteNonQuery(System.Data.Common.DbCommand)">
+            <summary>
+            Executes the non query.
+            </summary>
+            <param name="commandWrapper">The command wrapper.</param>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteNonQuery(ETradeHistory.DataAccess.TransactionManager,System.Data.Common.DbCommand)">
+            <summary>
+            Executes the non query.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="commandWrapper">The command wrapper.</param>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteNonQuery(System.Data.CommandType,System.String)">
+            <summary>
+            Executes the non query.
+            </summary>
+            <param name="commandType">Type of the command.</param>
+            <param name="commandText">The command text.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteNonQuery(ETradeHistory.DataAccess.TransactionManager,System.Data.CommandType,System.String)">
+            <summary>
+            Executes the non query.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="commandType">Type of the command.</param>
+            <param name="commandText">The command text.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteReader(System.String,System.Object[])">
+            <summary>
+            Executes the reader.
+            </summary>
+            <param name="storedProcedureName">Name of the stored procedure.</param>
+            <param name="parameterValues">The parameter values.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteReader(ETradeHistory.DataAccess.TransactionManager,System.String,System.Object[])">
+            <summary>
+            Executes the reader.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="storedProcedureName">Name of the stored procedure.</param>
+            <param name="parameterValues">The parameter values.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteReader(System.Data.Common.DbCommand)">
+            <summary>
+            Executes the reader.
+            </summary>
+            <param name="commandWrapper">The command wrapper.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteReader(ETradeHistory.DataAccess.TransactionManager,System.Data.Common.DbCommand)">
+            <summary>
+            Executes the reader.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="commandWrapper">The command wrapper.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteReader(System.Data.CommandType,System.String)">
+            <summary>
+            Executes the reader.
+            </summary>
+            <param name="commandType">Type of the command.</param>
+            <param name="commandText">The command text.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteReader(ETradeHistory.DataAccess.TransactionManager,System.Data.CommandType,System.String)">
+            <summary>
+            Executes the reader.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="commandType">Type of the command.</param>
+            <param name="commandText">The command text.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteDataSet(System.String,System.Object[])">
+            <summary>
+            Executes the data set.
+            </summary>
+            <param name="storedProcedureName">Name of the stored procedure.</param>
+            <param name="parameterValues">The parameter values.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteDataSet(ETradeHistory.DataAccess.TransactionManager,System.String,System.Object[])">
+            <summary>
+            Executes the data set.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="storedProcedureName">Name of the stored procedure.</param>
+            <param name="parameterValues">The parameter values.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteDataSet(System.Data.Common.DbCommand)">
+            <summary>
+            Executes the data set.
+            </summary>
+            <param name="commandWrapper">The command wrapper.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteDataSet(ETradeHistory.DataAccess.TransactionManager,System.Data.Common.DbCommand)">
+            <summary>
+            Executes the data set.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="commandWrapper">The command wrapper.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteDataSet(System.Data.CommandType,System.String)">
+            <summary>
+            Executes the data set.
+            </summary>
+            <param name="commandType">Type of the command.</param>
+            <param name="commandText">The command text.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteDataSet(ETradeHistory.DataAccess.TransactionManager,System.Data.CommandType,System.String)">
+            <summary>
+            Executes the data set.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="commandType">Type of the command.</param>
+            <param name="commandText">The command text.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteScalar(System.String,System.Object[])">
+            <summary>
+            Executes the scalar.
+            </summary>
+            <param name="storedProcedureName">Name of the stored procedure.</param>
+            <param name="parameterValues">The parameter values.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteScalar(ETradeHistory.DataAccess.TransactionManager,System.String,System.Object[])">
+            <summary>
+            Executes the scalar.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="storedProcedureName">Name of the stored procedure.</param>
+            <param name="parameterValues">The parameter values.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteScalar(System.Data.Common.DbCommand)">
+            <summary>
+            Executes the scalar.
+            </summary>
+            <param name="commandWrapper">The command wrapper.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteScalar(ETradeHistory.DataAccess.TransactionManager,System.Data.Common.DbCommand)">
+            <summary>
+            Executes the scalar.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="commandWrapper">The command wrapper.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteScalar(System.Data.CommandType,System.String)">
+            <summary>
+            Executes the scalar.
+            </summary>
+            <param name="commandType">Type of the command.</param>
+            <param name="commandText">The command text.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteScalar(ETradeHistory.DataAccess.TransactionManager,System.Data.CommandType,System.String)">
+            <summary>
+            Executes the scalar.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="commandType">Type of the command.</param>
+            <param name="commandText">The command text.</param>
+            <returns></returns>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.UseStoredProcedure">
+            <summary>
+            Gets a value indicating whether to use stored procedure or not.
+            </summary>
+            <value>
+            	<c>true</c> if this repository use stored procedures; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ConnectionString">
+            <summary>
+            Gets or sets the connection string.
+            </summary>
+            <value>The connection string.</value>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.ProviderInvariantName">
+            <summary>
+            Gets or sets the invariant provider name listed in the DbProviderFactories machine.config section.
+            </summary>
+            <value>The name of the provider invariant.</value>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.IsTransactionSupported">
+            <summary>
+             Indicates if the current <c cref="T:ETradeHistory.DataAccess.Bases.NetTiersProvider"/> implementation supports Transacton.
+            </summary>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.TradedHistoryProvider">
+            <summary>
+             This class is the Data Access Logic Component for the <see cref="T:ETradeHistory.Entities.TradedHistory"/> business entity.
+             It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+            </summary>
+             <value></value>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.SqlTradedHistoryProvider">
+            <summary>
+            Gets the current <c cref="P:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.SqlTradedHistoryProvider"/>.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.PnLhistoryProvider">
+            <summary>
+             This class is the Data Access Logic Component for the <see cref="T:ETradeHistory.Entities.PnLhistory"/> business entity.
+             It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+            </summary>
+             <value></value>
+        </member>
+        <member name="P:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.SqlPnLhistoryProvider">
+            <summary>
+            Gets the current <c cref="P:ETradeHistory.DataAccess.SqlClient.SqlNetTiersProvider.SqlPnLhistoryProvider"/>.
+            </summary>
+            <value></value>
+        </member>
+    </members>
+</doc>

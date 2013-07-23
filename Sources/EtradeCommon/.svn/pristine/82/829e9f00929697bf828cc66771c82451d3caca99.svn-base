@@ -1,0 +1,28 @@
+﻿#region Using directives
+
+using System;
+
+#endregion
+
+namespace AccountManager.Entities
+{	
+	///<summary>
+	/// An object representation of the 'SubCustAccount' table. [No description found the database]	
+	///</summary>
+	/// <remarks>
+	/// This file is generated once and will never be overwritten.
+	/// </remarks>	
+	[Serializable]
+	[CLSCompliant(true)]
+	public partial class SubCustAccount : SubCustAccountBase
+	{		
+		#region Constructors
+
+		///<summary>
+		/// Creates a new <see cref="SubCustAccount"/> instance.
+		///</summary>
+		public SubCustAccount():base(){}	
+		
+		#endregion
+	}
+}

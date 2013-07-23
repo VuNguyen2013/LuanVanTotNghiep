@@ -1,0 +1,3234 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet type='text/xsl' href="scriptsql.xsl"?>
+<root xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<database includeDrop="true">EtradeFinance</database>
+<procedures>
+		
+		<procedure owner="dbo" name="AdvanceTime_Get_List" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the AdvanceTime table
+-- Table Comment: Thoi gian ung truoc
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				SELECT
+					[ID],
+					[StartTime],
+					[EndTime],
+					[AdvanceType]
+				FROM
+					[dbo].[AdvanceTime]
+					
+				SELECT @@ROWCOUNT
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="AdvanceTime_GetPaged" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the AdvanceTime table passing page index and page count parameters
+-- Table Comment: Thoi gian ung truoc
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@WhereClause" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)" />
+				<parameter name="@OrderBy" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)"/>
+				<parameter name="@PageIndex" type="int" direction="Input" size="0" precision="10" scale="0" />
+				<parameter name="@PageSize" type="int" direction="Input" size="0" precision="10" scale="0" /> 
+			</parameters>
+			<body><![CDATA[
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[ID]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [ID]'
+				SET @SQL = @SQL + ', [StartTime]'
+				SET @SQL = @SQL + ', [EndTime]'
+				SET @SQL = @SQL + ', [AdvanceType]'
+				SET @SQL = @SQL + ' FROM [dbo].[AdvanceTime]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [ID],'
+				SET @SQL = @SQL + ' [StartTime],'
+				SET @SQL = @SQL + ' [EndTime],'
+				SET @SQL = @SQL + ' [AdvanceType]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[AdvanceTime]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			]]></body>
+		</procedure>
+		
+		<procedure owner="dbo" name="AdvanceTime_Insert" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the AdvanceTime table
+-- Table Comment: Thoi gian ung truoc
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="int" direction="Output" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@StartTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@EndTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@AdvanceType" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				INSERT INTO [dbo].[AdvanceTime]
+					(
+					[StartTime]
+					,[EndTime]
+					,[AdvanceType]
+					)
+				VALUES
+					(
+					@StartTime
+					,@EndTime
+					,@AdvanceType
+					)
+				
+				-- Get the identity value
+				SET @Id = SCOPE_IDENTITY()
+									
+							
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="AdvanceTime_Update" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the AdvanceTime table
+-- Table Comment: Thoi gian ung truoc
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@StartTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@EndTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@AdvanceType" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[AdvanceTime]
+				SET
+					[StartTime] = @StartTime
+					,[EndTime] = @EndTime
+					,[AdvanceType] = @AdvanceType
+				WHERE
+[ID] = @Id 
+				
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="AdvanceTime_Delete" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the AdvanceTime table
+-- Table Comment: Thoi gian ung truoc
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				DELETE FROM [dbo].[AdvanceTime] WITH (ROWLOCK) 
+				WHERE
+					[ID] = @Id
+					
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="AdvanceTime_GetById" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the AdvanceTime table through an index
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SELECT
+					[ID],
+					[StartTime],
+					[EndTime],
+					[AdvanceType]
+				FROM
+					[dbo].[AdvanceTime]
+				WHERE
+					[ID] = @Id
+				SELECT @@ROWCOUNT
+					
+			]]></body>
+			
+		</procedure>
+		<procedure owner="dbo" name="AdvanceTime_Find" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the AdvanceTime table passing nullable parameters
+-- Table Comment: Thoi gian ung truoc
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@SearchUsingOR" type="bit" direction="Input" size="0" precision="1" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Id" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@StartTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@EndTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@AdvanceType" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+			</parameters>
+			<body><![CDATA[
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [ID]
+	, [StartTime]
+	, [EndTime]
+	, [AdvanceType]
+    FROM
+	[dbo].[AdvanceTime]
+    WHERE 
+	 ([ID] = @Id OR @Id IS NULL)
+	AND ([StartTime] = @StartTime OR @StartTime IS NULL)
+	AND ([EndTime] = @EndTime OR @EndTime IS NULL)
+	AND ([AdvanceType] = @AdvanceType OR @AdvanceType IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [ID]
+	, [StartTime]
+	, [EndTime]
+	, [AdvanceType]
+    FROM
+	[dbo].[AdvanceTime]
+    WHERE 
+	 ([ID] = @Id AND @Id is not null)
+	OR ([StartTime] = @StartTime AND @StartTime is not null)
+	OR ([EndTime] = @EndTime AND @EndTime is not null)
+	OR ([AdvanceType] = @AdvanceType AND @AdvanceType is not null)
+	SELECT @@ROWCOUNT			
+  END
+				]]></body>
+		</procedure>
+
+		
+		<procedure owner="dbo" name="AdvanceTime_Find_Dynamic"  skip="true">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the AdvanceTime table using a dynamically generated query.
+-- Table Comment: Thoi gian ung truoc
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				BEGIN
+				
+				WITH PageIndex AS (
+					SELECT TOP {3} row_number() over (order by {1}) AS RowIndex
+					, [ID]
+					, [StartTime]
+					, [EndTime]
+					, [AdvanceType]
+					FROM [dbo].[AdvanceTime] {0}
+				)
+				SELECT
+				       [ID],
+				       [StartTime],
+				       [EndTime],
+				       [AdvanceType]
+				  FROM PageIndex
+				 WHERE RowIndex > {2}
+				   AND RowIndex <= {3}
+				ORDER BY {1};
+				
+
+				-- get total count
+				SELECT COUNT(*) AS TotalRowCount FROM [dbo].[AdvanceTime] {0};
+				
+				END
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="OddLotOrder_Get_List" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the OddLotOrder table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				SELECT
+					[OddLotOrderID],
+					[SecSymbol],
+					[Side],
+					[Price],
+					[Volume],
+					[SubCustAccountID],
+					[Market],
+					[ExecPrice],
+					[ExecVol],
+					[Status],
+					[BrokerID],
+					[RejectTime],
+					[RejectReason],
+					[ExecTime],
+					[Note]
+				FROM
+					[dbo].[OddLotOrder]
+					
+				SELECT @@ROWCOUNT
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="OddLotOrder_GetPaged" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the OddLotOrder table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@WhereClause" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)" />
+				<parameter name="@OrderBy" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)"/>
+				<parameter name="@PageIndex" type="int" direction="Input" size="0" precision="10" scale="0" />
+				<parameter name="@PageSize" type="int" direction="Input" size="0" precision="10" scale="0" /> 
+			</parameters>
+			<body><![CDATA[
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[OddLotOrderID]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [OddLotOrderID]'
+				SET @SQL = @SQL + ', [SecSymbol]'
+				SET @SQL = @SQL + ', [Side]'
+				SET @SQL = @SQL + ', [Price]'
+				SET @SQL = @SQL + ', [Volume]'
+				SET @SQL = @SQL + ', [SubCustAccountID]'
+				SET @SQL = @SQL + ', [Market]'
+				SET @SQL = @SQL + ', [ExecPrice]'
+				SET @SQL = @SQL + ', [ExecVol]'
+				SET @SQL = @SQL + ', [Status]'
+				SET @SQL = @SQL + ', [BrokerID]'
+				SET @SQL = @SQL + ', [RejectTime]'
+				SET @SQL = @SQL + ', [RejectReason]'
+				SET @SQL = @SQL + ', [ExecTime]'
+				SET @SQL = @SQL + ', [Note]'
+				SET @SQL = @SQL + ' FROM [dbo].[OddLotOrder]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [OddLotOrderID],'
+				SET @SQL = @SQL + ' [SecSymbol],'
+				SET @SQL = @SQL + ' [Side],'
+				SET @SQL = @SQL + ' [Price],'
+				SET @SQL = @SQL + ' [Volume],'
+				SET @SQL = @SQL + ' [SubCustAccountID],'
+				SET @SQL = @SQL + ' [Market],'
+				SET @SQL = @SQL + ' [ExecPrice],'
+				SET @SQL = @SQL + ' [ExecVol],'
+				SET @SQL = @SQL + ' [Status],'
+				SET @SQL = @SQL + ' [BrokerID],'
+				SET @SQL = @SQL + ' [RejectTime],'
+				SET @SQL = @SQL + ' [RejectReason],'
+				SET @SQL = @SQL + ' [ExecTime],'
+				SET @SQL = @SQL + ' [Note]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[OddLotOrder]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			]]></body>
+		</procedure>
+		
+		<procedure owner="dbo" name="OddLotOrder_Insert" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the OddLotOrder table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@OddLotOrderId" type="bigint" direction="Output" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@SecSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault=""/>
+				<parameter name="@Side" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@Price" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@Volume" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@SubCustAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@Market" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@ExecPrice" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@ExecVol" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@Status" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@BrokerId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@RejectTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@RejectReason" type="text" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@ExecTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@Note" type="text" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				INSERT INTO [dbo].[OddLotOrder]
+					(
+					[SecSymbol]
+					,[Side]
+					,[Price]
+					,[Volume]
+					,[SubCustAccountID]
+					,[Market]
+					,[ExecPrice]
+					,[ExecVol]
+					,[Status]
+					,[BrokerID]
+					,[RejectTime]
+					,[RejectReason]
+					,[ExecTime]
+					,[Note]
+					)
+				VALUES
+					(
+					@SecSymbol
+					,@Side
+					,@Price
+					,@Volume
+					,@SubCustAccountId
+					,@Market
+					,@ExecPrice
+					,@ExecVol
+					,@Status
+					,@BrokerId
+					,@RejectTime
+					,@RejectReason
+					,@ExecTime
+					,@Note
+					)
+				
+				-- Get the identity value
+				SET @OddLotOrderId = SCOPE_IDENTITY()
+									
+							
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="OddLotOrder_Update" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the OddLotOrder table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@OddLotOrderId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@SecSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault=""/>
+				<parameter name="@Side" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@Price" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@Volume" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@SubCustAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@Market" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@ExecPrice" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault=""/>
+				<parameter name="@ExecVol" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@Status" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault=""/>
+				<parameter name="@BrokerId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@RejectTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@RejectReason" type="text" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@ExecTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@Note" type="text" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[OddLotOrder]
+				SET
+					[SecSymbol] = @SecSymbol
+					,[Side] = @Side
+					,[Price] = @Price
+					,[Volume] = @Volume
+					,[SubCustAccountID] = @SubCustAccountId
+					,[Market] = @Market
+					,[ExecPrice] = @ExecPrice
+					,[ExecVol] = @ExecVol
+					,[Status] = @Status
+					,[BrokerID] = @BrokerId
+					,[RejectTime] = @RejectTime
+					,[RejectReason] = @RejectReason
+					,[ExecTime] = @ExecTime
+					,[Note] = @Note
+				WHERE
+[OddLotOrderID] = @OddLotOrderId 
+				
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="OddLotOrder_Delete" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the OddLotOrder table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@OddLotOrderId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				DELETE FROM [dbo].[OddLotOrder] WITH (ROWLOCK) 
+				WHERE
+					[OddLotOrderID] = @OddLotOrderId
+					
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="OddLotOrder_GetByOddLotOrderId" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the OddLotOrder table through an index
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@OddLotOrderId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SELECT
+					[OddLotOrderID],
+					[SecSymbol],
+					[Side],
+					[Price],
+					[Volume],
+					[SubCustAccountID],
+					[Market],
+					[ExecPrice],
+					[ExecVol],
+					[Status],
+					[BrokerID],
+					[RejectTime],
+					[RejectReason],
+					[ExecTime],
+					[Note]
+				FROM
+					[dbo].[OddLotOrder]
+				WHERE
+					[OddLotOrderID] = @OddLotOrderId
+				SELECT @@ROWCOUNT
+					
+			]]></body>
+			
+		</procedure>
+		<procedure owner="dbo" name="OddLotOrder_Find" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the OddLotOrder table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@SearchUsingOR" type="bit" direction="Input" size="0" precision="1" scale="0" param="" nulldefault="null"/>
+				<parameter name="@OddLotOrderId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault="null"/>
+				<parameter name="@SecSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault="null"/>
+				<parameter name="@Side" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault="null"/>
+				<parameter name="@Price" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault="null"/>
+				<parameter name="@Volume" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault="null"/>
+				<parameter name="@SubCustAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault="null"/>
+				<parameter name="@Market" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault="null"/>
+				<parameter name="@ExecPrice" type="decimal" direction="Input" size="9" precision="10" scale="3" param="(10, 3)" nulldefault="null"/>
+				<parameter name="@ExecVol" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Status" type="varchar" direction="Input" size="1" precision="0" scale="0" param="(1)" nulldefault="null"/>
+				<parameter name="@BrokerId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault="null"/>
+				<parameter name="@RejectTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@RejectReason" type="text" direction="Input" size="16" precision="0" scale="0" param="" nulldefault="null"/>
+				<parameter name="@ExecTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@Note" type="text" direction="Input" size="16" precision="0" scale="0" param="" nulldefault="null"/>
+			</parameters>
+			<body><![CDATA[
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [OddLotOrderID]
+	, [SecSymbol]
+	, [Side]
+	, [Price]
+	, [Volume]
+	, [SubCustAccountID]
+	, [Market]
+	, [ExecPrice]
+	, [ExecVol]
+	, [Status]
+	, [BrokerID]
+	, [RejectTime]
+	, [RejectReason]
+	, [ExecTime]
+	, [Note]
+    FROM
+	[dbo].[OddLotOrder]
+    WHERE 
+	 ([OddLotOrderID] = @OddLotOrderId OR @OddLotOrderId IS NULL)
+	AND ([SecSymbol] = @SecSymbol OR @SecSymbol IS NULL)
+	AND ([Side] = @Side OR @Side IS NULL)
+	AND ([Price] = @Price OR @Price IS NULL)
+	AND ([Volume] = @Volume OR @Volume IS NULL)
+	AND ([SubCustAccountID] = @SubCustAccountId OR @SubCustAccountId IS NULL)
+	AND ([Market] = @Market OR @Market IS NULL)
+	AND ([ExecPrice] = @ExecPrice OR @ExecPrice IS NULL)
+	AND ([ExecVol] = @ExecVol OR @ExecVol IS NULL)
+	AND ([Status] = @Status OR @Status IS NULL)
+	AND ([BrokerID] = @BrokerId OR @BrokerId IS NULL)
+	AND ([RejectTime] = @RejectTime OR @RejectTime IS NULL)
+	AND ([ExecTime] = @ExecTime OR @ExecTime IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [OddLotOrderID]
+	, [SecSymbol]
+	, [Side]
+	, [Price]
+	, [Volume]
+	, [SubCustAccountID]
+	, [Market]
+	, [ExecPrice]
+	, [ExecVol]
+	, [Status]
+	, [BrokerID]
+	, [RejectTime]
+	, [RejectReason]
+	, [ExecTime]
+	, [Note]
+    FROM
+	[dbo].[OddLotOrder]
+    WHERE 
+	 ([OddLotOrderID] = @OddLotOrderId AND @OddLotOrderId is not null)
+	OR ([SecSymbol] = @SecSymbol AND @SecSymbol is not null)
+	OR ([Side] = @Side AND @Side is not null)
+	OR ([Price] = @Price AND @Price is not null)
+	OR ([Volume] = @Volume AND @Volume is not null)
+	OR ([SubCustAccountID] = @SubCustAccountId AND @SubCustAccountId is not null)
+	OR ([Market] = @Market AND @Market is not null)
+	OR ([ExecPrice] = @ExecPrice AND @ExecPrice is not null)
+	OR ([ExecVol] = @ExecVol AND @ExecVol is not null)
+	OR ([Status] = @Status AND @Status is not null)
+	OR ([BrokerID] = @BrokerId AND @BrokerId is not null)
+	OR ([RejectTime] = @RejectTime AND @RejectTime is not null)
+	OR ([ExecTime] = @ExecTime AND @ExecTime is not null)
+	SELECT @@ROWCOUNT			
+  END
+				]]></body>
+		</procedure>
+
+		
+		<procedure owner="dbo" name="OddLotOrder_Find_Dynamic"  skip="true">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the OddLotOrder table using a dynamically generated query.
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				BEGIN
+				
+				WITH PageIndex AS (
+					SELECT TOP {3} row_number() over (order by {1}) AS RowIndex
+					, [OddLotOrderID]
+					, [SecSymbol]
+					, [Side]
+					, [Price]
+					, [Volume]
+					, [SubCustAccountID]
+					, [Market]
+					, [ExecPrice]
+					, [ExecVol]
+					, [Status]
+					, [BrokerID]
+					, [RejectTime]
+					, [RejectReason]
+					, [ExecTime]
+					, [Note]
+					FROM [dbo].[OddLotOrder] {0}
+				)
+				SELECT
+				       [OddLotOrderID],
+				       [SecSymbol],
+				       [Side],
+				       [Price],
+				       [Volume],
+				       [SubCustAccountID],
+				       [Market],
+				       [ExecPrice],
+				       [ExecVol],
+				       [Status],
+				       [BrokerID],
+				       [RejectTime],
+				       [RejectReason],
+				       [ExecTime],
+				       [Note]
+				  FROM PageIndex
+				 WHERE RowIndex > {2}
+				   AND RowIndex <= {3}
+				ORDER BY {1};
+				
+
+				-- get total count
+				SELECT COUNT(*) AS TotalRowCount FROM [dbo].[OddLotOrder] {0};
+				
+				END
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="Fee_Get_List" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the Fee table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				SELECT
+					[FeeID],
+					[MinValue],
+					[MaxValue],
+					[MinFee],
+					[FeeRatio],
+					[FeeType],
+					[VAT]
+				FROM
+					[dbo].[Fee]
+					
+				SELECT @@ROWCOUNT
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="Fee_GetPaged" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the Fee table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@WhereClause" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)" />
+				<parameter name="@OrderBy" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)"/>
+				<parameter name="@PageIndex" type="int" direction="Input" size="0" precision="10" scale="0" />
+				<parameter name="@PageSize" type="int" direction="Input" size="0" precision="10" scale="0" /> 
+			</parameters>
+			<body><![CDATA[
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[FeeID]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [FeeID]'
+				SET @SQL = @SQL + ', [MinValue]'
+				SET @SQL = @SQL + ', [MaxValue]'
+				SET @SQL = @SQL + ', [MinFee]'
+				SET @SQL = @SQL + ', [FeeRatio]'
+				SET @SQL = @SQL + ', [FeeType]'
+				SET @SQL = @SQL + ', [VAT]'
+				SET @SQL = @SQL + ' FROM [dbo].[Fee]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [FeeID],'
+				SET @SQL = @SQL + ' [MinValue],'
+				SET @SQL = @SQL + ' [MaxValue],'
+				SET @SQL = @SQL + ' [MinFee],'
+				SET @SQL = @SQL + ' [FeeRatio],'
+				SET @SQL = @SQL + ' [FeeType],'
+				SET @SQL = @SQL + ' [VAT]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[Fee]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			]]></body>
+		</procedure>
+		
+		<procedure owner="dbo" name="Fee_Insert" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the Fee table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@FeeId" type="bigint" direction="Output" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@MinValue" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@MaxValue" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@MinFee" type="decimal" direction="Input" size="9" precision="12" scale="3" param="(12, 3)" nulldefault=""/>
+				<parameter name="@FeeRatio" type="decimal" direction="Input" size="5" precision="8" scale="3" param="(8, 3)" nulldefault=""/>
+				<parameter name="@FeeType" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@Vat" type="decimal" direction="Input" size="5" precision="8" scale="3" param="(8, 3)" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				INSERT INTO [dbo].[Fee]
+					(
+					[MinValue]
+					,[MaxValue]
+					,[MinFee]
+					,[FeeRatio]
+					,[FeeType]
+					,[VAT]
+					)
+				VALUES
+					(
+					@MinValue
+					,@MaxValue
+					,@MinFee
+					,@FeeRatio
+					,@FeeType
+					,@Vat
+					)
+				
+				-- Get the identity value
+				SET @FeeId = SCOPE_IDENTITY()
+									
+							
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="Fee_Update" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the Fee table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@FeeId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@MinValue" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@MaxValue" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@MinFee" type="decimal" direction="Input" size="9" precision="12" scale="3" param="(12, 3)" nulldefault=""/>
+				<parameter name="@FeeRatio" type="decimal" direction="Input" size="5" precision="8" scale="3" param="(8, 3)" nulldefault=""/>
+				<parameter name="@FeeType" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@Vat" type="decimal" direction="Input" size="5" precision="8" scale="3" param="(8, 3)" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[Fee]
+				SET
+					[MinValue] = @MinValue
+					,[MaxValue] = @MaxValue
+					,[MinFee] = @MinFee
+					,[FeeRatio] = @FeeRatio
+					,[FeeType] = @FeeType
+					,[VAT] = @Vat
+				WHERE
+[FeeID] = @FeeId 
+				
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="Fee_Delete" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the Fee table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@FeeId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				DELETE FROM [dbo].[Fee] WITH (ROWLOCK) 
+				WHERE
+					[FeeID] = @FeeId
+					
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="Fee_GetByFeeId" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the Fee table through an index
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@FeeId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SELECT
+					[FeeID],
+					[MinValue],
+					[MaxValue],
+					[MinFee],
+					[FeeRatio],
+					[FeeType],
+					[VAT]
+				FROM
+					[dbo].[Fee]
+				WHERE
+					[FeeID] = @FeeId
+				SELECT @@ROWCOUNT
+					
+			]]></body>
+			
+		</procedure>
+		<procedure owner="dbo" name="Fee_Find" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the Fee table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@SearchUsingOR" type="bit" direction="Input" size="0" precision="1" scale="0" param="" nulldefault="null"/>
+				<parameter name="@FeeId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault="null"/>
+				<parameter name="@MinValue" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault="null"/>
+				<parameter name="@MaxValue" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault="null"/>
+				<parameter name="@MinFee" type="decimal" direction="Input" size="9" precision="12" scale="3" param="(12, 3)" nulldefault="null"/>
+				<parameter name="@FeeRatio" type="decimal" direction="Input" size="5" precision="8" scale="3" param="(8, 3)" nulldefault="null"/>
+				<parameter name="@FeeType" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Vat" type="decimal" direction="Input" size="5" precision="8" scale="3" param="(8, 3)" nulldefault="null"/>
+			</parameters>
+			<body><![CDATA[
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [FeeID]
+	, [MinValue]
+	, [MaxValue]
+	, [MinFee]
+	, [FeeRatio]
+	, [FeeType]
+	, [VAT]
+    FROM
+	[dbo].[Fee]
+    WHERE 
+	 ([FeeID] = @FeeId OR @FeeId IS NULL)
+	AND ([MinValue] = @MinValue OR @MinValue IS NULL)
+	AND ([MaxValue] = @MaxValue OR @MaxValue IS NULL)
+	AND ([MinFee] = @MinFee OR @MinFee IS NULL)
+	AND ([FeeRatio] = @FeeRatio OR @FeeRatio IS NULL)
+	AND ([FeeType] = @FeeType OR @FeeType IS NULL)
+	AND ([VAT] = @Vat OR @Vat IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [FeeID]
+	, [MinValue]
+	, [MaxValue]
+	, [MinFee]
+	, [FeeRatio]
+	, [FeeType]
+	, [VAT]
+    FROM
+	[dbo].[Fee]
+    WHERE 
+	 ([FeeID] = @FeeId AND @FeeId is not null)
+	OR ([MinValue] = @MinValue AND @MinValue is not null)
+	OR ([MaxValue] = @MaxValue AND @MaxValue is not null)
+	OR ([MinFee] = @MinFee AND @MinFee is not null)
+	OR ([FeeRatio] = @FeeRatio AND @FeeRatio is not null)
+	OR ([FeeType] = @FeeType AND @FeeType is not null)
+	OR ([VAT] = @Vat AND @Vat is not null)
+	SELECT @@ROWCOUNT			
+  END
+				]]></body>
+		</procedure>
+
+		
+		<procedure owner="dbo" name="Fee_Find_Dynamic"  skip="true">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the Fee table using a dynamically generated query.
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				BEGIN
+				
+				WITH PageIndex AS (
+					SELECT TOP {3} row_number() over (order by {1}) AS RowIndex
+					, [FeeID]
+					, [MinValue]
+					, [MaxValue]
+					, [MinFee]
+					, [FeeRatio]
+					, [FeeType]
+					, [VAT]
+					FROM [dbo].[Fee] {0}
+				)
+				SELECT
+				       [FeeID],
+				       [MinValue],
+				       [MaxValue],
+				       [MinFee],
+				       [FeeRatio],
+				       [FeeType],
+				       [VAT]
+				  FROM PageIndex
+				 WHERE RowIndex > {2}
+				   AND RowIndex <= {3}
+				ORDER BY {1};
+				
+
+				-- get total count
+				SELECT COUNT(*) AS TotalRowCount FROM [dbo].[Fee] {0};
+				
+				END
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="CashTransfer_Get_List" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the CashTransfer table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				SELECT
+					[CashTransferID],
+					[RequestTime],
+					[Amount],
+					[Fee],
+					[AmountAfterFee],
+					[RejectedTime],
+					[RejectedReason],
+					[SourceAccountID],
+					[TargetAccountID],
+					[BankAcount],
+					[Status],
+					[Note],
+					[BrokerID],
+					[ExecTime]
+				FROM
+					[dbo].[CashTransfer]
+					
+				SELECT @@ROWCOUNT
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="CashTransfer_GetPaged" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the CashTransfer table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@WhereClause" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)" />
+				<parameter name="@OrderBy" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)"/>
+				<parameter name="@PageIndex" type="int" direction="Input" size="0" precision="10" scale="0" />
+				<parameter name="@PageSize" type="int" direction="Input" size="0" precision="10" scale="0" /> 
+			</parameters>
+			<body><![CDATA[
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[CashTransferID]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [CashTransferID]'
+				SET @SQL = @SQL + ', [RequestTime]'
+				SET @SQL = @SQL + ', [Amount]'
+				SET @SQL = @SQL + ', [Fee]'
+				SET @SQL = @SQL + ', [AmountAfterFee]'
+				SET @SQL = @SQL + ', [RejectedTime]'
+				SET @SQL = @SQL + ', [RejectedReason]'
+				SET @SQL = @SQL + ', [SourceAccountID]'
+				SET @SQL = @SQL + ', [TargetAccountID]'
+				SET @SQL = @SQL + ', [BankAcount]'
+				SET @SQL = @SQL + ', [Status]'
+				SET @SQL = @SQL + ', [Note]'
+				SET @SQL = @SQL + ', [BrokerID]'
+				SET @SQL = @SQL + ', [ExecTime]'
+				SET @SQL = @SQL + ' FROM [dbo].[CashTransfer]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [CashTransferID],'
+				SET @SQL = @SQL + ' [RequestTime],'
+				SET @SQL = @SQL + ' [Amount],'
+				SET @SQL = @SQL + ' [Fee],'
+				SET @SQL = @SQL + ' [AmountAfterFee],'
+				SET @SQL = @SQL + ' [RejectedTime],'
+				SET @SQL = @SQL + ' [RejectedReason],'
+				SET @SQL = @SQL + ' [SourceAccountID],'
+				SET @SQL = @SQL + ' [TargetAccountID],'
+				SET @SQL = @SQL + ' [BankAcount],'
+				SET @SQL = @SQL + ' [Status],'
+				SET @SQL = @SQL + ' [Note],'
+				SET @SQL = @SQL + ' [BrokerID],'
+				SET @SQL = @SQL + ' [ExecTime]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[CashTransfer]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			]]></body>
+		</procedure>
+		
+		<procedure owner="dbo" name="CashTransfer_Insert" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the CashTransfer table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@CashTransferId" type="bigint" direction="Output" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@RequestTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@Amount" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@Fee" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@AmountAfterFee" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@RejectedTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@RejectedReason" type="text" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@SourceAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@TargetAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@BankAcount" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@Status" type="varchar" direction="Input" size="64" precision="0" scale="0" param="(64)" nulldefault=""/>
+				<parameter name="@Note" type="text" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@BrokerId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@ExecTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				INSERT INTO [dbo].[CashTransfer]
+					(
+					[RequestTime]
+					,[Amount]
+					,[Fee]
+					,[AmountAfterFee]
+					,[RejectedTime]
+					,[RejectedReason]
+					,[SourceAccountID]
+					,[TargetAccountID]
+					,[BankAcount]
+					,[Status]
+					,[Note]
+					,[BrokerID]
+					,[ExecTime]
+					)
+				VALUES
+					(
+					@RequestTime
+					,@Amount
+					,@Fee
+					,@AmountAfterFee
+					,@RejectedTime
+					,@RejectedReason
+					,@SourceAccountId
+					,@TargetAccountId
+					,@BankAcount
+					,@Status
+					,@Note
+					,@BrokerId
+					,@ExecTime
+					)
+				
+				-- Get the identity value
+				SET @CashTransferId = SCOPE_IDENTITY()
+									
+							
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="CashTransfer_Update" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the CashTransfer table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@CashTransferId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@RequestTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@Amount" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@Fee" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@AmountAfterFee" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@RejectedTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@RejectedReason" type="text" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@SourceAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@TargetAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@BankAcount" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@Status" type="varchar" direction="Input" size="64" precision="0" scale="0" param="(64)" nulldefault=""/>
+				<parameter name="@Note" type="text" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@BrokerId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@ExecTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[CashTransfer]
+				SET
+					[RequestTime] = @RequestTime
+					,[Amount] = @Amount
+					,[Fee] = @Fee
+					,[AmountAfterFee] = @AmountAfterFee
+					,[RejectedTime] = @RejectedTime
+					,[RejectedReason] = @RejectedReason
+					,[SourceAccountID] = @SourceAccountId
+					,[TargetAccountID] = @TargetAccountId
+					,[BankAcount] = @BankAcount
+					,[Status] = @Status
+					,[Note] = @Note
+					,[BrokerID] = @BrokerId
+					,[ExecTime] = @ExecTime
+				WHERE
+[CashTransferID] = @CashTransferId 
+				
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="CashTransfer_Delete" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the CashTransfer table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@CashTransferId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				DELETE FROM [dbo].[CashTransfer] WITH (ROWLOCK) 
+				WHERE
+					[CashTransferID] = @CashTransferId
+					
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="CashTransfer_GetByCashTransferId" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the CashTransfer table through an index
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@CashTransferId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SELECT
+					[CashTransferID],
+					[RequestTime],
+					[Amount],
+					[Fee],
+					[AmountAfterFee],
+					[RejectedTime],
+					[RejectedReason],
+					[SourceAccountID],
+					[TargetAccountID],
+					[BankAcount],
+					[Status],
+					[Note],
+					[BrokerID],
+					[ExecTime]
+				FROM
+					[dbo].[CashTransfer]
+				WHERE
+					[CashTransferID] = @CashTransferId
+				SELECT @@ROWCOUNT
+					
+			]]></body>
+			
+		</procedure>
+		<procedure owner="dbo" name="CashTransfer_Find" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the CashTransfer table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@SearchUsingOR" type="bit" direction="Input" size="0" precision="1" scale="0" param="" nulldefault="null"/>
+				<parameter name="@CashTransferId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault="null"/>
+				<parameter name="@RequestTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@Amount" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault="null"/>
+				<parameter name="@Fee" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault="null"/>
+				<parameter name="@AmountAfterFee" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault="null"/>
+				<parameter name="@RejectedTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@RejectedReason" type="text" direction="Input" size="16" precision="0" scale="0" param="" nulldefault="null"/>
+				<parameter name="@SourceAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault="null"/>
+				<parameter name="@TargetAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault="null"/>
+				<parameter name="@BankAcount" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault="null"/>
+				<parameter name="@Status" type="varchar" direction="Input" size="64" precision="0" scale="0" param="(64)" nulldefault="null"/>
+				<parameter name="@Note" type="text" direction="Input" size="16" precision="0" scale="0" param="" nulldefault="null"/>
+				<parameter name="@BrokerId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault="null"/>
+				<parameter name="@ExecTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+			</parameters>
+			<body><![CDATA[
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [CashTransferID]
+	, [RequestTime]
+	, [Amount]
+	, [Fee]
+	, [AmountAfterFee]
+	, [RejectedTime]
+	, [RejectedReason]
+	, [SourceAccountID]
+	, [TargetAccountID]
+	, [BankAcount]
+	, [Status]
+	, [Note]
+	, [BrokerID]
+	, [ExecTime]
+    FROM
+	[dbo].[CashTransfer]
+    WHERE 
+	 ([CashTransferID] = @CashTransferId OR @CashTransferId IS NULL)
+	AND ([RequestTime] = @RequestTime OR @RequestTime IS NULL)
+	AND ([Amount] = @Amount OR @Amount IS NULL)
+	AND ([Fee] = @Fee OR @Fee IS NULL)
+	AND ([AmountAfterFee] = @AmountAfterFee OR @AmountAfterFee IS NULL)
+	AND ([RejectedTime] = @RejectedTime OR @RejectedTime IS NULL)
+	AND ([SourceAccountID] = @SourceAccountId OR @SourceAccountId IS NULL)
+	AND ([TargetAccountID] = @TargetAccountId OR @TargetAccountId IS NULL)
+	AND ([BankAcount] = @BankAcount OR @BankAcount IS NULL)
+	AND ([Status] = @Status OR @Status IS NULL)
+	AND ([BrokerID] = @BrokerId OR @BrokerId IS NULL)
+	AND ([ExecTime] = @ExecTime OR @ExecTime IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [CashTransferID]
+	, [RequestTime]
+	, [Amount]
+	, [Fee]
+	, [AmountAfterFee]
+	, [RejectedTime]
+	, [RejectedReason]
+	, [SourceAccountID]
+	, [TargetAccountID]
+	, [BankAcount]
+	, [Status]
+	, [Note]
+	, [BrokerID]
+	, [ExecTime]
+    FROM
+	[dbo].[CashTransfer]
+    WHERE 
+	 ([CashTransferID] = @CashTransferId AND @CashTransferId is not null)
+	OR ([RequestTime] = @RequestTime AND @RequestTime is not null)
+	OR ([Amount] = @Amount AND @Amount is not null)
+	OR ([Fee] = @Fee AND @Fee is not null)
+	OR ([AmountAfterFee] = @AmountAfterFee AND @AmountAfterFee is not null)
+	OR ([RejectedTime] = @RejectedTime AND @RejectedTime is not null)
+	OR ([SourceAccountID] = @SourceAccountId AND @SourceAccountId is not null)
+	OR ([TargetAccountID] = @TargetAccountId AND @TargetAccountId is not null)
+	OR ([BankAcount] = @BankAcount AND @BankAcount is not null)
+	OR ([Status] = @Status AND @Status is not null)
+	OR ([BrokerID] = @BrokerId AND @BrokerId is not null)
+	OR ([ExecTime] = @ExecTime AND @ExecTime is not null)
+	SELECT @@ROWCOUNT			
+  END
+				]]></body>
+		</procedure>
+
+		
+		<procedure owner="dbo" name="CashTransfer_Find_Dynamic"  skip="true">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the CashTransfer table using a dynamically generated query.
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				BEGIN
+				
+				WITH PageIndex AS (
+					SELECT TOP {3} row_number() over (order by {1}) AS RowIndex
+					, [CashTransferID]
+					, [RequestTime]
+					, [Amount]
+					, [Fee]
+					, [AmountAfterFee]
+					, [RejectedTime]
+					, [RejectedReason]
+					, [SourceAccountID]
+					, [TargetAccountID]
+					, [BankAcount]
+					, [Status]
+					, [Note]
+					, [BrokerID]
+					, [ExecTime]
+					FROM [dbo].[CashTransfer] {0}
+				)
+				SELECT
+				       [CashTransferID],
+				       [RequestTime],
+				       [Amount],
+				       [Fee],
+				       [AmountAfterFee],
+				       [RejectedTime],
+				       [RejectedReason],
+				       [SourceAccountID],
+				       [TargetAccountID],
+				       [BankAcount],
+				       [Status],
+				       [Note],
+				       [BrokerID],
+				       [ExecTime]
+				  FROM PageIndex
+				 WHERE RowIndex > {2}
+				   AND RowIndex <= {3}
+				ORDER BY {1};
+				
+
+				-- get total count
+				SELECT COUNT(*) AS TotalRowCount FROM [dbo].[CashTransfer] {0};
+				
+				END
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="CashAdvanceHistory_Get_List" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the CashAdvanceHistory table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				SELECT
+					[ID],
+					[SubAccountID],
+					[AdvanceDate],
+					[ContractNo],
+					[OrderID],
+					[StockSymbol],
+					[SellDueDate],
+					[CashDueDate],
+					[TotalSellValue],
+					[CashAvilable],
+					[CashRequest],
+					[Fee],
+					[CashReceived],
+					[Status],
+					[TradeType],
+					[BrokerID],
+					[BrokerName],
+					[Reason],
+					[ExecTime],
+					[VAT]
+				FROM
+					[dbo].[CashAdvanceHistory]
+					
+				SELECT @@ROWCOUNT
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="CashAdvanceHistory_GetPaged" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the CashAdvanceHistory table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@WhereClause" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)" />
+				<parameter name="@OrderBy" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)"/>
+				<parameter name="@PageIndex" type="int" direction="Input" size="0" precision="10" scale="0" />
+				<parameter name="@PageSize" type="int" direction="Input" size="0" precision="10" scale="0" /> 
+			</parameters>
+			<body><![CDATA[
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[ID]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [ID]'
+				SET @SQL = @SQL + ', [SubAccountID]'
+				SET @SQL = @SQL + ', [AdvanceDate]'
+				SET @SQL = @SQL + ', [ContractNo]'
+				SET @SQL = @SQL + ', [OrderID]'
+				SET @SQL = @SQL + ', [StockSymbol]'
+				SET @SQL = @SQL + ', [SellDueDate]'
+				SET @SQL = @SQL + ', [CashDueDate]'
+				SET @SQL = @SQL + ', [TotalSellValue]'
+				SET @SQL = @SQL + ', [CashAvilable]'
+				SET @SQL = @SQL + ', [CashRequest]'
+				SET @SQL = @SQL + ', [Fee]'
+				SET @SQL = @SQL + ', [CashReceived]'
+				SET @SQL = @SQL + ', [Status]'
+				SET @SQL = @SQL + ', [TradeType]'
+				SET @SQL = @SQL + ', [BrokerID]'
+				SET @SQL = @SQL + ', [BrokerName]'
+				SET @SQL = @SQL + ', [Reason]'
+				SET @SQL = @SQL + ', [ExecTime]'
+				SET @SQL = @SQL + ', [VAT]'
+				SET @SQL = @SQL + ' FROM [dbo].[CashAdvanceHistory]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [ID],'
+				SET @SQL = @SQL + ' [SubAccountID],'
+				SET @SQL = @SQL + ' [AdvanceDate],'
+				SET @SQL = @SQL + ' [ContractNo],'
+				SET @SQL = @SQL + ' [OrderID],'
+				SET @SQL = @SQL + ' [StockSymbol],'
+				SET @SQL = @SQL + ' [SellDueDate],'
+				SET @SQL = @SQL + ' [CashDueDate],'
+				SET @SQL = @SQL + ' [TotalSellValue],'
+				SET @SQL = @SQL + ' [CashAvilable],'
+				SET @SQL = @SQL + ' [CashRequest],'
+				SET @SQL = @SQL + ' [Fee],'
+				SET @SQL = @SQL + ' [CashReceived],'
+				SET @SQL = @SQL + ' [Status],'
+				SET @SQL = @SQL + ' [TradeType],'
+				SET @SQL = @SQL + ' [BrokerID],'
+				SET @SQL = @SQL + ' [BrokerName],'
+				SET @SQL = @SQL + ' [Reason],'
+				SET @SQL = @SQL + ' [ExecTime],'
+				SET @SQL = @SQL + ' [VAT]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[CashAdvanceHistory]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			]]></body>
+		</procedure>
+		
+		<procedure owner="dbo" name="CashAdvanceHistory_Insert" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the CashAdvanceHistory table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="bigint" direction="Output" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@SubAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@AdvanceDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@ContractNo" type="varchar" direction="Input" size="50" precision="0" scale="0" param="(50)" nulldefault=""/>
+				<parameter name="@OrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@StockSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault=""/>
+				<parameter name="@SellDueDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@CashDueDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@TotalSellValue" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@CashAvilable" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@CashRequest" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@Fee" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@CashReceived" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@Status" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@TradeType" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@BrokerId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@BrokerName" type="varchar" direction="Input" size="50" precision="0" scale="0" param="(50)" nulldefault=""/>
+				<parameter name="@Reason" type="text" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@ExecTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@Vat" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				INSERT INTO [dbo].[CashAdvanceHistory]
+					(
+					[SubAccountID]
+					,[AdvanceDate]
+					,[ContractNo]
+					,[OrderID]
+					,[StockSymbol]
+					,[SellDueDate]
+					,[CashDueDate]
+					,[TotalSellValue]
+					,[CashAvilable]
+					,[CashRequest]
+					,[Fee]
+					,[CashReceived]
+					,[Status]
+					,[TradeType]
+					,[BrokerID]
+					,[BrokerName]
+					,[Reason]
+					,[ExecTime]
+					,[VAT]
+					)
+				VALUES
+					(
+					@SubAccountId
+					,@AdvanceDate
+					,@ContractNo
+					,@OrderId
+					,@StockSymbol
+					,@SellDueDate
+					,@CashDueDate
+					,@TotalSellValue
+					,@CashAvilable
+					,@CashRequest
+					,@Fee
+					,@CashReceived
+					,@Status
+					,@TradeType
+					,@BrokerId
+					,@BrokerName
+					,@Reason
+					,@ExecTime
+					,@Vat
+					)
+				
+				-- Get the identity value
+				SET @Id = SCOPE_IDENTITY()
+									
+							
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="CashAdvanceHistory_Update" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the CashAdvanceHistory table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@SubAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@AdvanceDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@ContractNo" type="varchar" direction="Input" size="50" precision="0" scale="0" param="(50)" nulldefault=""/>
+				<parameter name="@OrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@StockSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault=""/>
+				<parameter name="@SellDueDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@CashDueDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@TotalSellValue" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@CashAvilable" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@CashRequest" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@Fee" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@CashReceived" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@Status" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@TradeType" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@BrokerId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@BrokerName" type="varchar" direction="Input" size="50" precision="0" scale="0" param="(50)" nulldefault=""/>
+				<parameter name="@Reason" type="text" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@ExecTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@Vat" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[CashAdvanceHistory]
+				SET
+					[SubAccountID] = @SubAccountId
+					,[AdvanceDate] = @AdvanceDate
+					,[ContractNo] = @ContractNo
+					,[OrderID] = @OrderId
+					,[StockSymbol] = @StockSymbol
+					,[SellDueDate] = @SellDueDate
+					,[CashDueDate] = @CashDueDate
+					,[TotalSellValue] = @TotalSellValue
+					,[CashAvilable] = @CashAvilable
+					,[CashRequest] = @CashRequest
+					,[Fee] = @Fee
+					,[CashReceived] = @CashReceived
+					,[Status] = @Status
+					,[TradeType] = @TradeType
+					,[BrokerID] = @BrokerId
+					,[BrokerName] = @BrokerName
+					,[Reason] = @Reason
+					,[ExecTime] = @ExecTime
+					,[VAT] = @Vat
+				WHERE
+[ID] = @Id 
+				
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="CashAdvanceHistory_Delete" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the CashAdvanceHistory table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				DELETE FROM [dbo].[CashAdvanceHistory] WITH (ROWLOCK) 
+				WHERE
+					[ID] = @Id
+					
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="CashAdvanceHistory_GetById" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the CashAdvanceHistory table through an index
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SELECT
+					[ID],
+					[SubAccountID],
+					[AdvanceDate],
+					[ContractNo],
+					[OrderID],
+					[StockSymbol],
+					[SellDueDate],
+					[CashDueDate],
+					[TotalSellValue],
+					[CashAvilable],
+					[CashRequest],
+					[Fee],
+					[CashReceived],
+					[Status],
+					[TradeType],
+					[BrokerID],
+					[BrokerName],
+					[Reason],
+					[ExecTime],
+					[VAT]
+				FROM
+					[dbo].[CashAdvanceHistory]
+				WHERE
+					[ID] = @Id
+				SELECT @@ROWCOUNT
+					
+			]]></body>
+			
+		</procedure>
+		<procedure owner="dbo" name="CashAdvanceHistory_Find" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the CashAdvanceHistory table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@SearchUsingOR" type="bit" direction="Input" size="0" precision="1" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Id" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault="null"/>
+				<parameter name="@SubAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault="null"/>
+				<parameter name="@AdvanceDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@ContractNo" type="varchar" direction="Input" size="50" precision="0" scale="0" param="(50)" nulldefault="null"/>
+				<parameter name="@OrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@StockSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault="null"/>
+				<parameter name="@SellDueDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@CashDueDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@TotalSellValue" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault="null"/>
+				<parameter name="@CashAvilable" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault="null"/>
+				<parameter name="@CashRequest" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault="null"/>
+				<parameter name="@Fee" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault="null"/>
+				<parameter name="@CashReceived" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault="null"/>
+				<parameter name="@Status" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@TradeType" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@BrokerId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault="null"/>
+				<parameter name="@BrokerName" type="varchar" direction="Input" size="50" precision="0" scale="0" param="(50)" nulldefault="null"/>
+				<parameter name="@Reason" type="text" direction="Input" size="16" precision="0" scale="0" param="" nulldefault="null"/>
+				<parameter name="@ExecTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@Vat" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault="null"/>
+			</parameters>
+			<body><![CDATA[
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [ID]
+	, [SubAccountID]
+	, [AdvanceDate]
+	, [ContractNo]
+	, [OrderID]
+	, [StockSymbol]
+	, [SellDueDate]
+	, [CashDueDate]
+	, [TotalSellValue]
+	, [CashAvilable]
+	, [CashRequest]
+	, [Fee]
+	, [CashReceived]
+	, [Status]
+	, [TradeType]
+	, [BrokerID]
+	, [BrokerName]
+	, [Reason]
+	, [ExecTime]
+	, [VAT]
+    FROM
+	[dbo].[CashAdvanceHistory]
+    WHERE 
+	 ([ID] = @Id OR @Id IS NULL)
+	AND ([SubAccountID] = @SubAccountId OR @SubAccountId IS NULL)
+	AND ([AdvanceDate] = @AdvanceDate OR @AdvanceDate IS NULL)
+	AND ([ContractNo] = @ContractNo OR @ContractNo IS NULL)
+	AND ([OrderID] = @OrderId OR @OrderId IS NULL)
+	AND ([StockSymbol] = @StockSymbol OR @StockSymbol IS NULL)
+	AND ([SellDueDate] = @SellDueDate OR @SellDueDate IS NULL)
+	AND ([CashDueDate] = @CashDueDate OR @CashDueDate IS NULL)
+	AND ([TotalSellValue] = @TotalSellValue OR @TotalSellValue IS NULL)
+	AND ([CashAvilable] = @CashAvilable OR @CashAvilable IS NULL)
+	AND ([CashRequest] = @CashRequest OR @CashRequest IS NULL)
+	AND ([Fee] = @Fee OR @Fee IS NULL)
+	AND ([CashReceived] = @CashReceived OR @CashReceived IS NULL)
+	AND ([Status] = @Status OR @Status IS NULL)
+	AND ([TradeType] = @TradeType OR @TradeType IS NULL)
+	AND ([BrokerID] = @BrokerId OR @BrokerId IS NULL)
+	AND ([BrokerName] = @BrokerName OR @BrokerName IS NULL)
+	AND ([ExecTime] = @ExecTime OR @ExecTime IS NULL)
+	AND ([VAT] = @Vat OR @Vat IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [ID]
+	, [SubAccountID]
+	, [AdvanceDate]
+	, [ContractNo]
+	, [OrderID]
+	, [StockSymbol]
+	, [SellDueDate]
+	, [CashDueDate]
+	, [TotalSellValue]
+	, [CashAvilable]
+	, [CashRequest]
+	, [Fee]
+	, [CashReceived]
+	, [Status]
+	, [TradeType]
+	, [BrokerID]
+	, [BrokerName]
+	, [Reason]
+	, [ExecTime]
+	, [VAT]
+    FROM
+	[dbo].[CashAdvanceHistory]
+    WHERE 
+	 ([ID] = @Id AND @Id is not null)
+	OR ([SubAccountID] = @SubAccountId AND @SubAccountId is not null)
+	OR ([AdvanceDate] = @AdvanceDate AND @AdvanceDate is not null)
+	OR ([ContractNo] = @ContractNo AND @ContractNo is not null)
+	OR ([OrderID] = @OrderId AND @OrderId is not null)
+	OR ([StockSymbol] = @StockSymbol AND @StockSymbol is not null)
+	OR ([SellDueDate] = @SellDueDate AND @SellDueDate is not null)
+	OR ([CashDueDate] = @CashDueDate AND @CashDueDate is not null)
+	OR ([TotalSellValue] = @TotalSellValue AND @TotalSellValue is not null)
+	OR ([CashAvilable] = @CashAvilable AND @CashAvilable is not null)
+	OR ([CashRequest] = @CashRequest AND @CashRequest is not null)
+	OR ([Fee] = @Fee AND @Fee is not null)
+	OR ([CashReceived] = @CashReceived AND @CashReceived is not null)
+	OR ([Status] = @Status AND @Status is not null)
+	OR ([TradeType] = @TradeType AND @TradeType is not null)
+	OR ([BrokerID] = @BrokerId AND @BrokerId is not null)
+	OR ([BrokerName] = @BrokerName AND @BrokerName is not null)
+	OR ([ExecTime] = @ExecTime AND @ExecTime is not null)
+	OR ([VAT] = @Vat AND @Vat is not null)
+	SELECT @@ROWCOUNT			
+  END
+				]]></body>
+		</procedure>
+
+		
+		<procedure owner="dbo" name="CashAdvanceHistory_Find_Dynamic"  skip="true">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the CashAdvanceHistory table using a dynamically generated query.
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				BEGIN
+				
+				WITH PageIndex AS (
+					SELECT TOP {3} row_number() over (order by {1}) AS RowIndex
+					, [ID]
+					, [SubAccountID]
+					, [AdvanceDate]
+					, [ContractNo]
+					, [OrderID]
+					, [StockSymbol]
+					, [SellDueDate]
+					, [CashDueDate]
+					, [TotalSellValue]
+					, [CashAvilable]
+					, [CashRequest]
+					, [Fee]
+					, [CashReceived]
+					, [Status]
+					, [TradeType]
+					, [BrokerID]
+					, [BrokerName]
+					, [Reason]
+					, [ExecTime]
+					, [VAT]
+					FROM [dbo].[CashAdvanceHistory] {0}
+				)
+				SELECT
+				       [ID],
+				       [SubAccountID],
+				       [AdvanceDate],
+				       [ContractNo],
+				       [OrderID],
+				       [StockSymbol],
+				       [SellDueDate],
+				       [CashDueDate],
+				       [TotalSellValue],
+				       [CashAvilable],
+				       [CashRequest],
+				       [Fee],
+				       [CashReceived],
+				       [Status],
+				       [TradeType],
+				       [BrokerID],
+				       [BrokerName],
+				       [Reason],
+				       [ExecTime],
+				       [VAT]
+				  FROM PageIndex
+				 WHERE RowIndex > {2}
+				   AND RowIndex <= {3}
+				ORDER BY {1};
+				
+
+				-- get total count
+				SELECT COUNT(*) AS TotalRowCount FROM [dbo].[CashAdvanceHistory] {0};
+				
+				END
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="CashAdvance_Get_List" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the CashAdvance table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				SELECT
+					[ID],
+					[SubAccountID],
+					[AdvanceDate],
+					[ContractNo],
+					[OrderID],
+					[StockSymbol],
+					[SellDueDate],
+					[CashDueDate],
+					[TotalSellValue],
+					[CashAvailable],
+					[CashRequest],
+					[Fee],
+					[CashReceived],
+					[Status],
+					[TradeType],
+					[BrokerID],
+					[Reason],
+					[ExecTime],
+					[VAT]
+				FROM
+					[dbo].[CashAdvance]
+					
+				SELECT @@ROWCOUNT
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="CashAdvance_GetPaged" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the CashAdvance table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@WhereClause" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)" />
+				<parameter name="@OrderBy" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)"/>
+				<parameter name="@PageIndex" type="int" direction="Input" size="0" precision="10" scale="0" />
+				<parameter name="@PageSize" type="int" direction="Input" size="0" precision="10" scale="0" /> 
+			</parameters>
+			<body><![CDATA[
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[ID]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [ID]'
+				SET @SQL = @SQL + ', [SubAccountID]'
+				SET @SQL = @SQL + ', [AdvanceDate]'
+				SET @SQL = @SQL + ', [ContractNo]'
+				SET @SQL = @SQL + ', [OrderID]'
+				SET @SQL = @SQL + ', [StockSymbol]'
+				SET @SQL = @SQL + ', [SellDueDate]'
+				SET @SQL = @SQL + ', [CashDueDate]'
+				SET @SQL = @SQL + ', [TotalSellValue]'
+				SET @SQL = @SQL + ', [CashAvailable]'
+				SET @SQL = @SQL + ', [CashRequest]'
+				SET @SQL = @SQL + ', [Fee]'
+				SET @SQL = @SQL + ', [CashReceived]'
+				SET @SQL = @SQL + ', [Status]'
+				SET @SQL = @SQL + ', [TradeType]'
+				SET @SQL = @SQL + ', [BrokerID]'
+				SET @SQL = @SQL + ', [Reason]'
+				SET @SQL = @SQL + ', [ExecTime]'
+				SET @SQL = @SQL + ', [VAT]'
+				SET @SQL = @SQL + ' FROM [dbo].[CashAdvance]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [ID],'
+				SET @SQL = @SQL + ' [SubAccountID],'
+				SET @SQL = @SQL + ' [AdvanceDate],'
+				SET @SQL = @SQL + ' [ContractNo],'
+				SET @SQL = @SQL + ' [OrderID],'
+				SET @SQL = @SQL + ' [StockSymbol],'
+				SET @SQL = @SQL + ' [SellDueDate],'
+				SET @SQL = @SQL + ' [CashDueDate],'
+				SET @SQL = @SQL + ' [TotalSellValue],'
+				SET @SQL = @SQL + ' [CashAvailable],'
+				SET @SQL = @SQL + ' [CashRequest],'
+				SET @SQL = @SQL + ' [Fee],'
+				SET @SQL = @SQL + ' [CashReceived],'
+				SET @SQL = @SQL + ' [Status],'
+				SET @SQL = @SQL + ' [TradeType],'
+				SET @SQL = @SQL + ' [BrokerID],'
+				SET @SQL = @SQL + ' [Reason],'
+				SET @SQL = @SQL + ' [ExecTime],'
+				SET @SQL = @SQL + ' [VAT]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[CashAdvance]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			]]></body>
+		</procedure>
+		
+		<procedure owner="dbo" name="CashAdvance_Insert" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the CashAdvance table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="bigint" direction="Output" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@SubAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@AdvanceDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@ContractNo" type="varchar" direction="Input" size="50" precision="0" scale="0" param="(50)" nulldefault=""/>
+				<parameter name="@OrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@StockSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault=""/>
+				<parameter name="@SellDueDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@CashDueDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@TotalSellValue" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@CashAvailable" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@CashRequest" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@Fee" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@CashReceived" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@Status" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@TradeType" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@BrokerId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@Reason" type="ntext" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@ExecTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@Vat" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				INSERT INTO [dbo].[CashAdvance]
+					(
+					[SubAccountID]
+					,[AdvanceDate]
+					,[ContractNo]
+					,[OrderID]
+					,[StockSymbol]
+					,[SellDueDate]
+					,[CashDueDate]
+					,[TotalSellValue]
+					,[CashAvailable]
+					,[CashRequest]
+					,[Fee]
+					,[CashReceived]
+					,[Status]
+					,[TradeType]
+					,[BrokerID]
+					,[Reason]
+					,[ExecTime]
+					,[VAT]
+					)
+				VALUES
+					(
+					@SubAccountId
+					,@AdvanceDate
+					,@ContractNo
+					,@OrderId
+					,@StockSymbol
+					,@SellDueDate
+					,@CashDueDate
+					,@TotalSellValue
+					,@CashAvailable
+					,@CashRequest
+					,@Fee
+					,@CashReceived
+					,@Status
+					,@TradeType
+					,@BrokerId
+					,@Reason
+					,@ExecTime
+					,@Vat
+					)
+				
+				-- Get the identity value
+				SET @Id = SCOPE_IDENTITY()
+									
+							
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="CashAdvance_Update" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the CashAdvance table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@SubAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@AdvanceDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@ContractNo" type="varchar" direction="Input" size="50" precision="0" scale="0" param="(50)" nulldefault=""/>
+				<parameter name="@OrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@StockSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault=""/>
+				<parameter name="@SellDueDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@CashDueDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@TotalSellValue" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@CashAvailable" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@CashRequest" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@Fee" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@CashReceived" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+				<parameter name="@Status" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@TradeType" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@BrokerId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@Reason" type="ntext" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@ExecTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@Vat" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[CashAdvance]
+				SET
+					[SubAccountID] = @SubAccountId
+					,[AdvanceDate] = @AdvanceDate
+					,[ContractNo] = @ContractNo
+					,[OrderID] = @OrderId
+					,[StockSymbol] = @StockSymbol
+					,[SellDueDate] = @SellDueDate
+					,[CashDueDate] = @CashDueDate
+					,[TotalSellValue] = @TotalSellValue
+					,[CashAvailable] = @CashAvailable
+					,[CashRequest] = @CashRequest
+					,[Fee] = @Fee
+					,[CashReceived] = @CashReceived
+					,[Status] = @Status
+					,[TradeType] = @TradeType
+					,[BrokerID] = @BrokerId
+					,[Reason] = @Reason
+					,[ExecTime] = @ExecTime
+					,[VAT] = @Vat
+				WHERE
+[ID] = @Id 
+				
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="CashAdvance_Delete" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the CashAdvance table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				DELETE FROM [dbo].[CashAdvance] WITH (ROWLOCK) 
+				WHERE
+					[ID] = @Id
+					
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="CashAdvance_GetById" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the CashAdvance table through an index
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@Id" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SELECT
+					[ID],
+					[SubAccountID],
+					[AdvanceDate],
+					[ContractNo],
+					[OrderID],
+					[StockSymbol],
+					[SellDueDate],
+					[CashDueDate],
+					[TotalSellValue],
+					[CashAvailable],
+					[CashRequest],
+					[Fee],
+					[CashReceived],
+					[Status],
+					[TradeType],
+					[BrokerID],
+					[Reason],
+					[ExecTime],
+					[VAT]
+				FROM
+					[dbo].[CashAdvance]
+				WHERE
+					[ID] = @Id
+				SELECT @@ROWCOUNT
+					
+			]]></body>
+			
+		</procedure>
+		<procedure owner="dbo" name="CashAdvance_Find" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the CashAdvance table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@SearchUsingOR" type="bit" direction="Input" size="0" precision="1" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Id" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault="null"/>
+				<parameter name="@SubAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault="null"/>
+				<parameter name="@AdvanceDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@ContractNo" type="varchar" direction="Input" size="50" precision="0" scale="0" param="(50)" nulldefault="null"/>
+				<parameter name="@OrderId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@StockSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault="null"/>
+				<parameter name="@SellDueDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@CashDueDate" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@TotalSellValue" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault="null"/>
+				<parameter name="@CashAvailable" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault="null"/>
+				<parameter name="@CashRequest" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault="null"/>
+				<parameter name="@Fee" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault="null"/>
+				<parameter name="@CashReceived" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault="null"/>
+				<parameter name="@Status" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@TradeType" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@BrokerId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault="null"/>
+				<parameter name="@Reason" type="ntext" direction="Input" size="16" precision="0" scale="0" param="" nulldefault="null"/>
+				<parameter name="@ExecTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@Vat" type="decimal" direction="Input" size="9" precision="18" scale="3" param="(18, 3)" nulldefault="null"/>
+			</parameters>
+			<body><![CDATA[
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [ID]
+	, [SubAccountID]
+	, [AdvanceDate]
+	, [ContractNo]
+	, [OrderID]
+	, [StockSymbol]
+	, [SellDueDate]
+	, [CashDueDate]
+	, [TotalSellValue]
+	, [CashAvailable]
+	, [CashRequest]
+	, [Fee]
+	, [CashReceived]
+	, [Status]
+	, [TradeType]
+	, [BrokerID]
+	, [Reason]
+	, [ExecTime]
+	, [VAT]
+    FROM
+	[dbo].[CashAdvance]
+    WHERE 
+	 ([ID] = @Id OR @Id IS NULL)
+	AND ([SubAccountID] = @SubAccountId OR @SubAccountId IS NULL)
+	AND ([AdvanceDate] = @AdvanceDate OR @AdvanceDate IS NULL)
+	AND ([ContractNo] = @ContractNo OR @ContractNo IS NULL)
+	AND ([OrderID] = @OrderId OR @OrderId IS NULL)
+	AND ([StockSymbol] = @StockSymbol OR @StockSymbol IS NULL)
+	AND ([SellDueDate] = @SellDueDate OR @SellDueDate IS NULL)
+	AND ([CashDueDate] = @CashDueDate OR @CashDueDate IS NULL)
+	AND ([TotalSellValue] = @TotalSellValue OR @TotalSellValue IS NULL)
+	AND ([CashAvailable] = @CashAvailable OR @CashAvailable IS NULL)
+	AND ([CashRequest] = @CashRequest OR @CashRequest IS NULL)
+	AND ([Fee] = @Fee OR @Fee IS NULL)
+	AND ([CashReceived] = @CashReceived OR @CashReceived IS NULL)
+	AND ([Status] = @Status OR @Status IS NULL)
+	AND ([TradeType] = @TradeType OR @TradeType IS NULL)
+	AND ([BrokerID] = @BrokerId OR @BrokerId IS NULL)
+	AND ([ExecTime] = @ExecTime OR @ExecTime IS NULL)
+	AND ([VAT] = @Vat OR @Vat IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [ID]
+	, [SubAccountID]
+	, [AdvanceDate]
+	, [ContractNo]
+	, [OrderID]
+	, [StockSymbol]
+	, [SellDueDate]
+	, [CashDueDate]
+	, [TotalSellValue]
+	, [CashAvailable]
+	, [CashRequest]
+	, [Fee]
+	, [CashReceived]
+	, [Status]
+	, [TradeType]
+	, [BrokerID]
+	, [Reason]
+	, [ExecTime]
+	, [VAT]
+    FROM
+	[dbo].[CashAdvance]
+    WHERE 
+	 ([ID] = @Id AND @Id is not null)
+	OR ([SubAccountID] = @SubAccountId AND @SubAccountId is not null)
+	OR ([AdvanceDate] = @AdvanceDate AND @AdvanceDate is not null)
+	OR ([ContractNo] = @ContractNo AND @ContractNo is not null)
+	OR ([OrderID] = @OrderId AND @OrderId is not null)
+	OR ([StockSymbol] = @StockSymbol AND @StockSymbol is not null)
+	OR ([SellDueDate] = @SellDueDate AND @SellDueDate is not null)
+	OR ([CashDueDate] = @CashDueDate AND @CashDueDate is not null)
+	OR ([TotalSellValue] = @TotalSellValue AND @TotalSellValue is not null)
+	OR ([CashAvailable] = @CashAvailable AND @CashAvailable is not null)
+	OR ([CashRequest] = @CashRequest AND @CashRequest is not null)
+	OR ([Fee] = @Fee AND @Fee is not null)
+	OR ([CashReceived] = @CashReceived AND @CashReceived is not null)
+	OR ([Status] = @Status AND @Status is not null)
+	OR ([TradeType] = @TradeType AND @TradeType is not null)
+	OR ([BrokerID] = @BrokerId AND @BrokerId is not null)
+	OR ([ExecTime] = @ExecTime AND @ExecTime is not null)
+	OR ([VAT] = @Vat AND @Vat is not null)
+	SELECT @@ROWCOUNT			
+  END
+				]]></body>
+		</procedure>
+
+		
+		<procedure owner="dbo" name="CashAdvance_Find_Dynamic"  skip="true">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the CashAdvance table using a dynamically generated query.
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				BEGIN
+				
+				WITH PageIndex AS (
+					SELECT TOP {3} row_number() over (order by {1}) AS RowIndex
+					, [ID]
+					, [SubAccountID]
+					, [AdvanceDate]
+					, [ContractNo]
+					, [OrderID]
+					, [StockSymbol]
+					, [SellDueDate]
+					, [CashDueDate]
+					, [TotalSellValue]
+					, [CashAvailable]
+					, [CashRequest]
+					, [Fee]
+					, [CashReceived]
+					, [Status]
+					, [TradeType]
+					, [BrokerID]
+					, [Reason]
+					, [ExecTime]
+					, [VAT]
+					FROM [dbo].[CashAdvance] {0}
+				)
+				SELECT
+				       [ID],
+				       [SubAccountID],
+				       [AdvanceDate],
+				       [ContractNo],
+				       [OrderID],
+				       [StockSymbol],
+				       [SellDueDate],
+				       [CashDueDate],
+				       [TotalSellValue],
+				       [CashAvailable],
+				       [CashRequest],
+				       [Fee],
+				       [CashReceived],
+				       [Status],
+				       [TradeType],
+				       [BrokerID],
+				       [Reason],
+				       [ExecTime],
+				       [VAT]
+				  FROM PageIndex
+				 WHERE RowIndex > {2}
+				   AND RowIndex <= {3}
+				ORDER BY {1};
+				
+
+				-- get total count
+				SELECT COUNT(*) AS TotalRowCount FROM [dbo].[CashAdvance] {0};
+				
+				END
+			]]></body>
+		</procedure>
+		
+				
+		<procedure owner="dbo" name="_CashAdvance_DeleteOldData"  skip="true">
+			<comment><![CDATA[
+/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Wednesday, November 17, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the ExecOrder table
+----------------------------------------------------------------------------------------------------
+*/
+
+
+]]></comment>
+			<parameters>
+			</parameters>
+			<body><![CDATA[
+				
+
+
+
+				DELETE FROM [dbo].[CashAdvance] WITH (ROWLOCK) 
+				WHERE
+					[ExecTime] < Convert(datetime, Convert(int, GetDate()))
+					
+			
+
+
+			]]></body>
+					</procedure>
+		
+		<procedure owner="dbo" name="StockTransfer_Get_List" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets all records from the StockTransfer table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				SELECT
+					[StockTransferID],
+					[RequestTime],
+					[SecSymbol],
+					[StockQuantity],
+					[RejectedTime],
+					[RejectedReason],
+					[SourceAccountID],
+					[TargetAccountID],
+					[Status],
+					[BrokerID],
+					[ExecTime]
+				FROM
+					[dbo].[StockTransfer]
+					
+				SELECT @@ROWCOUNT
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="StockTransfer_GetPaged" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the StockTransfer table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@WhereClause" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)" />
+				<parameter name="@OrderBy" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)"/>
+				<parameter name="@PageIndex" type="int" direction="Input" size="0" precision="10" scale="0" />
+				<parameter name="@PageSize" type="int" direction="Input" size="0" precision="10" scale="0" /> 
+			</parameters>
+			<body><![CDATA[
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				IF (@OrderBy IS NULL OR LEN(@OrderBy) < 1)
+				BEGIN
+					-- default order by to first column
+					SET @OrderBy = '[StockTransferID]'
+				END
+
+				-- SQL Server 2005 Paging
+				DECLARE @SQL AS nvarchar(MAX)
+				SET @SQL = 'WITH PageIndex AS ('
+				SET @SQL = @SQL + ' SELECT'
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' TOP ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ROW_NUMBER() OVER (ORDER BY ' + @OrderBy + ') as RowIndex'
+				SET @SQL = @SQL + ', [StockTransferID]'
+				SET @SQL = @SQL + ', [RequestTime]'
+				SET @SQL = @SQL + ', [SecSymbol]'
+				SET @SQL = @SQL + ', [StockQuantity]'
+				SET @SQL = @SQL + ', [RejectedTime]'
+				SET @SQL = @SQL + ', [RejectedReason]'
+				SET @SQL = @SQL + ', [SourceAccountID]'
+				SET @SQL = @SQL + ', [TargetAccountID]'
+				SET @SQL = @SQL + ', [Status]'
+				SET @SQL = @SQL + ', [BrokerID]'
+				SET @SQL = @SQL + ', [ExecTime]'
+				SET @SQL = @SQL + ' FROM [dbo].[StockTransfer]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				SET @SQL = @SQL + ' ) SELECT'
+				SET @SQL = @SQL + ' [StockTransferID],'
+				SET @SQL = @SQL + ' [RequestTime],'
+				SET @SQL = @SQL + ' [SecSymbol],'
+				SET @SQL = @SQL + ' [StockQuantity],'
+				SET @SQL = @SQL + ' [RejectedTime],'
+				SET @SQL = @SQL + ' [RejectedReason],'
+				SET @SQL = @SQL + ' [SourceAccountID],'
+				SET @SQL = @SQL + ' [TargetAccountID],'
+				SET @SQL = @SQL + ' [Status],'
+				SET @SQL = @SQL + ' [BrokerID],'
+				SET @SQL = @SQL + ' [ExecTime]'
+				SET @SQL = @SQL + ' FROM PageIndex'
+				SET @SQL = @SQL + ' WHERE RowIndex > ' + CONVERT(nvarchar, @PageLowerBound)
+				IF @PageSize > 0
+				BEGIN
+					SET @SQL = @SQL + ' AND RowIndex <= ' + CONVERT(nvarchar, @PageUpperBound)
+				END
+				SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				EXEC sp_executesql @SQL
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[StockTransfer]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			]]></body>
+		</procedure>
+		
+		<procedure owner="dbo" name="StockTransfer_Insert" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Inserts a record into the StockTransfer table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@StockTransferId" type="bigint" direction="Output" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@RequestTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@SecSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault=""/>
+				<parameter name="@StockQuantity" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@RejectedTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@RejectedReason" type="text" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@SourceAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@TargetAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@Status" type="varchar" direction="Input" size="64" precision="0" scale="0" param="(64)" nulldefault=""/>
+				<parameter name="@BrokerId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@ExecTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				INSERT INTO [dbo].[StockTransfer]
+					(
+					[RequestTime]
+					,[SecSymbol]
+					,[StockQuantity]
+					,[RejectedTime]
+					,[RejectedReason]
+					,[SourceAccountID]
+					,[TargetAccountID]
+					,[Status]
+					,[BrokerID]
+					,[ExecTime]
+					)
+				VALUES
+					(
+					@RequestTime
+					,@SecSymbol
+					,@StockQuantity
+					,@RejectedTime
+					,@RejectedReason
+					,@SourceAccountId
+					,@TargetAccountId
+					,@Status
+					,@BrokerId
+					,@ExecTime
+					)
+				
+				-- Get the identity value
+				SET @StockTransferId = SCOPE_IDENTITY()
+									
+							
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="StockTransfer_Update" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Updates a record in the StockTransfer table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@StockTransferId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+				<parameter name="@RequestTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@SecSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault=""/>
+				<parameter name="@StockQuantity" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@RejectedTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+				<parameter name="@RejectedReason" type="text" direction="Input" size="16" precision="0" scale="0" param="" nulldefault=""/>
+				<parameter name="@SourceAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@TargetAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@Status" type="varchar" direction="Input" size="64" precision="0" scale="0" param="(64)" nulldefault=""/>
+				<parameter name="@BrokerId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault=""/>
+				<parameter name="@ExecTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[StockTransfer]
+				SET
+					[RequestTime] = @RequestTime
+					,[SecSymbol] = @SecSymbol
+					,[StockQuantity] = @StockQuantity
+					,[RejectedTime] = @RejectedTime
+					,[RejectedReason] = @RejectedReason
+					,[SourceAccountID] = @SourceAccountId
+					,[TargetAccountID] = @TargetAccountId
+					,[Status] = @Status
+					,[BrokerID] = @BrokerId
+					,[ExecTime] = @ExecTime
+				WHERE
+[StockTransferID] = @StockTransferId 
+				
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="StockTransfer_Delete" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Deletes a record in the StockTransfer table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@StockTransferId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				DELETE FROM [dbo].[StockTransfer] WITH (ROWLOCK) 
+				WHERE
+					[StockTransferID] = @StockTransferId
+					
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="StockTransfer_GetByStockTransferId" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Select records from the StockTransfer table through an index
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@StockTransferId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SELECT
+					[StockTransferID],
+					[RequestTime],
+					[SecSymbol],
+					[StockQuantity],
+					[RejectedTime],
+					[RejectedReason],
+					[SourceAccountID],
+					[TargetAccountID],
+					[Status],
+					[BrokerID],
+					[ExecTime]
+				FROM
+					[dbo].[StockTransfer]
+				WHERE
+					[StockTransferID] = @StockTransferId
+				SELECT @@ROWCOUNT
+					
+			]]></body>
+			
+		</procedure>
+		<procedure owner="dbo" name="StockTransfer_Find" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Finds records in the StockTransfer table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@SearchUsingOR" type="bit" direction="Input" size="0" precision="1" scale="0" param="" nulldefault="null"/>
+				<parameter name="@StockTransferId" type="bigint" direction="Input" size="8" precision="19" scale="0" param="" nulldefault="null"/>
+				<parameter name="@RequestTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@SecSymbol" type="varchar" direction="Input" size="8" precision="0" scale="0" param="(8)" nulldefault="null"/>
+				<parameter name="@StockQuantity" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@RejectedTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+				<parameter name="@RejectedReason" type="text" direction="Input" size="16" precision="0" scale="0" param="" nulldefault="null"/>
+				<parameter name="@SourceAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault="null"/>
+				<parameter name="@TargetAccountId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault="null"/>
+				<parameter name="@Status" type="varchar" direction="Input" size="64" precision="0" scale="0" param="(64)" nulldefault="null"/>
+				<parameter name="@BrokerId" type="varchar" direction="Input" size="20" precision="0" scale="0" param="(20)" nulldefault="null"/>
+				<parameter name="@ExecTime" type="datetime" direction="Input" size="8" precision="23" scale="3" param="" nulldefault="null"/>
+			</parameters>
+			<body><![CDATA[
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [StockTransferID]
+	, [RequestTime]
+	, [SecSymbol]
+	, [StockQuantity]
+	, [RejectedTime]
+	, [RejectedReason]
+	, [SourceAccountID]
+	, [TargetAccountID]
+	, [Status]
+	, [BrokerID]
+	, [ExecTime]
+    FROM
+	[dbo].[StockTransfer]
+    WHERE 
+	 ([StockTransferID] = @StockTransferId OR @StockTransferId IS NULL)
+	AND ([RequestTime] = @RequestTime OR @RequestTime IS NULL)
+	AND ([SecSymbol] = @SecSymbol OR @SecSymbol IS NULL)
+	AND ([StockQuantity] = @StockQuantity OR @StockQuantity IS NULL)
+	AND ([RejectedTime] = @RejectedTime OR @RejectedTime IS NULL)
+	AND ([SourceAccountID] = @SourceAccountId OR @SourceAccountId IS NULL)
+	AND ([TargetAccountID] = @TargetAccountId OR @TargetAccountId IS NULL)
+	AND ([Status] = @Status OR @Status IS NULL)
+	AND ([BrokerID] = @BrokerId OR @BrokerId IS NULL)
+	AND ([ExecTime] = @ExecTime OR @ExecTime IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [StockTransferID]
+	, [RequestTime]
+	, [SecSymbol]
+	, [StockQuantity]
+	, [RejectedTime]
+	, [RejectedReason]
+	, [SourceAccountID]
+	, [TargetAccountID]
+	, [Status]
+	, [BrokerID]
+	, [ExecTime]
+    FROM
+	[dbo].[StockTransfer]
+    WHERE 
+	 ([StockTransferID] = @StockTransferId AND @StockTransferId is not null)
+	OR ([RequestTime] = @RequestTime AND @RequestTime is not null)
+	OR ([SecSymbol] = @SecSymbol AND @SecSymbol is not null)
+	OR ([StockQuantity] = @StockQuantity AND @StockQuantity is not null)
+	OR ([RejectedTime] = @RejectedTime AND @RejectedTime is not null)
+	OR ([SourceAccountID] = @SourceAccountId AND @SourceAccountId is not null)
+	OR ([TargetAccountID] = @TargetAccountId AND @TargetAccountId is not null)
+	OR ([Status] = @Status AND @Status is not null)
+	OR ([BrokerID] = @BrokerId AND @BrokerId is not null)
+	OR ([ExecTime] = @ExecTime AND @ExecTime is not null)
+	SELECT @@ROWCOUNT			
+  END
+				]]></body>
+		</procedure>
+
+		
+		<procedure owner="dbo" name="StockTransfer_Find_Dynamic"  skip="true">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+-- Date Created: Thursday, December 09, 2010
+
+-- Created By: OTS Co., Ltd. (http://ots.vn)
+-- Purpose: Gets records from the StockTransfer table using a dynamically generated query.
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				BEGIN
+				
+				WITH PageIndex AS (
+					SELECT TOP {3} row_number() over (order by {1}) AS RowIndex
+					, [StockTransferID]
+					, [RequestTime]
+					, [SecSymbol]
+					, [StockQuantity]
+					, [RejectedTime]
+					, [RejectedReason]
+					, [SourceAccountID]
+					, [TargetAccountID]
+					, [Status]
+					, [BrokerID]
+					, [ExecTime]
+					FROM [dbo].[StockTransfer] {0}
+				)
+				SELECT
+				       [StockTransferID],
+				       [RequestTime],
+				       [SecSymbol],
+				       [StockQuantity],
+				       [RejectedTime],
+				       [RejectedReason],
+				       [SourceAccountID],
+				       [TargetAccountID],
+				       [Status],
+				       [BrokerID],
+				       [ExecTime]
+				  FROM PageIndex
+				 WHERE RowIndex > {2}
+				   AND RowIndex <= {3}
+				ORDER BY {1};
+				
+
+				-- get total count
+				SELECT COUNT(*) AS TotalRowCount FROM [dbo].[StockTransfer] {0};
+				
+				END
+			]]></body>
+		</procedure>
+		
+</procedures>
+</root>

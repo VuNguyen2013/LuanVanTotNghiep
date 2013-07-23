@@ -1,0 +1,351 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="StockServices.cs" company="OTS">
+//   2010
+// </copyright>
+// <summary>
+//   Defines the StockServices type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System.Linq;
+
+namespace ETradeCore.Services
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+
+    using ETradeCommon;
+    using ETradeCommon.Enums;
+
+    using DataAccess;
+    using DataAccess.SqlClient;
+    using Entities;
+
+    public class StockServices
+    {
+        private readonly IFisCoreProvider _fisProvider = new SqlDb2Provider();
+
+        private readonly ISbaCoreProvider _sbaProvider = new SqlInformixProvider();
+
+        #region Stock
+        /// <summary>
+        /// Gets the stock balance.
+        /// </summary>
+        /// <param name="accountNo">
+        /// The account no.
+        /// </param>
+        /// <param name="symbol">
+        /// The symbol.
+        /// </param>
+        /// <param name="accountType">
+        /// The account Type.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public StockAvailable GetStockAvailable(string accountNo, string symbol, int accountType)
+        {
+            StockAvailable stockBalance;
+
+            if (accountType == (int)CommonEnums.ACCOUNT_TYPE.NORMAL)
+            {
+                stockBalance = _fisProvider.GetStockAvailable4NormalAccount(accountNo, symbol);
+            }
+            else
+            {
+                stockBalance = _fisProvider.GetStockAvailable4MarginAccount(accountNo, symbol);
+            }
+
+            if (stockBalance == null)
+            {
+                LogHandler.Log("GetStockBalance: " + accountNo + " there no " + symbol + " in DB", GetType() + ".GetStockBalance()", TraceEventType.Information);
+                return null;
+            }
+
+            return stockBalance;
+        }
+        #endregion
+      
+        #region Portfolio
+        /// <summary>
+        /// Gets the portfolio info.
+        /// </summary>
+        /// <param name="accountNo">
+        /// The account no.
+        /// </param>
+        /// <param name="accountType">
+        /// The account Type.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public Dictionary<string, PortfolioInfo> GetPortfolioInfo(string accountNo, int accountType)
+        {
+            // Get portfolio information for symbols that can sell
+            Dictionary<string, PortfolioInfo> returnVal;
+
+            returnVal = this.GetPortfolio4Account(accountNo, accountType);
+
+            if (returnVal == null)
+            {
+                LogHandler.Log(
+                    "GetPortfolioInfo: " + accountNo + " no portfolio",
+                    GetType() + ".GetPortfolioInfo()",
+                    TraceEventType.Information);
+                return null;
+            }
+
+            return returnVal;
+        }
+
+        /// <summary>
+        /// Gets list of portfolios.
+        /// </summary>
+        /// <param name="accountNo">
+        /// The account no.
+        /// </param>
+        /// <param name="accountType">
+        /// The account Type.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public List<string> GetListPortfolio(string accountNo, int accountType)
+        {
+            var returnVal = GetListPortfolio4Account(accountNo, accountType);
+
+            return returnVal;
+        }
+
+        /// <summary>
+        /// Gets the portfolio4 normal account. Only care about the stocks that can sell/transfer
+        /// </summary>
+        /// <param name="accountNo">The account no.</param>
+        /// <param name="accounttype">Account type</param>
+        /// <returns></returns>
+        public List<string> GetListPortfolio4Account(string accountNo, int accounttype)
+        {
+            var portfolioInfos = new List<Portfolio>();
+            switch (accounttype)
+            {
+                case (int) CommonEnums.ACCOUNT_TYPE.NORMAL:
+                    portfolioInfos = _fisProvider.GetPortfolio4NormalAccount(accountNo);
+                    break;
+                case (int) CommonEnums.ACCOUNT_TYPE.MARGIN:
+                    portfolioInfos = _fisProvider.GetPortfolio4MarginAccount(accountNo);
+                    break;
+                default:
+                    break;
+            }
+
+            if (portfolioInfos != null)
+            {
+                var returnList = new List<string>();
+                foreach (var portfolioInfo in portfolioInfos)
+                {
+                    if (!returnList.Contains(portfolioInfo.Symbol.Trim()))
+                    {
+                        if (portfolioInfo.SecType == (int)CommonEnums.SEC_TYPE.SELLABLE_SHARE &&
+                            portfolioInfo.Available > 0)
+                        {
+                            returnList.Add(portfolioInfo.Symbol.Trim());
+                            returnList.Sort();
+                        }
+                    }
+                }
+                return returnList;
+            }
+            return new List<string>();
+        }
+
+        /// <summary>
+        /// Gets the portfolio4 normal account.
+        /// </summary>
+        /// <param name="accountNo">The account no.</param>
+        /// <returns></returns>
+        private Dictionary<String, PortfolioInfo> GetPortfolio4Account(string accountNo, int accounttype)
+        {
+            // Get portfolio information for symbols that can sell
+            List<Portfolio> portfolioInfos = null;
+
+            switch (accounttype)
+            {
+                case (int)CommonEnums.ACCOUNT_TYPE.NORMAL:
+                    portfolioInfos = this._fisProvider.GetPortfolio4NormalAccount(accountNo);
+                    break;
+                case (int)CommonEnums.ACCOUNT_TYPE.MARGIN:
+                    portfolioInfos = this._fisProvider.GetPortfolio4MarginAccount(accountNo);
+                    break;
+                default:
+                    break;
+            }
+
+            // Get stock due information for symbols wait to reveice or wait to send
+            Dictionary<string, StockDueInfo> listStockDueInfos = _fisProvider.GetStockDue(accountNo);
+
+            if (portfolioInfos == null && listStockDueInfos == null)
+            {
+                return null;
+            }
+
+            var returnVal = new Dictionary<string, PortfolioInfo>();
+
+           
+            foreach (Portfolio portfolio in portfolioInfos)
+            {
+                PortfolioInfo currentportfolio;
+
+                // Only care 2 types of stock in this phase.
+                if (portfolio.SecType != (int)CommonEnums.SEC_TYPE.SELLABLE_SHARE &&
+                    portfolio.SecType != (int)CommonEnums.SEC_TYPE.WAIT_RECV &&
+                    portfolio.SecType != (int)CommonEnums.SEC_TYPE.WAIT_SEND) continue;
+
+                // don't care row with avilable volume = 0.
+                if (portfolio.Available <= 0) continue;
+
+                if (returnVal.ContainsKey(portfolio.Symbol))
+                {
+                    // This symbol is existed in portfolio, so update portfolio information
+                    currentportfolio = returnVal[portfolio.Symbol];
+                }
+                else
+                {
+                    // This symbol is not exist in portfolio
+                    currentportfolio = new PortfolioInfo();
+                    currentportfolio.Symbol = portfolio.Symbol;
+                    //currentportfolio.MarketPrice = _coreProvider.GetMarketPrice(portfolio.Symbol);
+                    returnVal.Add(portfolio.Symbol, currentportfolio);
+                }
+
+                switch (portfolio.SecType)
+                {
+                    // TODO: USE IN THE FURTURE
+                    /*
+                    case (int)CommonEnums.SEC_TYPE.NON_SELLABLE_BY_LENDING_MONEY:
+                        currentportfolio.PledgeShare = portfolio.Available;
+                        break;
+                     */
+                    case (int)CommonEnums.SEC_TYPE.SELLABLE_SHARE:
+                        currentportfolio.SellableShare = portfolio.Available;
+                        currentportfolio.AvgPrice = portfolio.AvgPrice;
+                        currentportfolio.Total = portfolio.Available;
+                        break;
+                    case (int)CommonEnums.SEC_TYPE.WAIT_RECV:
+                        currentportfolio.WTR = portfolio.Available;
+                        break;
+                    case (int)CommonEnums.SEC_TYPE.WAIT_SEND:
+                        currentportfolio.WTS = portfolio.Available;
+                        break;
+
+                    default:
+                        break;
+                }
+
+
+                returnVal[portfolio.Symbol] = currentportfolio;
+            }// for reach
+
+            if (listStockDueInfos != null)
+            {
+                foreach (var stockdue in listStockDueInfos)
+                {
+                    string symbol = stockdue.Key;
+                                    
+                    if (returnVal.ContainsKey(symbol))
+                    {
+                        PortfolioInfo dueportfolio = returnVal[symbol];
+                        UpdatePortfolio(ref dueportfolio, listStockDueInfos[symbol]);
+
+                        returnVal[symbol] = dueportfolio;
+                    }
+                }// for reach
+
+            }// if
+
+            // this.CaculatePortfolio(ref returnVal);
+            
+
+            return returnVal;
+        }
+
+        /// <summary>
+        /// Updates the portfolio.
+        /// </summary>
+        /// <param name="retVal">The portfolio info.</param>
+        /// <param name="stockDueInfo">The stock due info.</param>
+        /// <returns></returns>
+        private static void UpdatePortfolio(ref PortfolioInfo retVal, StockDueInfo stockDueInfo)
+        {
+            if (stockDueInfo != null)
+            {
+                   
+                retVal.WTR_T1 = stockDueInfo.WTR_T1;
+                retVal.WTR_T2 = stockDueInfo.WTR_T2;
+                retVal.WTR_T3 = stockDueInfo.WTR_T3;
+                retVal.DueAvgPrice = stockDueInfo.DueAvgPrice;
+
+                //TODO: SHOULD CACULATE FOR T+0
+                decimal totalStock = retVal.SellableShare + retVal.WTR_T1 + retVal.WTR_T2 +
+                                     retVal.WTR_T3 + stockDueInfo.WTR;
+
+                retVal.Total = totalStock;
+
+                if (totalStock > 0)
+                {
+                    //TODO: SHOULD CACULATE FOR T+0, GET THE BUYAVR PRICE FROM ORDERS OF TODAY.
+                    retVal.AvgPrice = (((retVal.AvgPrice * retVal.SellableShare) +
+                                       stockDueInfo.DueAvgPrice *
+                                       (stockDueInfo.WTR_T1 + stockDueInfo.WTR_T2 + stockDueInfo.WTR_T3)) /
+                                      (totalStock - stockDueInfo.WTR) );
+                }
+                else
+                {
+                    retVal.AvgPrice = 0;
+                }
+                
+            }
+        }
+
+        /// <summary>
+        /// Gets the portfolio direct4 normal account.
+        /// </summary>
+        /// <param name="accountNo">The account no.</param>
+        /// <returns></returns>
+        public List<Portfolio> GetPortfolioDirect4NormalAccount(string accountNo)
+        {
+            return this._fisProvider.GetPortfolioBySql4NormalAccount(accountNo);
+        }
+        #endregion
+
+        #region XD
+        /// <summary>
+        /// Gets the XD info.
+        /// </summary>
+        /// <param name="accountNo">The account no.</param>
+        /// <param name="symbol">The symbol.</param>
+        /// <param name="fromDate">From date.</param>
+        /// <param name="toDate">To date.</param>
+        /// <returns></returns>
+        public List<XD> GetXDInfo(string accountNo, string symbol, string fromDate, string toDate)
+        {
+            return _sbaProvider.GetXDInfo(accountNo, symbol, fromDate, toDate);
+        }
+        #endregion       
+
+        #region XR
+        /// <summary>
+        /// Gets the XR info.
+        /// </summary>
+        /// <param name="accountNo">The account no.</param>
+        /// <param name="symbol">The symbol.</param>
+        /// <param name="sellFromDate">The sell from date.</param>
+        /// <param name="sellToDate">The sell to date.</param>
+        /// <param name="transferFromDate">The transfer from date.</param>
+        /// <param name="transferToDate">The transfer to date.</param>
+        /// <returns></returns>
+        public List<XR> GetXRInfo(string accountNo, string symbol, string fromDate, string toDate, int xType)
+        {
+            return _sbaProvider.GetXRInfo(accountNo, symbol, fromDate, toDate, xType);
+        }
+        #endregion
+        
+    }
+}

@@ -1,0 +1,123 @@
+using System;
+using System.Runtime.InteropServices;
+using System.Security.Principal;
+using System.Collections.Generic;
+using System.IO;
+
+namespace RTDataServices
+{
+    class NetworkSharing
+    {
+        [DllImport("advapi32.dll", SetLastError = true)]
+        private static extern bool LogonUser(string lpszUsername, 
+                                             string lpszDomain,
+                                             string lpszPassword,
+                                             int dwLogonType,
+                                             int dwLogonProvider,
+                                             ref IntPtr phToken);
+
+        //[DllImport("kernel32.dll", CharSet = CharSet.Auto)]
+        //private unsafe static extern int FormatMessage(int dwFlags, 
+        //                                               ref IntPtr lpSource,
+        //                                               int dwMessageId, 
+        //                                               int dwLanguageId,
+        //                                               ref String lpBuffer,
+        //                                               int nSize,
+        //                                               IntPtr* arguments);
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern bool CloseHandle(IntPtr handle);
+
+        [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public extern static bool DuplicateToken(IntPtr existingTokenHandle,
+                                                 int SECURITY_IMPERSONATION_LEVEL,
+                                                 ref IntPtr duplicateTokenHandle);
+
+
+        // logon types
+        //const int LOGON32_LOGON_INTERACTIVE = 2;
+        //const int LOGON32_LOGON_NETWORK = 3;
+        const int LOGON32_LOGON_NEW_CREDENTIALS = 9;
+
+        // logon providers
+        const int LOGON32_PROVIDER_DEFAULT = 0;
+        //const int LOGON32_PROVIDER_WINNT50 = 3;
+        //const int LOGON32_PROVIDER_WINNT40 = 2;
+        //const int LOGON32_PROVIDER_WINNT35 = 1;
+
+        private static IntPtr _token = IntPtr.Zero;
+        private static IntPtr _dupToken = IntPtr.Zero;
+        private static WindowsImpersonationContext _impersonatedUser;
+
+        static public bool ServerLogon(string sServerAddress, string sUsername, string sPassword)
+        {
+            bool bIsSuccess = LogonUser(sUsername, sServerAddress, sPassword,
+                                       LOGON32_LOGON_NEW_CREDENTIALS,
+                                       LOGON32_PROVIDER_DEFAULT, ref _token);
+            
+            if (!bIsSuccess)
+            {
+                return false;
+            }
+
+            bIsSuccess = DuplicateToken(_token, 2, ref _dupToken);
+
+            if (!bIsSuccess)
+            {
+                return false;
+            }
+
+            WindowsIdentity newIdentity = new WindowsIdentity(_dupToken);
+
+            _impersonatedUser = newIdentity.Impersonate();
+            
+            return bIsSuccess; 
+        }
+
+        static public bool NetworkCopy(string sSourceDir, string sDestDir)
+        { 
+            bool success = false;
+            while (!success)
+            {
+                try 
+                {
+                    List<string> lstFiles = new List<string>();
+
+                    foreach (string sPattern in new string[] { "*.zip", "*.DAT" })
+                    {
+                        lstFiles.AddRange(Directory.GetFiles(sSourceDir, sPattern));
+                    }
+
+                    foreach (string file in lstFiles)
+                    {
+                        FileInfo fi = new FileInfo(file);
+
+                        fi.CopyTo(sDestDir + @"\" + fi.Name, true);
+                    } 
+                    success = true;
+                }
+                catch (Exception e)
+                {
+                    //Common.Log(e.ToString());
+
+                    //return false;
+                }
+            }
+             
+            return true;
+        }
+
+        static public void ServerLogoff ()
+        {
+            _impersonatedUser.Undo();
+
+            bool bIsSuccess = CloseHandle(_token);
+
+            if (!bIsSuccess)
+            {
+                return;
+            }
+        }
+
+    }
+}

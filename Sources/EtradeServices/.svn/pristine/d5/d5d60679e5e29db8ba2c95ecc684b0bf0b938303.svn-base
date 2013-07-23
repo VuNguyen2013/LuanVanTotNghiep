@@ -1,0 +1,1893 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ETradeFinance.DataAccess.SqlClient</name>
+    </assembly>
+    <members>
+        <member name="T:ETradeFinance.DataAccess.SqlClient.SqlOddLotOrderProvider">
+            <summary>
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeFinance.Entities.OddLotOrder"/> entity.
+            </summary>
+        </member>
+        <member name="T:ETradeFinance.DataAccess.SqlClient.SqlOddLotOrderProviderBase">
+            <summary>
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeFinance.Entities.OddLotOrder"/> entity.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlOddLotOrderProviderBase.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlOddLotOrderProviderBase"/> instance.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlOddLotOrderProviderBase.#ctor(System.String,System.Boolean,System.String)">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlOddLotOrderProviderBase"/> instance.
+            Uses connection string to connect to datasource.
+            </summary>
+            <param name="connectionString">The connection string to the database.</param>
+            <param name="useStoredProcedure">A boolean value that indicates if we should use stored procedures or embedded queries.</param>
+            <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlOddLotOrderProviderBase.Delete(ETradeFinance.DataAccess.TransactionManager,System.Int64)">
+            <summary>
+            	Deletes a row from the DataSource.
+            </summary>
+            <param name="_id">OddLotOrderID identifies OddLotOrder. Primary Key.</param>	
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <remarks>Deletes based on primary key(s).</remarks>
+            <returns>Returns true if operation suceeded.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlOddLotOrderProviderBase.Find(ETradeFinance.DataAccess.TransactionManager,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Returns rows meeting the whereClause condition from the DataSource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <remarks>Operators must be capitalized (OR, AND).</remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.OddLotOrder objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlOddLotOrderProviderBase.Find(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.DataAccess.IFilterParameterCollection,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Returns rows from the DataSource that meet the parameter conditions.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="parameters">A collection of <see cref="T:ETradeFinance.DataAccess.SqlFilterParameter"/> objects.</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <returns>Returns a typed collection of ETradeFinance.Entities.OddLotOrder objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlOddLotOrderProviderBase.GetAll(ETradeFinance.DataAccess.TransactionManager,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Gets All rows from the DataSource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.OddLotOrder objects.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlOddLotOrderProviderBase.GetPaged(ETradeFinance.DataAccess.TransactionManager,System.String,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets a page of rows from the DataSource.
+            </summary>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">Number of rows in the DataSource.</param>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.OddLotOrder objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlOddLotOrderProviderBase.GetById(ETradeFinance.DataAccess.TransactionManager,System.Int64,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Gets rows from the datasource based on the PK_OddLotOrder index.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="_id">OddLotOrderID identifies OddLotOrder</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out parameter to get total records for query.</param>
+            <returns>Returns an instance of the <see cref="T:ETradeFinance.Entities.OddLotOrder"/> class.</returns>
+            <remarks></remarks>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlOddLotOrderProviderBase.BulkInsert(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.TList{ETradeFinance.Entities.OddLotOrder})">
+            <summary>
+            Lets you efficiently bulk insert many entities to the database.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="entities">The entities.</param>
+            <remarks>
+            	After inserting into the datasource, the ETradeFinance.Entities.OddLotOrder object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>	
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlOddLotOrderProviderBase.Insert(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.OddLotOrder)">
+            <summary>
+            	Inserts a ETradeFinance.Entities.OddLotOrder object into the datasource using a transaction.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="entity">ETradeFinance.Entities.OddLotOrder object to insert.</param>
+            <remarks>
+            	After inserting into the datasource, the ETradeFinance.Entities.OddLotOrder object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>	
+            <returns>Returns true if operation is successful.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlOddLotOrderProviderBase.Update(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.OddLotOrder)">
+            <summary>
+            	Update an existing row in the datasource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="entity">ETradeFinance.Entities.OddLotOrder object to update.</param>
+            <remarks>
+            	After updating the datasource, the ETradeFinance.Entities.OddLotOrder object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+            <returns>Returns true if operation is successful.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlOddLotOrderProviderBase.ConnectionString">
+            <summary>
+            Gets or sets the connection string.
+            </summary>
+            <value>The connection string.</value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlOddLotOrderProviderBase.UseStoredProcedure">
+            <summary>
+            Gets or sets a value indicating whether to use stored procedures.
+            </summary>
+            <value><c>true</c> if we choose to use use stored procedures; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlOddLotOrderProviderBase.ProviderInvariantName">
+            <summary>
+            Gets or sets the invariant provider name listed in the DbProviderFactories machine.config section.
+            </summary>
+            <value>The name of the provider invariant.</value>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlOddLotOrderProvider.#ctor(System.String,System.Boolean,System.String)">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlOddLotOrderProvider"/> instance.
+            Uses connection string to connect to datasource.
+            </summary>
+            <param name="connectionString">The connection string to the database.</param>
+            <param name="useStoredProcedure">A boolean value that indicates if we use the stored procedures or embedded queries.</param>
+            <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
+        </member>
+        <member name="T:ETradeFinance.DataAccess.SqlClient.SqlStockTransferProviderBase">
+            <summary>
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeFinance.Entities.StockTransfer"/> entity.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlStockTransferProviderBase.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlStockTransferProviderBase"/> instance.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlStockTransferProviderBase.#ctor(System.String,System.Boolean,System.String)">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlStockTransferProviderBase"/> instance.
+            Uses connection string to connect to datasource.
+            </summary>
+            <param name="connectionString">The connection string to the database.</param>
+            <param name="useStoredProcedure">A boolean value that indicates if we should use stored procedures or embedded queries.</param>
+            <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlStockTransferProviderBase.Delete(ETradeFinance.DataAccess.TransactionManager,System.Int64)">
+            <summary>
+            	Deletes a row from the DataSource.
+            </summary>
+            <param name="_id">StockTransferID identifies StockTransfer. Primary Key.</param>	
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <remarks>Deletes based on primary key(s).</remarks>
+            <returns>Returns true if operation suceeded.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlStockTransferProviderBase.Find(ETradeFinance.DataAccess.TransactionManager,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Returns rows meeting the whereClause condition from the DataSource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <remarks>Operators must be capitalized (OR, AND).</remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.StockTransfer objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlStockTransferProviderBase.Find(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.DataAccess.IFilterParameterCollection,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Returns rows from the DataSource that meet the parameter conditions.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="parameters">A collection of <see cref="T:ETradeFinance.DataAccess.SqlFilterParameter"/> objects.</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <returns>Returns a typed collection of ETradeFinance.Entities.StockTransfer objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlStockTransferProviderBase.GetAll(ETradeFinance.DataAccess.TransactionManager,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Gets All rows from the DataSource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.StockTransfer objects.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlStockTransferProviderBase.GetPaged(ETradeFinance.DataAccess.TransactionManager,System.String,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets a page of rows from the DataSource.
+            </summary>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">Number of rows in the DataSource.</param>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.StockTransfer objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlStockTransferProviderBase.GetById(ETradeFinance.DataAccess.TransactionManager,System.Int64,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Gets rows from the datasource based on the PK_StockTransfer index.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="_id">StockTransferID identifies StockTransfer</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out parameter to get total records for query.</param>
+            <returns>Returns an instance of the <see cref="T:ETradeFinance.Entities.StockTransfer"/> class.</returns>
+            <remarks></remarks>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlStockTransferProviderBase.BulkInsert(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.TList{ETradeFinance.Entities.StockTransfer})">
+            <summary>
+            Lets you efficiently bulk insert many entities to the database.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="entities">The entities.</param>
+            <remarks>
+            	After inserting into the datasource, the ETradeFinance.Entities.StockTransfer object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>	
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlStockTransferProviderBase.Insert(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.StockTransfer)">
+            <summary>
+            	Inserts a ETradeFinance.Entities.StockTransfer object into the datasource using a transaction.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="entity">ETradeFinance.Entities.StockTransfer object to insert.</param>
+            <remarks>
+            	After inserting into the datasource, the ETradeFinance.Entities.StockTransfer object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>	
+            <returns>Returns true if operation is successful.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlStockTransferProviderBase.Update(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.StockTransfer)">
+            <summary>
+            	Update an existing row in the datasource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="entity">ETradeFinance.Entities.StockTransfer object to update.</param>
+            <remarks>
+            	After updating the datasource, the ETradeFinance.Entities.StockTransfer object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+            <returns>Returns true if operation is successful.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlStockTransferProviderBase.ConnectionString">
+            <summary>
+            Gets or sets the connection string.
+            </summary>
+            <value>The connection string.</value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlStockTransferProviderBase.UseStoredProcedure">
+            <summary>
+            Gets or sets a value indicating whether to use stored procedures.
+            </summary>
+            <value><c>true</c> if we choose to use use stored procedures; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlStockTransferProviderBase.ProviderInvariantName">
+            <summary>
+            Gets or sets the invariant provider name listed in the DbProviderFactories machine.config section.
+            </summary>
+            <value>The name of the provider invariant.</value>
+        </member>
+        <member name="T:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceProviderBase">
+            <summary>
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeFinance.Entities.CashAdvance"/> entity.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceProviderBase.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceProviderBase"/> instance.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceProviderBase.#ctor(System.String,System.Boolean,System.String)">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceProviderBase"/> instance.
+            Uses connection string to connect to datasource.
+            </summary>
+            <param name="connectionString">The connection string to the database.</param>
+            <param name="useStoredProcedure">A boolean value that indicates if we should use stored procedures or embedded queries.</param>
+            <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceProviderBase.Delete(ETradeFinance.DataAccess.TransactionManager,System.Int64)">
+            <summary>
+            	Deletes a row from the DataSource.
+            </summary>
+            <param name="_id">CashAdvanceID identifies CashAdvance. Primary Key.</param>	
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <remarks>Deletes based on primary key(s).</remarks>
+            <returns>Returns true if operation suceeded.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceProviderBase.Find(ETradeFinance.DataAccess.TransactionManager,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Returns rows meeting the whereClause condition from the DataSource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <remarks>Operators must be capitalized (OR, AND).</remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.CashAdvance objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceProviderBase.Find(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.DataAccess.IFilterParameterCollection,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Returns rows from the DataSource that meet the parameter conditions.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="parameters">A collection of <see cref="T:ETradeFinance.DataAccess.SqlFilterParameter"/> objects.</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <returns>Returns a typed collection of ETradeFinance.Entities.CashAdvance objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceProviderBase.GetAll(ETradeFinance.DataAccess.TransactionManager,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Gets All rows from the DataSource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.CashAdvance objects.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceProviderBase.GetPaged(ETradeFinance.DataAccess.TransactionManager,System.String,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets a page of rows from the DataSource.
+            </summary>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">Number of rows in the DataSource.</param>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.CashAdvance objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceProviderBase.GetById(ETradeFinance.DataAccess.TransactionManager,System.Int64,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Gets rows from the datasource based on the PK_CashAdvance index.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="_id">CashAdvanceID identifies CashAdvance</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out parameter to get total records for query.</param>
+            <returns>Returns an instance of the <see cref="T:ETradeFinance.Entities.CashAdvance"/> class.</returns>
+            <remarks></remarks>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceProviderBase.BulkInsert(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.TList{ETradeFinance.Entities.CashAdvance})">
+            <summary>
+            Lets you efficiently bulk insert many entities to the database.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="entities">The entities.</param>
+            <remarks>
+            	After inserting into the datasource, the ETradeFinance.Entities.CashAdvance object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>	
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceProviderBase.Insert(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.CashAdvance)">
+            <summary>
+            	Inserts a ETradeFinance.Entities.CashAdvance object into the datasource using a transaction.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="entity">ETradeFinance.Entities.CashAdvance object to insert.</param>
+            <remarks>
+            	After inserting into the datasource, the ETradeFinance.Entities.CashAdvance object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>	
+            <returns>Returns true if operation is successful.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceProviderBase.Update(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.CashAdvance)">
+            <summary>
+            	Update an existing row in the datasource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="entity">ETradeFinance.Entities.CashAdvance object to update.</param>
+            <remarks>
+            	After updating the datasource, the ETradeFinance.Entities.CashAdvance object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+            <returns>Returns true if operation is successful.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceProviderBase.DeleteOldData(ETradeFinance.DataAccess.TransactionManager,System.Int32,System.Int32)">
+            <summary>
+            This method wraps the '_CashAdvance_DeleteOldData' stored procedure. 
+            </summary>	
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object.</param>
+            <remark>This method is generated from a stored procedure.</remark>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceProviderBase.ConnectionString">
+            <summary>
+            Gets or sets the connection string.
+            </summary>
+            <value>The connection string.</value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceProviderBase.UseStoredProcedure">
+            <summary>
+            Gets or sets a value indicating whether to use stored procedures.
+            </summary>
+            <value><c>true</c> if we choose to use use stored procedures; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceProviderBase.ProviderInvariantName">
+            <summary>
+            Gets or sets the invariant provider name listed in the DbProviderFactories machine.config section.
+            </summary>
+            <value>The name of the provider invariant.</value>
+        </member>
+        <member name="T:ETradeFinance.DataAccess.SqlClient.StoredProcedureProvider">
+            <summary>
+            Summary description for Procedures.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.StoredProcedureProvider.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.StoredProcedureProvider"/> instance.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.StoredProcedureProvider.Serialize(System.String)">
+            <summary>
+            Serializes the specified filename.
+            </summary>
+            <param name="filename">Filename.</param>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.StoredProcedureProvider.Deserialize">
+            <summary>
+            Deserializes this instance.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.StoredProcedureProvider.GetProcedureBodyFromEmbeddedResource(System.String)">
+            <summary>
+            Get the query text from the embedded xml file.
+            </summary>
+            <param name="name">The name of the query.</param>
+            <returns>the text of the query</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.StoredProcedureProvider.GetCommandWrapper(Microsoft.Practices.EnterpriseLibrary.Data.Database,System.String,System.Boolean)">
+            <summary>
+            Get the command wrapper, either from the stored procedures or from the embedded queries.
+            </summary>
+            <param name="database">The database instance.</param>
+            <param name="commandName">the name of the sp.</param>
+            <param name="useStoredProcedure">Indicates if we want stored procedure.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.StoredProcedureProvider.GetCommandWrapper(Microsoft.Practices.EnterpriseLibrary.Data.Database,System.String,System.Type,ETradeFinance.DataAccess.SqlFilterParameterCollection,System.String,System.Int32,System.Int32)">
+            <summary>
+            Gets the command wrapper for a dynamically generated query and
+            optionally includes server-side paging.
+            </summary>
+            <param name="database"></param>
+            <param name="commandName"></param>
+            <param name="columnEnum"></param>
+            <param name="parameters"></param>
+            <param name="orderBy"></param>
+            <param name="start"></param>
+            <param name="pageLength"></param>
+            <returns></returns>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.StoredProcedureProvider.Current">
+            <summary>
+            Gets the current <see cref="T:ETradeFinance.DataAccess.SqlClient.StoredProcedureProvider"/> singleton instance.
+            </summary>
+            <value><see cref="T:ETradeFinance.DataAccess.SqlClient.StoredProcedureProvider"/></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.StoredProcedureProvider.Procedures">
+            <summary>
+            Gets or sets the procedures.
+            </summary>
+            <value>An <see cref="T:System.Collections.ArrayList"/> of <see cref="T:ETradeFinance.DataAccess.SqlClient.Procedure"/> objects.</value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.StoredProcedureProvider.Item(System.String)">
+            <summary>
+            Gets or sets the <see cref="T:ETradeFinance.DataAccess.SqlClient.Procedure"/> instance with the specified name.
+            </summary>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.StoredProcedureProvider.Item(System.Int32)">
+            <summary>
+            Gets or sets the <see cref="T:ETradeFinance.DataAccess.SqlClient.Procedure"/> instance at the specified index.
+            </summary>
+        </member>
+        <member name="T:ETradeFinance.DataAccess.SqlClient.Procedure">
+            <summary>
+            Represents a sql query.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.Procedure.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.Procedure"/> instance.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.Procedure.Parameter(System.String)">
+            <summary>
+            Get the parameter from the specified name of the param.
+            </summary>
+            <param name="paramName">Name of the param.</param>
+            <returns></returns>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.Procedure.Parameters">
+            <summary>
+            Gets or sets the parameters.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.Procedure.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.Procedure.Owner">
+            <summary>
+            Gets or sets the owner.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.Procedure.Comment">
+            <summary>
+            Gets or sets the comment.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.Procedure.Body">
+            <summary>
+            Gets or sets the body.
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:ETradeFinance.DataAccess.SqlClient.Parameter">
+            <summary>
+            Respresents a query parameter.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.Parameter.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.Parameter"/> instance.
+            </summary>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.Parameter.Name">
+            <summary>
+            Gets or sets the Name.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.Parameter.SqlType">
+            <summary>
+            Gets or sets the SqlType.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.Parameter.Direction">
+            <summary>
+            Gets or sets the Direction.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.Parameter.Size">
+            <summary>
+            Gets or sets the size.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.Parameter.Precision">
+            <summary>
+            Gets or sets the precision.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.Parameter.Scale">
+            <summary>
+            Gets or sets the scale.
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:ETradeFinance.DataAccess.SqlClient.SqlXrOrdersProviderBase">
+            <summary>
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeFinance.Entities.XrOrders"/> entity.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlXrOrdersProviderBase.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlXrOrdersProviderBase"/> instance.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlXrOrdersProviderBase.#ctor(System.String,System.Boolean,System.String)">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlXrOrdersProviderBase"/> instance.
+            Uses connection string to connect to datasource.
+            </summary>
+            <param name="connectionString">The connection string to the database.</param>
+            <param name="useStoredProcedure">A boolean value that indicates if we should use stored procedures or embedded queries.</param>
+            <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlXrOrdersProviderBase.Delete(ETradeFinance.DataAccess.TransactionManager,System.Int64)">
+            <summary>
+            	Deletes a row from the DataSource.
+            </summary>
+            <param name="_id">. Primary Key.</param>	
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <remarks>Deletes based on primary key(s).</remarks>
+            <returns>Returns true if operation suceeded.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlXrOrdersProviderBase.Find(ETradeFinance.DataAccess.TransactionManager,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Returns rows meeting the whereClause condition from the DataSource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <remarks>Operators must be capitalized (OR, AND).</remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.XrOrders objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlXrOrdersProviderBase.Find(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.DataAccess.IFilterParameterCollection,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Returns rows from the DataSource that meet the parameter conditions.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="parameters">A collection of <see cref="T:ETradeFinance.DataAccess.SqlFilterParameter"/> objects.</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <returns>Returns a typed collection of ETradeFinance.Entities.XrOrders objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlXrOrdersProviderBase.GetAll(ETradeFinance.DataAccess.TransactionManager,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Gets All rows from the DataSource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.XrOrders objects.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlXrOrdersProviderBase.GetPaged(ETradeFinance.DataAccess.TransactionManager,System.String,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets a page of rows from the DataSource.
+            </summary>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">Number of rows in the DataSource.</param>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.XrOrders objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlXrOrdersProviderBase.GetById(ETradeFinance.DataAccess.TransactionManager,System.Int64,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Gets rows from the datasource based on the PK_XRORDERS index.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="_id"></param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out parameter to get total records for query.</param>
+            <returns>Returns an instance of the <see cref="T:ETradeFinance.Entities.XrOrders"/> class.</returns>
+            <remarks></remarks>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlXrOrdersProviderBase.BulkInsert(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.TList{ETradeFinance.Entities.XrOrders})">
+            <summary>
+            Lets you efficiently bulk insert many entities to the database.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="entities">The entities.</param>
+            <remarks>
+            	After inserting into the datasource, the ETradeFinance.Entities.XrOrders object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>	
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlXrOrdersProviderBase.Insert(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.XrOrders)">
+            <summary>
+            	Inserts a ETradeFinance.Entities.XrOrders object into the datasource using a transaction.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="entity">ETradeFinance.Entities.XrOrders object to insert.</param>
+            <remarks>
+            	After inserting into the datasource, the ETradeFinance.Entities.XrOrders object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>	
+            <returns>Returns true if operation is successful.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlXrOrdersProviderBase.Update(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.XrOrders)">
+            <summary>
+            	Update an existing row in the datasource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="entity">ETradeFinance.Entities.XrOrders object to update.</param>
+            <remarks>
+            	After updating the datasource, the ETradeFinance.Entities.XrOrders object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+            <returns>Returns true if operation is successful.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlXrOrdersProviderBase.ConnectionString">
+            <summary>
+            Gets or sets the connection string.
+            </summary>
+            <value>The connection string.</value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlXrOrdersProviderBase.UseStoredProcedure">
+            <summary>
+            Gets or sets a value indicating whether to use stored procedures.
+            </summary>
+            <value><c>true</c> if we choose to use use stored procedures; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlXrOrdersProviderBase.ProviderInvariantName">
+            <summary>
+            Gets or sets the invariant provider name listed in the DbProviderFactories machine.config section.
+            </summary>
+            <value>The name of the provider invariant.</value>
+        </member>
+        <member name="T:ETradeFinance.DataAccess.SqlClient.SqlStockTransferProvider">
+            <summary>
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeFinance.Entities.StockTransfer"/> entity.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlStockTransferProvider.#ctor(System.String,System.Boolean,System.String)">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlStockTransferProvider"/> instance.
+            Uses connection string to connect to datasource.
+            </summary>
+            <param name="connectionString">The connection string to the database.</param>
+            <param name="useStoredProcedure">A boolean value that indicates if we use the stored procedures or embedded queries.</param>
+            <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
+        </member>
+        <member name="T:ETradeFinance.DataAccess.SqlClient.SqlFeeProviderBase">
+            <summary>
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeFinance.Entities.Fee"/> entity.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlFeeProviderBase.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlFeeProviderBase"/> instance.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlFeeProviderBase.#ctor(System.String,System.Boolean,System.String)">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlFeeProviderBase"/> instance.
+            Uses connection string to connect to datasource.
+            </summary>
+            <param name="connectionString">The connection string to the database.</param>
+            <param name="useStoredProcedure">A boolean value that indicates if we should use stored procedures or embedded queries.</param>
+            <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlFeeProviderBase.Delete(ETradeFinance.DataAccess.TransactionManager,System.Int64)">
+            <summary>
+            	Deletes a row from the DataSource.
+            </summary>
+            <param name="_feeId">. Primary Key.</param>	
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <remarks>Deletes based on primary key(s).</remarks>
+            <returns>Returns true if operation suceeded.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlFeeProviderBase.Find(ETradeFinance.DataAccess.TransactionManager,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Returns rows meeting the whereClause condition from the DataSource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <remarks>Operators must be capitalized (OR, AND).</remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.Fee objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlFeeProviderBase.Find(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.DataAccess.IFilterParameterCollection,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Returns rows from the DataSource that meet the parameter conditions.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="parameters">A collection of <see cref="T:ETradeFinance.DataAccess.SqlFilterParameter"/> objects.</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <returns>Returns a typed collection of ETradeFinance.Entities.Fee objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlFeeProviderBase.GetAll(ETradeFinance.DataAccess.TransactionManager,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Gets All rows from the DataSource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.Fee objects.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlFeeProviderBase.GetPaged(ETradeFinance.DataAccess.TransactionManager,System.String,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets a page of rows from the DataSource.
+            </summary>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">Number of rows in the DataSource.</param>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.Fee objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlFeeProviderBase.GetByFeeId(ETradeFinance.DataAccess.TransactionManager,System.Int64,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Gets rows from the datasource based on the PK_FEE index.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="_feeId"></param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out parameter to get total records for query.</param>
+            <returns>Returns an instance of the <see cref="T:ETradeFinance.Entities.Fee"/> class.</returns>
+            <remarks></remarks>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlFeeProviderBase.BulkInsert(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.TList{ETradeFinance.Entities.Fee})">
+            <summary>
+            Lets you efficiently bulk insert many entities to the database.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="entities">The entities.</param>
+            <remarks>
+            	After inserting into the datasource, the ETradeFinance.Entities.Fee object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>	
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlFeeProviderBase.Insert(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.Fee)">
+            <summary>
+            	Inserts a ETradeFinance.Entities.Fee object into the datasource using a transaction.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="entity">ETradeFinance.Entities.Fee object to insert.</param>
+            <remarks>
+            	After inserting into the datasource, the ETradeFinance.Entities.Fee object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>	
+            <returns>Returns true if operation is successful.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlFeeProviderBase.Update(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.Fee)">
+            <summary>
+            	Update an existing row in the datasource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="entity">ETradeFinance.Entities.Fee object to update.</param>
+            <remarks>
+            	After updating the datasource, the ETradeFinance.Entities.Fee object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+            <returns>Returns true if operation is successful.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlFeeProviderBase.ConnectionString">
+            <summary>
+            Gets or sets the connection string.
+            </summary>
+            <value>The connection string.</value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlFeeProviderBase.UseStoredProcedure">
+            <summary>
+            Gets or sets a value indicating whether to use stored procedures.
+            </summary>
+            <value><c>true</c> if we choose to use use stored procedures; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlFeeProviderBase.ProviderInvariantName">
+            <summary>
+            Gets or sets the invariant provider name listed in the DbProviderFactories machine.config section.
+            </summary>
+            <value>The name of the provider invariant.</value>
+        </member>
+        <member name="T:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceHistoryProviderBase">
+            <summary>
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeFinance.Entities.CashAdvanceHistory"/> entity.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceHistoryProviderBase.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceHistoryProviderBase"/> instance.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceHistoryProviderBase.#ctor(System.String,System.Boolean,System.String)">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceHistoryProviderBase"/> instance.
+            Uses connection string to connect to datasource.
+            </summary>
+            <param name="connectionString">The connection string to the database.</param>
+            <param name="useStoredProcedure">A boolean value that indicates if we should use stored procedures or embedded queries.</param>
+            <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceHistoryProviderBase.Delete(ETradeFinance.DataAccess.TransactionManager,System.Int64)">
+            <summary>
+            	Deletes a row from the DataSource.
+            </summary>
+            <param name="_id">CashAdvanceID identifies CashAdvance. Primary Key.</param>	
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <remarks>Deletes based on primary key(s).</remarks>
+            <returns>Returns true if operation suceeded.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceHistoryProviderBase.Find(ETradeFinance.DataAccess.TransactionManager,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Returns rows meeting the whereClause condition from the DataSource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <remarks>Operators must be capitalized (OR, AND).</remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.CashAdvanceHistory objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceHistoryProviderBase.Find(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.DataAccess.IFilterParameterCollection,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Returns rows from the DataSource that meet the parameter conditions.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="parameters">A collection of <see cref="T:ETradeFinance.DataAccess.SqlFilterParameter"/> objects.</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <returns>Returns a typed collection of ETradeFinance.Entities.CashAdvanceHistory objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceHistoryProviderBase.GetAll(ETradeFinance.DataAccess.TransactionManager,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Gets All rows from the DataSource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.CashAdvanceHistory objects.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceHistoryProviderBase.GetPaged(ETradeFinance.DataAccess.TransactionManager,System.String,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets a page of rows from the DataSource.
+            </summary>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">Number of rows in the DataSource.</param>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.CashAdvanceHistory objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceHistoryProviderBase.GetById(ETradeFinance.DataAccess.TransactionManager,System.Int64,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Gets rows from the datasource based on the PK_CashAdvanceHistory index.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="_id">CashAdvanceID identifies CashAdvance</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out parameter to get total records for query.</param>
+            <returns>Returns an instance of the <see cref="T:ETradeFinance.Entities.CashAdvanceHistory"/> class.</returns>
+            <remarks></remarks>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceHistoryProviderBase.BulkInsert(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.TList{ETradeFinance.Entities.CashAdvanceHistory})">
+            <summary>
+            Lets you efficiently bulk insert many entities to the database.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="entities">The entities.</param>
+            <remarks>
+            	After inserting into the datasource, the ETradeFinance.Entities.CashAdvanceHistory object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>	
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceHistoryProviderBase.Insert(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.CashAdvanceHistory)">
+            <summary>
+            	Inserts a ETradeFinance.Entities.CashAdvanceHistory object into the datasource using a transaction.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="entity">ETradeFinance.Entities.CashAdvanceHistory object to insert.</param>
+            <remarks>
+            	After inserting into the datasource, the ETradeFinance.Entities.CashAdvanceHistory object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>	
+            <returns>Returns true if operation is successful.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceHistoryProviderBase.Update(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.CashAdvanceHistory)">
+            <summary>
+            	Update an existing row in the datasource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="entity">ETradeFinance.Entities.CashAdvanceHistory object to update.</param>
+            <remarks>
+            	After updating the datasource, the ETradeFinance.Entities.CashAdvanceHistory object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+            <returns>Returns true if operation is successful.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceHistoryProviderBase.ConnectionString">
+            <summary>
+            Gets or sets the connection string.
+            </summary>
+            <value>The connection string.</value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceHistoryProviderBase.UseStoredProcedure">
+            <summary>
+            Gets or sets a value indicating whether to use stored procedures.
+            </summary>
+            <value><c>true</c> if we choose to use use stored procedures; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceHistoryProviderBase.ProviderInvariantName">
+            <summary>
+            Gets or sets the invariant provider name listed in the DbProviderFactories machine.config section.
+            </summary>
+            <value>The name of the provider invariant.</value>
+        </member>
+        <member name="T:ETradeFinance.DataAccess.SqlClient.SqlXrOrdersProvider">
+            <summary>
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeFinance.Entities.XrOrders"/> entity.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlXrOrdersProvider.#ctor(System.String,System.Boolean,System.String)">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlXrOrdersProvider"/> instance.
+            Uses connection string to connect to datasource.
+            </summary>
+            <param name="connectionString">The connection string to the database.</param>
+            <param name="useStoredProcedure">A boolean value that indicates if we use the stored procedures or embedded queries.</param>
+            <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
+        </member>
+        <member name="T:ETradeFinance.DataAccess.SqlClient.SqlFeeProvider">
+            <summary>
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeFinance.Entities.Fee"/> entity.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlFeeProvider.#ctor(System.String,System.Boolean,System.String)">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlFeeProvider"/> instance.
+            Uses connection string to connect to datasource.
+            </summary>
+            <param name="connectionString">The connection string to the database.</param>
+            <param name="useStoredProcedure">A boolean value that indicates if we use the stored procedures or embedded queries.</param>
+            <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
+        </member>
+        <member name="T:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceHistoryProvider">
+            <summary>
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeFinance.Entities.CashAdvanceHistory"/> entity.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceHistoryProvider.#ctor(System.String,System.Boolean,System.String)">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceHistoryProvider"/> instance.
+            Uses connection string to connect to datasource.
+            </summary>
+            <param name="connectionString">The connection string to the database.</param>
+            <param name="useStoredProcedure">A boolean value that indicates if we use the stored procedures or embedded queries.</param>
+            <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
+        </member>
+        <member name="T:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceProvider">
+            <summary>
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeFinance.Entities.CashAdvance"/> entity.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceProvider.#ctor(System.String,System.Boolean,System.String)">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlCashAdvanceProvider"/> instance.
+            Uses connection string to connect to datasource.
+            </summary>
+            <param name="connectionString">The connection string to the database.</param>
+            <param name="useStoredProcedure">A boolean value that indicates if we use the stored procedures or embedded queries.</param>
+            <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
+        </member>
+        <member name="T:ETradeFinance.DataAccess.SqlClient.SqlCashTransferProvider">
+            <summary>
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeFinance.Entities.CashTransfer"/> entity.
+            </summary>
+        </member>
+        <member name="T:ETradeFinance.DataAccess.SqlClient.SqlCashTransferProviderBase">
+            <summary>
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeFinance.Entities.CashTransfer"/> entity.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashTransferProviderBase.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlCashTransferProviderBase"/> instance.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashTransferProviderBase.#ctor(System.String,System.Boolean,System.String)">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlCashTransferProviderBase"/> instance.
+            Uses connection string to connect to datasource.
+            </summary>
+            <param name="connectionString">The connection string to the database.</param>
+            <param name="useStoredProcedure">A boolean value that indicates if we should use stored procedures or embedded queries.</param>
+            <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashTransferProviderBase.Delete(ETradeFinance.DataAccess.TransactionManager,System.Int64)">
+            <summary>
+            	Deletes a row from the DataSource.
+            </summary>
+            <param name="_id">CashTransferID identifies CashTransfer. Primary Key.</param>	
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <remarks>Deletes based on primary key(s).</remarks>
+            <returns>Returns true if operation suceeded.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashTransferProviderBase.Find(ETradeFinance.DataAccess.TransactionManager,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Returns rows meeting the whereClause condition from the DataSource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <remarks>Operators must be capitalized (OR, AND).</remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.CashTransfer objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashTransferProviderBase.Find(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.DataAccess.IFilterParameterCollection,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Returns rows from the DataSource that meet the parameter conditions.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="parameters">A collection of <see cref="T:ETradeFinance.DataAccess.SqlFilterParameter"/> objects.</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <returns>Returns a typed collection of ETradeFinance.Entities.CashTransfer objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashTransferProviderBase.GetAll(ETradeFinance.DataAccess.TransactionManager,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Gets All rows from the DataSource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.CashTransfer objects.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashTransferProviderBase.GetPaged(ETradeFinance.DataAccess.TransactionManager,System.String,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets a page of rows from the DataSource.
+            </summary>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">Number of rows in the DataSource.</param>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.CashTransfer objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashTransferProviderBase.GetById(ETradeFinance.DataAccess.TransactionManager,System.Int64,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Gets rows from the datasource based on the PK_CashTransfer index.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="_id">CashTransferID identifies CashTransfer</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out parameter to get total records for query.</param>
+            <returns>Returns an instance of the <see cref="T:ETradeFinance.Entities.CashTransfer"/> class.</returns>
+            <remarks></remarks>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashTransferProviderBase.BulkInsert(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.TList{ETradeFinance.Entities.CashTransfer})">
+            <summary>
+            Lets you efficiently bulk insert many entities to the database.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="entities">The entities.</param>
+            <remarks>
+            	After inserting into the datasource, the ETradeFinance.Entities.CashTransfer object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>	
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashTransferProviderBase.Insert(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.CashTransfer)">
+            <summary>
+            	Inserts a ETradeFinance.Entities.CashTransfer object into the datasource using a transaction.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="entity">ETradeFinance.Entities.CashTransfer object to insert.</param>
+            <remarks>
+            	After inserting into the datasource, the ETradeFinance.Entities.CashTransfer object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>	
+            <returns>Returns true if operation is successful.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashTransferProviderBase.Update(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.CashTransfer)">
+            <summary>
+            	Update an existing row in the datasource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="entity">ETradeFinance.Entities.CashTransfer object to update.</param>
+            <remarks>
+            	After updating the datasource, the ETradeFinance.Entities.CashTransfer object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+            <returns>Returns true if operation is successful.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlCashTransferProviderBase.ConnectionString">
+            <summary>
+            Gets or sets the connection string.
+            </summary>
+            <value>The connection string.</value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlCashTransferProviderBase.UseStoredProcedure">
+            <summary>
+            Gets or sets a value indicating whether to use stored procedures.
+            </summary>
+            <value><c>true</c> if we choose to use use stored procedures; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlCashTransferProviderBase.ProviderInvariantName">
+            <summary>
+            Gets or sets the invariant provider name listed in the DbProviderFactories machine.config section.
+            </summary>
+            <value>The name of the provider invariant.</value>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlCashTransferProvider.#ctor(System.String,System.Boolean,System.String)">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlCashTransferProvider"/> instance.
+            Uses connection string to connect to datasource.
+            </summary>
+            <param name="connectionString">The connection string to the database.</param>
+            <param name="useStoredProcedure">A boolean value that indicates if we use the stored procedures or embedded queries.</param>
+            <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
+        </member>
+        <member name="T:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider">
+            <summary>
+            This class is the Sql implementation of the NetTiersProvider.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.#ctor">
+             <summary>
+             Initializes a new instance of the <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider"/> class.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.Initialize(System.String,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Initializes the provider.
+            </summary>
+            <param name="name">The friendly name of the provider.</param>
+            <param name="config">A collection of the name/value pairs representing the provider-specific attributes specified in the configuration for this provider.</param>
+            <exception cref="T:System.ArgumentNullException">The name of the provider is null.</exception>
+            <exception cref="T:System.InvalidOperationException">An attempt is made to call <see cref="M:System.Configuration.Provider.ProviderBase.Initialize(System.String,System.Collections.Specialized.NameValueCollection)"></see> on a provider after the provider has already been initialized.</exception>
+            <exception cref="T:System.ArgumentException">The name of the provider has a length of zero.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.CreateTransaction">
+            <summary>
+            Creates a new <c cref="T:ETradeFinance.DataAccess.TransactionManager"/> instance from the current datasource.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteNonQuery(System.String,System.Object[])">
+            <summary>
+            Executes the non query.
+            </summary>
+            <param name="storedProcedureName">Name of the stored procedure.</param>
+            <param name="parameterValues">The parameter values.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteNonQuery(ETradeFinance.DataAccess.TransactionManager,System.String,System.Object[])">
+            <summary>
+            Executes the non query.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="storedProcedureName">Name of the stored procedure.</param>
+            <param name="parameterValues">The parameter values.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteNonQuery(System.Data.Common.DbCommand)">
+            <summary>
+            Executes the non query.
+            </summary>
+            <param name="commandWrapper">The command wrapper.</param>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteNonQuery(ETradeFinance.DataAccess.TransactionManager,System.Data.Common.DbCommand)">
+            <summary>
+            Executes the non query.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="commandWrapper">The command wrapper.</param>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteNonQuery(System.Data.CommandType,System.String)">
+            <summary>
+            Executes the non query.
+            </summary>
+            <param name="commandType">Type of the command.</param>
+            <param name="commandText">The command text.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteNonQuery(ETradeFinance.DataAccess.TransactionManager,System.Data.CommandType,System.String)">
+            <summary>
+            Executes the non query.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="commandType">Type of the command.</param>
+            <param name="commandText">The command text.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteReader(System.String,System.Object[])">
+            <summary>
+            Executes the reader.
+            </summary>
+            <param name="storedProcedureName">Name of the stored procedure.</param>
+            <param name="parameterValues">The parameter values.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteReader(ETradeFinance.DataAccess.TransactionManager,System.String,System.Object[])">
+            <summary>
+            Executes the reader.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="storedProcedureName">Name of the stored procedure.</param>
+            <param name="parameterValues">The parameter values.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteReader(System.Data.Common.DbCommand)">
+            <summary>
+            Executes the reader.
+            </summary>
+            <param name="commandWrapper">The command wrapper.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteReader(ETradeFinance.DataAccess.TransactionManager,System.Data.Common.DbCommand)">
+            <summary>
+            Executes the reader.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="commandWrapper">The command wrapper.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteReader(System.Data.CommandType,System.String)">
+            <summary>
+            Executes the reader.
+            </summary>
+            <param name="commandType">Type of the command.</param>
+            <param name="commandText">The command text.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteReader(ETradeFinance.DataAccess.TransactionManager,System.Data.CommandType,System.String)">
+            <summary>
+            Executes the reader.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="commandType">Type of the command.</param>
+            <param name="commandText">The command text.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteDataSet(System.String,System.Object[])">
+            <summary>
+            Executes the data set.
+            </summary>
+            <param name="storedProcedureName">Name of the stored procedure.</param>
+            <param name="parameterValues">The parameter values.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteDataSet(ETradeFinance.DataAccess.TransactionManager,System.String,System.Object[])">
+            <summary>
+            Executes the data set.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="storedProcedureName">Name of the stored procedure.</param>
+            <param name="parameterValues">The parameter values.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteDataSet(System.Data.Common.DbCommand)">
+            <summary>
+            Executes the data set.
+            </summary>
+            <param name="commandWrapper">The command wrapper.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteDataSet(ETradeFinance.DataAccess.TransactionManager,System.Data.Common.DbCommand)">
+            <summary>
+            Executes the data set.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="commandWrapper">The command wrapper.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteDataSet(System.Data.CommandType,System.String)">
+            <summary>
+            Executes the data set.
+            </summary>
+            <param name="commandType">Type of the command.</param>
+            <param name="commandText">The command text.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteDataSet(ETradeFinance.DataAccess.TransactionManager,System.Data.CommandType,System.String)">
+            <summary>
+            Executes the data set.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="commandType">Type of the command.</param>
+            <param name="commandText">The command text.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteScalar(System.String,System.Object[])">
+            <summary>
+            Executes the scalar.
+            </summary>
+            <param name="storedProcedureName">Name of the stored procedure.</param>
+            <param name="parameterValues">The parameter values.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteScalar(ETradeFinance.DataAccess.TransactionManager,System.String,System.Object[])">
+            <summary>
+            Executes the scalar.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="storedProcedureName">Name of the stored procedure.</param>
+            <param name="parameterValues">The parameter values.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteScalar(System.Data.Common.DbCommand)">
+            <summary>
+            Executes the scalar.
+            </summary>
+            <param name="commandWrapper">The command wrapper.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteScalar(ETradeFinance.DataAccess.TransactionManager,System.Data.Common.DbCommand)">
+            <summary>
+            Executes the scalar.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="commandWrapper">The command wrapper.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteScalar(System.Data.CommandType,System.String)">
+            <summary>
+            Executes the scalar.
+            </summary>
+            <param name="commandType">Type of the command.</param>
+            <param name="commandText">The command text.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ExecuteScalar(ETradeFinance.DataAccess.TransactionManager,System.Data.CommandType,System.String)">
+            <summary>
+            Executes the scalar.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="commandType">Type of the command.</param>
+            <param name="commandText">The command text.</param>
+            <returns></returns>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.UseStoredProcedure">
+            <summary>
+            Gets a value indicating whether to use stored procedure or not.
+            </summary>
+            <value>
+            	<c>true</c> if this repository use stored procedures; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ConnectionString">
+            <summary>
+            Gets or sets the connection string.
+            </summary>
+            <value>The connection string.</value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.ProviderInvariantName">
+            <summary>
+            Gets or sets the invariant provider name listed in the DbProviderFactories machine.config section.
+            </summary>
+            <value>The name of the provider invariant.</value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.IsTransactionSupported">
+            <summary>
+             Indicates if the current <c cref="T:ETradeFinance.DataAccess.Bases.NetTiersProvider"/> implementation supports Transacton.
+            </summary>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.CashTransferProvider">
+            <summary>
+             This class is the Data Access Logic Component for the <see cref="T:ETradeFinance.Entities.CashTransfer"/> business entity.
+             It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+            </summary>
+             <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.SqlCashTransferProvider">
+            <summary>
+            Gets the current <c cref="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.SqlCashTransferProvider"/>.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.OddLotOrderProvider">
+            <summary>
+             This class is the Data Access Logic Component for the <see cref="T:ETradeFinance.Entities.OddLotOrder"/> business entity.
+             It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+            </summary>
+             <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.SqlOddLotOrderProvider">
+            <summary>
+            Gets the current <c cref="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.SqlOddLotOrderProvider"/>.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.CashAdvanceProvider">
+            <summary>
+             This class is the Data Access Logic Component for the <see cref="T:ETradeFinance.Entities.CashAdvance"/> business entity.
+             It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+            </summary>
+             <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.SqlCashAdvanceProvider">
+            <summary>
+            Gets the current <c cref="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.SqlCashAdvanceProvider"/>.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.XrOrdersProvider">
+            <summary>
+             This class is the Data Access Logic Component for the <see cref="T:ETradeFinance.Entities.XrOrders"/> business entity.
+             It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+            </summary>
+             <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.SqlXrOrdersProvider">
+            <summary>
+            Gets the current <c cref="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.SqlXrOrdersProvider"/>.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.AdvanceTimeProvider">
+            <summary>
+             This class is the Data Access Logic Component for the <see cref="T:ETradeFinance.Entities.AdvanceTime"/> business entity.
+             It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+            </summary>
+             <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.SqlAdvanceTimeProvider">
+            <summary>
+            Gets the current <c cref="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.SqlAdvanceTimeProvider"/>.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.StockTransferProvider">
+            <summary>
+             This class is the Data Access Logic Component for the <see cref="T:ETradeFinance.Entities.StockTransfer"/> business entity.
+             It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+            </summary>
+             <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.SqlStockTransferProvider">
+            <summary>
+            Gets the current <c cref="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.SqlStockTransferProvider"/>.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.CashAdvanceHistoryProvider">
+            <summary>
+             This class is the Data Access Logic Component for the <see cref="T:ETradeFinance.Entities.CashAdvanceHistory"/> business entity.
+             It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+            </summary>
+             <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.SqlCashAdvanceHistoryProvider">
+            <summary>
+            Gets the current <c cref="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.SqlCashAdvanceHistoryProvider"/>.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.FeeProvider">
+            <summary>
+             This class is the Data Access Logic Component for the <see cref="T:ETradeFinance.Entities.Fee"/> business entity.
+             It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+            </summary>
+             <value></value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.SqlFeeProvider">
+            <summary>
+            Gets the current <c cref="P:ETradeFinance.DataAccess.SqlClient.SqlNetTiersProvider.SqlFeeProvider"/>.
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:ETradeFinance.DataAccess.SqlClient.SqlAdvanceTimeProviderBase">
+            <summary>
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeFinance.Entities.AdvanceTime"/> entity.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlAdvanceTimeProviderBase.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlAdvanceTimeProviderBase"/> instance.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlAdvanceTimeProviderBase.#ctor(System.String,System.Boolean,System.String)">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlAdvanceTimeProviderBase"/> instance.
+            Uses connection string to connect to datasource.
+            </summary>
+            <param name="connectionString">The connection string to the database.</param>
+            <param name="useStoredProcedure">A boolean value that indicates if we should use stored procedures or embedded queries.</param>
+            <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlAdvanceTimeProviderBase.Delete(ETradeFinance.DataAccess.TransactionManager,System.Int32)">
+            <summary>
+            	Deletes a row from the DataSource.
+            </summary>
+            <param name="_id">Id tu tang . Primary Key.</param>	
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <remarks>Deletes based on primary key(s).</remarks>
+            <returns>Returns true if operation suceeded.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlAdvanceTimeProviderBase.Find(ETradeFinance.DataAccess.TransactionManager,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Returns rows meeting the whereClause condition from the DataSource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <remarks>Operators must be capitalized (OR, AND).</remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.AdvanceTime objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlAdvanceTimeProviderBase.Find(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.DataAccess.IFilterParameterCollection,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Returns rows from the DataSource that meet the parameter conditions.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="parameters">A collection of <see cref="T:ETradeFinance.DataAccess.SqlFilterParameter"/> objects.</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <returns>Returns a typed collection of ETradeFinance.Entities.AdvanceTime objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlAdvanceTimeProviderBase.GetAll(ETradeFinance.DataAccess.TransactionManager,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Gets All rows from the DataSource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out. The number of rows that match this query.</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.AdvanceTime objects.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlAdvanceTimeProviderBase.GetPaged(ETradeFinance.DataAccess.TransactionManager,System.String,System.String,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            Gets a page of rows from the DataSource.
+            </summary>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">Number of rows in the DataSource.</param>
+            <param name="whereClause">Specifies the condition for the rows returned by a query (Name='John Doe', Name='John Doe' AND Id='1', Name='John Doe' OR Id='1').</param>
+            <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of ETradeFinance.Entities.AdvanceTime objects.</returns>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlAdvanceTimeProviderBase.GetById(ETradeFinance.DataAccess.TransactionManager,System.Int32,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Gets rows from the datasource based on the PK_ADVANCETIME index.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="_id">Id tu tang </param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="count">out parameter to get total records for query.</param>
+            <returns>Returns an instance of the <see cref="T:ETradeFinance.Entities.AdvanceTime"/> class.</returns>
+            <remarks></remarks>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlAdvanceTimeProviderBase.BulkInsert(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.TList{ETradeFinance.Entities.AdvanceTime})">
+            <summary>
+            Lets you efficiently bulk insert many entities to the database.
+            </summary>
+            <param name="transactionManager">The transaction manager.</param>
+            <param name="entities">The entities.</param>
+            <remarks>
+            	After inserting into the datasource, the ETradeFinance.Entities.AdvanceTime object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>	
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlAdvanceTimeProviderBase.Insert(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.AdvanceTime)">
+            <summary>
+            	Inserts a ETradeFinance.Entities.AdvanceTime object into the datasource using a transaction.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="entity">ETradeFinance.Entities.AdvanceTime object to insert.</param>
+            <remarks>
+            	After inserting into the datasource, the ETradeFinance.Entities.AdvanceTime object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>	
+            <returns>Returns true if operation is successful.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlAdvanceTimeProviderBase.Update(ETradeFinance.DataAccess.TransactionManager,ETradeFinance.Entities.AdvanceTime)">
+            <summary>
+            	Update an existing row in the datasource.
+            </summary>
+            <param name="transactionManager"><see cref="T:ETradeFinance.DataAccess.TransactionManager"/> object</param>
+            <param name="entity">ETradeFinance.Entities.AdvanceTime object to update.</param>
+            <remarks>
+            	After updating the datasource, the ETradeFinance.Entities.AdvanceTime object will be updated
+            	to refelect any changes made by the datasource. (ie: identity or computed columns)
+            </remarks>
+            <returns>Returns true if operation is successful.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlAdvanceTimeProviderBase.ConnectionString">
+            <summary>
+            Gets or sets the connection string.
+            </summary>
+            <value>The connection string.</value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlAdvanceTimeProviderBase.UseStoredProcedure">
+            <summary>
+            Gets or sets a value indicating whether to use stored procedures.
+            </summary>
+            <value><c>true</c> if we choose to use use stored procedures; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:ETradeFinance.DataAccess.SqlClient.SqlAdvanceTimeProviderBase.ProviderInvariantName">
+            <summary>
+            Gets or sets the invariant provider name listed in the DbProviderFactories machine.config section.
+            </summary>
+            <value>The name of the provider invariant.</value>
+        </member>
+        <member name="T:ETradeFinance.DataAccess.SqlClient.SqlAdvanceTimeProvider">
+            <summary>
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeFinance.Entities.AdvanceTime"/> entity.
+            </summary>
+        </member>
+        <member name="M:ETradeFinance.DataAccess.SqlClient.SqlAdvanceTimeProvider.#ctor(System.String,System.Boolean,System.String)">
+            <summary>
+            Creates a new <see cref="T:ETradeFinance.DataAccess.SqlClient.SqlAdvanceTimeProvider"/> instance.
+            Uses connection string to connect to datasource.
+            </summary>
+            <param name="connectionString">The connection string to the database.</param>
+            <param name="useStoredProcedure">A boolean value that indicates if we use the stored procedures or embedded queries.</param>
+            <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
+        </member>
+    </members>
+</doc>

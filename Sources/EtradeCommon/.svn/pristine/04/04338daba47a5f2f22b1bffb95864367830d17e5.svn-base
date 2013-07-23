@@ -1,0 +1,564 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet type='text/xsl' href="scriptsql.xsl"?>
+<root xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<database includeDrop="true">RTStockData</database>
+<procedures>
+		
+		<procedure owner="dbo" name="Indexs_Get_List" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+
+-- Created By:  ()
+-- Purpose: Gets all records from the Indexs table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				SELECT
+					[VNINDEX_ID],
+					[TRADED_DATE],
+					[OPEN],
+					[CLOSE],
+					[CHANGE],
+					[UNCHANGE],
+					[HIGH],
+					[LOW],
+					[UP],
+					[DOWN],
+					[AVERAGE],
+					[VOL],
+					[VAL],
+					[ATTRIBUTE1],
+					[TOTALTRADE],
+					[ATTRIBUTE3],
+					[Market_ID],
+					[STATUS],
+					[TRANS],
+					[UPVOLUME],
+					[DOWNVOLUME],
+					[NOCHANGEVOLUME]
+				FROM
+					[dbo].[Indexs]
+					
+				SELECT @@ROWCOUNT
+			]]></body>
+		</procedure>
+		
+		
+		<procedure owner="dbo" name="Indexs_GetPaged" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+
+-- Created By:  ()
+-- Purpose: Gets records from the Indexs table passing page index and page count parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@WhereClause" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)" />
+				<parameter name="@OrderBy" type="varchar" direction="Input" size="2000" precision="0" scale="0" param="(2000)"/>
+				<parameter name="@PageIndex" type="int" direction="Input" size="0" precision="10" scale="0" />
+				<parameter name="@PageSize" type="int" direction="Input" size="0" precision="10" scale="0" /> 
+			</parameters>
+			<body><![CDATA[
+				
+				BEGIN
+				DECLARE @PageLowerBound int
+				DECLARE @PageUpperBound int
+				
+				-- Set the page bounds
+				SET @PageLowerBound = @PageSize * @PageIndex
+				SET @PageUpperBound = @PageLowerBound + @PageSize
+
+				-- Create a temp table to store the select results
+				CREATE TABLE #PageIndex
+				(
+				    [IndexId] int IDENTITY (1, 1) NOT NULL,
+				    [VNINDEX_ID] int 
+				)
+				
+				-- Insert into the temp table
+				DECLARE @SQL AS nvarchar(4000)
+				SET @SQL = 'INSERT INTO #PageIndex ([VNINDEX_ID])'
+				SET @SQL = @SQL + ' SELECT'
+				SET @SQL = @SQL + ' [VNINDEX_ID]'
+				SET @SQL = @SQL + ' FROM [dbo].[Indexs]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				IF LEN(@OrderBy) > 0
+				BEGIN
+					SET @SQL = @SQL + ' ORDER BY ' + @OrderBy
+				END
+				
+				-- Only get the number of rows needed here.
+				SET ROWCOUNT @PageUpperBound
+				
+				-- Populate the temp table
+				EXEC sp_executesql @SQL
+
+				-- Reset Rowcount back to all
+				SET ROWCOUNT 0
+				
+				-- Return paged results
+				SELECT O.[VNINDEX_ID], O.[TRADED_DATE], O.[OPEN], O.[CLOSE], O.[CHANGE], O.[UNCHANGE], O.[HIGH], O.[LOW], O.[UP], O.[DOWN], O.[AVERAGE], O.[VOL], O.[VAL], O.[ATTRIBUTE1], O.[TOTALTRADE], O.[ATTRIBUTE3], O.[Market_ID], O.[STATUS], O.[TRANS], O.[UPVOLUME], O.[DOWNVOLUME], O.[NOCHANGEVOLUME]
+				FROM
+				    [dbo].[Indexs] O,
+				    #PageIndex PageIndex
+				WHERE
+				    PageIndex.IndexId > @PageLowerBound
+					AND O.[VNINDEX_ID] = PageIndex.[VNINDEX_ID]
+				ORDER BY
+				    PageIndex.IndexId
+				
+				-- get row count
+				SET @SQL = 'SELECT COUNT(*) AS TotalRowCount'
+				SET @SQL = @SQL + ' FROM [dbo].[Indexs]'
+				IF LEN(@WhereClause) > 0
+				BEGIN
+					SET @SQL = @SQL + ' WHERE ' + @WhereClause
+				END
+				EXEC sp_executesql @SQL
+			
+				END
+			]]></body>
+		</procedure>
+		
+		<procedure owner="dbo" name="Indexs_Insert" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+
+-- Created By:  ()
+-- Purpose: Inserts a record into the Indexs table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@VnindexId" type="int" direction="Output" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@TradedDate" type="smalldatetime" direction="Input" size="4" precision="16" scale="0" param="" nulldefault=""/>
+				<parameter name="@Open" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Close" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Change" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Unchange" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@High" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Low" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Up" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Down" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Average" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Vol" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Val" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Attribute1" type="nvarchar" direction="Input" size="255" precision="0" scale="0" param="(255)" nulldefault=""/>
+				<parameter name="@Totaltrade" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Attribute3" type="smalldatetime" direction="Input" size="4" precision="16" scale="0" param="" nulldefault=""/>
+				<parameter name="@MarketId" type="nvarchar" direction="Input" size="30" precision="0" scale="0" param="(30)" nulldefault=""/>
+				<parameter name="@Status" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault=""/>
+				<parameter name="@Trans" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@Upvolume" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Downvolume" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Nochangevolume" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				INSERT INTO [dbo].[Indexs]
+					(
+					[TRADED_DATE]
+					,[OPEN]
+					,[CLOSE]
+					,[CHANGE]
+					,[UNCHANGE]
+					,[HIGH]
+					,[LOW]
+					,[UP]
+					,[DOWN]
+					,[AVERAGE]
+					,[VOL]
+					,[VAL]
+					,[ATTRIBUTE1]
+					,[TOTALTRADE]
+					,[ATTRIBUTE3]
+					,[Market_ID]
+					,[STATUS]
+					,[TRANS]
+					,[UPVOLUME]
+					,[DOWNVOLUME]
+					,[NOCHANGEVOLUME]
+					)
+				VALUES
+					(
+					@TradedDate
+					,@Open
+					,@Close
+					,@Change
+					,@Unchange
+					,@High
+					,@Low
+					,@Up
+					,@Down
+					,@Average
+					,@Vol
+					,@Val
+					,@Attribute1
+					,@Totaltrade
+					,@Attribute3
+					,@MarketId
+					,@Status
+					,@Trans
+					,@Upvolume
+					,@Downvolume
+					,@Nochangevolume
+					)
+				
+				-- Get the identity value
+				SET @VnindexId = SCOPE_IDENTITY()
+									
+							
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="Indexs_Update" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+
+-- Created By:  ()
+-- Purpose: Updates a record in the Indexs table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@VnindexId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@TradedDate" type="smalldatetime" direction="Input" size="4" precision="16" scale="0" param="" nulldefault=""/>
+				<parameter name="@Open" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Close" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Change" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Unchange" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@High" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Low" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Up" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Down" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Average" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Vol" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Val" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Attribute1" type="nvarchar" direction="Input" size="255" precision="0" scale="0" param="(255)" nulldefault=""/>
+				<parameter name="@Totaltrade" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Attribute3" type="smalldatetime" direction="Input" size="4" precision="16" scale="0" param="" nulldefault=""/>
+				<parameter name="@MarketId" type="nvarchar" direction="Input" size="30" precision="0" scale="0" param="(30)" nulldefault=""/>
+				<parameter name="@Status" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault=""/>
+				<parameter name="@Trans" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+				<parameter name="@Upvolume" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Downvolume" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+				<parameter name="@Nochangevolume" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				
+				
+				-- Modify the updatable columns
+				UPDATE
+					[dbo].[Indexs]
+				SET
+					[TRADED_DATE] = @TradedDate
+					,[OPEN] = @Open
+					,[CLOSE] = @Close
+					,[CHANGE] = @Change
+					,[UNCHANGE] = @Unchange
+					,[HIGH] = @High
+					,[LOW] = @Low
+					,[UP] = @Up
+					,[DOWN] = @Down
+					,[AVERAGE] = @Average
+					,[VOL] = @Vol
+					,[VAL] = @Val
+					,[ATTRIBUTE1] = @Attribute1
+					,[TOTALTRADE] = @Totaltrade
+					,[ATTRIBUTE3] = @Attribute3
+					,[Market_ID] = @MarketId
+					,[STATUS] = @Status
+					,[TRANS] = @Trans
+					,[UPVOLUME] = @Upvolume
+					,[DOWNVOLUME] = @Downvolume
+					,[NOCHANGEVOLUME] = @Nochangevolume
+				WHERE
+[VNINDEX_ID] = @VnindexId 
+				
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="Indexs_Delete" grant="">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+
+-- Created By:  ()
+-- Purpose: Deletes a record in the Indexs table
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@VnindexId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				DELETE FROM [dbo].[Indexs] WITH (ROWLOCK) 
+				WHERE
+					[VNINDEX_ID] = @VnindexId
+					
+			]]></body>
+		</procedure>
+		<procedure owner="dbo" name="Indexs_GetByVnindexId" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+
+-- Created By:  ()
+-- Purpose: Select records from the Indexs table through an index
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@VnindexId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault=""/>
+			</parameters>
+			<body><![CDATA[
+				SELECT
+					[VNINDEX_ID],
+					[TRADED_DATE],
+					[OPEN],
+					[CLOSE],
+					[CHANGE],
+					[UNCHANGE],
+					[HIGH],
+					[LOW],
+					[UP],
+					[DOWN],
+					[AVERAGE],
+					[VOL],
+					[VAL],
+					[ATTRIBUTE1],
+					[TOTALTRADE],
+					[ATTRIBUTE3],
+					[Market_ID],
+					[STATUS],
+					[TRANS],
+					[UPVOLUME],
+					[DOWNVOLUME],
+					[NOCHANGEVOLUME]
+				FROM
+					[dbo].[Indexs]
+				WHERE
+					[VNINDEX_ID] = @VnindexId
+				SELECT @@ROWCOUNT
+					
+			]]></body>
+			
+		</procedure>
+		<procedure owner="dbo" name="Indexs_Find" >
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+
+-- Created By:  ()
+-- Purpose: Finds records in the Indexs table passing nullable parameters
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters>
+				<parameter name="@SearchUsingOR" type="bit" direction="Input" size="0" precision="1" scale="0" param="" nulldefault="null"/>
+				<parameter name="@VnindexId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@TradedDate" type="smalldatetime" direction="Input" size="4" precision="16" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Open" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Close" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Change" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Unchange" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault="null"/>
+				<parameter name="@High" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Low" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Up" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Down" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Average" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Vol" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Val" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Attribute1" type="nvarchar" direction="Input" size="255" precision="0" scale="0" param="(255)" nulldefault="null"/>
+				<parameter name="@Totaltrade" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Attribute3" type="smalldatetime" direction="Input" size="4" precision="16" scale="0" param="" nulldefault="null"/>
+				<parameter name="@MarketId" type="nvarchar" direction="Input" size="30" precision="0" scale="0" param="(30)" nulldefault="null"/>
+				<parameter name="@Status" type="smallint" direction="Input" size="2" precision="5" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Trans" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Upvolume" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Downvolume" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault="null"/>
+				<parameter name="@Nochangevolume" type="float" direction="Input" size="8" precision="53" scale="0" param="" nulldefault="null"/>
+			</parameters>
+			<body><![CDATA[
+				
+  IF ISNULL(@SearchUsingOR, 0) <> 1
+  BEGIN
+    SELECT
+	  [VNINDEX_ID]
+	, [TRADED_DATE]
+	, [OPEN]
+	, [CLOSE]
+	, [CHANGE]
+	, [UNCHANGE]
+	, [HIGH]
+	, [LOW]
+	, [UP]
+	, [DOWN]
+	, [AVERAGE]
+	, [VOL]
+	, [VAL]
+	, [ATTRIBUTE1]
+	, [TOTALTRADE]
+	, [ATTRIBUTE3]
+	, [Market_ID]
+	, [STATUS]
+	, [TRANS]
+	, [UPVOLUME]
+	, [DOWNVOLUME]
+	, [NOCHANGEVOLUME]
+    FROM
+	[dbo].[Indexs]
+    WHERE 
+	 ([VNINDEX_ID] = @VnindexId OR @VnindexId IS NULL)
+	AND ([TRADED_DATE] = @TradedDate OR @TradedDate IS NULL)
+	AND ([OPEN] = @Open OR @Open IS NULL)
+	AND ([CLOSE] = @Close OR @Close IS NULL)
+	AND ([CHANGE] = @Change OR @Change IS NULL)
+	AND ([UNCHANGE] = @Unchange OR @Unchange IS NULL)
+	AND ([HIGH] = @High OR @High IS NULL)
+	AND ([LOW] = @Low OR @Low IS NULL)
+	AND ([UP] = @Up OR @Up IS NULL)
+	AND ([DOWN] = @Down OR @Down IS NULL)
+	AND ([AVERAGE] = @Average OR @Average IS NULL)
+	AND ([VOL] = @Vol OR @Vol IS NULL)
+	AND ([VAL] = @Val OR @Val IS NULL)
+	AND ([ATTRIBUTE1] = @Attribute1 OR @Attribute1 IS NULL)
+	AND ([TOTALTRADE] = @Totaltrade OR @Totaltrade IS NULL)
+	AND ([ATTRIBUTE3] = @Attribute3 OR @Attribute3 IS NULL)
+	AND ([Market_ID] = @MarketId OR @MarketId IS NULL)
+	AND ([STATUS] = @Status OR @Status IS NULL)
+	AND ([TRANS] = @Trans OR @Trans IS NULL)
+	AND ([UPVOLUME] = @Upvolume OR @Upvolume IS NULL)
+	AND ([DOWNVOLUME] = @Downvolume OR @Downvolume IS NULL)
+	AND ([NOCHANGEVOLUME] = @Nochangevolume OR @Nochangevolume IS NULL)
+						
+  END
+  ELSE
+  BEGIN
+    SELECT
+	  [VNINDEX_ID]
+	, [TRADED_DATE]
+	, [OPEN]
+	, [CLOSE]
+	, [CHANGE]
+	, [UNCHANGE]
+	, [HIGH]
+	, [LOW]
+	, [UP]
+	, [DOWN]
+	, [AVERAGE]
+	, [VOL]
+	, [VAL]
+	, [ATTRIBUTE1]
+	, [TOTALTRADE]
+	, [ATTRIBUTE3]
+	, [Market_ID]
+	, [STATUS]
+	, [TRANS]
+	, [UPVOLUME]
+	, [DOWNVOLUME]
+	, [NOCHANGEVOLUME]
+    FROM
+	[dbo].[Indexs]
+    WHERE 
+	 ([VNINDEX_ID] = @VnindexId AND @VnindexId is not null)
+	OR ([TRADED_DATE] = @TradedDate AND @TradedDate is not null)
+	OR ([OPEN] = @Open AND @Open is not null)
+	OR ([CLOSE] = @Close AND @Close is not null)
+	OR ([CHANGE] = @Change AND @Change is not null)
+	OR ([UNCHANGE] = @Unchange AND @Unchange is not null)
+	OR ([HIGH] = @High AND @High is not null)
+	OR ([LOW] = @Low AND @Low is not null)
+	OR ([UP] = @Up AND @Up is not null)
+	OR ([DOWN] = @Down AND @Down is not null)
+	OR ([AVERAGE] = @Average AND @Average is not null)
+	OR ([VOL] = @Vol AND @Vol is not null)
+	OR ([VAL] = @Val AND @Val is not null)
+	OR ([ATTRIBUTE1] = @Attribute1 AND @Attribute1 is not null)
+	OR ([TOTALTRADE] = @Totaltrade AND @Totaltrade is not null)
+	OR ([ATTRIBUTE3] = @Attribute3 AND @Attribute3 is not null)
+	OR ([Market_ID] = @MarketId AND @MarketId is not null)
+	OR ([STATUS] = @Status AND @Status is not null)
+	OR ([TRANS] = @Trans AND @Trans is not null)
+	OR ([UPVOLUME] = @Upvolume AND @Upvolume is not null)
+	OR ([DOWNVOLUME] = @Downvolume AND @Downvolume is not null)
+	OR ([NOCHANGEVOLUME] = @Nochangevolume AND @Nochangevolume is not null)
+	SELECT @@ROWCOUNT			
+  END
+				]]></body>
+		</procedure>
+
+		
+		<procedure owner="dbo" name="Indexs_Find_Dynamic"  skip="true">
+			<comment><![CDATA[/*
+----------------------------------------------------------------------------------------------------
+
+-- Created By:  ()
+-- Purpose: Gets records from the Indexs table using a dynamically generated query.
+----------------------------------------------------------------------------------------------------
+*/
+]]></comment>
+			<parameters/>
+			<body><![CDATA[
+				
+				BEGIN
+				
+				-- Create a temp table to store the select results
+				CREATE TABLE #PageIndex
+				(
+				    [IndexId] int IDENTITY (1, 1) NOT NULL,
+				    [VNINDEX_ID] int 
+				)
+				
+				-- Insert into the temp table
+				INSERT INTO #PageIndex ( [VNINDEX_ID] )
+				SELECT TOP {3} [VNINDEX_ID]
+				FROM [dbo].[Indexs] {0}
+				ORDER BY {1}
+				
+				-- Return paged results
+				SELECT O.[VNINDEX_ID], O.[TRADED_DATE], O.[OPEN], O.[CLOSE], O.[CHANGE], O.[UNCHANGE], O.[HIGH], O.[LOW], O.[UP], O.[DOWN], O.[AVERAGE], O.[VOL], O.[VAL], O.[ATTRIBUTE1], O.[TOTALTRADE], O.[ATTRIBUTE3], O.[Market_ID], O.[STATUS], O.[TRANS], O.[UPVOLUME], O.[DOWNVOLUME], O.[NOCHANGEVOLUME]
+				FROM
+				    [dbo].[Indexs] O,
+				    #PageIndex PageIndex
+				WHERE
+				    PageIndex.IndexId > {2}
+				    AND O.[VNINDEX_ID] = PageIndex.[VNINDEX_ID]
+				ORDER BY
+				    PageIndex.IndexId
+				
+
+				-- get total count
+				SELECT COUNT(*) AS TotalRowCount FROM [dbo].[Indexs] {0};
+				
+				DROP TABLE #PageIndex
+				END
+			]]></body>
+		</procedure>
+		
+				
+		<procedure owner="dbo" name="_Indexs_GetLastIndex"  skip="true">
+			<comment><![CDATA[]]></comment>
+			<parameters>
+				<parameter name="@MarketId" type="int" direction="Input" size="4" precision="10" scale="0" param="" nulldefault="null"/>
+			</parameters>
+			<body><![CDATA[
+				
+DECLARE @Market_Id varchar(5)
+
+	IF @MarketId = 1
+		SET @Market_Id = 'HCM'
+	ELSE IF @MarketId = 2
+		SET @Market_Id = 'HN'
+	ELSE IF @MarketId = 3
+		SET @Market_Id = 'UPCoM'
+
+	SELECT * FROM Indexs WHERE Market_Id = @Market_Id AND VNINDEX_ID = (SELECT MAX(VNINDEX_ID) FROM Indexs WHERE Market_Id = @Market_Id)
+
+
+			]]></body>
+					</procedure>
+</procedures>
+</root>

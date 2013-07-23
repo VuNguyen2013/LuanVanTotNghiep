@@ -1,0 +1,73 @@
+﻿using System;
+using System.Threading;
+
+namespace RTDataServices.Updater
+{
+    public static class RealTimeStockUpdater
+    {
+        private static bool _isReset;
+        private static bool _isUpdaterRunning;
+        private static Thread _updaterThread;
+
+        private readonly static Boolean _enableIntraD = Boolean.Parse(Common.ReadFromWebConfig("EnableIntraD"));
+        private readonly static int _timeToReset = Int32.Parse(Common.ReadFromWebConfig("TimeToReset"));
+        private readonly static int _timeToEnableReset = Int32.Parse(Common.ReadFromWebConfig("TimeToEnableReset"));
+
+        public static void StartUpdater()
+        {
+            if (!_isUpdaterRunning)
+            {
+                _updaterThread = new Thread(UpdaterHandler);
+                _updaterThread.IsBackground = true;
+                _isUpdaterRunning = true;
+                _updaterThread.Start();
+            }
+        }
+
+        public static void StopUpdater()
+        {
+            _isUpdaterRunning = false;
+        }
+
+        private static void UpdaterHandler()
+        {
+            int currentTime;
+
+            while (_isUpdaterRunning)
+            {
+                try
+                {
+                    /*
+                    currentTime = Common.DateTime2Int(DateTime.Now);
+
+                    if (currentTime >= _timeToReset && currentTime < _timeToReset + 2 && !_isReset)
+                    {
+                        DBServices.ResetRTData();
+
+                        _isReset = true;
+                    }
+                    else if (currentTime < _timeToEnableReset)
+                    {
+                        _isReset = false;
+                    }*/
+
+                    DBServices.UpdateAllMarketInfo();
+                    DBServices.UpdateAllStockInfo();
+
+                    if (_enableIntraD)
+                    {
+                        DBServices.UpdateTransactionInfo();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Common.Log(ex.ToString());
+                }
+
+                Thread.Sleep(300);
+            }
+
+            return;
+        }
+    }
+}

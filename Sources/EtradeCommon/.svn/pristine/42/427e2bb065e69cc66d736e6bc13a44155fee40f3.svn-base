@@ -1,0 +1,62 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CashAvailable.cs" company="OTS">
+//   2010
+// </copyright>
+// <summary>
+//   Defines the CashAvailable type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ETradeCore.Entities
+{
+    public class CashAvailable
+    {
+        /// <summary>
+        /// Gets or sets the buy credit.
+        /// </summary>
+        /// <value>The buy credit.</value>
+        public System.Decimal BuyCredit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the PP of account.
+        /// </summary>
+        /// <value>The PP.</value>
+        public System.Decimal PP { get; set; }
+
+        /// <summary>
+        /// Gets or sets the PP of stock.
+        /// </summary>
+        /// <value>The PP.</value>
+        public System.Decimal PPStock { get; set; }
+
+        /// <summary>
+        /// Gets or sets the IM.
+        /// </summary>
+        /// <value>The IM.</value>
+        public System.Decimal IM { get; set; }
+
+        /// <summary>
+        /// Gets or sets the IM of stock.
+        /// </summary>
+        /// <value>The IM.</value>
+        public System.Decimal IMStock { get; set; }
+
+        /// <summary>
+        /// Gets or sets the EE.
+        /// </summary>
+        /// <value>The EE.</value>
+        public System.Decimal EE { get; set; }
+
+        /// <summary>
+        /// Gets or sets the advance ordered amount.
+        /// </summary>
+        /// <value>The advance ordered amount.</value>
+        public System.Decimal AdvanceOrderedAmount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the cash transfered amount.
+        /// </summary>
+        /// <value>The cash transfered amount.</value>
+        public System.Decimal CashTransferedAmount { get; set; }
+    }
+}

@@ -1,0 +1,41 @@
+#ifndef SocketHandler_H
+#define SocketHandler_H
+
+#include "SocketClient.h"
+
+#ifdef SocketHandler_EXPORTS
+	#define SocketHandler_API __declspec(dllexport)
+#else
+	#pragma message("automatic link to SocketHandler.LIB")
+	#pragma comment(lib, "SocketHandler.lib")
+	#define SocketHandler_API __declspec(dllimport)
+#endif
+
+
+///////////////////////////////////////////////////////////////////////////////
+// This class is exported from SocketHandler.dll
+class SocketHandler_API CSocketHandler 
+{
+private:
+	SocketClient *pSocketClient;
+public:
+	CSocketHandler();
+	~CSocketHandler();
+	void InitLog(char * fileName);
+	bool Connect(char* server, int port);
+    bool Disconnect();
+    bool IsConnected();
+	bool Send(char *message, int length);
+	bool Receive(char *message, int *length);
+};
+
+void * __stdcall CreateSocketHandler();
+void __stdcall DestroySocketHandler(void * objptr);
+void __stdcall SocketHandlerInitLog(void * objptr, char * fileName);
+bool __stdcall SocketHandlerConnect(void * objptr, char *server, int port);
+bool __stdcall SocketHandlerDisconnect(void * objptr);
+bool  __stdcall SocketHandlerIsConnected(void * objptr);
+bool __stdcall SocketHandlerSendMessage(void * objptr, char * message, int length);
+bool __stdcall SocketHandlerReceiveMessage(void * objptr, char *message, int *length);
+
+#endif //SocketHandler_H

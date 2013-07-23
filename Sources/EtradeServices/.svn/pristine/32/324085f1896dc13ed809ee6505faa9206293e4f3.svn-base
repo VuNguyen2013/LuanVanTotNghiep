@@ -1,0 +1,119 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ISbaCoreProvider.cs" company="OTS">
+//   2010
+// </copyright>
+// <summary>
+//   Defines the ISbaCoreProvider type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ETradeCore.DataAccess
+{
+    using System.Collections.Generic;
+
+    using Entities;
+
+    public interface ISbaCoreProvider
+    {
+        /// <summary>
+        /// Gets the trade permission.
+        /// </summary>
+        /// <param name="accountNo">The account no.</param>
+        /// <returns></returns>
+        TradePermission GetTradePermission(string accountNo);
+
+        /// <summary>
+        /// Gets the order history.
+        /// </summary>
+        /// <param name="accountNo">The account no.</param>
+        /// <param name="fromDate">From date.</param>
+        /// <param name="toDate">To date.</param>
+        /// <param name="symbol">The symbol.</param>
+        /// <param name="orderStatus">The order status.</param>
+        /// <param name="pageNumber">The page number.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        List<OrderHistory> GetOrderHistory(string accountNo, string fromDate, string toDate, string symbol, int orderStatus, int pageNumber, int pageSize);
+
+        /// <summary>
+        /// Gets the deal history.
+        /// </summary>
+        /// <param name="orderNo">The order no.</param>
+        /// <param name="dealDate">The deal date.</param>
+        /// <param name="page">The page.</param>
+        /// <returns></returns>
+        List<DealHistory> GetDealHistory(decimal orderNo, string dealDate, int page);
+
+        /// <summary>
+        /// Gets the advance history.
+        /// </summary>
+        /// <param name="accountNo">The account no.</param>
+        /// <param name="fromAdvanceDate">From advance date.</param>
+        /// <param name="toAdvanceDate">To advance date.</param>
+        /// <param name="fromSellDate">From sell date.</param>
+        /// <param name="toSellDate">To sell date.</param>
+        /// <param name="contractNo">The contract no.</param>
+        /// <returns></returns>
+        List<CashAdvance> GetAdvanceHistory(
+            string accountNo,
+            string fromAdvanceDate,
+            string toAdvanceDate,
+            string fromSellDate,
+            string toSellDate,
+            string contractNo);
+
+        /// <summary>
+        /// Gets the actual trading.
+        /// </summary>
+        /// <param name="accountNo">The account no.</param>
+        /// <param name="fromDate">From date.</param>
+        /// <param name="toDate">To date.</param>
+        /// <param name="symbol">The symbol.</param>
+        /// <returns></returns>
+        List<ActualTrade> GetActualTrading(string accountNo, string fromDate, string toDate, string symbol);
+
+        /// <summary>
+        /// Gets the XD info.
+        /// </summary>
+        /// <param name="accountNo">The account no.</param>
+        /// <param name="symbol">The symbol.</param>
+        /// <param name="fromDate">From date.</param>
+        /// <param name="toDate">To date.</param>
+        /// <returns></returns>
+        List<XD> GetXDInfo(string accountNo, string symbol, string fromDate, string toDate);
+
+        /// <summary>
+        /// Gets the XR info.
+        /// </summary>
+        /// <param name="accountNo">The account no.</param>
+        /// <param name="symbol">The symbol.</param>
+        /// <param name="sellFromDate">The sell from date.</param>
+        /// <param name="sellToDate">The sell to date.</param>
+        /// <param name="transferFromDate">The transfer from date.</param>
+        /// <param name="transferToDate">The transfer to date.</param>
+        /// <returns></returns>
+        List<XR> GetXRInfo(string accountNo, string symbol, string fromDate, string toDate,
+                           int xType);
+
+        /// <summary>
+        /// Gets the bank account info.
+        /// </summary>
+        /// <param name="accountNo">The account no.</param>
+        /// <returns></returns>
+        BankAccountInfo GetBankAccountInfo(string accountNo);
+
+        /// <summary>
+        /// Gets the list magin sec info.
+        /// </summary>
+        /// <param name="tradeDate">tradeDate</param>
+        /// <returns></returns>
+        MaginSecInfo GetMaginSecInfo(string tradeDate,string symbol);
+
+
+        /// <summary>
+        /// Gets the list cap fund info.
+        /// </summary>
+        /// <returns></returns>
+        CapFundInfo GetCapFundInfo();
+    }
+}

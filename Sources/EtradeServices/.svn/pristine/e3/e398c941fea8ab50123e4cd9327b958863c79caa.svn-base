@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A611FB59-FEA2-48F6-ACE4-9FF7DDB7368C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ETradeCore.UnitTests</RootNamespace>
+    <AssemblyName>ETradeCore.UnitTests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.2.6.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Extensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccountServicesTest.cs" />
+    <Compile Include="ActualTradeServicesTest.cs" />
+    <Compile Include="CashAdvanceServicesTest.cs" />
+    <Compile Include="CashServicesTest.cs" />
+    <Compile Include="DealServicesTest.cs" />
+    <Compile Include="OrderHistoryServicesTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="StockServicesTest.cs" />
+    <Compile Include="TradePermissionServicesTest.cs" />
+    <Compile Include="ValidateServicesTest.cs" />
+    <Compile Include="Web References\AMServices\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\EtradeCommon\source\trunk\Entities\AccountManager.Entities\AccountManager.Entities.csproj">
+      <Project>{1719FD35-1A77-43A2-A4AA-A76F9685C304}</Project>
+      <Name>AccountManager.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\EtradeCommon\source\trunk\Entities\ETradeCore.Entities\ETradeCore.Entities.csproj">
+      <Project>{82039C8A-FFFE-4CBD-BCDC-83385F8BDA8B}</Project>
+      <Name>ETradeCore.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\ETradeCommon\source\trunk\Entities\RTDataServices.Entities\RTDataServices.Entities.csproj">
+      <Project>{9DD913FC-C07B-4D2F-A49A-7AA1EB2AF8CA}</Project>
+      <Name>RTDataServices.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\EtradeCommon\source\trunk\ETradeCommon\ETradeCommon\ETradeCommon.csproj">
+      <Project>{A578FFC5-379C-4219-8BB8-DA543D470770}</Project>
+      <Name>ETradeCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\EtradeCommon\source\trunk\ETradeCoreDB.Helper\ETradeCoreDB.Helper.csproj">
+      <Project>{B86A4799-9E43-48EA-A1AA-3D0CBA2E1790}</Project>
+      <Name>ETradeCoreDB.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ETradeCore.DataAccess.SqlClient\ETradeCore.DataAccess.SqlClient.csproj">
+      <Project>{E3E26094-AD3B-473D-BAE1-6B2EB2F1DDB0}</Project>
+      <Name>ETradeCore.DataAccess.SqlClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ETradeCore.DataAccess\ETradeCore.DataAccess.csproj">
+      <Project>{266202B2-4B2A-458A-B56A-A0A047694DC5}</Project>
+      <Name>ETradeCore.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ETradeCore.Services\ETradeCore.Services.csproj">
+      <Project>{3583CB63-0FC1-4FA2-A93E-6A67709606DF}</Project>
+      <Name>ETradeCore.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ETradeServices.Services\ETradeServices.Services.csproj">
+      <Project>{70538F09-38AE-4ED9-BC99-8654C712F37D}</Project>
+      <Name>ETradeServices.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Web References\AMServices\AccountManagerServices.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://172.16.1.30:2010/AMServices/AccountManagerServices.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\AMServices\</RelPath>
+      <UpdateFromURL>http://172.16.1.30:2010/AMServices/AccountManagerServices.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>ETradeCore_UnitTests_AMServices_AccountManagerServices</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="entlib.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\AMServices\AccountManagerServices.disco" />
+    <None Include="Web References\AMServices\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,182 @@
+﻿using System;
+using System.IO;
+using System.Text;
+using System.Security.Cryptography;
+
+namespace RTWebService.Utils
+{
+    public class CPasswordHandler
+    {
+        const string ENCRYPT_STRING = "&%#@?,:*";
+
+        static public string Encrypt(string strText)
+        {
+            return Encrypt(strText, ENCRYPT_STRING);
+        }
+        
+        static private string Encrypt(string strText, string strEncrypt)
+        {
+            byte[] byKey = new byte[20];
+            byte[] dv = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
+
+            try
+            {
+                byKey = System.Text.Encoding.UTF8.GetBytes(strEncrypt.Substring(0, 8));
+
+                DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+
+                byte[] inputArray = System.Text.Encoding.UTF8.GetBytes(strText);
+
+                MemoryStream ms = new MemoryStream();
+                CryptoStream cs = new CryptoStream(ms, des.CreateEncryptor(byKey, dv), CryptoStreamMode.Write);
+
+                cs.Write(inputArray, 0, inputArray.Length);
+                cs.FlushFinalBlock();
+
+                return Convert.ToBase64String(ms.ToArray());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        static public string Decrypt(string str)
+        {
+            return Decrypt(str, ENCRYPT_STRING);
+        }
+
+        static private string Decrypt(string strText, string strEncrypt)
+        {
+            byte[] bKey = new byte[20];
+            byte[] IV = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
+
+            try
+            {
+                bKey = System.Text.Encoding.UTF8.GetBytes(strEncrypt.Substring(0, 8));
+
+                DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+                Byte[] inputByteArray = inputByteArray = Convert.FromBase64String(strText);
+                
+                MemoryStream ms = new MemoryStream();
+                CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(bKey, IV), CryptoStreamMode.Write);
+                
+                cs.Write(inputByteArray, 0, inputByteArray.Length);
+                cs.FlushFinalBlock();
+                System.Text.Encoding encoding = System.Text.Encoding.UTF8;
+                
+                return encoding.GetString(ms.ToArray());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public const int MIN_PASSWORD_LENGTH = 3;
+
+        // The C# random class is a little easier to use
+        // than Java's Math.random, as you'll see in the 
+        // random methods later on...
+        private static Random random = new Random();
+
+        /**
+         * @return a random lowercase character from 'a' to 'z'
+         */
+        private static char randomLowercase()
+        {
+            return (char)random.Next('a', 'z' + 1);
+        }
+
+        /**
+         * @return a random uppercase character from 'A' to 'Z'
+         */
+        private static char randomUppercase()
+        {
+            return (char)random.Next('A', 'Z' + 1);
+        }
+
+        /**
+         * @return a random character in this list: !"#$%&'()*+,-./
+         */
+        private static char randomOther()
+        {
+            return (char)random.Next('!', '/' + 1);
+        }
+
+
+        /**
+         * @return a random character from '0' to '9'
+         */
+        private static char randomNumber()
+        {
+            return (char)random.Next('0', '9' + 1);
+        }
+
+        // C# lets us use "delegates" to create a variable
+        // that stores a reference to a function...
+        delegate char RandomCharacter();
+
+        private static string generatePassword(int length, bool isLowercaseIncluded, bool isNumbersIncluded, bool isUppercaseIncluded)
+        {
+            bool isOthersIncluded = false;
+
+            string password = "";
+
+            RandomCharacter[] r = new RandomCharacter[4];
+
+            // keep track of how many array locations we're actually using
+            int count = 0;
+
+            if (isLowercaseIncluded)
+            {
+                // using our delegate, store a reference to the randomLowercase
+                // function in our array
+                r[count++] = new RandomCharacter(CPasswordHandler.randomLowercase);
+            }
+            if (isUppercaseIncluded)
+            {
+                r[count++] = new RandomCharacter(CPasswordHandler.randomUppercase);
+            }
+            if (isOthersIncluded)
+            {
+                r[count++] = new RandomCharacter(CPasswordHandler.randomOther);
+            }
+            if (isNumbersIncluded)
+            {
+                r[count++] = new RandomCharacter(CPasswordHandler.randomNumber);
+            }
+
+            for (int i = 0; i < length; i++)
+            {
+                password += r[(int)random.Next(0, count)]();
+            }
+
+            return password;
+        } // end generatePassword method
+
+        public static string GetPassword(int length, bool isLowercaseIncluded, bool isNumbersIncluded, bool isUppercaseIncluded)
+        {
+            return generatePassword(length, isLowercaseIncluded, isNumbersIncluded, isUppercaseIncluded);
+        }
+
+        public static string GetRandomKey(int byteLength)
+        {
+            byte[] buff = new byte[byteLength];
+            RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
+
+            rng.GetBytes(buff);
+
+            StringBuilder sb = new StringBuilder(byteLength * 2);
+
+            for (int i = 0; i < buff.Length; i++)
+            {
+                sb.Append(string.Format("{0:X2}", buff[i]));
+            }
+
+            return sb.ToString();
+        }
+
+
+    }
+}

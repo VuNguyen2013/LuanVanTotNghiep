@@ -1,0 +1,67 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="AdvanceInfo.cs" company="OTS">
+//   2010
+// </copyright>
+// <summary>
+//   Defines the AdvanceInfo type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ETradeCore.Entities
+{
+    public class AdvanceInfo
+    {
+        /// <summary>
+        /// Gets or sets the sell amt.
+        /// </summary>
+        /// <value>The sell amt.</value>
+        public System.Decimal SellAmt { get; set; }
+
+        /// <summary>
+        /// Gets or sets the max can advance.
+        /// </summary>
+        /// <value>The max can advance.</value>
+        public System.Decimal MaxCanAdvance { get; set; }
+
+        /// <summary>
+        /// Gets or sets the trade date.
+        /// </summary>
+        /// <value>The trade date.</value>
+        public System.String TradeDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the due date.
+        /// </summary>
+        /// <value>The due date.</value>
+        public System.String DueDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the advance finished.
+        /// </summary>
+        /// <value>The advance finished.</value>
+        public System.Decimal AdvanceFinished { get; set; }
+
+        /// <summary>
+        /// Gets or sets the adv fee ratio.
+        /// </summary>
+        /// <value>The adv fee ratio.</value>
+        public System.Decimal AdvFeeRatio { get; set; }
+
+        /// <summary>
+        /// Allow or not put order advance
+        /// </summary>
+        public bool CanAdvance { get; set; }
+
+        /// <summary>
+        /// Gets or sets the advance fee.
+        /// </summary>
+        /// <value>The advance fee.</value>
+        public System.Decimal AdvanceFee { get; set; }
+
+        /// <summary>
+        /// Gets or sets the advance day.
+        /// </summary>
+        /// <value>The advance day.</value>
+        public int AdvanceDay { get; set; }
+    }
+}

@@ -1,0 +1,1478 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using RTDataServices.Entities;
+using RTStockData.Entities;
+using RTStockData.Services;
+
+using ETradeCommon;
+using ETradeCommon.Enums;
+using CompanyInfo = RTDataServices.Entities.CompanyInfo;
+
+namespace RTDataServices
+{
+    /// <summary>
+    /// Summary description for DBServices
+    /// </summary>
+    public class DBServices
+    {
+        public static Dictionary<string, StockInfo> ListStocks = new Dictionary<string, StockInfo>();
+        public static Dictionary<int, Dictionary<int, MarketInfo>> ListMarketInfos = new Dictionary<int, Dictionary<int, MarketInfo>>();
+        public static Dictionary<string, RTDataServices.Entities.CompanyInfo> ListCompanies = new Dictionary<string, RTDataServices.Entities.CompanyInfo>();
+        public static Dictionary<string, Dictionary<string, RTDataServices.Entities.CompanyInfo>> ListLangCompanies = new Dictionary<string, Dictionary<string, RTDataServices.Entities.CompanyInfo>>();
+
+        private static TotalmarketService totalMarketServive = new TotalmarketService();
+        private static HastcMarketService hastcMarketService = new HastcMarketService();
+        private static UpcomMarketService upcomMarketService = new UpcomMarketService();
+
+        private static SecurityRealtimeService sercurityRealtimeService = new SecurityRealtimeService();
+        private static HastcStocksService hastcStocksService = new HastcStocksService();
+        private static UpcomStocksService upcomStocksService = new UpcomStocksService();
+
+        private static NearestWorkingDatesService nearestWorkingDatesService = new NearestWorkingDatesService();
+
+        private static HoseTransactionsService hoseTransactionsService = new HoseTransactionsService();
+        private static HastcTransactionsService hastcTransactionsService = new HastcTransactionsService();
+        private static UpcomTransactionsService upcomTransactionsService = new UpcomTransactionsService();
+
+        private static CompanyInfoService companyInfoService = new CompanyInfoService();
+        private static LanguageService languageService = new LanguageService();
+        private static CompanyInfoLanguageService companyInfoLangService = new CompanyInfoLanguageService();
+
+        private static double _priorIndex = -1;
+
+        private readonly static int HOSETimePreOpen = Int32.Parse(RTDataServices.Common.ReadFromWebConfig("HOSETimePreOpen"));
+        private readonly static int HOSETimeOpen = Int32.Parse(RTDataServices.Common.ReadFromWebConfig("HOSETimeOpen"));
+        private readonly static int HOSETimePreClose = Int32.Parse(RTDataServices.Common.ReadFromWebConfig("HOSETimePreClose"));
+        private readonly static int HOSETimePutThrough = Int32.Parse(RTDataServices.Common.ReadFromWebConfig("HOSETimePutThrough"));
+        private readonly static int HOSETimeEndTrading = Int32.Parse(RTDataServices.Common.ReadFromWebConfig("HOSETimeEndTrading"));
+
+        private readonly static int UPCOMTimeOpen = Int32.Parse(RTDataServices.Common.ReadFromWebConfig("UPCOMTimeOpen"));
+        private readonly static int UPCOMTimeBeginHalf = Int32.Parse(RTDataServices.Common.ReadFromWebConfig("UPCOMTimeBeginHalf"));
+        private readonly static int UPCOMTimeEndHalf = Int32.Parse(RTDataServices.Common.ReadFromWebConfig("UPCOMTimeEndHalf"));
+        private readonly static int UPCOMTimeClose = Int32.Parse(RTDataServices.Common.ReadFromWebConfig("UPCOMTimeClose"));
+        private static long hoseTransactionsId = 0;
+        private static long hastcTransactionsId = 0;
+        private static long upcomTransactionsId = 0;
+
+        private static List<bool> isFistLoadStocks = new List<bool>(){true, true, true, true};
+
+        private static List<DateTime> loadStockDates = new List<DateTime>() { DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now};
+
+        private static List<bool> isFistLoadMarkets = new List<bool>() { true, true, true, true };
+
+        private static List<DateTime> loadMarketDates = new List<DateTime>() { DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now };
+
+        
+        private DBServices()
+        {
+
+        }
+
+        public static void CreateInMemDB()
+        {
+            hoseTransactionsId = 0;
+            hastcTransactionsId = 0;
+            upcomTransactionsId = 0;
+            Db4oManager.CreateDatabase();
+        }
+
+        public static void ResetRTData()
+        {
+            try
+            {
+                ListStocks.Clear();
+                ListCompanies.Clear();
+                ListMarketInfos.Clear();
+            }
+
+            catch (Exception ex)
+            {
+                Common.Log(ex.ToString());
+            }
+        }
+
+        public  static MarketInfo GetCurrentMarketInfo(int marketID)
+        {
+            Dictionary<int, MarketInfo> listMarketInfos;
+            List<MarketInfo> listInfos = null;
+
+            try
+            {
+                if (!ListMarketInfos.ContainsKey(marketID))
+                {
+                    return null;
+                }
+
+                listMarketInfos = ListMarketInfos[marketID];
+                listInfos = new List<MarketInfo>(listMarketInfos.Values);
+
+                if (listInfos.Count == 0)
+                {
+                    return null;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Common.Log(ex.ToString());
+            }
+
+            return ((listInfos == null) ? null :  listInfos[listInfos.Count - 1]);
+        }
+
+        private static MarketInfo GetFirstMarketInfo(int marketID)
+        {
+            Dictionary<int, MarketInfo> listMarketInfos;
+            List<MarketInfo> listInfos = null;
+
+            try
+            {
+                if (!ListMarketInfos.ContainsKey(marketID))
+                {
+                    return null;
+                }
+
+                listMarketInfos = ListMarketInfos[marketID];
+                listInfos = new List<MarketInfo>(listMarketInfos.Values);
+
+                if (listInfos.Count == 0)
+                {
+                    return null;
+                }
+            }
+
+            catch(Exception ex)
+            {
+                Common.Log(ex.ToString());
+            }
+
+            return ((listInfos == null) ? null : listInfos[0]);
+        }
+
+        /// <summary>
+        /// Get Stock information of symbol
+        /// </summary>
+        /// <param name="symbol"></param>
+        public  static StockInfo GetStock(string symbol)
+        {
+            StockInfo info = null;
+
+            try
+            {
+
+                if (ListStocks.ContainsKey(symbol))
+                {
+                    info = ListStocks[symbol];
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Common.Log(ex.ToString());
+            }    
+
+            return info;
+        }
+
+        /// <summary>
+        /// Get Stock information of symbol
+        /// </summary>
+        /// <param name="symbol"></param>
+        /// <param name="languageId"></param>
+        public static StockInfo GetStock(string symbol, string languageId)
+        {
+            StockInfo info = null;
+
+            try
+            {
+
+                if (ListStocks.ContainsKey(symbol))
+                {
+                    info = ListStocks[symbol];
+
+                    if (ListLangCompanies.ContainsKey(languageId))
+                    {
+                        Dictionary<string, CompanyInfo> companyInfoEntry = ListLangCompanies[languageId];
+
+                        if (companyInfoEntry.ContainsKey(symbol))
+                        {
+                            CompanyInfo companyInfo = companyInfoEntry[symbol];
+
+                            info.Name = companyInfo.FullName;
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Common.Log(ex.ToString());
+            }
+
+            return info;
+        }
+        /// <summary>
+        /// Reset the market info of yesterday for each market
+        /// </summary>
+        /// <param name="securityInfo"></param>
+        /// <param name="marketID"></param>
+        private static void RemoveOldMarketInfo(DateTime tradeDate, short marketID)
+        {
+            //Reset all old data
+            if (isFistLoadMarkets[marketID])
+            {
+                loadMarketDates[marketID] = tradeDate; ;
+
+                isFistLoadMarkets[marketID] = false;
+            }
+            else if (loadMarketDates[marketID].Date != tradeDate.Date)
+            {
+                RemoveMarketInfos(marketID);
+
+                loadMarketDates[marketID] = tradeDate;
+            }
+        }
+
+        /// <summary>
+        /// Remove all stock with market is marketID
+        /// </summary>
+        /// <param name="marketID"></param>
+        private static void RemoveMarketInfos(short marketID)
+        {
+            ListMarketInfos.Remove(marketID);
+           
+        }
+
+        /// <summary>
+        /// Reset the stock of yesterday for each market
+        /// </summary>
+        /// <param name="securityInfo"></param>
+        /// <param name="marketID"></param>
+        private static void RemoveOldStockData (DateTime tradeDate, short  marketID)
+        {
+            //Reset all old data
+            if (isFistLoadStocks[marketID])
+            {
+                loadStockDates[marketID] = tradeDate; ;
+
+                isFistLoadStocks[marketID] = false;
+            }
+            else if (loadStockDates[marketID].Date != tradeDate.Date)
+            {
+                RemoveStocks(marketID);
+
+                loadStockDates[marketID] = tradeDate;
+            }
+        }
+
+        /// <summary>
+        /// Remove all stock with market is marketID
+        /// </summary>
+        /// <param name="marketID"></param>
+        private static void RemoveStocks (short marketID)
+        {
+            List<StockInfo> listStocks = Select_All_StockInfo(marketID);
+
+            foreach (var item in listStocks)
+            {
+                ListStocks.Remove(item.StockSymbol);
+            }
+        }
+
+        private static void UpdateStockInfoForHOSE()
+        {
+            TList<SecurityRealtime> listSecurityRealtimes = sercurityRealtimeService.GetAll();
+
+            foreach (SecurityRealtime securityInfo in listSecurityRealtimes)
+            {
+                try
+                {
+                    RemoveOldStockData((DateTime)securityInfo.TradeDate, ((short) RTDdataServices.Entities.MARKET_ID.HOSE));
+                  
+                    // only update for stocks, no bonds.
+                    if (securityInfo.StockType != "S" && securityInfo.StockType != "U") 
+                    {
+                        continue;
+                    }
+
+                    StockInfo stockInfo = new StockInfo();
+
+                    stockInfo.MarketID              = (short)RTDdataServices.Entities.MARKET_ID.HOSE;
+                    stockInfo.StockSymbol           = securityInfo.StockSymbol.Trim();
+                    stockInfo.Name                  = securityInfo.SecurityName.Trim();
+                    //stockInfo.Status              = stockInfo.Status;
+                    stockInfo.Floor                 = (securityInfo.Floor ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.Ceiling               = (securityInfo.Ceiling ?? 0)/ Common.PRICE_UNIT;
+                    stockInfo.AvrPrice              = (securityInfo.AvrPrice ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.OpenPrice             = (securityInfo.OpenPrice ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.RefPrice              = (securityInfo.PriorClosePrice ?? 0)/ Common.PRICE_UNIT;
+                    stockInfo.Last                  = (securityInfo.Last ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.LastVol               = (int)(securityInfo.LastVol ?? 0);
+                    stockInfo.LastVal               = securityInfo.LastVal ?? 0;
+                    stockInfo.Highest               = (securityInfo.Highest ?? 0)/ Common.PRICE_UNIT;
+                    stockInfo.Lowest                = (securityInfo.Lowest ?? 0)/ Common.PRICE_UNIT;
+                    stockInfo.TotalShare            = securityInfo.Totalshares ?? 0;
+                    stockInfo.TotalForeignRoom      = securityInfo.StartRoom ?? 0;
+                    stockInfo.AvailableForeignRoom  = securityInfo.CurrentRoom ?? 0;
+                    stockInfo.FRBoughtVol           = stockInfo.TotalForeignRoom - stockInfo.AvailableForeignRoom;
+                    stockInfo.FRSoldVol             = 0; // Can not calculate this value for HOSE.
+
+                    stockInfo.Best1Bid              = (securityInfo.Best1Bid ?? 0)/ Common.PRICE_UNIT;
+                    stockInfo.Best1BidVolume        = (int)(securityInfo.Best1BidVolume ?? 0);
+                    stockInfo.Best2Bid              = (securityInfo.Best2Bid ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.Best2BidVolume        = (int)(securityInfo.Best2BidVolume ?? 0);
+                    stockInfo.Best3Bid              = (securityInfo.Best3Bid ?? 0)/ Common.PRICE_UNIT;
+                    stockInfo.Best3BidVolume        = (int)(securityInfo.Best3BidVolume ?? 0);
+                    stockInfo.Best1Offer            = (securityInfo.Best1Offer ?? 0)/ Common.PRICE_UNIT;
+                    stockInfo.Best1OfferVolume      = (int)(securityInfo.Best1OfferVolume ?? 0);
+                    stockInfo.Best2Offer            = (securityInfo.Best2Offer ?? 0)/ Common.PRICE_UNIT;
+                    stockInfo.Best2OfferVolume      = (int)(securityInfo.Best2OfferVolume ?? 0);
+                    stockInfo.Best3Offer            = (securityInfo.Best3Offer ?? 0)/ Common.PRICE_UNIT;
+                    stockInfo.Best3OfferVolume      = (int)(securityInfo.Best3OfferVolume ?? 0);
+                    stockInfo.Sequence              = securityInfo.Sequence ?? 0;
+                    stockInfo.CanTrade              = ((securityInfo.Suspension != "S" && securityInfo.HaltResumeFlag != "H" && IsOpenedMarket(stockInfo.MarketID)) ? 1 : 0);
+
+                    // Check ATO and ATC
+                    MarketInfo marketInfo = GetCurrentMarketInfo((short) RTDdataServices.Entities.MARKET_ID.HOSE);
+                    char marketStatus = MarketStatus(marketInfo, (short) RTDdataServices.Entities.MARKET_ID.HOSE);
+
+                    if (marketStatus == (char)CommonEnums.MARKET_STATUS.PRE_OPEN)
+                    {
+                        if (stockInfo.Best1Bid == 0 && stockInfo.Best1BidVolume != 0)
+                        {
+                            stockInfo.Best1Bid = (double) CommonEnums.COND_PRICE.ATO;
+                        }
+                        if (stockInfo.Best1Offer == 0 && stockInfo.Best1OfferVolume != 0)
+                        {
+                            stockInfo.Best1Offer = (double)CommonEnums.COND_PRICE.ATO;
+                        }
+                    }
+                    else if (marketStatus == (char)CommonEnums.MARKET_STATUS.PRE_CLOSE)
+                    {
+                        if (stockInfo.Best1Bid == 0 && stockInfo.Best1BidVolume != 0)
+                        {
+                            stockInfo.Best1Bid = (double)CommonEnums.COND_PRICE.ATC;
+                        }
+                        if (stockInfo.Best1Offer == 0 && stockInfo.Best1OfferVolume != 0)
+                        {
+                            stockInfo.Best1Offer = (double)CommonEnums.COND_PRICE.ATC;
+                        }
+                    }
+
+                    // Advance value
+                    stockInfo.Changed = Math.Round(stockInfo.Last - stockInfo.RefPrice, 2);
+                    stockInfo.PercentChanged = Math.Round(((stockInfo.Last - stockInfo.RefPrice) / stockInfo.RefPrice) * 100, 2);
+
+                    UpdateStockInfo(stockInfo);
+                }
+                catch (Exception ex)
+                {
+                    Common.Log(ex.ToString());
+                }
+            }
+        }
+
+        private static void UpdateStockInfoForHNX()
+        {
+            TList<HastcStocks> listHastcStockInfos = hastcStocksService.GetAll();
+
+            foreach (HastcStocks hastcStockInfo in listHastcStockInfos)
+            {
+                try
+                {
+                    RemoveOldStockData((DateTime)hastcStockInfo.TradeDate, ((short)RTDdataServices.Entities.MARKET_ID.HASTC));
+
+                    if (hastcStockInfo.StockType != "S" && hastcStockInfo.StockType != "U") // only update for stocks, no bonds.
+                    {
+                        continue;
+                    }
+
+                    StockInfo stockInfo = new StockInfo();
+
+                    stockInfo.MarketID              = (short)RTDdataServices.Entities.MARKET_ID.HASTC;
+                    stockInfo.StockSymbol           = hastcStockInfo.StockSymbol;
+                    stockInfo.Name                  = hastcStockInfo.SecurityName;
+                    //stockInfo.Status              = stockInfo.Status;
+                    stockInfo.Floor                 = (double)hastcStockInfo.Floor / Common.PRICE_UNIT;
+                    stockInfo.Ceiling               = (double)hastcStockInfo.Ceiling / Common.PRICE_UNIT;
+                    stockInfo.RefPrice              = (double)hastcStockInfo.PriorClosePrice / Common.PRICE_UNIT;
+                    stockInfo.AvrPrice              = (hastcStockInfo.Average ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.OpenPrice             = (hastcStockInfo.OpenPrice ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.Last                  = (hastcStockInfo.Last ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.LastVol               = (int)(hastcStockInfo.LastVol ?? 0);
+                    stockInfo.LastVal               = hastcStockInfo.LastVal ?? 0;
+                    stockInfo.Highest               = (hastcStockInfo.Highest ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.Lowest                = (hastcStockInfo.Lowest ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.TotalShare            = hastcStockInfo.Totalshares ?? 0;
+                    stockInfo.TotalForeignRoom      = (long)(hastcStockInfo.SellForeignQtty + hastcStockInfo.RemainForeignQtty);
+                    stockInfo.AvailableForeignRoom  = (long)hastcStockInfo.RemainForeignQtty;
+                    stockInfo.FRBoughtVol           = (long) hastcStockInfo.BuyForeignQtty;
+                    stockInfo.FRSoldVol             = (long) hastcStockInfo.SellForeignQtty;
+
+                    stockInfo.Best1Bid              = (hastcStockInfo.Best1Bid ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.Best1BidVolume        = (int)(hastcStockInfo.Best1BidVolume ?? 0);
+                    stockInfo.Best2Bid              = (hastcStockInfo.Best2Bid ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.Best2BidVolume        = (int)(hastcStockInfo.Best2BidVolume ?? 0);
+                    stockInfo.Best3Bid              = (hastcStockInfo.Best3Bid ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.Best3BidVolume        = (int)(hastcStockInfo.Best3BidVolume ?? 0);
+                    stockInfo.Best1Offer            = (hastcStockInfo.Best1Offer ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.Best1OfferVolume      = (int)(hastcStockInfo.Best1OfferVolume ?? 0);
+                    stockInfo.Best2Offer            = (hastcStockInfo.Best2Offer ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.Best2OfferVolume      = (int)(hastcStockInfo.Best2OfferVolume ?? 0);
+                    stockInfo.Best3Offer            = (hastcStockInfo.Best3Offer ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.Best3OfferVolume      = (int)(hastcStockInfo.Best3OfferVolume ?? 0);
+                    stockInfo.Sequence              = (long)hastcStockInfo.Sequence;
+                    stockInfo.CanTrade              = ((stockInfo.Status == 0 || (stockInfo.Status >= 3 && stockInfo.Status <= 5)) && IsOpenedMarket(stockInfo.MarketID) ? 1 : 0);
+
+                    // Advance value
+                    stockInfo.Changed = Math.Round(stockInfo.Last - stockInfo.RefPrice, 2);
+                    stockInfo.PercentChanged = Math.Round(((stockInfo.Last - stockInfo.RefPrice) / stockInfo.RefPrice) * 100, 2);
+                    stockInfo.Best4BidVolume = (int)hastcStockInfo.TotalBidQtty -
+                                               (stockInfo.Best1BidVolume + stockInfo.Best2BidVolume + stockInfo.Best3BidVolume);
+                    stockInfo.Best4OfferVolume = (int)hastcStockInfo.TotalOfferQtty -
+                                               (stockInfo.Best1OfferVolume + stockInfo.Best2OfferVolume + stockInfo.Best3OfferVolume);
+
+                    UpdateStockInfo(stockInfo);
+                }
+                catch (Exception ex)
+                {
+                    Common.Log(ex.ToString());
+                }
+            }
+        }
+
+        private static void UpdateStockInfoForUPCOM()
+        {
+            TList<UpcomStocks> listUpcomStockInfos = upcomStocksService.GetAll();
+            TimeSpan duration;
+
+            foreach (UpcomStocks upcomStockInfo in listUpcomStockInfos)
+            {
+                try
+                {
+                    RemoveOldStockData((DateTime)upcomStockInfo.TradeDate, ((short)RTDdataServices.Entities.MARKET_ID.UPCoM));
+
+                    if (upcomStockInfo.StockType != "S" && upcomStockInfo.StockType != "U") // only update for stocks, no bonds.
+                    {
+                        continue;
+                    }
+
+                    StockInfo stockInfo = new StockInfo();
+
+                    stockInfo.MarketID              = (short)RTDdataServices.Entities.MARKET_ID.UPCoM;
+                    stockInfo.StockSymbol           = upcomStockInfo.StockSymbol;
+                    stockInfo.Name                  = upcomStockInfo.SecurityName;
+                    //stockInfo.Status              = stockInfo.Status;
+                    stockInfo.Floor                 = (double)upcomStockInfo.Floor / Common.PRICE_UNIT;
+                    stockInfo.Ceiling               = (double)upcomStockInfo.Ceiling / Common.PRICE_UNIT;
+                    stockInfo.RefPrice              = (double)upcomStockInfo.PriorClosePrice / Common.PRICE_UNIT;
+                    stockInfo.AvrPrice              = (upcomStockInfo.Average ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.OpenPrice             = (upcomStockInfo.OpenPrice ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.Last                  = (upcomStockInfo.Last ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.LastVol               = (int)(upcomStockInfo.LastVol ?? 0);
+                    stockInfo.LastVal               = upcomStockInfo.LastVal ?? 0;
+                    stockInfo.Highest               = (upcomStockInfo.Highest ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.Lowest                = (upcomStockInfo.Lowest ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.TotalShare            = upcomStockInfo.Totalshares ?? 0;
+                    stockInfo.TotalForeignRoom      = (long)(upcomStockInfo.SellForeignQtty + upcomStockInfo.RemainForeignQtty);
+                    stockInfo.AvailableForeignRoom  = (long)upcomStockInfo.RemainForeignQtty;
+                    stockInfo.FRBoughtVol           = (long)upcomStockInfo.BuyForeignQtty;
+                    stockInfo.FRSoldVol             = (long)upcomStockInfo.SellForeignQtty;
+
+                    stockInfo.Best1Bid              = (upcomStockInfo.Best1Bid ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.Best1BidVolume        = (int)(upcomStockInfo.Best1BidVolume ?? 0);
+                    stockInfo.Best2Bid              = (upcomStockInfo.Best2Bid ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.Best2BidVolume        = (int)(upcomStockInfo.Best2BidVolume ?? 0);
+                    stockInfo.Best3Bid              = (upcomStockInfo.Best3Bid ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.Best3BidVolume        = (int)(upcomStockInfo.Best3BidVolume ?? 0);
+                    stockInfo.Best1Offer            = (upcomStockInfo.Best1Offer ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.Best1OfferVolume      = (int)(upcomStockInfo.Best1OfferVolume ?? 0);
+                    stockInfo.Best2Offer            = (upcomStockInfo.Best2Offer ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.Best2OfferVolume      = (int)(upcomStockInfo.Best2OfferVolume ?? 0);
+                    stockInfo.Best3Offer            = (upcomStockInfo.Best3Offer ?? 0) / Common.PRICE_UNIT;
+                    stockInfo.Best3OfferVolume      = (int)(upcomStockInfo.Best3OfferVolume ?? 0);
+                    stockInfo.CanTrade              = ((stockInfo.Status == 0 || (stockInfo.Status >= 3 && stockInfo.Status <= 5)) && IsOpenedMarket(stockInfo.MarketID) ? 1 : 0);
+                    stockInfo.Sequence              = (long)upcomStockInfo.Sequence;
+
+                    // Advance value
+                    stockInfo.Changed = Math.Round(stockInfo.Last - stockInfo.RefPrice, 2);
+                    stockInfo.PercentChanged = Math.Round(((stockInfo.Last - stockInfo.RefPrice) / stockInfo.RefPrice) * 100, 2);
+                    stockInfo.Best4BidVolume = (int)upcomStockInfo.TotalBidQtty -
+                                               (stockInfo.Best1BidVolume + stockInfo.Best2BidVolume + stockInfo.Best3BidVolume);
+                    stockInfo.Best4OfferVolume = (int)upcomStockInfo.TotalOfferQtty -
+                                               (stockInfo.Best1OfferVolume + stockInfo.Best2OfferVolume + stockInfo.Best3OfferVolume);
+
+                    UpdateStockInfo(stockInfo);
+
+                }
+                catch (Exception ex)
+                {
+                    Common.Log(ex.ToString());
+                }
+            }
+        }
+
+        private static void UpdateStockInfo(StockInfo stockInfo)
+        {
+            try
+            {
+                if (ListStocks.ContainsKey(stockInfo.StockSymbol))
+                {
+                    ListStocks[stockInfo.StockSymbol] = stockInfo;
+                }
+                else
+                {
+                    ListStocks.Add(stockInfo.StockSymbol, stockInfo);
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log(ex.ToString());
+            }
+
+        }
+
+        public static void UpdateAllStockInfo()
+        {
+            UpdateStockInfoForHOSE();
+            UpdateStockInfoForHNX();
+            UpdateStockInfoForUPCOM();
+            UpdateCompanyInfo();
+            UpdateLangCompanyInfo();
+        }
+
+        public static char MarketStatus(MarketInfo marInfo, int marketID)
+        {
+            char marketStatus = (char)CommonEnums.MARKET_STATUS.UNVAILABLE;
+
+            try
+            {
+                if (marInfo == null)
+                {
+                    List<StockInfo> listStockInfos = Select_All_StockInfo((short)marketID);
+
+                    if (listStockInfos.Count == 0)
+                    {
+                        marketStatus = (char)CommonEnums.MARKET_STATUS.UNVAILABLE;
+                    }
+                    else
+                    {
+                        marketStatus = (char)CommonEnums.MARKET_STATUS.READY;
+                    }
+
+                    return marketStatus;
+                }
+
+                switch (marketID)
+                {
+                    case (short)CommonEnums.MARKET_ID.HOSE:
+                        {
+                            if (marInfo.Time >= (int)HOSETimePreOpen && marInfo.Time < (int)HOSETimeOpen)
+                            {
+                                marketStatus = (char)CommonEnums.MARKET_STATUS.PRE_OPEN;
+                            }
+                            else if ((marInfo.Time >= HOSETimeOpen) && (marInfo.Time < HOSETimePreClose))
+                            {
+                                marketStatus = (char)CommonEnums.MARKET_STATUS.OPEN;
+                            }
+                            else if ((marInfo.Time >= HOSETimePreClose) && (marInfo.Time < HOSETimePutThrough))
+                            {
+                                marketStatus = (char)CommonEnums.MARKET_STATUS.PRE_CLOSE;
+                            }
+                            else if ((marInfo.Time >= HOSETimePutThrough) && (marInfo.Time < HOSETimeEndTrading))
+                            {
+                                marketStatus = (char)CommonEnums.MARKET_STATUS.CLOSE;
+                            }
+                            else if (marInfo.Time >= HOSETimeEndTrading)
+                            {
+                                marketStatus = (char)CommonEnums.MARKET_STATUS.CLOSE_PT;
+                            }
+
+                            break;
+                        }
+                    case (short)CommonEnums.MARKET_ID.HNX:
+                        {
+                            if (marInfo.Time < (int)RTDataServices.Common.MARKET_TIME.CLOSE)
+                            {
+                                marketStatus = (char)CommonEnums.MARKET_STATUS.OPEN;
+                            }
+                            else
+                            {
+                                marketStatus = (char)CommonEnums.MARKET_STATUS.CLOSE;
+                            }
+
+                            break;
+                        }
+                    case (short)CommonEnums.MARKET_ID.UPCoM:
+                        {
+                            if (marInfo.Time >= UPCOMTimeOpen && marInfo.Time < UPCOMTimeBeginHalf)
+                            {
+                                marketStatus = (char)CommonEnums.MARKET_STATUS.OPEN;
+                            }
+                            else if (marInfo.Time >= UPCOMTimeBeginHalf && marInfo.Time < UPCOMTimeEndHalf)
+                            {
+                                marketStatus = (char)CommonEnums.MARKET_STATUS.HAFT;
+                            }
+                            else if (marInfo.Time >= UPCOMTimeEndHalf && marInfo.Time < UPCOMTimeClose)
+                            {
+                                marketStatus = (char)CommonEnums.MARKET_STATUS.OPEN_2;
+                            }
+
+                            else if (marInfo.Time >= UPCOMTimeClose)
+                            {
+                                marketStatus = (char)CommonEnums.MARKET_STATUS.CLOSE;
+                            }
+
+                            break;
+                        }
+                    default:
+                        break;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                RTDataServices.Common.Log(ex.ToString());
+            }
+
+            return marketStatus;
+        }
+
+        public static bool IsOpenedMarket(int marketID)
+        {
+            try
+            {
+                if (RTDataServices.Common.RunMode == "TEST")
+                {
+                    return true;
+                }
+                MarketInfo marInfo = GetCurrentMarketInfo(marketID);
+                
+                switch (marketID)
+                {
+                    case (short)CommonEnums.MARKET_ID.HOSE:
+                    {
+                        return marInfo.Time < HOSETimePutThrough;
+                    }
+                    case (short)CommonEnums.MARKET_ID.HNX:
+                    {
+                        return (marInfo.Time < (int) RTDataServices.Common.MARKET_TIME.CLOSE);
+                    }
+                    case (short)CommonEnums.MARKET_ID.UPCoM:
+                    {
+                        return (marInfo.Time >= UPCOMTimeOpen && marInfo.Time < UPCOMTimeBeginHalf) ||
+                               (marInfo.Time >= UPCOMTimeEndHalf && marInfo.Time < UPCOMTimeClose);
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                RTDataServices.Common.Log(ex.ToString());
+            }
+
+            return false;
+        }
+
+        private static void UpdateMarketInfoForHOSE()
+        {
+            TList<Totalmarket> listTotalMarketInfos = totalMarketServive.GetAll();
+            TimeSpan duration;
+
+            foreach (Totalmarket totalMarketInfo in listTotalMarketInfos)
+            {
+                try
+                {
+                    RemoveOldMarketInfo((DateTime)totalMarketInfo.TradeDate, (short)RTDdataServices.Entities.MARKET_ID.HOSE);
+
+                    MarketInfo marketInfo = new MarketInfo();
+
+                    marketInfo.MarketId = (short) RTDdataServices.Entities.MARKET_ID.HOSE;
+                    marketInfo.TradeDate = DateTime.Now; // need to change with time in file.
+                    marketInfo.SetIndex = (totalMarketInfo.SetIndex ?? 0)/Common.PRICE_UNIT;
+
+                    if (_priorIndex == -1)
+                    {
+                        MarketInfo firstMarketInfo = GetFirstMarketInfo((int) Common.MARKET_ID.HOSE);
+
+                        if (firstMarketInfo != null)
+                        {
+                            _priorIndex = firstMarketInfo.SetIndex;
+                        }
+                    }
+
+                    marketInfo.IndexChanged     = (_priorIndex == -1 ? 0 : marketInfo.SetIndex - _priorIndex);
+                    marketInfo.TotalTrade       = (int) (totalMarketInfo.TotalTrade ?? 0);
+                    marketInfo.TotalShares      = totalMarketInfo.Totalshare ?? 0;
+                    marketInfo.TotalValues      = (totalMarketInfo.TotalValue ?? 0)*10;
+                    marketInfo.UpVolume         = totalMarketInfo.UpVolume ?? 0;
+                    marketInfo.DownVolume       = totalMarketInfo.DownVolume ?? 0;
+                    marketInfo.NoChangeVolume   = totalMarketInfo.NoChangeVolume ?? 0;
+                    marketInfo.Advances         = (short) (totalMarketInfo.Advances ?? 0);
+                    marketInfo.NoChange         = (short) (totalMarketInfo.Nochange ?? 0);
+                    marketInfo.Declines         = (short) (totalMarketInfo.Declines ?? 0);
+                    marketInfo.Time             = (int) (totalMarketInfo.Time ?? 0);
+                    marketInfo.Status           = MarketStatus(marketInfo, marketInfo.MarketId);
+                    marketInfo.CountCeiling = GetCeiling(marketInfo.MarketId);
+                    marketInfo.CountFloor = GetFloor(marketInfo.MarketId);
+
+                    UpdateMarketInfo(marketInfo);
+                }
+                catch(Exception ex)
+                {
+                    Common.Log(ex.ToString());
+                }
+            }
+        }
+
+        private static void UpdateMarketInfoForHNX()
+        {
+            TList<HastcMarket> listHastcMarketInfos = hastcMarketService.GetAll();
+            TimeSpan duration;
+
+            foreach (HastcMarket hastcMarketInfo in listHastcMarketInfos)
+            {
+                try
+                {
+                    RemoveOldMarketInfo((DateTime)hastcMarketInfo.TradeDate, (short) RTDdataServices.Entities.MARKET_ID.HASTC);
+
+                    MarketInfo marketInfo = new MarketInfo();
+
+                    marketInfo.MarketId         = (short)RTDdataServices.Entities.MARKET_ID.HASTC;
+                    marketInfo.TradeDate        = DateTime.Now; // need to change with time in file.
+                    marketInfo.SetIndex         = hastcMarketInfo.SetIndex ?? 0;
+                    marketInfo.IndexChanged     = marketInfo.SetIndex - (hastcMarketInfo.OpenIndex ?? 0);
+                    marketInfo.TotalTrade       = (int)(hastcMarketInfo.TotalTrade ?? 0);
+                    marketInfo.TotalShares      = hastcMarketInfo.Totalshare ?? 0;
+                    marketInfo.TotalValues      = (hastcMarketInfo.TotalValue ?? 0);
+                    marketInfo.UpVolume         = 0;
+                    marketInfo.DownVolume       = 0;
+                    marketInfo.NoChangeVolume   = 0;
+                    marketInfo.Advances         = Advances(marketInfo.MarketId);
+                    marketInfo.NoChange         = NoChange(marketInfo.MarketId);
+                    marketInfo.Declines         = Declines(marketInfo.MarketId);
+                    marketInfo.Time             = (int)(hastcMarketInfo.Time ?? 0);
+                    marketInfo.Status           = MarketStatus(marketInfo, marketInfo.MarketId);
+                    marketInfo.CountCeiling = GetCeiling(marketInfo.MarketId);
+                    marketInfo.CountFloor = GetFloor(marketInfo.MarketId);
+
+                    UpdateMarketInfo(marketInfo);
+                }
+                catch (Exception ex)
+                {
+                    Common.Log(ex.ToString());
+                }
+            }
+        }
+
+
+        private static void UpdateMarketInfoForUPCOM()
+        {
+            TList<UpcomMarket> listUpcomMarketInfos = upcomMarketService.GetAll();
+            TimeSpan duration;
+
+            foreach (UpcomMarket upcomMarketInfo in listUpcomMarketInfos)
+            {
+                try
+                {
+                    RemoveOldMarketInfo((DateTime)upcomMarketInfo.TradeDate, (short)RTDdataServices.Entities.MARKET_ID.UPCoM);
+
+                    MarketInfo marketInfo = new MarketInfo();
+
+                    marketInfo.MarketId         = (short)RTDdataServices.Entities.MARKET_ID.UPCoM;
+                    marketInfo.TradeDate        = DateTime.Now; // need to change with time in file.
+                    marketInfo.SetIndex         = upcomMarketInfo.SetIndex ?? 0;
+                    marketInfo.IndexChanged     = marketInfo.SetIndex - (upcomMarketInfo.OpenIndex ?? 0);
+                    marketInfo.TotalTrade       = (int)(upcomMarketInfo.TotalTrade ?? 0);
+                    marketInfo.TotalShares      = upcomMarketInfo.Totalshare ?? 0;
+                    marketInfo.TotalValues      = (upcomMarketInfo.TotalValue ?? 0);
+                    marketInfo.UpVolume         = 0;
+                    marketInfo.DownVolume       = 0;
+                    marketInfo.NoChangeVolume   = 0;
+                    marketInfo.Advances         = upcomMarketInfo.Advances ?? 0;
+                    marketInfo.NoChange         = upcomMarketInfo.Nochange ?? 0;
+                    marketInfo.Declines         = upcomMarketInfo.Declines ?? 0;
+                    marketInfo.Time             = (int)(upcomMarketInfo.Time ?? 0);
+                    marketInfo.Status           = MarketStatus(marketInfo, marketInfo.MarketId);
+                    marketInfo.CountCeiling = GetCeiling(marketInfo.MarketId);
+                    marketInfo.CountFloor = GetFloor(marketInfo.MarketId);
+
+                    UpdateMarketInfo(marketInfo);
+                }
+                catch (Exception ex)
+                {
+                    Common.Log(ex.ToString());
+                }
+            }
+        }
+
+        private static void UpdateMarketInfo (MarketInfo marketInfo)
+        {
+            try
+            {
+
+                if (!ListMarketInfos.ContainsKey((int) marketInfo.MarketId))
+                {
+                    Dictionary<int, MarketInfo> marketInfoEntry = new Dictionary<int, MarketInfo>();
+
+                    marketInfoEntry.Add(marketInfo.Time, marketInfo);
+                    ListMarketInfos.Add((int) marketInfo.MarketId, marketInfoEntry);
+
+                    return;
+                }
+
+                Dictionary<int, MarketInfo> currentMarketInfo = ListMarketInfos[marketInfo.MarketId];
+
+                if (!currentMarketInfo.ContainsKey(marketInfo.Time))
+                {
+                    currentMarketInfo.Add(marketInfo.Time, marketInfo);
+                }
+                else
+                {
+                    currentMarketInfo[marketInfo.Time] = marketInfo;
+                }
+
+                ListMarketInfos[marketInfo.MarketId] = currentMarketInfo;
+            }
+
+            catch (Exception ex)
+            {
+                Common.Log(ex.ToString());
+            }
+        }
+
+        public static void UpdateAllMarketInfo()
+        {
+            UpdateMarketInfoForHOSE();
+            UpdateMarketInfoForHNX();
+            UpdateMarketInfoForUPCOM();
+        }
+
+        private static void UpdateCompanyInfo()
+        {
+            try
+            {
+                if (ListCompanies.Count == 0)
+                {
+                    if (ListStocks.Count > 0)
+                    {
+                        List<StockInfo> stockInfos = Select_All_StockInfo();
+
+                        foreach (var stockInfo in stockInfos)
+                        {
+                            RTDataServices.Entities.CompanyInfo companyInfo = new RTDataServices.Entities.CompanyInfo();
+
+                            companyInfo.MarketId = stockInfo.MarketID;
+                            companyInfo.Code = stockInfo.StockSymbol;
+                            companyInfo.FullName = stockInfo.Name;
+
+                            ListCompanies.Add(companyInfo.Code, companyInfo);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log(ex.ToString());
+            }
+        }
+
+        private static void UpdateLangCompanyInfo()
+        {
+            try
+            {
+                TList<Language> listLanguages = languageService.GetAll();
+
+                foreach (Language lang in listLanguages)
+                {
+                    DataSet dsCompanies = companyInfoService.GetCompanyInfoByLanguageId(lang.LanguageId);
+
+                    if (!ListLangCompanies.ContainsKey(lang.LanguageId))
+                    {
+                        Dictionary<string, RTDataServices.Entities.CompanyInfo> companyInfoEntry = new Dictionary<string, RTDataServices.Entities.CompanyInfo>();
+
+                        if (dsCompanies.Tables[0].Rows.Count > 0)
+                        {
+                            for (int index = 0; index < dsCompanies.Tables[0].Rows.Count; index++)
+                            {
+                                try
+                                {
+                                    RTDataServices.Entities.CompanyInfo companyInfo = new CompanyInfo();
+
+                                    companyInfo.Code = dsCompanies.Tables[0].Rows[index]["Code"].ToString();
+                                    companyInfo.FullName = dsCompanies.Tables[0].Rows[index]["CompanyName"].ToString();
+                                    companyInfo.MarketId =
+                                        Int16.Parse(dsCompanies.Tables[0].Rows[index]["MarketId"].ToString());
+
+                                    if (!companyInfoEntry.ContainsKey(companyInfo.Code))
+                                    {
+                                        companyInfoEntry.Add(companyInfo.Code, companyInfo);
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    Common.Log(ex.ToString());
+                                }
+                            }
+                        }
+
+                        ListLangCompanies.Add(lang.LanguageId, companyInfoEntry);
+                        
+                        continue;
+                    }
+
+                    Dictionary<string, RTDataServices.Entities.CompanyInfo> langCompanyInfoEntry = ListLangCompanies[lang.LanguageId];
+
+                    if (dsCompanies.Tables[0].Rows.Count > 0)
+                    {
+                        for (int index = 0; index < dsCompanies.Tables[0].Rows.Count; index++)
+                        {
+                            RTDataServices.Entities.CompanyInfo companyInfo = new CompanyInfo();
+
+                            companyInfo.Code = dsCompanies.Tables[0].Rows[index]["Code"].ToString();
+                            companyInfo.FullName = dsCompanies.Tables[0].Rows[index]["CompanyName"].ToString();
+                            companyInfo.MarketId =
+                                Int16.Parse(dsCompanies.Tables[0].Rows[index]["MarketId"].ToString());
+
+                            if (!langCompanyInfoEntry.ContainsKey(companyInfo.Code))
+                            {
+                                langCompanyInfoEntry.Add(companyInfo.Code, companyInfo);
+                            }
+                            else
+                            {
+                                langCompanyInfoEntry[companyInfo.Code] = companyInfo;
+                            }
+                        }
+
+                        ListLangCompanies[lang.LanguageId] = langCompanyInfoEntry;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log(ex.ToString());
+            }
+        }
+
+        public  void Update(HOSEPutAdInfo info)
+        {
+            //HOSEPutAdInfoData.Update(info);
+        }
+
+        public  void Update(HOSEPutExecInfo info)
+        {
+            //HOSEPutExecInfoData.Update(info);
+        }
+
+        public  void Update(HOSEForeignRoomInfo info)
+        {
+            //HOSEForeignRoomInfoData.Update(info);
+        }
+
+        private static void UpdateTransactionForHOSE()
+        {
+            // Get all data from hose transaction id
+            var listTransactions = hoseTransactionsService.GetAllById(hoseTransactionsId);
+
+            foreach (var hoseTransactions in listTransactions)
+            {
+                try
+                {
+                    var transactionInfo = new HOSETransactionInfo();
+
+                    transactionInfo.Id = (int)hoseTransactions.Id;
+
+                    if (!string.IsNullOrEmpty(hoseTransactions.StockSymbol))
+                    {
+                        transactionInfo.StockSymbol = hoseTransactions.StockSymbol.Trim();
+                    }
+                    if (hoseTransactions.Price != null)
+                        transactionInfo.Price = (double)hoseTransactions.Price / Common.PRICE_UNIT;
+                    if (hoseTransactions.Vol != null) 
+                        transactionInfo.Vol = (int)hoseTransactions.Vol;
+                    if (hoseTransactions.Val != null) 
+                        transactionInfo.Val = (int)hoseTransactions.Val;
+                    if (hoseTransactions.AccumulatedVol != null)
+                        transactionInfo.AccumulatedVol = (int)hoseTransactions.AccumulatedVol;
+                    if (hoseTransactions.AccumulatedVal != null)
+                        transactionInfo.AccumulatedVal = (long)hoseTransactions.AccumulatedVal;
+                    if (hoseTransactions.Highest != null)
+                        transactionInfo.Highest = (double)hoseTransactions.Highest / 100;
+                    if (hoseTransactions.Lowest != null) 
+                        transactionInfo.Lowest = (double)hoseTransactions.Lowest / 100;
+                    if (hoseTransactions.Time != null)
+                        transactionInfo.Time = (int)hoseTransactions.Time;
+                    
+                    transactionInfo.Side = hoseTransactions.Side;
+
+                    Db4oManager.Insert(transactionInfo);
+                    hoseTransactionsId = hoseTransactions.Id;
+                }
+                catch (Exception ex)
+                {
+                    Common.Log(ex.ToString());
+                }
+            }
+        }
+
+        private static void UpdateTransactionForHNX()
+        {
+            var listTransactions = hastcTransactionsService.GetAllById(hastcTransactionsId);
+
+            foreach (var hastcTransactions in listTransactions)
+            {
+                try
+                {
+                    var transactionInfo = new HNXTransactionInfo();
+
+                    transactionInfo.Id = (int)hastcTransactions.Id;
+
+                    if (!string.IsNullOrEmpty(hastcTransactions.StockSymbol))
+                    {
+                        transactionInfo.StockSymbol = hastcTransactions.StockSymbol;
+                    }
+
+                    if (hastcTransactions.Price != null)
+                        transactionInfo.Price = (double)hastcTransactions.Price / Common.PRICE_UNIT;
+                    if (hastcTransactions.Vol != null) 
+                        transactionInfo.Vol = (int)hastcTransactions.Vol;
+                    if (hastcTransactions.Val != null) 
+                        transactionInfo.Val = (int)hastcTransactions.Val;
+                    if (hastcTransactions.AccumulatedVol != null)
+                        transactionInfo.AccumulatedVol  = (int)hastcTransactions.AccumulatedVol;
+                    if (hastcTransactions.AccumulatedVal != null)
+                    {
+                        transactionInfo.AccumulatedVal = (long)hastcTransactions.AccumulatedVal;
+                    }
+                    if (hastcTransactions.Highest != null)
+                    {
+                        transactionInfo.Highest = (double)hastcTransactions.Highest / Common.PRICE_UNIT;
+                    }
+                    if (hastcTransactions.Lowest != null)
+                    {
+                        transactionInfo.Lowest = (double)hastcTransactions.Lowest / Common.PRICE_UNIT;
+                    }
+                    if (hastcTransactions.Time != null)
+                    {
+                        transactionInfo.Time = (int)hastcTransactions.Time;
+                    }
+                    
+                    transactionInfo.Side            = hastcTransactions.Side;
+
+                    Db4oManager.Insert(transactionInfo);
+                    hastcTransactionsId = hastcTransactions.Id;
+                }
+                catch (Exception ex)
+                {
+                    Common.Log(ex.ToString());
+                }
+            }
+        }
+
+        private static void UpdateTransactionForUPCOM()
+        {
+            var listTransactions = upcomTransactionsService.GetAllById(upcomTransactionsId);            
+
+            foreach (var upcomTransactions in listTransactions)
+            {
+                try
+                {
+                    var transactionInfo = new UPCOMTransactionInfo();
+
+                    transactionInfo.Id = (int)upcomTransactions.Id;
+
+                    transactionInfo.StockSymbol     = upcomTransactions.StockSymbol;
+                    if (upcomTransactions.Price != null)
+                        transactionInfo.Price = (double)upcomTransactions.Price / Common.PRICE_UNIT;
+                    if (upcomTransactions.Vol != null) 
+                        transactionInfo.Vol = (int)upcomTransactions.Vol;
+                    if (upcomTransactions.Val != null) 
+                        transactionInfo.Val = (int)upcomTransactions.Val;
+                    if (upcomTransactions.AccumulatedVol != null)
+                        transactionInfo.AccumulatedVol = (int)upcomTransactions.AccumulatedVol;
+                    if (upcomTransactions.AccumulatedVal != null)
+                        transactionInfo.AccumulatedVal = (long)upcomTransactions.AccumulatedVal;
+                    if (upcomTransactions.Highest != null)
+                        transactionInfo.Highest = (double)upcomTransactions.Highest / Common.PRICE_UNIT;
+                    if (upcomTransactions.Lowest != null)
+                        transactionInfo.Lowest = (double)upcomTransactions.Lowest / Common.PRICE_UNIT;
+                    if (upcomTransactions.Time != null) 
+                        transactionInfo.Time = (int)upcomTransactions.Time;
+                    transactionInfo.Side = upcomTransactions.Side;
+
+                    Db4oManager.Insert(transactionInfo);
+                    upcomTransactionsId = upcomTransactions.Id;
+                }
+                catch (Exception ex)
+                {
+                    Common.Log(ex.ToString());
+                }
+            }
+        }
+
+
+        public static void UpdateTransactionInfo()
+        {
+            UpdateTransactionForHOSE();
+            UpdateTransactionForHNX();
+            UpdateTransactionForUPCOM();
+        }
+
+        public  void Update(HOSETransferedSessionInfo info)
+        {
+            //HOSETransferedSessionInfoData.Update(info);
+        }
+
+        private static List<StockInfo> Select_All_StockInfo()
+        {
+            return new List<StockInfo>(ListStocks.Values); ;
+        }
+
+        private static short Advances (short marketID)
+        {
+            List<StockInfo> listStockInfos;
+
+            try
+            {
+                listStockInfos = new List<StockInfo>(ListStocks.Values).FindAll(info => (info.MarketID == marketID && (info.Last - info.RefPrice) > 0 && info.TotalShare > 0));
+
+                return (short)listStockInfos.Count;
+            }
+
+            catch (Exception ex)
+            {
+                Common.Log(ex.ToString());
+
+                return 0;
+            }
+        }
+
+        private static short Declines(short marketID)
+        {
+            List<StockInfo> listStockInfos;
+
+            try
+            {
+                listStockInfos = new List<StockInfo>(ListStocks.Values).FindAll(info => (info.MarketID == marketID && (info.Last - info.RefPrice) < 0 && info.TotalShare > 0));
+
+                return (short)listStockInfos.Count;
+            }
+
+            catch (Exception ex)
+            {
+                Common.Log(ex.ToString());
+
+                return 0;
+            }
+        }
+
+        private static short NoChange(short marketID)
+        {
+            List<StockInfo> listStockInfos;
+
+            try
+            {
+                // Get all stocks that have no transaction or last price == refprice 
+                listStockInfos = new List<StockInfo>(ListStocks.Values).FindAll(info => (info.MarketID == marketID && (((info.Last - info.RefPrice) == 0) || (info.TotalShare == 0))));
+
+                return (short)listStockInfos.Count;
+            }
+
+            catch (Exception ex)
+            {
+                Common.Log(ex.ToString());
+
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Get ceiling stocks
+        /// </summary>
+        /// <param name="marketID">Market Id</param>
+        /// <returns></returns>
+        private static short GetCeiling(short marketID)
+        {
+            List<StockInfo> listStockInfos;
+
+            try
+            {
+                listStockInfos = new List<StockInfo>(ListStocks.Values).FindAll(info => (info.MarketID == marketID && (info.Last - info.Ceiling) == 0 && info.TotalShare > 0));
+
+                return (short)listStockInfos.Count;
+            }
+
+            catch (Exception ex)
+            {
+                Common.Log(ex.ToString());
+
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Get floor stocks
+        /// </summary>
+        /// <param name="marketID">Market Id</param>
+        /// <returns></returns>
+        private static short GetFloor(short marketID)
+        {
+            List<StockInfo> listStockInfos;
+
+            try
+            {
+                listStockInfos = new List<StockInfo>(ListStocks.Values).FindAll(info => (info.MarketID == marketID && (info.Last - info.Floor) == 0 && info.TotalShare > 0));
+
+                return (short)listStockInfos.Count;
+            }
+
+            catch (Exception ex)
+            {
+                Common.Log(ex.ToString());
+
+                return 0;
+            }
+        }
+
+        public static List<HOSETransactionInfo> Select_HOSETransactionInfo(string stockSymbol)
+        {
+            return Db4oManager.GetHoseTransactionInfoListBySymbol(stockSymbol);
+        }
+
+        public static List<HOSETransactionInfo> Select_HOSETransactionInfo(string stockSymbol, int time)
+        {
+            return Db4oManager.GetHoseTransactionInfoListBySymbol(stockSymbol, time);
+        }
+
+        public static List<HNXTransactionInfo> Select_HNXTransactionInfo(string stockSymbol)
+        {
+            return Db4oManager.GetHnxTransactionInfoListBySymbol(stockSymbol);
+        }
+
+        public static List<HNXTransactionInfo> Select_HNXTransactionInfo(string stockSymbol, int time)
+        {
+            return Db4oManager.GetHnxTransactionInfoListBySymbol(stockSymbol, time);
+        }
+
+        public static List<UPCOMTransactionInfo> Select_UPCOMTransactionInfo(string stockSymbol)
+        {
+            return Db4oManager.GetUpcomTransactionInfoListBySymbol(stockSymbol);
+        }
+
+        public static List<UPCOMTransactionInfo> Select_UPCOMTransactionInfo(string stockSymbol, int time)
+        {
+            return Db4oManager.GetUpcomTransactionInfoListBySymbol(stockSymbol, time);
+        }
+
+        public static List<MainMatchedPricesInfo> GetHOSEMainMatchedPrices(string stockSymbol)
+        {
+            return Db4oManager.GetHOSEMainMatchedPrices(stockSymbol);
+        }
+
+        public static List<MainMatchedPricesInfo> GetHNXMainMatchedPrices(string stockSymbol)
+        {
+            return Db4oManager.GetHNXMainMatchedPrices(stockSymbol);
+        }
+
+        public static List<MainMatchedPricesInfo> GetUPCOMMainMatchedPrices(string stockSymbol)
+        {
+            return Db4oManager.GetUPCOMMainMatchedPrices(stockSymbol);
+        }
+
+        private static List<TickerInfo> GetTickerListBySymbolAndId(string stockSymbol, int id)
+        {
+            StockInfo stockInfo = GetStock(stockSymbol);
+
+            switch (stockInfo.MarketID)
+            {
+                case (short)CommonEnums.MARKET_ID.HOSE:
+                    return Db4oManager.GetTickerListBySymbolAndId(stockSymbol, id, stockInfo.RefPrice, typeof(HOSETransactionInfo));
+                case (short)CommonEnums.MARKET_ID.HNX:
+                    return Db4oManager.GetTickerListBySymbolAndId(stockSymbol, id, stockInfo.RefPrice, typeof(HNXTransactionInfo));
+                case (short)CommonEnums.MARKET_ID.UPCoM:
+                    return Db4oManager.GetTickerListBySymbolAndId(stockSymbol, id, stockInfo.RefPrice, typeof(UPCOMTransactionInfo));
+                default:
+                    return null;
+            }
+        }
+
+        /// <summary>
+        /// Get All Ticker Infos
+        /// </summary>
+        /// <param name="id">current Max Id</param>
+        /// <returns>List<TickerInfo></returns>
+        public static List<TickerInfo> GetTickerListById(int marketId, int id)
+        {
+            switch (marketId)
+            {
+                case (short)CommonEnums.MARKET_ID.HOSE:
+                    return Db4oManager.GetTickerListById(id, typeof(HOSETransactionInfo));
+                case (short)CommonEnums.MARKET_ID.HNX:
+                    return Db4oManager.GetTickerListById(id, typeof(HNXTransactionInfo));
+                case (short)CommonEnums.MARKET_ID.UPCoM:
+                    return Db4oManager.GetTickerListById(id, typeof(UPCOMTransactionInfo));
+                default:
+                    return null;
+            }
+        }
+
+        /// <summary>
+        /// Get Ticker List By List Of Codes
+        /// </summary>
+        /// <param name="listCodes">listCodes with format: Code1:id1,Code2:id2,...</param>
+        /// <returns>List<TickerInfo></returns>
+        public static List<TickerInfo> GetTickerListByListCode(string listCodes)
+        {
+            string[] Codes = listCodes.Split(',');
+
+            var listTickerInfos = new List<TickerInfo>();
+
+            foreach (string code in Codes)
+            {
+                string[] CodeInfo = code.Split(':');
+
+                List<TickerInfo> ticketList = GetTickerListBySymbolAndId(CodeInfo[0], Int32.Parse(CodeInfo[1]));
+
+                if (ticketList != null)
+                {
+                    listTickerInfos.InsertRange(0, ticketList);
+                }
+            }
+
+            return listTickerInfos;
+        }
+
+        public static List<StockInfo> Select_List_StockInfos(string listCodes)
+        {
+            string[] Symbols = listCodes.Split(',');
+
+            List<StockInfo> listStockInfos = new List<StockInfo>();
+
+            foreach (string  symbol in Symbols)
+            {
+                StockInfo stockInfo = GetStock(symbol.Trim());
+
+                if (stockInfo != null)
+                {
+                    listStockInfos.Add(stockInfo);
+                }
+            }
+
+            return listStockInfos; ;
+        }
+
+        public static List<StockInfo> Select_List_StockInfos(string listCodes, string languageId)
+        {
+            string[] Symbols = listCodes.Split(',');
+
+            List<StockInfo> listStockInfos = new List<StockInfo>();
+
+            foreach (string symbol in Symbols)
+            {
+                StockInfo stockInfo = GetStock(symbol.Trim(), languageId);
+
+                if (stockInfo != null)
+                {
+                    listStockInfos.Add(stockInfo);
+                }
+            }
+
+            return listStockInfos; ;
+        }
+
+         public static List<StockInfo> Select_All_StockInfo(short marketID)
+        {
+             List<StockInfo> listStockInfos;
+             List<StockInfo> listRetStockInfos = null;
+
+             try
+             {
+                 listStockInfos = new List<StockInfo>(ListStocks.Values);
+                 listRetStockInfos = listStockInfos.FindAll(info => (info.MarketID == marketID));
+             }
+
+             catch (Exception ex)
+             {
+                 Common.Log(ex.ToString());
+             }
+
+             return listRetStockInfos;
+        }
+
+
+        public static List<RTDataServices.Entities.CompanyInfo> Select_All_CompanyInfo()
+        {
+            return new List<RTDataServices.Entities.CompanyInfo>(ListCompanies.Values);
+        }
+
+        public static List<NewestWorkingDatesInfo> Select_All_NewestWorkingDates()
+        {
+            List<NewestWorkingDatesInfo> listNewestWorkingDates = null;
+
+            try
+            {
+                TList<NearestWorkingDates> listNearestWorkingDatesInfos = nearestWorkingDatesService.GetAll();
+
+                listNewestWorkingDates = new List<NewestWorkingDatesInfo>();
+
+                foreach (var nearestWorkingDatesInfo in listNearestWorkingDatesInfos)
+                {
+                    NewestWorkingDatesInfo newestWorkingDatesInfo = new NewestWorkingDatesInfo();
+
+                    newestWorkingDatesInfo.MarketId = (short) nearestWorkingDatesInfo.MarketId;
+                    newestWorkingDatesInfo.T  = nearestWorkingDatesInfo.T ?? DateTime.Now;
+                    newestWorkingDatesInfo.T1 = nearestWorkingDatesInfo.T1 ?? DateTime.Now;
+                    newestWorkingDatesInfo.T2 = nearestWorkingDatesInfo.T2 ?? DateTime.Now;
+                    newestWorkingDatesInfo.T3 = nearestWorkingDatesInfo.T3 ?? DateTime.Now;
+
+                    listNewestWorkingDates.Add(newestWorkingDatesInfo);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Common.Log(ex.ToString());
+            }
+
+            return listNewestWorkingDates;
+        }
+
+        public static List<RTDataServices.Entities.CompanyInfo> Select_All_CompanyInfo(short marketID)
+        {
+            List<RTDataServices.Entities.CompanyInfo> listRetCompanyInfos = null;
+            List<RTDataServices.Entities.CompanyInfo> listCompanyInfos;
+
+            try
+            {
+
+                listCompanyInfos = new List<RTDataServices.Entities.CompanyInfo>(ListCompanies.Values);
+
+                if (marketID == 0)
+                {
+                    return listCompanyInfos;
+                }
+
+                listRetCompanyInfos =
+                    listCompanyInfos.FindAll(delegate(RTDataServices.Entities.CompanyInfo info) { return (info.MarketId == marketID); });
+            }
+
+            catch (Exception ex)
+            {
+                Common.Log(ex.ToString());
+            }
+
+            return listRetCompanyInfos;
+        }
+
+        public static List<HOSEPutAdInfo> Select_All_HOSEPutAdInfo()
+        {
+            return new List<HOSEPutAdInfo>();
+        }
+
+         public static List<HOSEPutExecInfo> Select_All_HOSEPutExecInfo()
+        {
+            return new List<HOSEPutExecInfo>();
+        }
+    }
+}

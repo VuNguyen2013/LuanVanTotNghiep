@@ -1,0 +1,260 @@
+﻿	
+
+#region Using Directives
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using ETradeCommon;
+using ETradeCommon.Enums;
+using ETradeOrders.DataAccess.Bases;
+using ETradeOrders.Entities;
+
+#endregion
+
+namespace ETradeOrders.Services
+{		
+	/// <summary>
+	/// An component type implementation of the 'ConditionOrder' table.
+	/// </summary>
+	/// <remarks>
+	/// All custom implementations should be done here.
+	/// </remarks>
+	[CLSCompliant(true)]
+	public partial class ConditionOrderService : ETradeOrders.Services.ConditionOrderServiceBase
+	{
+        private readonly ConditionOrderDetailService _detailService = new ConditionOrderDetailService();
+		#region Constructors
+
+	    #endregion Constructors
+
+	    ///<summary>
+	    /// Get waiting and actived condition orders.
+	    ///</summary>
+	    ///<param name="side">Buy or sell side</param>
+	    ///<param name="subCustAccountId">Sub customer account id</param>
+	    ///<param name="symbol">Stock symbol</param>
+	    ///<returns></returns>
+	    public List<ConditionOrder> GetListUnfinishedConditionOrders(char side, string subCustAccountId, string symbol)
+        {
+            var whereClause = new StringBuilder();
+            whereClause.Append("(Status = '0')");
+            whereClause.AppendFormat(" AND Side='{0}'", side);
+            whereClause.AppendFormat(" AND SubCustAccountID='{0}'", subCustAccountId);
+            if(!string.IsNullOrEmpty(symbol))
+            {
+                whereClause.AppendFormat(" AND SecSymbol='{0}'", symbol);
+            }
+            int count;
+            var list = GetPaged(whereClause.ToString(), string.Empty, 0, int.MaxValue, out count);
+            if (list != null)
+            {
+                return list.ToList();
+            }
+	        return null;
+        }
+
+        ///<summary>
+        /// Get list of condition order by dynamic conditions.
+        ///</summary>
+        ///<param name="accountNo">Account no</param>
+        ///<param name="side">Buy or sell side</param>
+        ///<param name="symbol">Stock symbol</param>
+        ///<param name="status">Order status</param>
+        ///<param name="fromDate">Searched effective date from</param>
+        ///<param name="toDate">Searched effective date to</param>
+        ///<param name="pageIndex">Page index</param>
+        ///<param name="pageSize">Page size</param>
+        ///<param name="count">Total records</param>
+        ///<returns></returns>
+        public List<ConditionOrder> GetListConditionOrder(string accountNo, string side, string symbol, int[] status, 
+            string fromDate, string toDate, int pageIndex, int pageSize, out int count)
+        {
+            var whereClause = new StringBuilder();
+            if(!string.IsNullOrEmpty(accountNo))
+            {
+                whereClause.AppendFormat("AND SubCustAccountID='{0}'", accountNo);
+            }
+            if (!string.IsNullOrEmpty(side))
+            {
+                whereClause.AppendFormat("AND Side='{0}'", side);
+            }
+            if (!string.IsNullOrEmpty(symbol))
+            {
+                whereClause.AppendFormat("AND SecSymbol='{0}'", symbol);
+            }
+            if (status.Count() >= 0)
+            {
+                string strStatus = status.Aggregate(string.Empty, (current, iStatus) => current + "'" + iStatus + "',");
+                if (!string.IsNullOrEmpty(strStatus))
+                {
+                    strStatus = strStatus.Substring(0, strStatus.Length - 1);
+                    whereClause.AppendFormat("AND Status IN ({0})", strStatus);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(toDate))
+            {
+                whereClause.AppendFormat("AND EffDate < " + Constants.SQL_CONVERT_DATETIME_YYYYMMDD, toDate);
+            }
+
+            if (!string.IsNullOrEmpty(fromDate))
+            {
+                whereClause.AppendFormat("AND ExpDate >= " + Constants.SQL_CONVERT_DATETIME_YYYYMMDD, fromDate);
+            }
+
+            string where = whereClause.ToString();
+            if (!string.IsNullOrEmpty(where))
+            {
+                where = where.Substring(4);
+            }
+            var list = GetPaged(where, "TradeTime DESC" , pageIndex - 1, pageSize, out count);
+            if (list != null)
+            {
+                var returnList = list.ToList();
+                foreach (var conditionOrder in returnList)
+                {
+                    if(conditionOrder.Status == ((int)CommonEnums.CONDITION_ORDER_STATUS.WAITING).ToString())
+                    {
+                        conditionOrder.CanCancel = true;
+                    }
+                    else
+                    {
+                        conditionOrder.CanCancel = false;
+                    }
+                }
+                return returnList;
+            }
+            return null;
+        }
+
+        ///<summary>
+        /// Cancel condition order when it is in state Actived.
+        ///</summary>
+        ///<param name="conditionOrderId">Condition order id</param>
+        ///<param name="accountNo">Account id</param>
+        ///<returns></returns>
+        public CommonEnums.RET_CODE CancelConditionOrder(long conditionOrderId, string accountNo)
+        {
+            var conditionOrder = GetByConditionOrderId(conditionOrderId);
+            if (conditionOrder != null)
+            {
+                if (conditionOrder.SubCustAccountId != accountNo)
+                {
+                    return CommonEnums.RET_CODE.ERROR_ACCOUNT;
+                }
+                if (conditionOrder.Status != ((int) CommonEnums.CONDITION_ORDER_STATUS.WAITING).ToString())
+                {
+                    return CommonEnums.RET_CODE.ADVANCE_ORDER_STATUS_INCORRECT_STATE;
+                }
+                conditionOrder.Status = ((int)CommonEnums.CONDITION_ORDER_STATUS.CANCELLED).ToString();
+                bool result = Update(conditionOrder);
+                if (result)
+                {
+                    return CommonEnums.RET_CODE.SUCCESS;
+                }
+                return CommonEnums.RET_CODE.FAIL;
+            }
+            return CommonEnums.RET_CODE.NO_EXISTED_DATA;
+        }
+
+	    ///<summary>
+	    /// Update condition order information and condition order detail information
+	    ///</summary>
+	    ///<param name="execOrder">Current order information</param>
+	    ///<param name="volume">Matched volume</param>
+	    ///<param name="matchedPrice">Matched price</param>
+	    ///<returns></returns>
+	    public CommonEnums.RET_CODE UpdateConditionOrder(ExecOrder execOrder, int volume, decimal? matchedPrice)
+        {
+            if (execOrder.ConditionOrderId != null)
+            {
+                var conditionOrder = GetByConditionOrderId((long)execOrder.ConditionOrderId);
+                if (conditionOrder != null)
+                {
+                    if (execOrder.OrderStatus == (short)CommonEnums.ORDER_STATUS.CANCELLED)
+                    {
+                        if (conditionOrder.Status == ((int)CommonEnums.CONDITION_ORDER_STATUS.ACTIVED).ToString())
+                        {
+                            conditionOrder.Status =
+                                ((int)CommonEnums.CONDITION_ORDER_STATUS.WAITING).ToString();
+                        }
+                    } 
+                    else if ((execOrder.OrderStatus == (short)CommonEnums.ORDER_STATUS.FULL_MATCHED)
+                                || (execOrder.OrderStatus == (short)CommonEnums.ORDER_STATUS.SEMI_MATCHED))
+                    {
+                        // Update condition order and condition order detail
+                        conditionOrder.MatchedVolume = conditionOrder.MatchedVolume + volume;
+                        if (conditionOrder.MatchedVolume == conditionOrder.Volume)
+                        {
+                            conditionOrder.Status =
+                                ((int)CommonEnums.CONDITION_ORDER_STATUS.DONE).ToString();
+                        }
+                    }
+                    bool result = Update(conditionOrder);
+
+                    if (result)
+                    {
+                        // Update condition order detail
+                        var parameters = new ConditionOrderDetailParameterBuilder();
+                        parameters.AppendEquals(ConditionOrderDetailColumn.ConditionOrderId, execOrder.ConditionOrderId.ToString());
+                        int count;
+                        var list = _detailService.Find(parameters, "DetailId DESC", 0, 1, out count);
+                        if (list != null && list.Count > 0)
+                        {
+                            var detail = list[0];
+                            if (detail != null)
+                            {
+                                if (volume > 0)
+                                {
+                                    if (matchedPrice == null)
+                                    {
+                                        matchedPrice = 0;
+                                    }
+                                    if (detail.AvgPrice == null)
+                                    {
+                                        detail.AvgPrice = 0;
+                                    }
+                                    detail.AvgPrice = (detail.MatchedVolume*detail.AvgPrice + volume*matchedPrice)/
+                                                      (conditionOrder.MatchedVolume + volume);
+                                }
+                                detail.UpdatedDateTime = DateTime.Now;
+                                detail.MatchedVolume = conditionOrder.MatchedVolume;
+                                detail.FisOrderId = execOrder.FisOrderId;
+                                detail.OrdRejReason = execOrder.OrdRejReason;
+                                detail.NumOfMatch = execOrder.NumOfMatch;
+                                detail.CancelledVol = execOrder.CancelledVolume;
+                                detail.OrderStatus = execOrder.OrderStatus;
+                                _detailService.Update(detail);
+                            }
+                        }
+                        return CommonEnums.RET_CODE.SUCCESS;
+                    }
+                }
+            }
+            return CommonEnums.RET_CODE.FAIL;
+        }
+
+        ///<summary>
+        /// Update condition order status.
+        ///</summary>
+        ///<param name="conditionOrderId"></param>
+        ///<param name="status"></param>
+        ///<returns></returns>
+        public bool UpdateConditionOrderStatus(long conditionOrderId, string status)
+        {
+            var conditionOrder = GetByConditionOrderId(conditionOrderId);
+            if (conditionOrder != null)
+            {
+                conditionOrder.Status = status;
+                bool result = Update(conditionOrder);
+                if (result)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+	}//End Class
+
+} // end namespace

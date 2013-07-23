@@ -1,0 +1,44 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="StockAvailable.cs" company="OTS">
+//   2010
+// </copyright>
+// <summary>
+//   Defines the StockBalance type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ETradeCore.Entities
+{
+    public class StockAvailable
+    {
+        /// <summary>
+        /// Gets or sets the sec symbol.
+        /// </summary>
+        /// <value>The sec symbol.</value>
+        public System.String SecSymbol { get; set; }
+        /// <summary>
+        /// Gets or sets the avai volume.
+        /// </summary>
+        /// <value>The avai volume.</value>
+        public System.Decimal AvaiVolume { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets the avg price.
+        /// </summary>
+        /// <value>The avg price.</value>
+        public System.Decimal AvgPrice { get; set; }
+
+        /// <summary>
+        /// Gets or sets the stock transfered amount.
+        /// </summary>
+        /// <value>The stock transfered amount.</value>
+        public System.Decimal StockTransferedAmount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the advance ordered amount.
+        /// </summary>
+        /// <value>The advance ordered amount.</value>
+        public System.Decimal AdvanceOrderedAmount { get; set; }
+    }
+}

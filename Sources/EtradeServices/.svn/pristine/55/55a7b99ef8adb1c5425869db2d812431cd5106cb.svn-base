@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{92F8D436-4374-447E-9267-E0F4990BACFA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ETradeGWServices</RootNamespace>
+    <AssemblyName>ETradeGWServices</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Extensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ETradeGWCommonConstants.cs" />
+    <Compile Include="EtradeGWCommonEnums.cs" />
+    <Compile Include="ETradeGW.cs" />
+    <Compile Include="EtradeGWCommonUtils.cs" />
+    <Compile Include="IFISMessageInfo.cs" />
+    <Compile Include="LogTransactionDTO.cs" />
+    <Compile Include="MessageHandler.cs" />
+    <Compile Include="OrderUpdater.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\RTServices\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\EtradeCommon\source\trunk\Entities\ETradeCore.Entities\ETradeCore.Entities.csproj">
+      <Project>{82039C8A-FFFE-4CBD-BCDC-83385F8BDA8B}</Project>
+      <Name>ETradeCore.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\EtradeCommon\source\trunk\Entities\ETradeFinance.Entities\ETradeFinance.Entities.csproj">
+      <Project>{4918BD3B-037F-4227-9831-787E0C84443D}</Project>
+      <Name>ETradeFinance.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\ETradeCommon\source\trunk\Entities\ETradeHistory.Entities\ETradeHistory.Entities.csproj">
+      <Project>{20E43088-4618-4F4A-B8AD-FC31B50D94CD}</Project>
+      <Name>ETradeHistory.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\EtradeCommon\source\trunk\Entities\ETradeOrders.Entities\ETradeOrders.Entities.csproj">
+      <Project>{847EB067-E31D-43B4-A589-332119E49197}</Project>
+      <Name>ETradeOrders.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\EtradeCommon\source\trunk\ETradeCommon\ETradeCommon\ETradeCommon.csproj">
+      <Project>{A578FFC5-379C-4219-8BB8-DA543D470770}</Project>
+      <Name>ETradeCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\ETradeGWApp\source\trunk\LinkOPSConnector\LinkOPSConnector\LinkOPSConnector.csproj">
+      <Project>{C5C7D52B-77FC-4D8B-B484-B8D52163647A}</Project>
+      <Name>LinkOPSConnector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ETradeCore.Services\ETradeCore.Services.csproj">
+      <Project>{3583CB63-0FC1-4FA2-A93E-6A67709606DF}</Project>
+      <Name>ETradeCore.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ETradeFinance.DataAccess\ETradeFinance.DataAccess.csproj">
+      <Project>{B8594D6B-559D-42FB-BD5B-D39B8D495637}</Project>
+      <Name>ETradeFinance.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ETradeFinance.Services\ETradeFinance.Services.csproj">
+      <Project>{26498C00-A5CD-4DE8-803D-2B9D282C52DF}</Project>
+      <Name>ETradeFinance.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ETradeHistory.DataAccess\ETradeHistory.DataAccess.csproj">
+      <Project>{041C1BBE-0BFB-4D45-8125-9AB0BBC09A92}</Project>
+      <Name>ETradeHistory.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ETradeHistory.Services\ETradeHistory.Services.csproj">
+      <Project>{794327CE-DC0A-4381-89EE-4C00AFB08D5A}</Project>
+      <Name>ETradeHistory.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ETradeOrders.DataAccess.SqlClient\ETradeOrders.DataAccess.SqlClient.csproj">
+      <Project>{95EE3BBD-CCC8-4FB3-80E6-42179D5D8DD5}</Project>
+      <Name>ETradeOrders.DataAccess.SqlClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ETradeOrders.DataAccess\ETradeOrders.DataAccess.csproj">
+      <Project>{EE668EF4-ABAA-40F3-86D9-F9AB613BE090}</Project>
+      <Name>ETradeOrders.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ETradeOrders.Services\ETradeOrders.Services.csproj">
+      <Project>{EE5F56A4-9E99-4E1C-99F9-F31149BCBB31}</Project>
+      <Name>ETradeOrders.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Web References\RTServices\Service.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://172.16.68.9/RTService/Service.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\RTServices\</RelPath>
+      <UpdateFromURL>http://172.16.68.9/RTService/Service.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>ETradeGWServices_RTServices_Service</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\RTServices\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\RTServices\Service.disco" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

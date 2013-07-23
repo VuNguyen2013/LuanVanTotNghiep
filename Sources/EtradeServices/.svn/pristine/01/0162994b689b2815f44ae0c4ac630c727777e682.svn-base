@@ -1,0 +1,394 @@
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.IO;
+using System.Reflection;
+using System.Diagnostics;
+
+namespace LinkOPSConnector
+{
+    public enum ERROR_TYPE
+    { 
+        DATABASE_ERROR,
+        SOCKET_ERROR,
+        PIPE_ERROR,
+        GENERAL_ERROR,
+        INFORMATION
+    }
+
+    public enum ORDER_SOURCE
+    {
+        FROM_WEB = 'W',
+        FROM_BROKER = 'B',
+    };
+
+    class Common
+    {
+        // Message Type
+        public const string TYPE_LOGON             = "LI";
+        public const string TYPE_HEARTBEAT         = "HB";
+        public const string TYPE_LOGOUT            = "LO";
+        public const string TYPE_TEST              = "TR";
+        public const string TYPE_RECOVERY          = "RR";
+        public const string TYPE_RECOVERY_ACK      = "RA";
+        public const string TYPE_RECOVERY_COMPLETE = "RC";
+        public const string TYPE_DATA              = "DT";
+
+        // Data Type
+        public const string DATA_NEW_ORDER                = "7a";
+        public const string DATA_NEW_CANCEL_ACK           = "7b";
+        public const string DATA_EXEC_REPORT              = "7e";
+        public const string DATA_CANCEL_ORDER             = "7c";
+        public const string DATA_NEW_ORDER_FROM_BROKER    = "6a";
+        public const string DATA_CHANGE_ORDER             = "7d";
+        public const string DATA_CHANGE_ORDER_FROM_BROKER = "6d";
+        public const string DATA_CANCEL_DEAL              = "3D";
+
+        public const string NON_SEQ = "000000";
+        public const string NON_VOLUME = "00000000";
+        public const string NON_CHECKFLAG = "00000000";
+        public const string NON_TRADERID = "00000000000";
+        public const string NON_FISORDERID = "0000000000";
+        public const string ZERO_PRICE = "000000.000000";
+        public const string ZERO_REFORDERID = "0000000000000000000000000000000000000000000000000000000000000000";
+        public const char RESULT_OK         = '0';
+        public const byte ETX_DEFAULT       = 0x03;
+        public const int  PIPE_BUFFER_ZIZE  = 1024000;
+
+        public const string DIR_SEND = "SEND";
+        public const string DIR_RECV = "RECV";
+
+        public const int TRADERID_LEN     = 11;
+        public const int ACCOUNT_LEN      = 10;
+        public const int SECSYMBOL_LEN    = 8;
+        public const int USER_LEN         = 20;
+        public const int MESSAGE_TYPE_LEN = 2;
+        public const int REFORDERID_LEN   = 64;
+        public const int STOPPRICE_LEN = 13;
+
+        // Data position
+        public const int MESSAGE_TYPE_POS = 25;
+        public const int REFORDERID_POS   = 27;
+
+        public const int MAX_RECV_LEN = 8096;
+        public const int MAX_MSG_LEN = 1024;
+
+        private static string fullPath   = Assembly.GetExecutingAssembly().Location;
+        public  static string currentDir = Path.GetDirectoryName(fullPath);
+        private static string fileName   = Path.GetFileNameWithoutExtension(fullPath);
+
+        private static string configFile  = currentDir + @"\" + fileName + ".ini";
+        private static string logFile     = currentDir + @"\" + fileName + ".log";
+        private static string messageFile = currentDir + @"\" + fileName + ".csv";
+
+        public const string DEAULT_PIPENAME     = "InnoTradingGWPipe";
+        public const string DEFAULT_SERVICENAME = "InnoTradeGW";
+
+        // Convert any structures to byte[].
+        public static byte[] SerializeExact(object anything)
+        {
+            int structSize = Marshal.SizeOf(anything);
+            IntPtr buffer  = Marshal.AllocHGlobal(structSize);
+
+            Marshal.StructureToPtr(anything, buffer, false);
+
+            byte[] streamData = new byte[structSize];
+
+            Marshal.Copy(buffer, streamData, 0, structSize);
+            Marshal.FreeHGlobal(buffer);
+
+            return streamData;
+        }
+
+        // Convert byte[] to any structures.
+        public static object RawDeserialize(byte[] rawData, Type anyType)
+        {
+            try
+            {
+                int rawSize = Marshal.SizeOf(anyType);
+
+                if (rawSize > rawData.Length) return null;
+
+                IntPtr buffer = Marshal.AllocHGlobal(rawSize);
+
+                Marshal.Copy(rawData, 0, buffer, rawSize);
+
+                object retObject = Marshal.PtrToStructure(buffer, anyType);
+
+                Marshal.FreeHGlobal(buffer);
+
+                return retObject;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static byte[] GetBytes(string data)
+        {
+            return ASCIIEncoding.ASCII.GetBytes(data);
+        }
+
+        public static string GetString(byte[] data)
+        {
+            return ASCIIEncoding.ASCII.GetString(data);
+        }
+
+        public static short GetPackageLength(byte[] data)
+        {
+            if (data.Length < 2)
+            {
+                return 0;
+            }
+
+            return System.Net.IPAddress.NetworkToHostOrder(BitConverter.ToInt16(data, 0)); 
+        }
+
+        static public string GetString(byte x)
+        {
+            byte[] s = new byte[1];
+
+            s[0] = x;
+
+            return GetString(s);
+        }
+
+        static public byte[] GetSubArrary(byte[] source, int position, int length)
+        {
+            byte[] dest = new byte[length];
+
+            for (int index = 0; index < length; index++)
+            {
+                dest[index] = source[position + index];
+            }
+
+            return dest;
+        }
+
+        static public string GetRawData(byte[] data, int length)
+        {
+            return GetString(Common.GetSubArrary(data, 2, length - 3)) + "^C";
+        }
+
+        static public void UpdateData(ref byte[] source, byte[] newData, int position)
+        {
+            for (int index = 0; index < newData.Length; index++)
+            {
+                source[position + index] = newData[index];
+            }
+        }
+
+        static public string SQLString(string s)
+        {
+            return "'" + s + "'";
+        }
+
+        public static string GetDate()
+        {
+            return DateTime.Now.ToString("yyyyMMdd-HHmmss");
+        }
+
+        public static string GetTimestamp()
+        {
+            return DateTime.Now.ToString("HHmmss    ");
+        }
+
+        public static ORDER_STATUS GetStatus(int status, int sourceID)
+        {
+            switch (status)
+            { 
+                case 0:
+                case 7:
+                    if (sourceID == (int)SOURCE_ID.FROM_SET)
+                    {
+                        return ORDER_STATUS.ORD_WAITING;
+                    }
+
+                    return ORDER_STATUS.ORD_PENDING;
+                case 8:
+                    return ORDER_STATUS.ORD_REJECTED;
+                default:
+                    return ORDER_STATUS.ORD_UNKNOWN;
+            }
+        }
+
+        public static string GetErrorMessage (string errorCode)
+        {
+            switch (errorCode)
+            {
+                case "00":
+                    return "MP order without contra-side";
+                case "01":
+                    return "Illegal price spread";
+                case "02":
+                    return "Incorrect volume for specified board";
+                case "03":
+                    return "Illegal request - Market Closed";
+                case "04":
+                    return "Incorrect Stock Symbol";
+                case "05":
+                    return "Incorrect Firm";
+                case "06":
+                    return "Incorrect Trader ID";
+                case "07":
+                    return "Incorrect confirm number";
+                case "08":
+                    return "Too late to perform requested action";
+                case "09":
+                    return "Incorrect Reference Number";
+                case "10":
+                    return "Incorrect Conditions";
+                case "11":
+                    return "Trading halted in Stock";
+                case "12":
+                    return "Incorrect Board";
+                case "13":
+                    return "Security in DS - Missing Client ID";
+                case "14":
+                    return "Incorrect Order Type";
+                case "15":
+                    return "Incorrect Port / Client flag";
+                case "16":
+                    return "Incorrect Request Code or Reply Code";
+                case "17":
+                    return "Incorrect Side: must be Buy or Sell";
+                case "18":
+                    return "Incorrect Order Number";
+                case "19":
+                    return "Incorrect Time";
+                case "20":
+                    return "Incorrect Date";
+                case "21":
+                    return "Cannot do on Odd-Lot board";
+                case "22":
+                    return "Incorrect Sub-Broker ID";
+                case "23":
+                    return "Illegal Trustee ID";
+                case "24":
+                    return "Security suspended";
+                case "25":
+                    return "Missing P/C Flag";
+                case "26":
+                    return "Missing Sub-Broker ID";
+                case "27":
+                    return "No available room for Thai Trust Fund";
+                case "28":
+                    return "Market in Intermission";
+                case "29":
+                    return "Market Halted";
+                case "30":
+                    return "Incorrect Published Volume";
+                case "31":
+                    return "Changing Deal information disallowed";
+                case "32":
+                    return "Publish Vol disallowed at this time";
+                case "33":
+                    return "Trading disallowed for this stock";
+                case "34":
+                    return "Incorrect price - above ceiling";
+                case "35":
+                    return "Incorrect price - below floor";
+                case "36":
+                    return "Put-Through price incorrect format";
+                case "37":
+                    return "Cancel of automatch deal disallowed";
+                case "38":
+                    return "Incorrect Volume for Put-Through deal";
+                case "39":
+                    return "Incorrect Market Maker";
+                case "40":
+                    return "Illegal Short Sales Order";
+                case "41":
+                    return "Illegal Market ID";
+                case "42":
+                    return "Illegal Message Type/Header";
+                case "43":
+                    return "Illegal Message Length";
+                case "71":
+                    return "Warning! Price over 10 %";
+                case "81":
+                    return "Disapprove Order";
+                case "82":
+                    return "Reject form FIS";
+                case "99": 
+                    return "Unidentified Error";
+                default:
+                    return "";
+            }
+        }
+
+        public static void ClearLogFile ()
+        {
+            FileInfo fileInfo = new FileInfo(logFile);
+            fileInfo.Delete();
+
+            fileInfo = new FileInfo(messageFile);
+            fileInfo.Delete();
+        }
+        
+        public static void Log(string sErrMsg)
+        {
+            //if (Common.Config.Log_Enable == "0")
+            //{
+            //    return;
+            //}
+            
+            bool isNotOpened = true;
+
+            string sLogFormat  = DateTime.Now.ToShortDateString().ToString() + " " + DateTime.Now.ToLongTimeString().ToString() + " ==> "; 
+
+            while (isNotOpened)
+            {
+                try
+                {
+                    StreamWriter sw = new StreamWriter(logFile, true);
+                    sw.WriteLine(sLogFormat + sErrMsg);
+                    sw.Flush();
+                    sw.Close();
+
+                    isNotOpened = false;
+                }
+                catch
+                {
+                    System.Threading.Thread.Sleep(5);
+                }
+            }
+        }
+
+        public static void ExportMessage(String[] messages)
+        {
+            //if (Common.Config.Log_Enable == "0")
+            //{
+            //    return;
+            //}
+            
+            bool isNotOpened = true;
+
+            while (isNotOpened)
+            {
+                try
+                {
+                    StreamWriter sw = new StreamWriter(messageFile, true);
+                    string message = "";
+
+                    for (int index = 0; index < messages.Length; index++)
+                    {
+                        message += messages[index] + ",";
+                    }
+
+                    sw.WriteLine(message);
+                    sw.Flush();
+                    sw.Close();
+
+                    isNotOpened = false;
+                }
+                catch
+                {
+                    System.Threading.Thread.Sleep(5);
+                }
+            }
+        }
+    }
+}

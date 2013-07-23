@@ -1,0 +1,8 @@
+DELETE FROM [Article]
+DELETE FROM [Document]
+DELETE FROM [DocumentBelongDocumentType]
+DELETE FROM [DocumentBelongDocumentTypePrimary]
+DELETE FROM [DocumentDetail]
+DELETE FROM [DocumentType]
+DELETE FROM [DocumentTypeLanguage]
+DELETE FROM [Favourite]

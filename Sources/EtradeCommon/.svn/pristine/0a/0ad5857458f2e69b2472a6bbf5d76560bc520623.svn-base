@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="MigrateDB">
+  <DataContextMoniker Name="/MigrateDBDataContext" />
+  <nestedChildShapes>
+    <classShape Id="072270e6-fc30-4113-87bb-5229ef949d60" absoluteBounds="0.5, 0.625, 2, 6.0015283203125">
+      <DataClassMoniker Name="/MigrateDBDataContext/MainCustAccount" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bd9f13b0-6710-4c63-a665-9e05696d4557" absoluteBounds="0.51500000000000012, 1.085, 1.9700000000000002, 5.4415283203125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d531b66a-7794-4a42-8147-78ca979aae88" absoluteBounds="3, 3.25, 2, 2.9247054036458331">
+      <DataClassMoniker Name="/MigrateDBDataContext/BrokerAccount" />
+      <nestedChildShapes>
+        <elementListCompartment Id="959a6c31-213c-48ef-9851-4cb030536824" absoluteBounds="3.0149999999999997, 3.71, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(3 : 4.71235270182292); (2.5 : 4.71235270182292)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/MigrateDBDataContext/BrokerAccount/BrokerAccount_MainCustAccount" />
+      <nodes>
+        <classShapeMoniker Id="d531b66a-7794-4a42-8147-78ca979aae88" />
+        <classShapeMoniker Id="072270e6-fc30-4113-87bb-5229ef949d60" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="6f9e49dc-3d2b-4c50-998f-48362ee7fc59" absoluteBounds="3, 0.5, 2, 2.5401025390625">
+      <DataClassMoniker Name="/MigrateDBDataContext/SubCustAccount" />
+      <nestedChildShapes>
+        <elementListCompartment Id="faa6a7bb-fede-42d5-8972-f900ab6ecfc9" absoluteBounds="3.015, 0.96, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.5 : 1.83255126953125); (3 : 1.83255126953125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/MigrateDBDataContext/MainCustAccount/MainCustAccount_SubCustAccount" />
+      <nodes>
+        <classShapeMoniker Id="072270e6-fc30-4113-87bb-5229ef949d60" />
+        <classShapeMoniker Id="6f9e49dc-3d2b-4c50-998f-48362ee7fc59" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="663d6baf-a97c-45a4-ab78-8b201144e865" absoluteBounds="6.375, 1.875, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/MigrateDBDataContext/SubCustAccountPermission" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a7879921-94d1-46d4-8d21-57a8dc185dce" absoluteBounds="6.39, 2.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5 : 2.45755126953125); (6.375 : 2.45755126953125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/MigrateDBDataContext/SubCustAccount/SubCustAccount_SubCustAccountPermission" />
+      <nodes>
+        <classShapeMoniker Id="6f9e49dc-3d2b-4c50-998f-48362ee7fc59" />
+        <classShapeMoniker Id="663d6baf-a97c-45a4-ab78-8b201144e865" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

@@ -1,0 +1,166 @@
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Constants.cs" company="OTS">
+//   2010
+// </copyright>
+// <summary>
+//   Defines the Constants type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ETradeCommon
+{
+    public class Constants
+    {
+        public struct Priority
+        {
+            public const int LOWEST = 0;
+            public const int LOW = 1;
+            public const int NORMAL = 2;
+            public const int HIGH = 3;
+            public const int HIGHEST = 4;
+        }
+
+        public struct Category
+        {
+            public const string GENERAL = "General";
+            public const string TRACE = "Trace";
+            public const string ERROR_LOG = "ErrorCategory";
+            public const string LINKOPS = "LinkOPS";
+        }
+
+        public const decimal MONEY_UNIT = 1000;
+        public const decimal PERCENT_UNIT = 100;
+        public const double PERCENT_PRICE_BUY_ODD_LOT = 0.9;//90%
+
+        public const string FISDB_INSTANCE_NAME = "DB2INST1.";
+
+        public const string SBA_SCHEMA_NAME = "infocust.";
+
+        public const string CUSTOMER_VIEW = "custinfo";
+
+        public const string ORDERHIST_VIEW = "ordhist";
+
+        public const string DEALHIST_VIEW = "dealhist";
+
+        public const string CASHADVANCE_VIEW = "advwinfo";
+
+        public const string CASHHIST_VIEW = "cashhist";
+
+        public const string STKHIST_VIEW = "stkhist";
+
+        public const string TRADETRNHIST_VIEW = "tradetrnhist";
+
+        public const string ACTTRADE_VIEW = "acttrade";
+
+        public const string MAGINSEC = "marginsec";
+
+        public const string CAPFUND = "capfund";
+
+        public const string XD_VIEW = "xd";
+
+        public const string XR_VIEW = "xr";
+
+        public const string ACCINFO_VIEW = "accinfo";
+
+        public const string COMPANY_CODE = "085C";
+
+        public const string EXCEPTION_POLICY = "ServiceLayerExceptionPolicy";
+
+        public const string SUM_PORTFOLIO_PAGE = "SUM_P";
+
+        public const string SUM_PORTFOLIO_TOTAL = "SUM_T";
+
+        public const string PORTFOLIO_SQL =
+            "SELECT ACCOUNTNO, SECSYMBOL, SECTYPE, STARTVOLUME, STARTAMOUNT, STARTPRICE, TRUSTEEID, " + 
+            "ACTUALVOLUME, STARTCLOSE, AVGCLOSE, VOLUMECLOSE, AMOUNTCLOSE, PCCASHDEDUCT, MULTIPLIER, " + 
+            "TODAYMARGIN, AVAIVOLUME, AVGPRICE, AVGVOLUME, AVGAMOUNT, BUYORDVOLUME, BUYVOLUME, BUYCOST, " + 
+            "BUYAMOUNT, BUYAVG, BUYCANCEL, SELLVOLUME, SELLCOST, SELLAMOUNT, SELLCANCEL, SELLORDVOLUME, " + 
+            "SELLORDAVG, SELLORDAMOUNT, SHSELLVOLUME, SHSELLAMOUNT, TODAYREALIZE, COST, MARKETPRICE, " +
+            "AMOUNT, VALUE, GAINLOSS, PERCENTGAINLOSS, UPDATEFLAG, DELFLAG FROM " + FISDB_INSTANCE_NAME +
+            "CUSTPOSITIONTAB WHERE ACCOUNTNO = '{0}'";
+
+        public const string MARKETSTATUS_SQL = "SELECT MKTTYPE,STATUS,MSGTIME,RECEIVETIME FROM " + FISDB_INSTANCE_NAME + "MKTSTATUSTAB with UR";
+
+        public const int NUMBER_DUE_DATES = 3;
+
+        public const string SQL_CONVERT_DATETIME = "CONVERT(datetime, '{0}', 103)";
+
+        public const string Suffix_Account_Cash = "02";
+
+        public const string Suffix_Account_Margin = "60";
+
+        public const string SQL_CONVERT_DATETIME_YYYYMMDD = "CONVERT(datetime, '{0}', 112)";
+
+        public const string COMPANY_NAME = "TCSC";
+
+        public const string ENGLISH_ID = "en-US";
+
+        public const string VIETNAMESE_ID = "vi-VN";
+
+        public const string VIETNAMESE_LANGUAGE_ID = "vi";
+
+        public const string ENGLISH_LANGUAGE_ID = "en";
+
+        /// <summary>
+        /// Value = C
+        /// </summary>
+        public const char ORDER_TYPE_ATC = 'C';
+
+        /// <summary>
+        /// Value = A
+        /// </summary>
+        public const char ORDER_TYPE_ATO = 'A';
+        /// <summary>
+        /// Value = ' '
+        /// </summary>
+        public const char ORDER_TYPE_LO = ' ';
+        /// <summary>
+        /// Value = M
+        /// </summary>
+        public const char ORDER_TYPE_MP = 'M';
+        /// <summary>
+        /// Value = O
+        /// </summary>
+        public const char ORDER_TYPE_MOK = 'O';
+        /// <summary>
+        /// Value = K
+        /// </summary>
+        public const char ORDER_TYPE_MAK = 'K';
+        /// <summary>
+        /// Value = S
+        /// </summary>
+        public const char ORDER_TYPE_SBO = 'S';
+        /// <summary>
+        /// Value = B
+        /// </summary>
+        public const char ORDER_TYPE_OBO = 'B';
+        /// <summary>
+        /// Value = P
+        /// </summary>
+        public const char ORDER_TYPE_PLO = 'P';
+        /// <summary>
+        /// Value = >
+        /// </summary>
+        public const char ORDER_TYPE_SOL = '>';
+        /// <summary>
+        /// Value = <
+        /// </summary>
+        public const char ORDER_TYPE_SOS = '<';
+        /// <summary>
+        /// Value = I
+        /// </summary>
+        public const char ORDER_TYPE_IO = 'I';
+        /// <summary>
+        /// Value = OK
+        /// </summary>
+        public const string ORDER_TYPE_MOAK = "OK";
+        /// <summary>
+        /// Value = OC
+        /// </summary>
+        public const string ORDER_TYPE_ATO_ATC = "OC";
+        /// <summary>
+        /// Value = BEST
+        /// </summary>
+        public const string ORDER_TYPE_BEST = "BEST";
+    }
+}

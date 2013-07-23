@@ -1,0 +1,2375 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="BrokerLogin">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BrokerLoginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BrokerLoginResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BrokerLogout">
+        <s:complexType />
+      </s:element>
+      <s:element name="BrokerLogoutResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="BrokerLogoutResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateBroker">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="brokerId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="accountType" type="s:short" />
+            <s:element minOccurs="1" maxOccurs="1" name="actived" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="mobilePhone" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="permissionList" type="tns:ArrayOfInt" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfInt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CreateBrokerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CreateBrokerResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateBroker">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="brokerId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="accountType" type="s:short" />
+            <s:element minOccurs="1" maxOccurs="1" name="actived" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="mobilePhone" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="permissionList" type="tns:ArrayOfInt" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateBrokerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateBrokerResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeBrokerPassword">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="brokerId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="oldPassword" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="newPassword" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeBrokerPasswordResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ChangeBrokerPasswordResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteBroker">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="brokerId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteBrokerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteBrokerResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListBroker">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetListBrokerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetListBrokerResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBroker">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="brokerId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBrokerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetBrokerResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateMainCustomer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mainCustAccountId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="fullname" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="phone" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="actived" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pin" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="passwordLockReason" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pinLockReason" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="tokenId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="tokenName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="tokenActived" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateMainCustomerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CreateMainCustomerResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateSubCustomer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="subCustAccountId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="actived" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="authType" nillable="true" type="s:short" />
+            <s:element minOccurs="0" maxOccurs="1" name="mainCustAccountId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="permissionList" type="tns:ArrayOfInt" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateSubCustomerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CreateSubCustomerResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateMainCustomer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mainCustAccountId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="fullname" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="phone" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="actived" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pin" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="passwordLockReason" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pinLockReason" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="tokenId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="tokenName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="tokenActived" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateMainCustomerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateMainCustomerResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateSubCustomer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="subCustAccountId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="actived" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="authType" type="s:short" />
+            <s:element minOccurs="0" maxOccurs="1" name="mainCustAccountId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="permissionList" type="tns:ArrayOfInt" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateSubCustomerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateSubCustomerResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ActivateMainCustomer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mainCustAccountId" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="actived" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ActivateMainCustomerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ActivateMainCustomerResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ActivateSubCustomer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="subCustAccountId" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="actived" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ActivateSubCustomerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ActivateSubCustomerResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCustomer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mainCustAccountId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCustomerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCustomerResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCustomerNoSession">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mainCustAccountId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCustomerNoSessionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCustomerNoSessionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMainCustAccount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mainCustAccountId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMainCustAccountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMainCustAccountResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListMainCustomer">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetListMainCustomerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetListMainCustomerResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCustInfoFromCore">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetCustInfoFromCoreResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCustInfoFromCoreResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GenerateCustPass">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mainCustAccId" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="authType" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GenerateCustPassResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GenerateCustPassResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GenerateCustPin">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mainCustAccId" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="authType" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GenerateCustPinResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GenerateCustPinResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthenticateCustLogon">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="authType" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthenticateCustLogonResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AuthenticateCustLogonResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeCustPassword">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mainCustAccId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="oldPassword" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="newPassword" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeCustPasswordResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ChangeCustPasswordResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeCustPin">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mainCustAccId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="oldPin" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="newPin" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeCustPinResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ChangeCustPinResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateOpenCustAccount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="cardId" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="cardIssue" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="placeIssue" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="birthday" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="sex" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="occupation" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="nationality" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="address1" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="telephone1" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="fax1" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="address2" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="telephone2" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="fax2" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="address3" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="telephone3" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="fax3" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="branchCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="branchName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="custodian" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="customerType" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="tradeAtCompany" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="tradeByTelephone" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="tradeOnline" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="existedAccount" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateOpenCustAccountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateOpenCustAccountResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteOpenCustAccount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="openId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteOpenCustAccountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteOpenCustAccountResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpenCustAccount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="openId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOpenCustAccountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOpenCustAccountResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListOpenCustAccount">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetListOpenCustAccountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetListOpenCustAccountResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string" />
+      <s:element name="boolean" type="s:boolean" />
+      <s:element name="int" type="s:int" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="BrokerLoginSoapIn">
+    <wsdl:part name="parameters" element="tns:BrokerLogin" />
+  </wsdl:message>
+  <wsdl:message name="BrokerLoginSoapOut">
+    <wsdl:part name="parameters" element="tns:BrokerLoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="BrokerLogoutSoapIn">
+    <wsdl:part name="parameters" element="tns:BrokerLogout" />
+  </wsdl:message>
+  <wsdl:message name="BrokerLogoutSoapOut">
+    <wsdl:part name="parameters" element="tns:BrokerLogoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateBrokerSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateBroker" />
+  </wsdl:message>
+  <wsdl:message name="CreateBrokerSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateBrokerResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateBrokerSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateBroker" />
+  </wsdl:message>
+  <wsdl:message name="UpdateBrokerSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateBrokerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangeBrokerPasswordSoapIn">
+    <wsdl:part name="parameters" element="tns:ChangeBrokerPassword" />
+  </wsdl:message>
+  <wsdl:message name="ChangeBrokerPasswordSoapOut">
+    <wsdl:part name="parameters" element="tns:ChangeBrokerPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteBrokerSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteBroker" />
+  </wsdl:message>
+  <wsdl:message name="DeleteBrokerSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteBrokerResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListBrokerSoapIn">
+    <wsdl:part name="parameters" element="tns:GetListBroker" />
+  </wsdl:message>
+  <wsdl:message name="GetListBrokerSoapOut">
+    <wsdl:part name="parameters" element="tns:GetListBrokerResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetBrokerSoapIn">
+    <wsdl:part name="parameters" element="tns:GetBroker" />
+  </wsdl:message>
+  <wsdl:message name="GetBrokerSoapOut">
+    <wsdl:part name="parameters" element="tns:GetBrokerResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateMainCustomerSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateMainCustomer" />
+  </wsdl:message>
+  <wsdl:message name="CreateMainCustomerSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateMainCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateSubCustomerSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateSubCustomer" />
+  </wsdl:message>
+  <wsdl:message name="CreateSubCustomerSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateSubCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateMainCustomerSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateMainCustomer" />
+  </wsdl:message>
+  <wsdl:message name="UpdateMainCustomerSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateMainCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateSubCustomerSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateSubCustomer" />
+  </wsdl:message>
+  <wsdl:message name="UpdateSubCustomerSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateSubCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ActivateMainCustomerSoapIn">
+    <wsdl:part name="parameters" element="tns:ActivateMainCustomer" />
+  </wsdl:message>
+  <wsdl:message name="ActivateMainCustomerSoapOut">
+    <wsdl:part name="parameters" element="tns:ActivateMainCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ActivateSubCustomerSoapIn">
+    <wsdl:part name="parameters" element="tns:ActivateSubCustomer" />
+  </wsdl:message>
+  <wsdl:message name="ActivateSubCustomerSoapOut">
+    <wsdl:part name="parameters" element="tns:ActivateSubCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCustomerSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCustomer" />
+  </wsdl:message>
+  <wsdl:message name="GetCustomerSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCustomerNoSessionSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCustomerNoSession" />
+  </wsdl:message>
+  <wsdl:message name="GetCustomerNoSessionSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCustomerNoSessionResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMainCustAccountSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMainCustAccount" />
+  </wsdl:message>
+  <wsdl:message name="GetMainCustAccountSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMainCustAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListMainCustomerSoapIn">
+    <wsdl:part name="parameters" element="tns:GetListMainCustomer" />
+  </wsdl:message>
+  <wsdl:message name="GetListMainCustomerSoapOut">
+    <wsdl:part name="parameters" element="tns:GetListMainCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCustInfoFromCoreSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCustInfoFromCore" />
+  </wsdl:message>
+  <wsdl:message name="GetCustInfoFromCoreSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCustInfoFromCoreResponse" />
+  </wsdl:message>
+  <wsdl:message name="GenerateCustPassSoapIn">
+    <wsdl:part name="parameters" element="tns:GenerateCustPass" />
+  </wsdl:message>
+  <wsdl:message name="GenerateCustPassSoapOut">
+    <wsdl:part name="parameters" element="tns:GenerateCustPassResponse" />
+  </wsdl:message>
+  <wsdl:message name="GenerateCustPinSoapIn">
+    <wsdl:part name="parameters" element="tns:GenerateCustPin" />
+  </wsdl:message>
+  <wsdl:message name="GenerateCustPinSoapOut">
+    <wsdl:part name="parameters" element="tns:GenerateCustPinResponse" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateCustLogonSoapIn">
+    <wsdl:part name="parameters" element="tns:AuthenticateCustLogon" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateCustLogonSoapOut">
+    <wsdl:part name="parameters" element="tns:AuthenticateCustLogonResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCustPasswordSoapIn">
+    <wsdl:part name="parameters" element="tns:ChangeCustPassword" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCustPasswordSoapOut">
+    <wsdl:part name="parameters" element="tns:ChangeCustPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCustPinSoapIn">
+    <wsdl:part name="parameters" element="tns:ChangeCustPin" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCustPinSoapOut">
+    <wsdl:part name="parameters" element="tns:ChangeCustPinResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateOpenCustAccountSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateOpenCustAccount" />
+  </wsdl:message>
+  <wsdl:message name="CreateOpenCustAccountSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateOpenCustAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteOpenCustAccountSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteOpenCustAccount" />
+  </wsdl:message>
+  <wsdl:message name="DeleteOpenCustAccountSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteOpenCustAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOpenCustAccountSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOpenCustAccount" />
+  </wsdl:message>
+  <wsdl:message name="GetOpenCustAccountSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOpenCustAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListOpenCustAccountSoapIn">
+    <wsdl:part name="parameters" element="tns:GetListOpenCustAccount" />
+  </wsdl:message>
+  <wsdl:message name="GetListOpenCustAccountSoapOut">
+    <wsdl:part name="parameters" element="tns:GetListOpenCustAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="BrokerLoginHttpGetIn">
+    <wsdl:part name="userName" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BrokerLoginHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="BrokerLogoutHttpGetIn" />
+  <wsdl:message name="BrokerLogoutHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="ChangeBrokerPasswordHttpGetIn">
+    <wsdl:part name="brokerId" type="s:string" />
+    <wsdl:part name="oldPassword" type="s:string" />
+    <wsdl:part name="newPassword" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangeBrokerPasswordHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="DeleteBrokerHttpGetIn">
+    <wsdl:part name="brokerId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteBrokerHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetListBrokerHttpGetIn" />
+  <wsdl:message name="GetListBrokerHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetBrokerHttpGetIn">
+    <wsdl:part name="brokerId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetBrokerHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="CreateMainCustomerHttpGetIn">
+    <wsdl:part name="mainCustAccountId" type="s:string" />
+    <wsdl:part name="fullname" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="phone" type="s:string" />
+    <wsdl:part name="actived" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="pin" type="s:string" />
+    <wsdl:part name="passwordLockReason" type="s:string" />
+    <wsdl:part name="pinLockReason" type="s:string" />
+    <wsdl:part name="tokenId" type="s:string" />
+    <wsdl:part name="tokenName" type="s:string" />
+    <wsdl:part name="tokenActived" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CreateMainCustomerHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="UpdateMainCustomerHttpGetIn">
+    <wsdl:part name="mainCustAccountId" type="s:string" />
+    <wsdl:part name="fullname" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="phone" type="s:string" />
+    <wsdl:part name="actived" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="pin" type="s:string" />
+    <wsdl:part name="passwordLockReason" type="s:string" />
+    <wsdl:part name="pinLockReason" type="s:string" />
+    <wsdl:part name="tokenId" type="s:string" />
+    <wsdl:part name="tokenName" type="s:string" />
+    <wsdl:part name="tokenActived" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateMainCustomerHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="ActivateMainCustomerHttpGetIn">
+    <wsdl:part name="mainCustAccountId" type="s:string" />
+    <wsdl:part name="actived" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ActivateMainCustomerHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="ActivateSubCustomerHttpGetIn">
+    <wsdl:part name="subCustAccountId" type="s:string" />
+    <wsdl:part name="actived" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ActivateSubCustomerHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetCustomerHttpGetIn">
+    <wsdl:part name="mainCustAccountId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCustomerHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCustomerNoSessionHttpGetIn">
+    <wsdl:part name="mainCustAccountId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCustomerNoSessionHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMainCustAccountHttpGetIn">
+    <wsdl:part name="mainCustAccountId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMainCustAccountHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetListMainCustomerHttpGetIn" />
+  <wsdl:message name="GetListMainCustomerHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCustInfoFromCoreHttpGetIn" />
+  <wsdl:message name="GetCustInfoFromCoreHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GenerateCustPassHttpGetIn">
+    <wsdl:part name="mainCustAccId" type="s:string" />
+    <wsdl:part name="authType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GenerateCustPassHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GenerateCustPinHttpGetIn">
+    <wsdl:part name="mainCustAccId" type="s:string" />
+    <wsdl:part name="authType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GenerateCustPinHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateCustLogonHttpGetIn">
+    <wsdl:part name="username" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="authType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateCustLogonHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCustPasswordHttpGetIn">
+    <wsdl:part name="mainCustAccId" type="s:string" />
+    <wsdl:part name="oldPassword" type="s:string" />
+    <wsdl:part name="newPassword" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCustPasswordHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCustPinHttpGetIn">
+    <wsdl:part name="mainCustAccId" type="s:string" />
+    <wsdl:part name="oldPin" type="s:string" />
+    <wsdl:part name="newPin" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCustPinHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="CreateOpenCustAccountHttpGetIn">
+    <wsdl:part name="cardId" type="s:string" />
+    <wsdl:part name="cardIssue" type="s:string" />
+    <wsdl:part name="placeIssue" type="s:string" />
+    <wsdl:part name="name" type="s:string" />
+    <wsdl:part name="birthday" type="s:string" />
+    <wsdl:part name="sex" type="s:string" />
+    <wsdl:part name="occupation" type="s:string" />
+    <wsdl:part name="nationality" type="s:string" />
+    <wsdl:part name="address1" type="s:string" />
+    <wsdl:part name="telephone1" type="s:string" />
+    <wsdl:part name="fax1" type="s:string" />
+    <wsdl:part name="address2" type="s:string" />
+    <wsdl:part name="telephone2" type="s:string" />
+    <wsdl:part name="fax2" type="s:string" />
+    <wsdl:part name="address3" type="s:string" />
+    <wsdl:part name="telephone3" type="s:string" />
+    <wsdl:part name="fax3" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="branchCode" type="s:string" />
+    <wsdl:part name="branchName" type="s:string" />
+    <wsdl:part name="custodian" type="s:string" />
+    <wsdl:part name="customerType" type="s:string" />
+    <wsdl:part name="tradeAtCompany" type="s:string" />
+    <wsdl:part name="tradeByTelephone" type="s:string" />
+    <wsdl:part name="tradeOnline" type="s:string" />
+    <wsdl:part name="existedAccount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CreateOpenCustAccountHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteOpenCustAccountHttpGetIn">
+    <wsdl:part name="openId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteOpenCustAccountHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetOpenCustAccountHttpGetIn">
+    <wsdl:part name="openId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetOpenCustAccountHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetListOpenCustAccountHttpGetIn" />
+  <wsdl:message name="GetListOpenCustAccountHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="BrokerLoginHttpPostIn">
+    <wsdl:part name="userName" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="BrokerLoginHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="BrokerLogoutHttpPostIn" />
+  <wsdl:message name="BrokerLogoutHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="ChangeBrokerPasswordHttpPostIn">
+    <wsdl:part name="brokerId" type="s:string" />
+    <wsdl:part name="oldPassword" type="s:string" />
+    <wsdl:part name="newPassword" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangeBrokerPasswordHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="DeleteBrokerHttpPostIn">
+    <wsdl:part name="brokerId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteBrokerHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetListBrokerHttpPostIn" />
+  <wsdl:message name="GetListBrokerHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetBrokerHttpPostIn">
+    <wsdl:part name="brokerId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetBrokerHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="CreateMainCustomerHttpPostIn">
+    <wsdl:part name="mainCustAccountId" type="s:string" />
+    <wsdl:part name="fullname" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="phone" type="s:string" />
+    <wsdl:part name="actived" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="pin" type="s:string" />
+    <wsdl:part name="passwordLockReason" type="s:string" />
+    <wsdl:part name="pinLockReason" type="s:string" />
+    <wsdl:part name="tokenId" type="s:string" />
+    <wsdl:part name="tokenName" type="s:string" />
+    <wsdl:part name="tokenActived" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CreateMainCustomerHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="UpdateMainCustomerHttpPostIn">
+    <wsdl:part name="mainCustAccountId" type="s:string" />
+    <wsdl:part name="fullname" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="phone" type="s:string" />
+    <wsdl:part name="actived" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="pin" type="s:string" />
+    <wsdl:part name="passwordLockReason" type="s:string" />
+    <wsdl:part name="pinLockReason" type="s:string" />
+    <wsdl:part name="tokenId" type="s:string" />
+    <wsdl:part name="tokenName" type="s:string" />
+    <wsdl:part name="tokenActived" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateMainCustomerHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="ActivateMainCustomerHttpPostIn">
+    <wsdl:part name="mainCustAccountId" type="s:string" />
+    <wsdl:part name="actived" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ActivateMainCustomerHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="ActivateSubCustomerHttpPostIn">
+    <wsdl:part name="subCustAccountId" type="s:string" />
+    <wsdl:part name="actived" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ActivateSubCustomerHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetCustomerHttpPostIn">
+    <wsdl:part name="mainCustAccountId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCustomerHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCustomerNoSessionHttpPostIn">
+    <wsdl:part name="mainCustAccountId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCustomerNoSessionHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMainCustAccountHttpPostIn">
+    <wsdl:part name="mainCustAccountId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMainCustAccountHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetListMainCustomerHttpPostIn" />
+  <wsdl:message name="GetListMainCustomerHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCustInfoFromCoreHttpPostIn" />
+  <wsdl:message name="GetCustInfoFromCoreHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GenerateCustPassHttpPostIn">
+    <wsdl:part name="mainCustAccId" type="s:string" />
+    <wsdl:part name="authType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GenerateCustPassHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GenerateCustPinHttpPostIn">
+    <wsdl:part name="mainCustAccId" type="s:string" />
+    <wsdl:part name="authType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GenerateCustPinHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateCustLogonHttpPostIn">
+    <wsdl:part name="username" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="authType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateCustLogonHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCustPasswordHttpPostIn">
+    <wsdl:part name="mainCustAccId" type="s:string" />
+    <wsdl:part name="oldPassword" type="s:string" />
+    <wsdl:part name="newPassword" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCustPasswordHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCustPinHttpPostIn">
+    <wsdl:part name="mainCustAccId" type="s:string" />
+    <wsdl:part name="oldPin" type="s:string" />
+    <wsdl:part name="newPin" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangeCustPinHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="CreateOpenCustAccountHttpPostIn">
+    <wsdl:part name="cardId" type="s:string" />
+    <wsdl:part name="cardIssue" type="s:string" />
+    <wsdl:part name="placeIssue" type="s:string" />
+    <wsdl:part name="name" type="s:string" />
+    <wsdl:part name="birthday" type="s:string" />
+    <wsdl:part name="sex" type="s:string" />
+    <wsdl:part name="occupation" type="s:string" />
+    <wsdl:part name="nationality" type="s:string" />
+    <wsdl:part name="address1" type="s:string" />
+    <wsdl:part name="telephone1" type="s:string" />
+    <wsdl:part name="fax1" type="s:string" />
+    <wsdl:part name="address2" type="s:string" />
+    <wsdl:part name="telephone2" type="s:string" />
+    <wsdl:part name="fax2" type="s:string" />
+    <wsdl:part name="address3" type="s:string" />
+    <wsdl:part name="telephone3" type="s:string" />
+    <wsdl:part name="fax3" type="s:string" />
+    <wsdl:part name="email" type="s:string" />
+    <wsdl:part name="branchCode" type="s:string" />
+    <wsdl:part name="branchName" type="s:string" />
+    <wsdl:part name="custodian" type="s:string" />
+    <wsdl:part name="customerType" type="s:string" />
+    <wsdl:part name="tradeAtCompany" type="s:string" />
+    <wsdl:part name="tradeByTelephone" type="s:string" />
+    <wsdl:part name="tradeOnline" type="s:string" />
+    <wsdl:part name="existedAccount" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CreateOpenCustAccountHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteOpenCustAccountHttpPostIn">
+    <wsdl:part name="openId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteOpenCustAccountHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetOpenCustAccountHttpPostIn">
+    <wsdl:part name="openId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetOpenCustAccountHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetListOpenCustAccountHttpPostIn" />
+  <wsdl:message name="GetListOpenCustAccountHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:portType name="AccountManagerServicesSoap">
+    <wsdl:operation name="BrokerLogin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Login service for broker</wsdl:documentation>
+      <wsdl:input message="tns:BrokerLoginSoapIn" />
+      <wsdl:output message="tns:BrokerLoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BrokerLogout">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Logout service for broker</wsdl:documentation>
+      <wsdl:input message="tns:BrokerLogoutSoapIn" />
+      <wsdl:output message="tns:BrokerLogoutSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateBroker">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Create a new broker</wsdl:documentation>
+      <wsdl:input message="tns:CreateBrokerSoapIn" />
+      <wsdl:output message="tns:CreateBrokerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateBroker">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Update an existing broker</wsdl:documentation>
+      <wsdl:input message="tns:UpdateBrokerSoapIn" />
+      <wsdl:output message="tns:UpdateBrokerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeBrokerPassword">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Change broker password</wsdl:documentation>
+      <wsdl:input message="tns:ChangeBrokerPasswordSoapIn" />
+      <wsdl:output message="tns:ChangeBrokerPasswordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteBroker">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Delete a broker</wsdl:documentation>
+      <wsdl:input message="tns:DeleteBrokerSoapIn" />
+      <wsdl:output message="tns:DeleteBrokerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListBroker">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get list of broker from system</wsdl:documentation>
+      <wsdl:input message="tns:GetListBrokerSoapIn" />
+      <wsdl:output message="tns:GetListBrokerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBroker">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get a broker</wsdl:documentation>
+      <wsdl:input message="tns:GetBrokerSoapIn" />
+      <wsdl:output message="tns:GetBrokerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateMainCustomer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Create a new main customer account</wsdl:documentation>
+      <wsdl:input message="tns:CreateMainCustomerSoapIn" />
+      <wsdl:output message="tns:CreateMainCustomerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateSubCustomer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Create a new of sub customer account</wsdl:documentation>
+      <wsdl:input message="tns:CreateSubCustomerSoapIn" />
+      <wsdl:output message="tns:CreateSubCustomerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateMainCustomer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Update information of main customer account</wsdl:documentation>
+      <wsdl:input message="tns:UpdateMainCustomerSoapIn" />
+      <wsdl:output message="tns:UpdateMainCustomerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSubCustomer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Update information of sub customer account</wsdl:documentation>
+      <wsdl:input message="tns:UpdateSubCustomerSoapIn" />
+      <wsdl:output message="tns:UpdateSubCustomerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ActivateMainCustomer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Activate a customer account</wsdl:documentation>
+      <wsdl:input message="tns:ActivateMainCustomerSoapIn" />
+      <wsdl:output message="tns:ActivateMainCustomerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ActivateSubCustomer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Inactivate a customer</wsdl:documentation>
+      <wsdl:input message="tns:ActivateSubCustomerSoapIn" />
+      <wsdl:output message="tns:ActivateSubCustomerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get full customer information</wsdl:documentation>
+      <wsdl:input message="tns:GetCustomerSoapIn" />
+      <wsdl:output message="tns:GetCustomerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerNoSession">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get full customer information. This method is used to call from Etrade website.</wsdl:documentation>
+      <wsdl:input message="tns:GetCustomerNoSessionSoapIn" />
+      <wsdl:output message="tns:GetCustomerNoSessionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMainCustAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get only information of main customer account</wsdl:documentation>
+      <wsdl:input message="tns:GetMainCustAccountSoapIn" />
+      <wsdl:output message="tns:GetMainCustAccountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListMainCustomer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get list of customer information</wsdl:documentation>
+      <wsdl:input message="tns:GetListMainCustomerSoapIn" />
+      <wsdl:output message="tns:GetListMainCustomerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustInfoFromCore">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get customer information from SBA</wsdl:documentation>
+      <wsdl:input message="tns:GetCustInfoFromCoreSoapIn" />
+      <wsdl:output message="tns:GetCustInfoFromCoreSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerateCustPass">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Generate customer password</wsdl:documentation>
+      <wsdl:input message="tns:GenerateCustPassSoapIn" />
+      <wsdl:output message="tns:GenerateCustPassSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerateCustPin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Generate customer pin</wsdl:documentation>
+      <wsdl:input message="tns:GenerateCustPinSoapIn" />
+      <wsdl:output message="tns:GenerateCustPinSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateCustLogon">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Authenticate customer login information</wsdl:documentation>
+      <wsdl:input message="tns:AuthenticateCustLogonSoapIn" />
+      <wsdl:output message="tns:AuthenticateCustLogonSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCustPassword">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Change customer password</wsdl:documentation>
+      <wsdl:input message="tns:ChangeCustPasswordSoapIn" />
+      <wsdl:output message="tns:ChangeCustPasswordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCustPin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Change customer pin</wsdl:documentation>
+      <wsdl:input message="tns:ChangeCustPinSoapIn" />
+      <wsdl:output message="tns:ChangeCustPinSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateOpenCustAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Allow user to register to open account online</wsdl:documentation>
+      <wsdl:input message="tns:CreateOpenCustAccountSoapIn" />
+      <wsdl:output message="tns:CreateOpenCustAccountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteOpenCustAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Delete an account registered by web</wsdl:documentation>
+      <wsdl:input message="tns:DeleteOpenCustAccountSoapIn" />
+      <wsdl:output message="tns:DeleteOpenCustAccountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOpenCustAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get the information that customer registered</wsdl:documentation>
+      <wsdl:input message="tns:GetOpenCustAccountSoapIn" />
+      <wsdl:output message="tns:GetOpenCustAccountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListOpenCustAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get list of account registered by web</wsdl:documentation>
+      <wsdl:input message="tns:GetListOpenCustAccountSoapIn" />
+      <wsdl:output message="tns:GetListOpenCustAccountSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="AccountManagerServicesHttpGet">
+    <wsdl:operation name="BrokerLogin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Login service for broker</wsdl:documentation>
+      <wsdl:input message="tns:BrokerLoginHttpGetIn" />
+      <wsdl:output message="tns:BrokerLoginHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BrokerLogout">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Logout service for broker</wsdl:documentation>
+      <wsdl:input message="tns:BrokerLogoutHttpGetIn" />
+      <wsdl:output message="tns:BrokerLogoutHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeBrokerPassword">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Change broker password</wsdl:documentation>
+      <wsdl:input message="tns:ChangeBrokerPasswordHttpGetIn" />
+      <wsdl:output message="tns:ChangeBrokerPasswordHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteBroker">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Delete a broker</wsdl:documentation>
+      <wsdl:input message="tns:DeleteBrokerHttpGetIn" />
+      <wsdl:output message="tns:DeleteBrokerHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListBroker">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get list of broker from system</wsdl:documentation>
+      <wsdl:input message="tns:GetListBrokerHttpGetIn" />
+      <wsdl:output message="tns:GetListBrokerHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBroker">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get a broker</wsdl:documentation>
+      <wsdl:input message="tns:GetBrokerHttpGetIn" />
+      <wsdl:output message="tns:GetBrokerHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateMainCustomer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Create a new main customer account</wsdl:documentation>
+      <wsdl:input message="tns:CreateMainCustomerHttpGetIn" />
+      <wsdl:output message="tns:CreateMainCustomerHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateMainCustomer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Update information of main customer account</wsdl:documentation>
+      <wsdl:input message="tns:UpdateMainCustomerHttpGetIn" />
+      <wsdl:output message="tns:UpdateMainCustomerHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ActivateMainCustomer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Activate a customer account</wsdl:documentation>
+      <wsdl:input message="tns:ActivateMainCustomerHttpGetIn" />
+      <wsdl:output message="tns:ActivateMainCustomerHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ActivateSubCustomer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Inactivate a customer</wsdl:documentation>
+      <wsdl:input message="tns:ActivateSubCustomerHttpGetIn" />
+      <wsdl:output message="tns:ActivateSubCustomerHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get full customer information</wsdl:documentation>
+      <wsdl:input message="tns:GetCustomerHttpGetIn" />
+      <wsdl:output message="tns:GetCustomerHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerNoSession">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get full customer information. This method is used to call from Etrade website.</wsdl:documentation>
+      <wsdl:input message="tns:GetCustomerNoSessionHttpGetIn" />
+      <wsdl:output message="tns:GetCustomerNoSessionHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMainCustAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get only information of main customer account</wsdl:documentation>
+      <wsdl:input message="tns:GetMainCustAccountHttpGetIn" />
+      <wsdl:output message="tns:GetMainCustAccountHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListMainCustomer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get list of customer information</wsdl:documentation>
+      <wsdl:input message="tns:GetListMainCustomerHttpGetIn" />
+      <wsdl:output message="tns:GetListMainCustomerHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustInfoFromCore">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get customer information from SBA</wsdl:documentation>
+      <wsdl:input message="tns:GetCustInfoFromCoreHttpGetIn" />
+      <wsdl:output message="tns:GetCustInfoFromCoreHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerateCustPass">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Generate customer password</wsdl:documentation>
+      <wsdl:input message="tns:GenerateCustPassHttpGetIn" />
+      <wsdl:output message="tns:GenerateCustPassHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerateCustPin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Generate customer pin</wsdl:documentation>
+      <wsdl:input message="tns:GenerateCustPinHttpGetIn" />
+      <wsdl:output message="tns:GenerateCustPinHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateCustLogon">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Authenticate customer login information</wsdl:documentation>
+      <wsdl:input message="tns:AuthenticateCustLogonHttpGetIn" />
+      <wsdl:output message="tns:AuthenticateCustLogonHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCustPassword">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Change customer password</wsdl:documentation>
+      <wsdl:input message="tns:ChangeCustPasswordHttpGetIn" />
+      <wsdl:output message="tns:ChangeCustPasswordHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCustPin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Change customer pin</wsdl:documentation>
+      <wsdl:input message="tns:ChangeCustPinHttpGetIn" />
+      <wsdl:output message="tns:ChangeCustPinHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateOpenCustAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Allow user to register to open account online</wsdl:documentation>
+      <wsdl:input message="tns:CreateOpenCustAccountHttpGetIn" />
+      <wsdl:output message="tns:CreateOpenCustAccountHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteOpenCustAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Delete an account registered by web</wsdl:documentation>
+      <wsdl:input message="tns:DeleteOpenCustAccountHttpGetIn" />
+      <wsdl:output message="tns:DeleteOpenCustAccountHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOpenCustAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get the information that customer registered</wsdl:documentation>
+      <wsdl:input message="tns:GetOpenCustAccountHttpGetIn" />
+      <wsdl:output message="tns:GetOpenCustAccountHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListOpenCustAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get list of account registered by web</wsdl:documentation>
+      <wsdl:input message="tns:GetListOpenCustAccountHttpGetIn" />
+      <wsdl:output message="tns:GetListOpenCustAccountHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="AccountManagerServicesHttpPost">
+    <wsdl:operation name="BrokerLogin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Login service for broker</wsdl:documentation>
+      <wsdl:input message="tns:BrokerLoginHttpPostIn" />
+      <wsdl:output message="tns:BrokerLoginHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BrokerLogout">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Logout service for broker</wsdl:documentation>
+      <wsdl:input message="tns:BrokerLogoutHttpPostIn" />
+      <wsdl:output message="tns:BrokerLogoutHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeBrokerPassword">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Change broker password</wsdl:documentation>
+      <wsdl:input message="tns:ChangeBrokerPasswordHttpPostIn" />
+      <wsdl:output message="tns:ChangeBrokerPasswordHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteBroker">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Delete a broker</wsdl:documentation>
+      <wsdl:input message="tns:DeleteBrokerHttpPostIn" />
+      <wsdl:output message="tns:DeleteBrokerHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListBroker">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get list of broker from system</wsdl:documentation>
+      <wsdl:input message="tns:GetListBrokerHttpPostIn" />
+      <wsdl:output message="tns:GetListBrokerHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBroker">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get a broker</wsdl:documentation>
+      <wsdl:input message="tns:GetBrokerHttpPostIn" />
+      <wsdl:output message="tns:GetBrokerHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateMainCustomer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Create a new main customer account</wsdl:documentation>
+      <wsdl:input message="tns:CreateMainCustomerHttpPostIn" />
+      <wsdl:output message="tns:CreateMainCustomerHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateMainCustomer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Update information of main customer account</wsdl:documentation>
+      <wsdl:input message="tns:UpdateMainCustomerHttpPostIn" />
+      <wsdl:output message="tns:UpdateMainCustomerHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ActivateMainCustomer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Activate a customer account</wsdl:documentation>
+      <wsdl:input message="tns:ActivateMainCustomerHttpPostIn" />
+      <wsdl:output message="tns:ActivateMainCustomerHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ActivateSubCustomer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Inactivate a customer</wsdl:documentation>
+      <wsdl:input message="tns:ActivateSubCustomerHttpPostIn" />
+      <wsdl:output message="tns:ActivateSubCustomerHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get full customer information</wsdl:documentation>
+      <wsdl:input message="tns:GetCustomerHttpPostIn" />
+      <wsdl:output message="tns:GetCustomerHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerNoSession">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get full customer information. This method is used to call from Etrade website.</wsdl:documentation>
+      <wsdl:input message="tns:GetCustomerNoSessionHttpPostIn" />
+      <wsdl:output message="tns:GetCustomerNoSessionHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMainCustAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get only information of main customer account</wsdl:documentation>
+      <wsdl:input message="tns:GetMainCustAccountHttpPostIn" />
+      <wsdl:output message="tns:GetMainCustAccountHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListMainCustomer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get list of customer information</wsdl:documentation>
+      <wsdl:input message="tns:GetListMainCustomerHttpPostIn" />
+      <wsdl:output message="tns:GetListMainCustomerHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustInfoFromCore">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get customer information from SBA</wsdl:documentation>
+      <wsdl:input message="tns:GetCustInfoFromCoreHttpPostIn" />
+      <wsdl:output message="tns:GetCustInfoFromCoreHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerateCustPass">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Generate customer password</wsdl:documentation>
+      <wsdl:input message="tns:GenerateCustPassHttpPostIn" />
+      <wsdl:output message="tns:GenerateCustPassHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerateCustPin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Generate customer pin</wsdl:documentation>
+      <wsdl:input message="tns:GenerateCustPinHttpPostIn" />
+      <wsdl:output message="tns:GenerateCustPinHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateCustLogon">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Authenticate customer login information</wsdl:documentation>
+      <wsdl:input message="tns:AuthenticateCustLogonHttpPostIn" />
+      <wsdl:output message="tns:AuthenticateCustLogonHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCustPassword">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Change customer password</wsdl:documentation>
+      <wsdl:input message="tns:ChangeCustPasswordHttpPostIn" />
+      <wsdl:output message="tns:ChangeCustPasswordHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCustPin">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Change customer pin</wsdl:documentation>
+      <wsdl:input message="tns:ChangeCustPinHttpPostIn" />
+      <wsdl:output message="tns:ChangeCustPinHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateOpenCustAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Allow user to register to open account online</wsdl:documentation>
+      <wsdl:input message="tns:CreateOpenCustAccountHttpPostIn" />
+      <wsdl:output message="tns:CreateOpenCustAccountHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteOpenCustAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Delete an account registered by web</wsdl:documentation>
+      <wsdl:input message="tns:DeleteOpenCustAccountHttpPostIn" />
+      <wsdl:output message="tns:DeleteOpenCustAccountHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOpenCustAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get the information that customer registered</wsdl:documentation>
+      <wsdl:input message="tns:GetOpenCustAccountHttpPostIn" />
+      <wsdl:output message="tns:GetOpenCustAccountHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListOpenCustAccount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get list of account registered by web</wsdl:documentation>
+      <wsdl:input message="tns:GetListOpenCustAccountHttpPostIn" />
+      <wsdl:output message="tns:GetListOpenCustAccountHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AccountManagerServicesSoap" type="tns:AccountManagerServicesSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="BrokerLogin">
+      <soap:operation soapAction="http://tempuri.org/BrokerLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BrokerLogout">
+      <soap:operation soapAction="http://tempuri.org/BrokerLogout" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateBroker">
+      <soap:operation soapAction="http://tempuri.org/CreateBroker" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateBroker">
+      <soap:operation soapAction="http://tempuri.org/UpdateBroker" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeBrokerPassword">
+      <soap:operation soapAction="http://tempuri.org/ChangeBrokerPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteBroker">
+      <soap:operation soapAction="http://tempuri.org/DeleteBroker" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListBroker">
+      <soap:operation soapAction="http://tempuri.org/GetListBroker" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBroker">
+      <soap:operation soapAction="http://tempuri.org/GetBroker" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateMainCustomer">
+      <soap:operation soapAction="http://tempuri.org/CreateMainCustomer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateSubCustomer">
+      <soap:operation soapAction="http://tempuri.org/CreateSubCustomer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateMainCustomer">
+      <soap:operation soapAction="http://tempuri.org/UpdateMainCustomer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSubCustomer">
+      <soap:operation soapAction="http://tempuri.org/UpdateSubCustomer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActivateMainCustomer">
+      <soap:operation soapAction="http://tempuri.org/ActivateMainCustomer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActivateSubCustomer">
+      <soap:operation soapAction="http://tempuri.org/ActivateSubCustomer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomer">
+      <soap:operation soapAction="http://tempuri.org/GetCustomer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerNoSession">
+      <soap:operation soapAction="http://tempuri.org/GetCustomerNoSession" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMainCustAccount">
+      <soap:operation soapAction="http://tempuri.org/GetMainCustAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListMainCustomer">
+      <soap:operation soapAction="http://tempuri.org/GetListMainCustomer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustInfoFromCore">
+      <soap:operation soapAction="http://tempuri.org/GetCustInfoFromCore" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateCustPass">
+      <soap:operation soapAction="http://tempuri.org/GenerateCustPass" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateCustPin">
+      <soap:operation soapAction="http://tempuri.org/GenerateCustPin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateCustLogon">
+      <soap:operation soapAction="http://tempuri.org/AuthenticateCustLogon" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCustPassword">
+      <soap:operation soapAction="http://tempuri.org/ChangeCustPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCustPin">
+      <soap:operation soapAction="http://tempuri.org/ChangeCustPin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOpenCustAccount">
+      <soap:operation soapAction="http://tempuri.org/CreateOpenCustAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteOpenCustAccount">
+      <soap:operation soapAction="http://tempuri.org/DeleteOpenCustAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpenCustAccount">
+      <soap:operation soapAction="http://tempuri.org/GetOpenCustAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListOpenCustAccount">
+      <soap:operation soapAction="http://tempuri.org/GetListOpenCustAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AccountManagerServicesSoap12" type="tns:AccountManagerServicesSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="BrokerLogin">
+      <soap12:operation soapAction="http://tempuri.org/BrokerLogin" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BrokerLogout">
+      <soap12:operation soapAction="http://tempuri.org/BrokerLogout" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateBroker">
+      <soap12:operation soapAction="http://tempuri.org/CreateBroker" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateBroker">
+      <soap12:operation soapAction="http://tempuri.org/UpdateBroker" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeBrokerPassword">
+      <soap12:operation soapAction="http://tempuri.org/ChangeBrokerPassword" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteBroker">
+      <soap12:operation soapAction="http://tempuri.org/DeleteBroker" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListBroker">
+      <soap12:operation soapAction="http://tempuri.org/GetListBroker" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBroker">
+      <soap12:operation soapAction="http://tempuri.org/GetBroker" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateMainCustomer">
+      <soap12:operation soapAction="http://tempuri.org/CreateMainCustomer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateSubCustomer">
+      <soap12:operation soapAction="http://tempuri.org/CreateSubCustomer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateMainCustomer">
+      <soap12:operation soapAction="http://tempuri.org/UpdateMainCustomer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSubCustomer">
+      <soap12:operation soapAction="http://tempuri.org/UpdateSubCustomer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActivateMainCustomer">
+      <soap12:operation soapAction="http://tempuri.org/ActivateMainCustomer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActivateSubCustomer">
+      <soap12:operation soapAction="http://tempuri.org/ActivateSubCustomer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomer">
+      <soap12:operation soapAction="http://tempuri.org/GetCustomer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerNoSession">
+      <soap12:operation soapAction="http://tempuri.org/GetCustomerNoSession" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMainCustAccount">
+      <soap12:operation soapAction="http://tempuri.org/GetMainCustAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListMainCustomer">
+      <soap12:operation soapAction="http://tempuri.org/GetListMainCustomer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustInfoFromCore">
+      <soap12:operation soapAction="http://tempuri.org/GetCustInfoFromCore" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateCustPass">
+      <soap12:operation soapAction="http://tempuri.org/GenerateCustPass" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateCustPin">
+      <soap12:operation soapAction="http://tempuri.org/GenerateCustPin" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateCustLogon">
+      <soap12:operation soapAction="http://tempuri.org/AuthenticateCustLogon" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCustPassword">
+      <soap12:operation soapAction="http://tempuri.org/ChangeCustPassword" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCustPin">
+      <soap12:operation soapAction="http://tempuri.org/ChangeCustPin" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOpenCustAccount">
+      <soap12:operation soapAction="http://tempuri.org/CreateOpenCustAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteOpenCustAccount">
+      <soap12:operation soapAction="http://tempuri.org/DeleteOpenCustAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpenCustAccount">
+      <soap12:operation soapAction="http://tempuri.org/GetOpenCustAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListOpenCustAccount">
+      <soap12:operation soapAction="http://tempuri.org/GetListOpenCustAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AccountManagerServicesHttpGet" type="tns:AccountManagerServicesHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="BrokerLogin">
+      <http:operation location="/BrokerLogin" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BrokerLogout">
+      <http:operation location="/BrokerLogout" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeBrokerPassword">
+      <http:operation location="/ChangeBrokerPassword" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteBroker">
+      <http:operation location="/DeleteBroker" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListBroker">
+      <http:operation location="/GetListBroker" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBroker">
+      <http:operation location="/GetBroker" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateMainCustomer">
+      <http:operation location="/CreateMainCustomer" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateMainCustomer">
+      <http:operation location="/UpdateMainCustomer" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActivateMainCustomer">
+      <http:operation location="/ActivateMainCustomer" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActivateSubCustomer">
+      <http:operation location="/ActivateSubCustomer" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomer">
+      <http:operation location="/GetCustomer" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerNoSession">
+      <http:operation location="/GetCustomerNoSession" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMainCustAccount">
+      <http:operation location="/GetMainCustAccount" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListMainCustomer">
+      <http:operation location="/GetListMainCustomer" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustInfoFromCore">
+      <http:operation location="/GetCustInfoFromCore" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateCustPass">
+      <http:operation location="/GenerateCustPass" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateCustPin">
+      <http:operation location="/GenerateCustPin" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateCustLogon">
+      <http:operation location="/AuthenticateCustLogon" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCustPassword">
+      <http:operation location="/ChangeCustPassword" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCustPin">
+      <http:operation location="/ChangeCustPin" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOpenCustAccount">
+      <http:operation location="/CreateOpenCustAccount" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteOpenCustAccount">
+      <http:operation location="/DeleteOpenCustAccount" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpenCustAccount">
+      <http:operation location="/GetOpenCustAccount" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListOpenCustAccount">
+      <http:operation location="/GetListOpenCustAccount" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AccountManagerServicesHttpPost" type="tns:AccountManagerServicesHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="BrokerLogin">
+      <http:operation location="/BrokerLogin" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BrokerLogout">
+      <http:operation location="/BrokerLogout" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeBrokerPassword">
+      <http:operation location="/ChangeBrokerPassword" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteBroker">
+      <http:operation location="/DeleteBroker" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListBroker">
+      <http:operation location="/GetListBroker" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBroker">
+      <http:operation location="/GetBroker" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateMainCustomer">
+      <http:operation location="/CreateMainCustomer" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateMainCustomer">
+      <http:operation location="/UpdateMainCustomer" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActivateMainCustomer">
+      <http:operation location="/ActivateMainCustomer" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActivateSubCustomer">
+      <http:operation location="/ActivateSubCustomer" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomer">
+      <http:operation location="/GetCustomer" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomerNoSession">
+      <http:operation location="/GetCustomerNoSession" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMainCustAccount">
+      <http:operation location="/GetMainCustAccount" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListMainCustomer">
+      <http:operation location="/GetListMainCustomer" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustInfoFromCore">
+      <http:operation location="/GetCustInfoFromCore" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateCustPass">
+      <http:operation location="/GenerateCustPass" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateCustPin">
+      <http:operation location="/GenerateCustPin" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateCustLogon">
+      <http:operation location="/AuthenticateCustLogon" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCustPassword">
+      <http:operation location="/ChangeCustPassword" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeCustPin">
+      <http:operation location="/ChangeCustPin" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOpenCustAccount">
+      <http:operation location="/CreateOpenCustAccount" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteOpenCustAccount">
+      <http:operation location="/DeleteOpenCustAccount" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpenCustAccount">
+      <http:operation location="/GetOpenCustAccount" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListOpenCustAccount">
+      <http:operation location="/GetListOpenCustAccount" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AccountManagerServices">
+    <wsdl:port name="AccountManagerServicesSoap" binding="tns:AccountManagerServicesSoap">
+      <soap:address location="http://172.16.1.30:2010/AMServices/AccountManagerServices.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AccountManagerServicesSoap12" binding="tns:AccountManagerServicesSoap12">
+      <soap12:address location="http://172.16.1.30:2010/AMServices/AccountManagerServices.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AccountManagerServicesHttpGet" binding="tns:AccountManagerServicesHttpGet">
+      <http:address location="http://172.16.1.30:2010/AMServices/AccountManagerServices.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AccountManagerServicesHttpPost" binding="tns:AccountManagerServicesHttpPost">
+      <http:address location="http://172.16.1.30:2010/AMServices/AccountManagerServices.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

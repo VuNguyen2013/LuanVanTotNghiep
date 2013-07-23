@@ -1,0 +1,38 @@
+﻿using System;
+using System.Configuration;
+using System.Diagnostics;
+using ETradeCommon;
+
+namespace ETradeAutomation
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                var actionvationTime = int.Parse(ConfigurationManager.AppSettings["ActivationTime"]);
+                var conditionOrderTime = int.Parse(ConfigurationManager.AppSettings["ConditionOrderTime"]);
+                var currentTime = DateTime.Now;
+                var hour = currentTime.Hour;
+                if (hour == actionvationTime)
+                {
+                    LogHandler.Log("Activate service", "ETradeAutomation", TraceEventType.Information);
+                    var etradeWebService = new ETradeWebService.ETradeServicesWebServices();
+                    etradeWebService.Login("1", "1", 0);//fake login
+                }
+                if (hour == conditionOrderTime)
+                {
+                    LogHandler.Log("Start putting condition order", "ETradeAutomation", TraceEventType.Information);
+                    var etradeWebService = new ETradeWebService.ETradeServicesWebServices();
+                    etradeWebService.PutConditionOrder();
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, ETradeCommon.Constants.EXCEPTION_POLICY);
+            }
+            
+        }
+    }
+}

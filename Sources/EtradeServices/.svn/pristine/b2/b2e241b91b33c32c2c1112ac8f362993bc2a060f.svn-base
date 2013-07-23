@@ -1,0 +1,86 @@
+﻿	
+
+#region Using Directives
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Collections;
+using System.Linq;
+using System.Text;
+using System.Xml.Serialization;
+using System.Data;
+
+using ETradeHistory.Entities;
+using ETradeHistory.Entities.Validation;
+
+using ETradeHistory.DataAccess;
+using Microsoft.Practices.EnterpriseLibrary.Logging;
+
+#endregion
+
+namespace ETradeHistory.Services
+{		
+	/// <summary>
+	/// An component type implementation of the 'PnLHistory' table.
+	/// </summary>
+	/// <remarks>
+	/// All custom implementations should be done here.
+	/// </remarks>
+	[CLSCompliant(true)]
+	public partial class PnLhistoryService : ETradeHistory.Services.PnLhistoryServiceBase
+	{
+		#region Constructors
+		/// <summary>
+		/// Initializes a new instance of the PnLhistoryService class.
+		/// </summary>
+		public PnLhistoryService() : base()
+		{
+		}
+		#endregion Constructors
+
+	    ///<summary>
+	    ///</summary>
+	    ///<param name="accountNo"></param>
+	    ///<param name="fromDate"></param>
+	    ///<param name="toDate"></param>
+	    ///<param name="symbol"></param>
+	    ///<param name="pageIndex"></param>
+	    ///<param name="pageSize"></param>
+	    ///<param name="count"></param>
+	    ///<returns></returns>
+	    public List<PnLhistory> GetList(string accountNo, string fromDate, string toDate, string symbol, int pageIndex, 
+            int pageSize, out int count)
+        {
+            var whereClause = new StringBuilder();
+            if (!string.IsNullOrEmpty(accountNo))
+            {
+                whereClause.AppendFormat("AND SubCustAccountID = {0}", accountNo);
+            }
+            if (!string.IsNullOrEmpty(fromDate))
+            {
+                whereClause.AppendFormat("AND TradeTime >= CONVERT(datetime, '{0}', 103)", fromDate);
+            }
+            if (!string.IsNullOrEmpty(toDate))
+            {
+                whereClause.AppendFormat("AND TradeTime <= CONVERT(datetime, '{0}', 103)", toDate);
+            }
+            if (!string.IsNullOrEmpty(symbol))
+            {
+                whereClause.AppendFormat("AND SecSymbol LIKE '%{0}%'", symbol);
+            }
+            string where = whereClause.ToString();
+            if (!string.IsNullOrEmpty(where))
+            {
+                where = where.Substring(4);
+            }
+            var list = GetPaged(where, string.Empty, pageIndex - 1, pageSize, out count);
+            if (list == null)
+            {
+                return null;
+            }
+            return list.ToList();
+        }
+		
+	}//End Class
+
+} // end namespace

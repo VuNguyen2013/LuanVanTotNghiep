@@ -1,0 +1,2 @@
+DELETE FROM [TradedHistory]
+DELETE FROM [PnLHistory]

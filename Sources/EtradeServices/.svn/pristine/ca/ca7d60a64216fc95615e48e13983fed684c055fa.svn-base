@@ -1,0 +1,194 @@
+#include <process.h> 
+#include "Log.h"
+#include "Common.h"
+#include "SockException.h"
+#include "HostInfo.h"
+#include "LinkOPSClient.h"
+
+Log winLog;
+
+static void ReadThread(void* lp);
+
+string serverName;
+
+
+LinkOPSClient::LinkOPSClient()
+{
+#ifdef WIN32
+	WSADATA wsaData;
+
+	try 
+	{
+		if (WSAStartup(0x101, &wsaData))
+		{
+			SockException* initializationException = new SockException(0,"Error: calling WSAStartup()");
+
+			throw initializationException;
+        }
+	}
+	catch(SockException* excp)
+	{
+		delete excp;
+
+		exit(1);
+	}
+#endif
+
+	Connected(0);
+}
+
+void LinkOPSClient::InitLog(char * fileName)
+{
+	winLog.init(fileName);	
+}
+
+bool LinkOPSClient::Connect(string serverIPAddress, int port)
+{
+    if (Connected())
+    {
+        winLog << "Connected already !\n";
+
+        return true;
+    }
+
+	winLog << "Connect to " << serverIPAddress << "on port " << port << endl;
+
+	tcpSocket    = new TcpSocket(port);
+
+    // connect to the server.
+	winLog << "connecting to the server [" << serverIPAddress << "] ... " << endl;
+
+    try
+    {
+	    tcpSocket->connectToServer(serverIPAddress, ADDRESS);
+    }
+    catch (SockException * excp)
+    {
+       Connected(0);
+        
+        winLog << "Can not connect to server!\n";
+
+        excp->response();
+
+		tcpSocket->disconnectFromServer();
+
+        return false;    
+    }
+
+    Connected(1);
+
+	return true;
+}
+
+bool LinkOPSClient::Disconnect()
+{
+    try
+    {
+        if (!Connected())
+        {
+            winLog << "Disconnected already!\n";
+
+            return true;
+        }
+
+        Connected(0);
+
+        tcpSocket->disconnectFromServer();
+        
+        return true;
+    }
+    catch(SockException * excp)
+    {
+        excp->response();
+
+        return false;
+    }
+}
+
+bool LinkOPSClient::SendMessage (char *message, int length)
+{
+    if (!Connected())
+    {
+        return false;
+    }
+    
+    try
+    {
+		winLog << "[SEND]:--> " << GetRawMessage(message, length) << endl;
+
+	    tcpSocket->sendMessage(message, length);
+    }
+	catch(SockException* excp)
+	{
+        winLog << "Error when sending\n";
+		excp->response();
+
+		delete excp;
+
+        return false;
+	}
+
+	return true;
+}
+
+bool LinkOPSClient::ReceiveMessage (BSTR *message, int *length)
+{
+    if (!Connected())
+    {
+        return false;
+    }
+    
+    try
+    {
+		int recvBytes = 0; 
+     
+		char msgRecv[MAX_RECV_LEN];
+
+	    recvBytes = tcpSocket->RecieveMessage(msgRecv);
+
+		if (recvBytes > 0)
+		{
+			*message = SysAllocStringByteLen( (char *)msgRecv, recvBytes );
+		}
+
+		*length = recvBytes;
+    }
+	catch(SockException* excp)
+	{
+        winLog << "Error in ReadThread\n";
+        Connected(0);
+        excp->response();
+
+        return false;
+	}
+
+	return true;
+}
+
+LinkOPSClient::~LinkOPSClient()
+{
+#ifdef WIN32
+	winLog << endl << "system shut down ...";		
+	
+	try 
+	{
+		if (WSACleanup())
+		{
+			SockException* cleanupException = new SockException(0,"Error: calling WSACleanup()");
+
+			throw cleanupException;
+        }
+	}
+	catch(SockException* excp)
+	{
+		excp->response();
+		delete excp;
+
+		exit(1);
+	}
+
+	winLog << "successful" << endl;
+
+#endif
+}
+

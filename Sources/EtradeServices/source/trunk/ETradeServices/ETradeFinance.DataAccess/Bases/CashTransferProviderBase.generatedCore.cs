@@ -1,0 +1,495 @@
+﻿#region Using directives
+
+using System;
+using System.Data;
+using System.Data.Common;
+using System.Collections;
+using System.Collections.Generic;
+
+using ETradeFinance.Entities;
+using ETradeFinance.DataAccess;
+
+#endregion
+
+namespace ETradeFinance.DataAccess.Bases
+{	
+	///<summary>
+	/// This class is the base class for any <see cref="CashTransferProviderBase"/> implementation.
+	/// It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+	///</summary>
+	public abstract partial class CashTransferProviderBaseCore : EntityProviderBase<ETradeFinance.Entities.CashTransfer, ETradeFinance.Entities.CashTransferKey>
+	{		
+		#region Get from Many To Many Relationship Functions
+		#endregion	
+		
+		#region Delete Methods
+
+		/// <summary>
+		/// 	Deletes a row from the DataSource.
+		/// </summary>
+		/// <param name="transactionManager">A <see cref="TransactionManager"/> object.</param>
+		/// <param name="key">The unique identifier of the row to delete.</param>
+		/// <returns>Returns true if operation suceeded.</returns>
+		public override bool Delete(TransactionManager transactionManager, ETradeFinance.Entities.CashTransferKey key)
+		{
+			return Delete(transactionManager, key.Id);
+		}
+		
+		/// <summary>
+		/// 	Deletes a row from the DataSource.
+		/// </summary>
+		/// <param name="_id">CashTransferID identifies CashTransfer. Primary Key.</param>
+		/// <remarks>Deletes based on primary key(s).</remarks>
+		/// <returns>Returns true if operation suceeded.</returns>
+		public bool Delete(long _id)
+		{
+			return Delete(null, _id);
+		}
+		
+		/// <summary>
+		/// 	Deletes a row from the DataSource.
+		/// </summary>
+		/// <param name="transactionManager"><see cref="TransactionManager"/> object</param>
+		/// <param name="_id">CashTransferID identifies CashTransfer. Primary Key.</param>
+		/// <remarks>Deletes based on primary key(s).</remarks>
+		/// <returns>Returns true if operation suceeded.</returns>
+		public abstract bool Delete(TransactionManager transactionManager, long _id);		
+		
+		#endregion Delete Methods
+		
+		#region Get By Foreign Key Functions
+		#endregion
+
+		#region Get By Index Functions
+		
+		/// <summary>
+		/// 	Gets a row from the DataSource based on its primary key.
+		/// </summary>
+		/// <param name="transactionManager">A <see cref="TransactionManager"/> object.</param>
+		/// <param name="key">The unique identifier of the row to retrieve.</param>
+		/// <param name="start">Row number at which to start reading, the first row is 0.</param>
+		/// <param name="pageLength">Number of rows to return.</param>
+		/// <returns>Returns an instance of the Entity class.</returns>
+		public override ETradeFinance.Entities.CashTransfer Get(TransactionManager transactionManager, ETradeFinance.Entities.CashTransferKey key, int start, int pageLength)
+		{
+			return GetById(transactionManager, key.Id, start, pageLength);
+		}
+		
+		/// <summary>
+		/// 	Gets rows from the datasource based on the primary key PK_CashTransfer index.
+		/// </summary>
+		/// <param name="_id">CashTransferID identifies CashTransfer</param>
+		/// <returns>Returns an instance of the <see cref="ETradeFinance.Entities.CashTransfer"/> class.</returns>
+		public ETradeFinance.Entities.CashTransfer GetById(long _id)
+		{
+			int count = -1;
+			return GetById(null,_id, 0, int.MaxValue, out count);
+		}
+		
+		/// <summary>
+		/// 	Gets rows from the datasource based on the PK_CashTransfer index.
+		/// </summary>
+		/// <param name="_id">CashTransferID identifies CashTransfer</param>
+		/// <param name="start">Row number at which to start reading, the first row is 0.</param>
+		/// <param name="pageLength">Number of rows to return.</param>
+		/// <remarks></remarks>
+		/// <returns>Returns an instance of the <see cref="ETradeFinance.Entities.CashTransfer"/> class.</returns>
+		public ETradeFinance.Entities.CashTransfer GetById(long _id, int start, int pageLength)
+		{
+			int count = -1;
+			return GetById(null, _id, start, pageLength, out count);
+		}
+		
+		/// <summary>
+		/// 	Gets rows from the datasource based on the PK_CashTransfer index.
+		/// </summary>
+		/// <param name="transactionManager"><see cref="TransactionManager"/> object</param>
+		/// <param name="_id">CashTransferID identifies CashTransfer</param>
+		/// <remarks></remarks>
+		/// <returns>Returns an instance of the <see cref="ETradeFinance.Entities.CashTransfer"/> class.</returns>
+		public ETradeFinance.Entities.CashTransfer GetById(TransactionManager transactionManager, long _id)
+		{
+			int count = -1;
+			return GetById(transactionManager, _id, 0, int.MaxValue, out count);
+		}
+		
+		/// <summary>
+		/// 	Gets rows from the datasource based on the PK_CashTransfer index.
+		/// </summary>
+		/// <param name="transactionManager"><see cref="TransactionManager"/> object</param>
+		/// <param name="_id">CashTransferID identifies CashTransfer</param>
+		/// <param name="start">Row number at which to start reading, the first row is 0.</param>
+		/// <param name="pageLength">Number of rows to return.</param>
+		/// <remarks></remarks>
+		/// <returns>Returns an instance of the <see cref="ETradeFinance.Entities.CashTransfer"/> class.</returns>
+		public ETradeFinance.Entities.CashTransfer GetById(TransactionManager transactionManager, long _id, int start, int pageLength)
+		{
+			int count = -1;
+			return GetById(transactionManager, _id, start, pageLength, out count);
+		}
+		
+		/// <summary>
+		/// 	Gets rows from the datasource based on the PK_CashTransfer index.
+		/// </summary>
+		/// <param name="_id">CashTransferID identifies CashTransfer</param>
+		/// <param name="start">Row number at which to start reading, the first row is 0.</param>
+		/// <param name="pageLength">Number of rows to return.</param>
+		/// <param name="count">out parameter to get total records for query</param>
+		/// <remarks></remarks>
+		/// <returns>Returns an instance of the <see cref="ETradeFinance.Entities.CashTransfer"/> class.</returns>
+		public ETradeFinance.Entities.CashTransfer GetById(long _id, int start, int pageLength, out int count)
+		{
+			return GetById(null, _id, start, pageLength, out count);
+		}
+		
+				
+		/// <summary>
+		/// 	Gets rows from the datasource based on the PK_CashTransfer index.
+		/// </summary>
+		/// <param name="transactionManager"><see cref="TransactionManager"/> object</param>
+		/// <param name="_id">CashTransferID identifies CashTransfer</param>
+		/// <param name="start">Row number at which to start reading, the first row is 0.</param>
+		/// <param name="pageLength">Number of rows to return.</param>
+		/// <param name="count">The total number of records.</param>
+		/// <returns>Returns an instance of the <see cref="ETradeFinance.Entities.CashTransfer"/> class.</returns>
+		public abstract ETradeFinance.Entities.CashTransfer GetById(TransactionManager transactionManager, long _id, int start, int pageLength, out int count);
+						
+		#endregion "Get By Index Functions"
+	
+		#region Custom Methods
+		
+		
+		#endregion
+
+		#region Helper Functions	
+		
+		/// <summary>
+		/// Fill a TList&lt;CashTransfer&gt; From a DataReader.
+		/// </summary>
+		/// <param name="reader">Datareader</param>
+		/// <param name="rows">The collection to fill</param>
+		/// <param name="start">Row number at which to start reading, the first row is 0.</param>
+		/// <param name="pageLength">number of rows.</param>
+		/// <returns>a <see cref="TList&lt;CashTransfer&gt;"/></returns>
+		public static TList<CashTransfer> Fill(IDataReader reader, TList<CashTransfer> rows, int start, int pageLength)
+		{
+			NetTiersProvider currentProvider = DataRepository.Provider;
+            bool useEntityFactory = currentProvider.UseEntityFactory;
+            bool enableEntityTracking = currentProvider.EnableEntityTracking;
+            LoadPolicy currentLoadPolicy = currentProvider.CurrentLoadPolicy;
+			Type entityCreationFactoryType = currentProvider.EntityCreationalFactoryType;
+			
+			// advance to the starting row
+			for (int i = 0; i < start; i++)
+			{
+				if (!reader.Read())
+				return rows; // not enough rows, just return
+			}
+			for (int i = 0; i < pageLength; i++)
+			{
+				if (!reader.Read())
+					break; // we are done
+					
+				string key = null;
+				
+				ETradeFinance.Entities.CashTransfer c = null;
+				if (useEntityFactory)
+				{
+					key = new System.Text.StringBuilder("CashTransfer")
+					.Append("|").Append((long)reader[((int)CashTransferColumn.Id - 1)]).ToString();
+					c = EntityManager.LocateOrCreate<CashTransfer>(
+					key.ToString(), // EntityTrackingKey
+					"CashTransfer",  //Creational Type
+					entityCreationFactoryType,  //Factory used to create entity
+					enableEntityTracking); // Track this entity?
+				}
+				else
+				{
+					c = new ETradeFinance.Entities.CashTransfer();
+				}
+				
+				if (!enableEntityTracking ||
+					c.EntityState == EntityState.Added ||
+					(enableEntityTracking &&
+					
+						(
+							(currentLoadPolicy == LoadPolicy.PreserveChanges && c.EntityState == EntityState.Unchanged) ||
+							(currentLoadPolicy == LoadPolicy.DiscardChanges && c.EntityState != EntityState.Unchanged)
+						)
+					))
+				{
+					c.SuppressEntityEvents = true;
+					c.Id = (long)reader[((int)CashTransferColumn.Id - 1)];
+					c.WithdrawableAmt = (reader.IsDBNull(((int)CashTransferColumn.WithdrawableAmt - 1)))?null:(System.Decimal?)reader[((int)CashTransferColumn.WithdrawableAmt - 1)];
+					c.TransferedAmt = (reader.IsDBNull(((int)CashTransferColumn.TransferedAmt - 1)))?null:(System.Decimal?)reader[((int)CashTransferColumn.TransferedAmt - 1)];
+					c.AdvOrderAmt = (reader.IsDBNull(((int)CashTransferColumn.AdvOrderAmt - 1)))?null:(System.Decimal?)reader[((int)CashTransferColumn.AdvOrderAmt - 1)];
+					c.AvilableAmt = (reader.IsDBNull(((int)CashTransferColumn.AvilableAmt - 1)))?null:(System.Decimal?)reader[((int)CashTransferColumn.AvilableAmt - 1)];
+					c.RequestAmt = (decimal)reader[((int)CashTransferColumn.RequestAmt - 1)];
+					c.RequestTime = (System.DateTime)reader[((int)CashTransferColumn.RequestTime - 1)];
+					c.Fee = (reader.IsDBNull(((int)CashTransferColumn.Fee - 1)))?null:(System.Decimal?)reader[((int)CashTransferColumn.Fee - 1)];
+					c.Vat = (reader.IsDBNull(((int)CashTransferColumn.Vat - 1)))?null:(System.Decimal?)reader[((int)CashTransferColumn.Vat - 1)];
+					c.AmtAfterFee = (reader.IsDBNull(((int)CashTransferColumn.AmtAfterFee - 1)))?null:(System.Decimal?)reader[((int)CashTransferColumn.AmtAfterFee - 1)];
+					c.SrcAccountId = (string)reader[((int)CashTransferColumn.SrcAccountId - 1)];
+					c.DestAccountId = (reader.IsDBNull(((int)CashTransferColumn.DestAccountId - 1)))?null:(string)reader[((int)CashTransferColumn.DestAccountId - 1)];
+					c.TransType = (reader.IsDBNull(((int)CashTransferColumn.TransType - 1)))?null:(System.Int32?)reader[((int)CashTransferColumn.TransType - 1)];
+					c.Status = (reader.IsDBNull(((int)CashTransferColumn.Status - 1)))?null:(System.Int32?)reader[((int)CashTransferColumn.Status - 1)];
+					c.ExecTime = (reader.IsDBNull(((int)CashTransferColumn.ExecTime - 1)))?null:(System.DateTime?)reader[((int)CashTransferColumn.ExecTime - 1)];
+					c.ApprovedAmt = (reader.IsDBNull(((int)CashTransferColumn.ApprovedAmt - 1)))?null:(System.Decimal?)reader[((int)CashTransferColumn.ApprovedAmt - 1)];
+					c.Note = (reader.IsDBNull(((int)CashTransferColumn.Note - 1)))?null:(string)reader[((int)CashTransferColumn.Note - 1)];
+					c.BrokerId = (reader.IsDBNull(((int)CashTransferColumn.BrokerId - 1)))?null:(string)reader[((int)CashTransferColumn.BrokerId - 1)];
+					c.BankName = (reader.IsDBNull(((int)CashTransferColumn.BankName - 1)))?null:(string)reader[((int)CashTransferColumn.BankName - 1)];
+					c.BranchName = (reader.IsDBNull(((int)CashTransferColumn.BranchName - 1)))?null:(string)reader[((int)CashTransferColumn.BranchName - 1)];
+					c.EntityTrackingKey = key;
+					c.AcceptChanges();
+					c.SuppressEntityEvents = false;
+				}
+				rows.Add(c);
+			}
+		return rows;
+		}		
+		/// <summary>
+		/// Refreshes the <see cref="ETradeFinance.Entities.CashTransfer"/> object from the <see cref="IDataReader"/>.
+		/// </summary>
+		/// <param name="reader">The <see cref="IDataReader"/> to read from.</param>
+		/// <param name="entity">The <see cref="ETradeFinance.Entities.CashTransfer"/> object to refresh.</param>
+		public static void RefreshEntity(IDataReader reader, ETradeFinance.Entities.CashTransfer entity)
+		{
+			if (!reader.Read()) return;
+			
+			entity.Id = (long)reader[((int)CashTransferColumn.Id - 1)];
+			entity.WithdrawableAmt = (reader.IsDBNull(((int)CashTransferColumn.WithdrawableAmt - 1)))?null:(System.Decimal?)reader[((int)CashTransferColumn.WithdrawableAmt - 1)];
+			entity.TransferedAmt = (reader.IsDBNull(((int)CashTransferColumn.TransferedAmt - 1)))?null:(System.Decimal?)reader[((int)CashTransferColumn.TransferedAmt - 1)];
+			entity.AdvOrderAmt = (reader.IsDBNull(((int)CashTransferColumn.AdvOrderAmt - 1)))?null:(System.Decimal?)reader[((int)CashTransferColumn.AdvOrderAmt - 1)];
+			entity.AvilableAmt = (reader.IsDBNull(((int)CashTransferColumn.AvilableAmt - 1)))?null:(System.Decimal?)reader[((int)CashTransferColumn.AvilableAmt - 1)];
+			entity.RequestAmt = (decimal)reader[((int)CashTransferColumn.RequestAmt - 1)];
+			entity.RequestTime = (System.DateTime)reader[((int)CashTransferColumn.RequestTime - 1)];
+			entity.Fee = (reader.IsDBNull(((int)CashTransferColumn.Fee - 1)))?null:(System.Decimal?)reader[((int)CashTransferColumn.Fee - 1)];
+			entity.Vat = (reader.IsDBNull(((int)CashTransferColumn.Vat - 1)))?null:(System.Decimal?)reader[((int)CashTransferColumn.Vat - 1)];
+			entity.AmtAfterFee = (reader.IsDBNull(((int)CashTransferColumn.AmtAfterFee - 1)))?null:(System.Decimal?)reader[((int)CashTransferColumn.AmtAfterFee - 1)];
+			entity.SrcAccountId = (string)reader[((int)CashTransferColumn.SrcAccountId - 1)];
+			entity.DestAccountId = (reader.IsDBNull(((int)CashTransferColumn.DestAccountId - 1)))?null:(string)reader[((int)CashTransferColumn.DestAccountId - 1)];
+			entity.TransType = (reader.IsDBNull(((int)CashTransferColumn.TransType - 1)))?null:(System.Int32?)reader[((int)CashTransferColumn.TransType - 1)];
+			entity.Status = (reader.IsDBNull(((int)CashTransferColumn.Status - 1)))?null:(System.Int32?)reader[((int)CashTransferColumn.Status - 1)];
+			entity.ExecTime = (reader.IsDBNull(((int)CashTransferColumn.ExecTime - 1)))?null:(System.DateTime?)reader[((int)CashTransferColumn.ExecTime - 1)];
+			entity.ApprovedAmt = (reader.IsDBNull(((int)CashTransferColumn.ApprovedAmt - 1)))?null:(System.Decimal?)reader[((int)CashTransferColumn.ApprovedAmt - 1)];
+			entity.Note = (reader.IsDBNull(((int)CashTransferColumn.Note - 1)))?null:(string)reader[((int)CashTransferColumn.Note - 1)];
+			entity.BrokerId = (reader.IsDBNull(((int)CashTransferColumn.BrokerId - 1)))?null:(string)reader[((int)CashTransferColumn.BrokerId - 1)];
+			entity.BankName = (reader.IsDBNull(((int)CashTransferColumn.BankName - 1)))?null:(string)reader[((int)CashTransferColumn.BankName - 1)];
+			entity.BranchName = (reader.IsDBNull(((int)CashTransferColumn.BranchName - 1)))?null:(string)reader[((int)CashTransferColumn.BranchName - 1)];
+			entity.AcceptChanges();
+		}
+		
+		/// <summary>
+		/// Refreshes the <see cref="ETradeFinance.Entities.CashTransfer"/> object from the <see cref="DataSet"/>.
+		/// </summary>
+		/// <param name="dataSet">The <see cref="DataSet"/> to read from.</param>
+		/// <param name="entity">The <see cref="ETradeFinance.Entities.CashTransfer"/> object.</param>
+		public static void RefreshEntity(DataSet dataSet, ETradeFinance.Entities.CashTransfer entity)
+		{
+			DataRow dataRow = dataSet.Tables[0].Rows[0];
+			
+			entity.Id = (long)dataRow["ID"];
+			entity.WithdrawableAmt = Convert.IsDBNull(dataRow["WithdrawableAmt"]) ? null : (System.Decimal?)dataRow["WithdrawableAmt"];
+			entity.TransferedAmt = Convert.IsDBNull(dataRow["TransferedAmt"]) ? null : (System.Decimal?)dataRow["TransferedAmt"];
+			entity.AdvOrderAmt = Convert.IsDBNull(dataRow["AdvOrderAmt"]) ? null : (System.Decimal?)dataRow["AdvOrderAmt"];
+			entity.AvilableAmt = Convert.IsDBNull(dataRow["AvilableAmt"]) ? null : (System.Decimal?)dataRow["AvilableAmt"];
+			entity.RequestAmt = (decimal)dataRow["RequestAmt"];
+			entity.RequestTime = (System.DateTime)dataRow["RequestTime"];
+			entity.Fee = Convert.IsDBNull(dataRow["Fee"]) ? null : (System.Decimal?)dataRow["Fee"];
+			entity.Vat = Convert.IsDBNull(dataRow["VAT"]) ? null : (System.Decimal?)dataRow["VAT"];
+			entity.AmtAfterFee = Convert.IsDBNull(dataRow["AmtAfterFee"]) ? null : (System.Decimal?)dataRow["AmtAfterFee"];
+			entity.SrcAccountId = (string)dataRow["SrcAccountID"];
+			entity.DestAccountId = Convert.IsDBNull(dataRow["DestAccountID"]) ? null : (string)dataRow["DestAccountID"];
+			entity.TransType = Convert.IsDBNull(dataRow["TransType"]) ? null : (System.Int32?)dataRow["TransType"];
+			entity.Status = Convert.IsDBNull(dataRow["Status"]) ? null : (System.Int32?)dataRow["Status"];
+			entity.ExecTime = Convert.IsDBNull(dataRow["ExecTime"]) ? null : (System.DateTime?)dataRow["ExecTime"];
+			entity.ApprovedAmt = Convert.IsDBNull(dataRow["ApprovedAmt"]) ? null : (System.Decimal?)dataRow["ApprovedAmt"];
+			entity.Note = Convert.IsDBNull(dataRow["Note"]) ? null : (string)dataRow["Note"];
+			entity.BrokerId = Convert.IsDBNull(dataRow["BrokerID"]) ? null : (string)dataRow["BrokerID"];
+			entity.BankName = Convert.IsDBNull(dataRow["BankName"]) ? null : (string)dataRow["BankName"];
+			entity.BranchName = Convert.IsDBNull(dataRow["BranchName"]) ? null : (string)dataRow["BranchName"];
+			entity.AcceptChanges();
+		}
+		#endregion 
+		
+		#region DeepLoad Methods
+		/// <summary>
+		/// Deep Loads the <see cref="IEntity"/> object with criteria based of the child 
+		/// property collections only N Levels Deep based on the <see cref="DeepLoadType"/>.
+		/// </summary>
+		/// <remarks>
+		/// Use this method with caution as it is possible to DeepLoad with Recursion and traverse an entire object graph.
+		/// </remarks>
+		/// <param name="transactionManager"><see cref="TransactionManager"/> object</param>
+		/// <param name="entity">The <see cref="ETradeFinance.Entities.CashTransfer"/> object to load.</param>
+		/// <param name="deep">Boolean. A flag that indicates whether to recursively save all Property Collection that are descendants of this instance. If True, saves the complete object graph below this object. If False, saves this object only. </param>
+		/// <param name="deepLoadType">DeepLoadType Enumeration to Include/Exclude object property collections from Load.</param>
+		/// <param name="childTypes">ETradeFinance.Entities.CashTransfer Property Collection Type Array To Include or Exclude from Load</param>
+		/// <param name="innerList">A collection of child types for easy access.</param>
+	    /// <exception cref="ArgumentNullException">entity or childTypes is null.</exception>
+	    /// <exception cref="ArgumentException">deepLoadType has invalid value.</exception>
+		public override void DeepLoad(TransactionManager transactionManager, ETradeFinance.Entities.CashTransfer entity, bool deep, DeepLoadType deepLoadType, System.Type[] childTypes, DeepSession innerList)
+		{
+			if(entity == null)
+				return;
+			
+			//used to hold DeepLoad method delegates and fire after all the local children have been loaded.
+			Dictionary<string, KeyValuePair<Delegate, object>> deepHandles = new Dictionary<string, KeyValuePair<Delegate, object>>();
+			
+			//Fire all DeepLoad Items
+			foreach(KeyValuePair<Delegate, object> pair in deepHandles.Values)
+		    {
+                pair.Key.DynamicInvoke((object[])pair.Value);
+		    }
+			deepHandles = null;
+		}
+		
+		#endregion 
+		
+		#region DeepSave Methods
+
+		/// <summary>
+		/// Deep Save the entire object graph of the ETradeFinance.Entities.CashTransfer object with criteria based of the child 
+		/// Type property array and DeepSaveType.
+		/// </summary>
+		/// <param name="transactionManager">The transaction manager.</param>
+		/// <param name="entity">ETradeFinance.Entities.CashTransfer instance</param>
+		/// <param name="deepSaveType">DeepSaveType Enumeration to Include/Exclude object property collections from Save.</param>
+		/// <param name="childTypes">ETradeFinance.Entities.CashTransfer Property Collection Type Array To Include or Exclude from Save</param>
+		/// <param name="innerList">A Hashtable of child types for easy access.</param>
+		public override bool DeepSave(TransactionManager transactionManager, ETradeFinance.Entities.CashTransfer entity, DeepSaveType deepSaveType, System.Type[] childTypes, DeepSession innerList)
+		{	
+			if (entity == null)
+				return false;
+							
+			#region Composite Parent Properties
+			//Save Source Composite Properties, however, don't call deep save on them.  
+			//So they only get saved a single level deep.
+			#endregion Composite Parent Properties
+
+			// Save Root Entity through Provider
+			if (!entity.IsDeleted)
+				this.Save(transactionManager, entity);
+			
+			//used to hold DeepSave method delegates and fire after all the local children have been saved.
+			Dictionary<string, KeyValuePair<Delegate, object>> deepHandles = new Dictionary<string, KeyValuePair<Delegate, object>>();
+			//Fire all DeepSave Items
+			foreach(KeyValuePair<Delegate, object> pair in deepHandles.Values)
+		    {
+                pair.Key.DynamicInvoke((object[])pair.Value);
+		    }
+			
+			// Save Root Entity through Provider, if not already saved in delete mode
+			if (entity.IsDeleted)
+				this.Save(transactionManager, entity);
+				
+
+			deepHandles = null;
+						
+			return true;
+		}
+		#endregion
+	} // end class
+	
+	#region CashTransferChildEntityTypes
+	
+	///<summary>
+	/// Enumeration used to expose the different child entity types 
+	/// for child properties in <c>ETradeFinance.Entities.CashTransfer</c>
+	///</summary>
+	public enum CashTransferChildEntityTypes
+	{
+	}
+	
+	#endregion CashTransferChildEntityTypes
+	
+	#region CashTransferFilterBuilder
+	
+	/// <summary>
+	/// A strongly-typed instance of the <see cref="SqlFilterBuilder&lt;CashTransferColumn&gt;"/> class
+	/// that is used exclusively with a <see cref="CashTransfer"/> object.
+	/// </summary>
+	[CLSCompliant(true)]
+	public class CashTransferFilterBuilder : SqlFilterBuilder<CashTransferColumn>
+	{
+		#region Constructors
+
+		/// <summary>
+		/// Initializes a new instance of the CashTransferFilterBuilder class.
+		/// </summary>
+		public CashTransferFilterBuilder() : base() { }
+
+		/// <summary>
+		/// Initializes a new instance of the CashTransferFilterBuilder class.
+		/// </summary>
+		/// <param name="ignoreCase">Specifies whether to create case-insensitive statements.</param>
+		public CashTransferFilterBuilder(bool ignoreCase) : base(ignoreCase) { }
+
+		/// <summary>
+		/// Initializes a new instance of the CashTransferFilterBuilder class.
+		/// </summary>
+		/// <param name="ignoreCase">Specifies whether to create case-insensitive statements.</param>
+		/// <param name="useAnd">Specifies whether to combine statements using AND or OR.</param>
+		public CashTransferFilterBuilder(bool ignoreCase, bool useAnd) : base(ignoreCase, useAnd) { }
+
+		#endregion Constructors
+	}
+
+	#endregion CashTransferFilterBuilder
+	
+	#region CashTransferParameterBuilder
+	
+	/// <summary>
+	/// A strongly-typed instance of the <see cref="ParameterizedSqlFilterBuilder&lt;CashTransferColumn&gt;"/> class
+	/// that is used exclusively with a <see cref="CashTransfer"/> object.
+	/// </summary>
+	[CLSCompliant(true)]
+	public class CashTransferParameterBuilder : ParameterizedSqlFilterBuilder<CashTransferColumn>
+	{
+		#region Constructors
+
+		/// <summary>
+		/// Initializes a new instance of the CashTransferParameterBuilder class.
+		/// </summary>
+		public CashTransferParameterBuilder() : base() { }
+
+		/// <summary>
+		/// Initializes a new instance of the CashTransferParameterBuilder class.
+		/// </summary>
+		/// <param name="ignoreCase">Specifies whether to create case-insensitive statements.</param>
+		public CashTransferParameterBuilder(bool ignoreCase) : base(ignoreCase) { }
+
+		/// <summary>
+		/// Initializes a new instance of the CashTransferParameterBuilder class.
+		/// </summary>
+		/// <param name="ignoreCase">Specifies whether to create case-insensitive statements.</param>
+		/// <param name="useAnd">Specifies whether to combine statements using AND or OR.</param>
+		public CashTransferParameterBuilder(bool ignoreCase, bool useAnd) : base(ignoreCase, useAnd) { }
+
+		#endregion Constructors
+	}
+
+	#endregion CashTransferParameterBuilder
+	
+	#region CashTransferSortBuilder
+    
+    /// <summary>
+    /// A strongly-typed instance of the <see cref="SqlSortBuilder&lt;CashTransferColumn&gt;"/> class
+	/// that is used exclusively with a <see cref="CashTransfer"/> object.
+    /// </summary>
+    [CLSCompliant(true)]
+    public class CashTransferSortBuilder : SqlSortBuilder<CashTransferColumn>
+    {
+		#region Constructors
+
+		/// <summary>
+		/// Initializes a new instance of the CashTransferSqlSortBuilder class.
+		/// </summary>
+		public CashTransferSortBuilder() : base() { }
+
+		#endregion Constructors
+
+    }    
+    #endregion CashTransferSortBuilder
+	
+} // end namespace

@@ -1,0 +1,1174 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ValidateServices.cs" company="OTS">
+//   2010
+// </copyright>
+// <summary>
+//   Defines the ValidateServices type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ETradeServices.Services
+{
+    using System.Diagnostics;
+    using System.Text;
+    using System.Web.Script.Serialization;
+
+    using AccountManager.Entities;
+
+    using ETradeCommon;
+    using ETradeCommon.Enums;
+
+    using ETradeCore.Entities;
+    using ETradeCore.Services;
+
+    using ETradeOrders.Entities;
+    using ETradeOrders.Services;
+
+    using RTServices;
+
+    using RTDataServices.Entities;
+
+    /// <summary>
+    /// The priority of validation:
+    /// 1.  Validate market
+    /// 2.  Validate stock
+    /// 3.  Validate volume unit
+    /// 4.  Validate step price
+    /// 5.  Validate price
+    /// 6.  Validate traderId
+    /// 7.  Validate transaction
+    /// 8.  Validate trade permission
+    /// 9.  Validate balance
+    /// 10. Validate account
+    /// </summary>
+    public class ValidateServices
+    {
+        private readonly ExecOrderService _execOrderService = new ExecOrderService();
+
+        private readonly Service _rtService = new Service();
+
+        private static readonly JavaScriptSerializer Serializer = new JavaScriptSerializer();
+
+        private readonly CashServices _cashServices = new CashServices();
+
+        /// <summary>
+        /// Determines whether [is valid market] [the specified market id].
+        /// </summary>
+        /// <param name="marketId">The market id.</param>
+        /// <param name="condPrice">The con price.</param>
+        /// <returns></returns>
+        private CommonEnums.REJECT_REASON IsValidMarket(int marketId, char condPrice)
+        {
+            CommonEnums.MARKET_STATUS marketState = CommonEnums.MARKET_STATUS.UNVAILABLE; // in case no row found in FISDB
+            CommonEnums.REJECT_REASON rejCode = CommonEnums.REJECT_REASON.IS_VALID;
+
+            marketState = (CommonEnums.MARKET_STATUS)MarketServices.TradingStatus(marketId);
+
+            switch (marketState)
+            {
+                case CommonEnums.MARKET_STATUS.UNVAILABLE:
+                    rejCode = CommonEnums.REJECT_REASON.ERROR_MARKET_CLOSE;
+                    break;
+                case CommonEnums.MARKET_STATUS.CLOSE: // Close
+                case CommonEnums.MARKET_STATUS.CLOSE_PT: // Close
+                case CommonEnums.MARKET_STATUS.HAFT: //UPCOM close session 1
+                    rejCode = CommonEnums.REJECT_REASON.ERROR_MARKET_CLOSE;
+
+                    break;
+                case CommonEnums.MARKET_STATUS.OPEN: // Open
+                    {
+                        if (condPrice == Constants.ORDER_TYPE_ATO)
+                        {
+                            LogHandler.Log(
+                                "IsValidMarket: ATC not in SESSION3, condPrice = " + condPrice + ", marketState = " +
+                                marketState + ", market: " + marketId,
+                                GetType() + ".IsValidMarket",
+                                TraceEventType.Warning);
+                            rejCode = CommonEnums.REJECT_REASON.ERROR_ATO_NOT_IN_READY_AND_SESSION1;
+                        }
+
+                        if (!AppConfig.EnablePutATCbefore)
+                        {
+                            if (condPrice == Constants.ORDER_TYPE_ATC)
+                            {
+                                LogHandler.Log(
+                                    "IsValidMarket: ATO not in READY and SESSION1, condPrice = " + condPrice +
+                                    ", marketState = " + marketState + ", market: " + marketId,
+                                    GetType() + ".IsValidMarket",
+                                    TraceEventType.Warning);
+                                rejCode = CommonEnums.REJECT_REASON.ERROR_ATC_NOT_IN_SESSION3;
+                            }
+                        }
+
+                        break;
+                    }
+                case CommonEnums.MARKET_STATUS.READY:
+                case CommonEnums.MARKET_STATUS.PRE_OPEN: // Pre open
+                    if (!AppConfig.EnablePutATCbefore)
+                    {
+                        if (condPrice == Constants.ORDER_TYPE_ATC)
+                        {
+                            LogHandler.Log(
+                                "IsValidMarket: ATO not in READY and SESSION1, condPrice = " + condPrice +
+                                ", marketState = " + marketState + ", market: " + marketId,
+                                GetType() + ".IsValidMarket",
+                                TraceEventType.Warning);
+                            rejCode = CommonEnums.REJECT_REASON.ERROR_ATC_NOT_IN_SESSION3;
+                        }
+                    }
+
+                    break;
+                case CommonEnums.MARKET_STATUS.PRE_CLOSE: // Pre close
+                    if (condPrice == Constants.ORDER_TYPE_ATO)
+                    {
+                        // ATO
+                        LogHandler.Log(
+                            "IsValidMarket: ATC not in SESSION3, condPrice = " + condPrice + ", marketState = " +
+                            marketState + ", market: " + marketId,
+                            GetType() + ".IsValidMarket",
+                            TraceEventType.Warning);
+                        rejCode = CommonEnums.REJECT_REASON.ERROR_ATO_NOT_IN_READY_AND_SESSION1;
+                    }
+
+                    break;
+            }
+
+            return rejCode;
+        }
+
+        /// <summary>
+        /// Determines whether [is valid stock] [the specified symbol].
+        /// </summary>
+        /// <param name="symbol">The symbol.</param>
+        /// <returns></returns>
+        private CommonEnums.REJECT_REASON IsValidStock(string symbol)
+        {
+            var stockInfo = Serializer.Deserialize<ResultObject<StockInfo>>(this._rtService.GetStockInfo(symbol));
+
+            if (stockInfo == null || string.IsNullOrEmpty(symbol))
+            {
+                LogHandler.Log(
+                    "IsValidStock: " + symbol + " not existed in collection",
+                    GetType() + ".IsValidStock",
+                    TraceEventType.Warning);
+                return CommonEnums.REJECT_REASON.INCORRECT_STOCK;
+            }
+
+            // TODO:    
+            // 1. Check is existed stock? - Done
+            // 2. Check isHalted
+            // 3. Check isBond
+            return CommonEnums.REJECT_REASON.IS_VALID;
+        }
+
+        /// <summary>
+        /// Determines whether [is valid vol unit] [the specified market id].
+        /// </summary>
+        /// <param name="marketId">The market id.</param>
+        /// <param name="volume">The volume.</param>
+        /// <returns></returns>
+        private CommonEnums.REJECT_REASON IsValidVolUnit(int marketId, int volume)
+        {
+            decimal volUnit = 0;
+            var center = (CommonEnums.MARKET_ID)marketId;
+
+            // Validate the volume unit and step price first
+            if (volume <= 0)
+            {
+                LogHandler.Log(
+                    "IsValidVolUnit: Incorrect volume, volume = " + volume + ", marketId = " + marketId,
+                    GetType() + ".IsValidVolUnit",
+                    TraceEventType.Warning);
+                return CommonEnums.REJECT_REASON.INCORRECT_VOL;
+            }
+
+            switch (center)
+            {
+                case CommonEnums.MARKET_ID.HOSE:
+                    volUnit = (decimal)CommonEnums.TRADE_RULE.VOL_UNIT_HOSE;
+
+                    if (volume % volUnit != 0)
+                    {
+                        LogHandler.Log(
+                            "IsValidVolUnit: Incorrect volume, volume = " + volume + ", market = " + marketId,
+                            GetType() + ".IsValidVolUnit",
+                            TraceEventType.Warning);
+                        return CommonEnums.REJECT_REASON.INCORRECT_VOL;
+                    }
+
+                    if (volume > (decimal)CommonEnums.TRADE_RULE.VOL_MAX_HOSE)
+                    {
+                        LogHandler.Log(
+                            "IsValidVolUnit: volume is over max volume, volume = " + volume + ", market = " + marketId,
+                            GetType() + ".IsValidVolUnit",
+                            TraceEventType.Warning);
+                        return CommonEnums.REJECT_REASON.OVER_MAX_VOL;
+                    }
+
+                    break;
+                case CommonEnums.MARKET_ID.HNX:
+                    volUnit = (decimal)CommonEnums.TRADE_RULE.VOL_UNIT_HNX;
+
+                    if (volume % volUnit != 0)
+                    {
+                        LogHandler.Log(
+                            "IsValidVolUnit: Incorrect volume, volume = " + volume + ", market = " + marketId,
+                            GetType() + ".IsValidVolUnit",
+                            TraceEventType.Warning);
+                        return CommonEnums.REJECT_REASON.INCORRECT_VOL;
+                    }
+
+                    if (volume >= (decimal)CommonEnums.TRADE_RULE.VOL_MAX_HNX)
+                    {
+                        LogHandler.Log(
+                            "IsValidVolUnit: volume is over max volume, volume = " + volume + ", market = " + marketId,
+                            GetType() + ".IsValidVolUnit",
+                            TraceEventType.Warning);
+                        return CommonEnums.REJECT_REASON.OVER_MAX_VOL;
+                    }
+
+                    break;
+                case CommonEnums.MARKET_ID.UPCoM:
+                    volUnit = (decimal)CommonEnums.TRADE_RULE.VOL_UNIT_UPCOM;
+
+                    if (volume % volUnit != 0)
+                    {
+                        LogHandler.Log(
+                            "IsValidVolUnit: Incorrect volume, volume = " + volume + ", market = " + marketId,
+                            GetType() + ".IsValidVolUnit",
+                            TraceEventType.Warning);
+                        return CommonEnums.REJECT_REASON.INCORRECT_VOL;
+                    }
+
+                    /*if (volume >= (decimal)CommonEnums.TRADE_RULE.VOL_MAX_UPCOM)
+                    {
+                        LogHandler.Log(
+                            "IsValidVolUnit: volume is over max volume, volume = " + volume + ", market = " + marketId,
+                            GetType() + ".IsValidVolUnit",
+                            TraceEventType.Warning);
+                        return CommonEnums.REJECT_REASON.OVER_MAX_VOL;
+                    }*/
+
+                    break;
+            }
+
+            return CommonEnums.REJECT_REASON.IS_VALID;
+        }
+
+        /// <summary>
+        /// Determines whether [is valid step price] [the specified market id].
+        /// </summary>
+        /// <param name="marketId">The market id.</param>
+        /// <param name="price">The price.</param>
+        /// <param name="condPrice">The con price.</param>
+        /// <returns></returns>
+        private CommonEnums.REJECT_REASON IsValidStepPrice(int marketId, decimal price, char condPrice)
+        {
+            var center = (CommonEnums.MARKET_ID)marketId;
+
+            // validate the volume unit and step price first
+            switch (center)
+            {
+                case CommonEnums.MARKET_ID.HOSE:
+                    if (condPrice == Constants.ORDER_TYPE_ATO || condPrice == Constants.ORDER_TYPE_ATC)
+                    {
+                        return CommonEnums.REJECT_REASON.IS_VALID;
+                    }
+
+                    price = price * (decimal)CommonEnums.TRADE_RULE.MONEY_UNIT_HOSE;
+
+                    if ((price < (decimal)CommonEnums.TRADE_RULE.PRICE_LEVEL_1_HOSE) &&
+                        (price % (decimal)CommonEnums.TRADE_RULE.PRICE_STEP_LEVEL_1_HOSE != 0))
+                    {
+                        LogHandler.Log(
+                            "IsValidStepPrice: incorrect step price: price must multiple of 100, price = " + price +
+                            ", market = " + marketId,
+                            GetType() + ".",
+                            TraceEventType.Warning);
+                        return CommonEnums.REJECT_REASON.ERROR_PRICE_NOT_MULTIPLE_100_FOR_HOSE;
+                    }
+
+                    if ((price > (decimal)CommonEnums.TRADE_RULE.PRICE_LEVEL_1_HOSE) &&
+                        (price < (decimal)CommonEnums.TRADE_RULE.PRICE_LEVEL_2_HOSE) &&
+                        (price % (decimal)CommonEnums.TRADE_RULE.PRICE_STEP_LEVEL_2_HOSE != 0))
+                    {
+                        LogHandler.Log(
+                            "IsValidStepPrice: incorrect step price, price must multiple of 500, price = " + price +
+                            ", market = " + marketId,
+                            GetType() + ".",
+                            TraceEventType.Warning);
+                        return CommonEnums.REJECT_REASON.ERROR_PRICE_NOT_MULTIPLE_500_FOR_HOSE;
+                    }
+
+                    if ((price > (decimal)CommonEnums.TRADE_RULE.PRICE_LEVEL_2_HOSE) &&
+                        (price % (decimal)CommonEnums.TRADE_RULE.PRICE_STEP_LEVEL_3_HOSE != 0))
+                    {
+                        LogHandler.Log(
+                            "IsValidStepPrice: incorrect step price, price must multiple of 1000, price must multiple of 500, price = " +
+                            price + ", market = " + marketId,
+                            GetType() + ".",
+                            TraceEventType.Warning);
+                        return CommonEnums.REJECT_REASON.ERROR_PRICE_NOT_MULTIPLE_1000_FOR_HOSE;
+                    }
+
+                    break;
+                case CommonEnums.MARKET_ID.HNX:
+                    if (condPrice == Constants.ORDER_TYPE_ATO || condPrice == Constants.ORDER_TYPE_ATC)
+                    {
+                        LogHandler.Log(
+                            "IsValidStepPrice: incorrect order type, condPrice = " + condPrice + ", marketId = " +
+                            marketId,
+                            GetType() + ".",
+                            TraceEventType.Warning);
+                        return CommonEnums.REJECT_REASON.ERROR_HNX_NOT_USE_ATO_ATC;
+                    }
+
+                    price = price * (decimal)CommonEnums.TRADE_RULE.MONEY_UNIT_HNX;
+
+                    if (price % (decimal)CommonEnums.TRADE_RULE.PRICE_STEP_HNX != 0)
+                    {
+                        LogHandler.Log(
+                            "IsValidStepPrice: incorrect step price, price must multiple of 100, price = " +
+                            price + ", market = " + marketId,
+                            GetType() + ".",
+                            TraceEventType.Warning);
+                        return CommonEnums.REJECT_REASON.ERROR_PRICE_NOT_MULTIPLE_100_FOR_HNX;
+                    }
+
+                    break;
+                case CommonEnums.MARKET_ID.UPCoM:
+                    if (condPrice == Constants.ORDER_TYPE_ATO || condPrice == Constants.ORDER_TYPE_ATC)
+                    {
+                        LogHandler.Log(
+                            "IsValidStepPrice: incorrect order type, condPrice = " + condPrice + ", marketId = " +
+                            marketId,
+                            GetType() + ".",
+                            TraceEventType.Warning);
+                        return CommonEnums.REJECT_REASON.ERROR_UPCOM_NOT_USE_ATO_ATC;
+                    }
+
+                    price = price * (decimal)CommonEnums.TRADE_RULE.MONEY_UNIT_UPCOM;
+
+                    if (price % (decimal)CommonEnums.TRADE_RULE.PRICE_STEP_UPCOM != 0)
+                    {
+                        LogHandler.Log(
+                            "IsValidStepPrice: incorrect step price, price must multiple of 100, price = " +
+                            price + ", market = " + marketId,
+                            GetType() + ".",
+                            TraceEventType.Warning);
+                        return CommonEnums.REJECT_REASON.ERROR_PRICE_NOT_MULTIPLE_100_FOR_UPCOM;
+                    }
+
+                    break;
+            }
+
+            return CommonEnums.REJECT_REASON.IS_VALID;
+        }
+
+        /// <summary>
+        /// Determines whether [is valid price] [the specified market id].
+        /// </summary>
+        /// <param name="marketId">The market id.</param>
+        /// <param name="price">The price.</param>
+        /// <param name="conPrice">The con price.</param>
+        /// <param name="symbol">The symbol.</param>
+        /// <returns></returns>
+        private CommonEnums.REJECT_REASON IsValidPrice(int marketId, decimal price, char conPrice, string symbol)
+        {
+            var stockInfo = Serializer.Deserialize<ResultObject<StockInfo>>(this._rtService.GetStockInfo(symbol));
+
+            if (stockInfo == null || stockInfo.Result == null)
+            {
+                LogHandler.Log(
+                    "IsValidPrice: " + symbol + " not existed in collection",
+                    GetType() + ".IsValidPrice",
+                    TraceEventType.Warning);
+                return CommonEnums.REJECT_REASON.INCORRECT_STOCK;
+            }
+
+            if (conPrice == Constants.ORDER_TYPE_ATO || conPrice == Constants.ORDER_TYPE_ATC)
+            {
+                return CommonEnums.REJECT_REASON.IS_VALID;
+            }
+
+            var center = (CommonEnums.MARKET_ID)marketId;
+            switch (center)
+            {
+                case CommonEnums.MARKET_ID.HOSE:
+                    if (price < (decimal)stockInfo.Result.Floor)
+                    {
+                        LogHandler.Log(
+                            "IsValidPrice: Price below floor, price = " + price + ", floor = " +
+                            stockInfo.Result.Floor + ", stock symbol: " + symbol,
+                            GetType() + ".IsValidPrice",
+                            TraceEventType.Warning);
+                        return CommonEnums.REJECT_REASON.PRICE_BELOW_FLOOR;
+                    }
+
+                    if (price > (decimal)stockInfo.Result.Ceiling)
+                    {
+                        LogHandler.Log(
+                            "IsValidPrice: Price above ceiling, price = " + price + ", ceiling = " +
+                            stockInfo.Result.Ceiling + ", stock symbol: " + symbol,
+                            GetType() + ".IsValidPrice",
+                            TraceEventType.Warning);
+                        return CommonEnums.REJECT_REASON.PRICE_ABOVE_CEILING;
+                    }
+
+                    break;
+                case CommonEnums.MARKET_ID.HNX:
+                    if ((stockInfo.Result.Ceiling == 0) && (stockInfo.Result.Floor == 0))
+                    {
+                        // This validation for new stock, it without celing and floor.
+                        // So we just check range from 1000VND to 1000,000 VND
+                        if (price < 1)
+                        {
+                            LogHandler.Log(
+                                "IsValidPrice: Price below floor, price = " + price + ", floor = " +
+                                stockInfo.Result.Floor + ", stock symbol: " + symbol,
+                                GetType() + ".IsValidPrice",
+                                TraceEventType.Warning);
+                            return CommonEnums.REJECT_REASON.PRICE_BELOW_FLOOR;
+                        }
+
+                        if (price > 1000)
+                        {
+                            LogHandler.Log(
+                                "IsValidPrice: Price above ceiling, price = " + price + ", floor = " +
+                                stockInfo.Result.Floor + ", stock symbol: " + symbol,
+                                GetType() + ".IsValidPrice",
+                                TraceEventType.Warning);
+                            return CommonEnums.REJECT_REASON.PRICE_ABOVE_CEILING;
+                        }
+                    }
+                    else
+                    {
+                        if (price < (decimal)stockInfo.Result.Floor)
+                        {
+                            LogHandler.Log(
+                                "IsValidPrice: Price below floor, price = " + price + ", floor = " +
+                                stockInfo.Result.Floor + ", stock symbol: " + symbol,
+                                GetType() + ".IsValidPrice",
+                                TraceEventType.Warning);
+                            return CommonEnums.REJECT_REASON.PRICE_BELOW_FLOOR;
+                        }
+
+                        if (price > (decimal)stockInfo.Result.Ceiling)
+                        {
+                            LogHandler.Log(
+                                "IsValidPrice: Price above ceiling, price = " + price + ", floor = " +
+                                stockInfo.Result.Floor + ", stock symbol: " + symbol,
+                                GetType() + ".IsValidPrice",
+                                TraceEventType.Warning);
+                            return CommonEnums.REJECT_REASON.PRICE_ABOVE_CEILING;
+                        }
+                    }
+
+                    break;
+                case CommonEnums.MARKET_ID.UPCoM:
+                    if ((stockInfo.Result.Ceiling == 0) && (stockInfo.Result.Floor == 0))
+                    {
+                        // This validation for new stock, it without celing and floor.
+                        // So we just check range from 1000VND to 1000,000 VND
+                        if (price < 1)
+                        {
+                            LogHandler.Log(
+                                "IsValidPrice: Price below floor, price = " + price + ", floor = " +
+                                stockInfo.Result.Floor + ", stock symbol: " + symbol,
+                                GetType() + ".IsValidPrice",
+                                TraceEventType.Warning);
+                            return CommonEnums.REJECT_REASON.PRICE_BELOW_FLOOR;
+                        }
+
+                        if (price > 1000)
+                        {
+                            LogHandler.Log(
+                                "IsValidPrice: Price above ceiling, price = " + price + ", floor = " +
+                                stockInfo.Result.Floor + ", stock symbol: " + symbol,
+                                GetType() + ".IsValidPrice",
+                                TraceEventType.Warning);
+                            return CommonEnums.REJECT_REASON.PRICE_ABOVE_CEILING;
+                        }
+                    }
+                    else
+                    {
+                        if (price < (decimal)stockInfo.Result.Floor)
+                        {
+                            LogHandler.Log(
+                                "IsValidPrice: Price below floor, price = " + price + ", floor = " +
+                                stockInfo.Result.Floor + ", stock symbol: " + symbol,
+                                GetType() + ".IsValidPrice",
+                                TraceEventType.Warning);
+                            return CommonEnums.REJECT_REASON.PRICE_BELOW_FLOOR;
+                        }
+
+                        if (price > (decimal)stockInfo.Result.Ceiling)
+                        {
+                            LogHandler.Log(
+                                "IsValidPrice: Price above ceiling, price = " + price + ", floor = " +
+                                stockInfo.Result.Floor + ", stock symbol: " + symbol,
+                                GetType() + ".IsValidPrice",
+                                TraceEventType.Warning);
+                            return CommonEnums.REJECT_REASON.PRICE_ABOVE_CEILING;
+                        }
+                    }
+
+                    break;
+            }
+
+            return CommonEnums.REJECT_REASON.IS_VALID;
+        }
+
+        /// <summary>
+        /// Determines whether [is valid trader id].
+        /// </summary>
+        /// <returns></returns>
+        private CommonEnums.REJECT_REASON IsValidTraderId()
+        {
+            // TODO: check web trade TraderId permission
+            return CommonEnums.REJECT_REASON.IS_VALID;
+        }
+
+        /// <summary>
+        /// Determines whether [is valid transaction] [the specified account no].
+        /// </summary>
+        /// <param name="accountNo">The account no.</param>
+        /// <param name="symbol">The symbol.</param>
+        /// <param name="side">The side.</param>
+        /// <param name="subCustAccounts">The sub cust accounts.</param>
+        /// <returns></returns>
+        private CommonEnums.REJECT_REASON IsValidTransaction(string accountNo, string symbol, char side, AccountManager.Entities.TList<SubCustAccount> subCustAccounts)
+        {
+            var subCustAccountCollection = new StringBuilder(100);
+            foreach (SubCustAccount subCustAccount in subCustAccounts)
+            {
+                subCustAccountCollection.Append("'" + subCustAccount.SubCustAccountId + "', ");
+            }
+
+            string accountCondition = subCustAccountCollection.ToString().Substring(
+                0, subCustAccountCollection.ToString().Length - 2); // Remove ", "
+
+            string conditionStr = string.Empty;
+
+            if (side == (char)CommonEnums.TRADE_SIDE.BUY)
+            {
+                conditionStr = string.Format(
+                    " (Side = '{0}') AND (SubCustAccountID in ({1})) AND (SecSymbol = '{2}')",
+                    ((char)CommonEnums.TRADE_SIDE.SELL),
+                    accountCondition,
+                    symbol);
+            }
+            else if (side == (char)CommonEnums.TRADE_SIDE.SELL)
+            {
+                conditionStr = string.Format(
+                    " (Side = '{0}') AND (SubCustAccountID in ({1})) AND (SecSymbol = '{2}')",
+                    ((char)CommonEnums.TRADE_SIDE.BUY),
+                    accountCondition,
+                    symbol);
+            }
+
+            int numberOfRecords;
+            this._execOrderService.GetPaged(conditionStr, "OrderID DESC", 0, 10, out numberOfRecords);
+
+            bool isExisted = (numberOfRecords > 0) ? true : false;
+
+            if (isExisted)
+            {
+                LogHandler.Log(
+                    "IsValidTransaction: " + accountNo + " buy and sell same " + symbol + " intra-day", 
+                    GetType() + ".IsValidTransaction", 
+                    TraceEventType.Warning);
+                return CommonEnums.REJECT_REASON.NOT_BUY_SELL_THE_SAME_STOCK;
+            }
+
+            return CommonEnums.REJECT_REASON.IS_VALID;
+        }
+
+        /// <summary>
+        /// Determines whether [is valid trade permission] [the specified account no].
+        /// Validation includes:
+        /// 1. CanBuy
+        /// 2. CanSell
+        /// 3. IsActive
+        /// </summary>
+        /// <param name="subCustAccount">
+        /// The sub Cust Account.
+        /// </param>
+        /// <param name="permissions">
+        /// The permissions.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        private CommonEnums.REJECT_REASON IsValidTradePermission(SubCustAccount subCustAccount, CommonEnums.PERMISSION_TYPE permissions)
+        {
+            if (subCustAccount.Actived == false)
+            {
+                LogHandler.Log(
+                    "IsValidTradePermission: " + subCustAccount.SubCustAccountId + " is locked",
+                    GetType() + ".IsValidTradePermission",
+                    TraceEventType.Warning);
+                return CommonEnums.REJECT_REASON.ERROR_LOCK_ACCOUNT;
+            }
+
+            bool canBuy = false;
+            bool canSell = false;
+            bool canTrade = false;
+
+            foreach (
+                SubCustAccountPermission subCustAccountPermission in subCustAccount.SubCustAccountPermissionCollection)
+            {
+                if (permissions == CommonEnums.PERMISSION_TYPE.VALIDATE_ORDER || permissions == CommonEnums.PERMISSION_TYPE.PORFOLIO)
+                {
+                    if (subCustAccountPermission.CustServicesPermissionId ==
+                        (int)CommonEnums.SUB_ACCOUNT_PERMISSIONS.CAN_TRADE)
+                    {
+                        canTrade = true;
+                    }    
+                }
+                else
+                {
+                    canTrade = true;
+                }
+
+                if (permissions == CommonEnums.PERMISSION_TYPE.VALIDATE_ORDER)
+                {
+                    if (subCustAccountPermission.CustServicesPermissionId ==
+                        (int)CommonEnums.SUB_ACCOUNT_PERMISSIONS.CAN_BUY)
+                    {
+                        canBuy = true;
+                    }    
+                }
+                else
+                {
+                    canBuy = true;
+                }
+
+                if (permissions == CommonEnums.PERMISSION_TYPE.VALIDATE_ORDER || permissions == CommonEnums.PERMISSION_TYPE.PORFOLIO)
+                {
+                    if (subCustAccountPermission.CustServicesPermissionId ==
+                        (int)CommonEnums.SUB_ACCOUNT_PERMISSIONS.CAN_SELL)
+                    {
+                        canSell = true;
+                    }    
+                }
+                else
+                {
+                    canSell = true;
+                }
+            }
+
+            if (canTrade == false)
+            {
+                LogHandler.Log(
+                    "IsValidTradePermission: " + subCustAccount.SubCustAccountId + " not trade permission",
+                    GetType() + ".IsValidTradePermission",
+                    TraceEventType.Warning);
+                return CommonEnums.REJECT_REASON.ERROR_ACCOUNT_NOT_TRADE_PERMISSION;
+            }
+
+            if (canBuy == false)
+            {
+                LogHandler.Log(
+                    "IsValidTradePermission: " + subCustAccount.SubCustAccountId + " not buy permission",
+                    GetType() + ".IsValidTradePermission",
+                    TraceEventType.Warning);
+                return CommonEnums.REJECT_REASON.ERROR_ACCOUNT_NOT_BUY_PERMISSION;
+            }
+
+            if (canSell == false)
+            {
+                LogHandler.Log(
+                    "IsValidTradePermission: " + subCustAccount.SubCustAccountId + " not sell permission",
+                    GetType() + ".IsValidTradePermission",
+                    TraceEventType.Warning);
+                return CommonEnums.REJECT_REASON.ERROR_ACCOUNT_NOT_SELL_PERMISSION;
+            }
+
+            return CommonEnums.REJECT_REASON.IS_VALID;
+        }
+
+
+        /// <summary>
+        /// Determines whether [is valid balance] [the specified account no].
+        /// Validation includes:
+        /// 1. Validate stock available
+        /// 2. Validate cash available
+        /// 3. validate remain room
+        /// </summary>
+        /// <param name="accountNo">The account no.</param>
+        /// <param name="side">The side.</param>
+        /// <param name="symbol">The symbol.</param>
+        /// <param name="marketId">The market id.</param>
+        /// <param name="condPrice">The cond price.</param>
+        /// <param name="accounType">Type of the accoun.</param>
+        /// <param name="volume">The volume.</param>
+        /// <param name="price">The price.</param>
+        /// <param name="sellableShare">The sellable share.</param>
+        /// <returns></returns>
+        private CommonEnums.REJECT_REASON IsValidBalance(
+            string accountNo,
+            char side,
+            string symbol,
+            int marketId,
+            char condPrice,
+            int accounType,
+            int volume,
+            decimal price,
+            StockAvailable stockAvailable)
+        {
+            decimal moneyUnit = 0;
+
+            if (side == (char)CommonEnums.TRADE_SIDE.BUY)
+            {
+                var center = (CommonEnums.MARKET_ID)marketId;
+
+                switch (center)
+                {
+                    case CommonEnums.MARKET_ID.HOSE:
+                        moneyUnit = (decimal)CommonEnums.TRADE_RULE.MONEY_UNIT_HOSE;
+
+                        if (condPrice == Constants.ORDER_TYPE_ATO || condPrice == Constants.ORDER_TYPE_ATC)
+                        {
+                            var stockInfo = Serializer.Deserialize<ResultObject<StockInfo>>(this._rtService.GetStockInfo(symbol));
+
+                            if (stockInfo != null)
+                            {
+                                price = (decimal) stockInfo.Result.Ceiling;
+                            }
+                        }
+
+                        break;
+                    case CommonEnums.MARKET_ID.HNX:
+
+                        moneyUnit = (decimal)CommonEnums.TRADE_RULE.MONEY_UNIT_HNX;
+                        break;
+                    case CommonEnums.MARKET_ID.UPCoM:
+
+                        moneyUnit = (decimal)CommonEnums.TRADE_RULE.MONEY_UNIT_UPCOM;
+                        break;
+                }
+
+                CashAvailable cashAvailable = this._cashServices.GetAvailableCash(accountNo, accounType);
+                if (cashAvailable == null)
+                {
+                    LogHandler.Log(
+                        "IsValidAccount: " + accountNo + " not enough cash, cashAvailable is null",
+                        GetType() + ".IsValidAccount",
+                        TraceEventType.Warning);
+                    return CommonEnums.REJECT_REASON.NOT_ENOUGH_CASH;
+                }
+
+                decimal buyPower = cashAvailable.BuyCredit;
+                decimal cashAmount = volume * price * moneyUnit;
+
+                // Commission should configured in DB 
+                const decimal fee = 0; // CalculateCommission(cashAmount);
+
+                if ((cashAmount + fee) >= buyPower)
+                {
+                    LogHandler.Log(
+                        "IsValidAccount: " + accountNo + " not enough cash, buy credit = " + cashAvailable.BuyCredit,
+                        GetType() + ".IsValidAccount",
+                        TraceEventType.Warning);
+                    return CommonEnums.REJECT_REASON.NOT_ENOUGH_CASH;
+                }
+            }
+            else
+            {
+                if (stockAvailable == null)
+                {
+                    LogHandler.Log(
+                        "IsValidAccount: " + accountNo + " not available " + symbol + " in portfolio",
+                        GetType() + ".IsValidAccount",
+                        TraceEventType.Warning);
+                    return CommonEnums.REJECT_REASON.ERROR_NOT_AVAILABLE_STOCK;
+                }
+
+                if (stockAvailable.AvaiVolume < volume)
+                {
+                    LogHandler.Log(
+                        "IsValidAccount: " + accountNo + " not enough stock for sell, available = " +
+                        stockAvailable.AvaiVolume + ", symbol = " + symbol,
+                        GetType() + ".IsValidAccount",
+                        TraceEventType.Warning);
+                    return CommonEnums.REJECT_REASON.NOT_ENOUGH_STOCK;
+                }
+            }
+
+            return CommonEnums.REJECT_REASON.IS_VALID;
+        }
+
+        /// <summary>
+        /// Determines whether [is valid account] [the specified account no].
+        /// </summary>
+        /// <param name="accountNo">
+        /// The account no.
+        /// </param>
+        /// <param name="side">
+        /// The side.
+        /// </param>
+        /// <param name="symbol">
+        /// The symbol.
+        /// </param>
+        /// <param name="volume">
+        /// The volume.
+        /// </param>
+        /// <param name="customerType"></param>
+        /// <returns>
+        /// </returns>
+        private CommonEnums.REJECT_REASON IsValidAccount(string accountNo, char side, string symbol, int volume, int customerType)
+        {
+            if (side == (char)CommonEnums.TRADE_SIDE.BUY)
+            {
+                if (customerType == (int)CommonEnums.CUSTOMER_TYPE.FOREIGN)
+                {
+                    var stockInfo = Serializer.Deserialize<ResultObject<StockInfo>>(this._rtService.GetStockInfo(symbol));
+
+                    if (stockInfo == null || stockInfo.Result == null)
+                    {
+                        LogHandler.Log(
+                            "IsValidAccount: over remain room, " + symbol + " not existed in collection",
+                            GetType() + ".IsValidAccount",
+                            TraceEventType.Warning);
+                        return CommonEnums.REJECT_REASON.OVER_REMAIN_VOLUME;
+                    }
+
+                    if (stockInfo.Result.AvailableForeignRoom < 10 || stockInfo.Result.AvailableForeignRoom < volume)
+                    {
+                        LogHandler.Log(
+                            "IsValidAccount: over remain room, acccountNo: " + accountNo + ", symbol: " + symbol +
+                            ", remainRoom: " + stockInfo.Result.AvailableForeignRoom,
+                            GetType() + ".IsValidAccount",
+                            TraceEventType.Warning);
+
+                        return CommonEnums.REJECT_REASON.OVER_REMAIN_VOLUME;
+                    }
+                }
+            }
+
+            return CommonEnums.REJECT_REASON.IS_VALID;
+        }
+
+        /// <summary>
+        /// Determines whether [is valid new order] [the specified market id].
+        /// </summary>
+        /// <param name="marketId">The market id.</param>
+        /// <param name="accountNo">The account no.</param>
+        /// <param name="symbol">The symbol.</param>
+        /// <param name="side">The side.</param>
+        /// <param name="volume">The volume.</param>
+        /// <param name="price">The price.</param>
+        /// <param name="conPrice">The con price.</param>
+        /// <param name="accountType">Type of the account.</param>
+        /// <param name="customerType">Type of the customer.</param>
+        /// <param name="subCustAccount">The sub cust account.</param>
+        /// <param name="subCustAccounts">The sub cust accounts.</param>
+        /// <param name="stockAvailable">The stock available.</param>
+        /// <returns></returns>
+        public CommonEnums.REJECT_REASON IsValidNewOrder(
+            int marketId,
+            string accountNo,
+            string symbol,
+            char side,
+            int volume,
+            decimal price,
+            char conPrice,
+            int accountType,
+            int customerType,
+            SubCustAccount subCustAccount,
+            AccountManager.Entities.TList<SubCustAccount> subCustAccounts,
+            StockAvailable stockAvailable)
+        {
+            CommonEnums.REJECT_REASON retCode = this.IsValidMarket(marketId, conPrice);
+
+            if (retCode != CommonEnums.REJECT_REASON.IS_VALID)
+            {
+                return retCode;
+            }
+
+            retCode = this.IsValidStepPrice(marketId, price, conPrice);
+
+            if (retCode != CommonEnums.REJECT_REASON.IS_VALID)
+            {
+                return retCode;
+            }
+
+            // Validate side
+            if (side != (char)CommonEnums.TRADE_SIDE.SELL && side != (char)CommonEnums.TRADE_SIDE.BUY)
+            {
+                return CommonEnums.REJECT_REASON.INCORRECT_SIDE;
+            }
+
+            retCode = this.IsValidVolUnit(marketId, volume);
+
+            if (retCode != CommonEnums.REJECT_REASON.IS_VALID)
+            {
+                return retCode;
+            }
+
+            retCode = this.IsValidStock(symbol);
+
+            if (retCode != CommonEnums.REJECT_REASON.IS_VALID)
+            {
+                return retCode;
+            }
+
+            retCode = this.IsValidPrice(marketId, price, conPrice, symbol);
+
+            if (retCode != CommonEnums.REJECT_REASON.IS_VALID)
+            {
+                return retCode;
+            }
+
+            //retCode = this.IsValidTraderId();
+
+            //if (retCode != CommonEnums.REJECT_REASON.IS_VALID)
+            //{
+            //    return retCode;
+            //}
+
+            retCode = this.IsValidTransaction(accountNo, symbol, side, subCustAccounts);
+
+            if (retCode != CommonEnums.REJECT_REASON.IS_VALID)
+            {
+                return retCode;
+            }
+
+            retCode = this.IsValidTradePermission(subCustAccount, CommonEnums.PERMISSION_TYPE.VALIDATE_ORDER);
+
+            if (retCode != CommonEnums.REJECT_REASON.IS_VALID)
+            {
+                return retCode;
+            }
+
+            retCode = this.IsValidBalance(accountNo, side, symbol, marketId, conPrice, accountType, volume, price, stockAvailable);
+
+            if (retCode != CommonEnums.REJECT_REASON.IS_VALID)
+            {
+                return retCode;
+            }
+
+            retCode = this.IsValidAccount(accountNo, side, symbol, volume, customerType);
+
+            if (retCode != CommonEnums.REJECT_REASON.IS_VALID)
+            {
+                return retCode;
+            }
+
+            return CommonEnums.REJECT_REASON.IS_VALID;
+        }
+
+        /// <summary>
+        /// Determines whether [is valid cancel order] [the specified exec order].
+        /// </summary>
+        /// <param name="execOrder">The exec order.</param>
+        /// <returns>REJECT_REASON</returns>
+        public CommonEnums.REJECT_REASON IsValidCancelOrder(ExecOrder execOrder)
+        {
+            if (execOrder == null)
+            {
+                LogHandler.Log("IsValidCancelOrder: execOrder is null", GetType() + "IsValidCancelOrder", TraceEventType.Warning);
+                return CommonEnums.REJECT_REASON.INCORRECT_ORDER_NO;
+            }
+
+            if (execOrder.OrderStatus == (short)CommonEnums.ORDER_STATUS.CANCELLED
+                || execOrder.OrderStatus == (short)CommonEnums.ORDER_STATUS.ORDER_REJECTED)
+            {
+                LogHandler.Log(
+                    "IsValidCancelOrder: " + execOrder.OrderId + " is cancelled",
+                    GetType() + "IsValidCancelOrder",
+                    TraceEventType.Warning);
+                return CommonEnums.REJECT_REASON.NOT_CANCEL_ORDER_CANCELED;
+            }
+
+            if ((execOrder.CancelledVolume + execOrder.ExecutedVol) == execOrder.Volume
+                || execOrder.OrderStatus == (short)CommonEnums.ORDER_STATUS.FULL_MATCHED)
+            {
+                LogHandler.Log(
+                    "IsValidCancelOrder: " + execOrder.OrderId + " is matched, matchedVol = " + execOrder.ExecutedVol +
+                    ", cancelledVolume = " + execOrder.CancelledVolume + ", orderStatus = " + execOrder.OrderStatus,
+                    GetType() + "IsValidCancelOrder",
+                    TraceEventType.Warning);
+                return CommonEnums.REJECT_REASON.NOT_CANCEL_ORDER_MATCHED;
+            }
+
+            char orderSource = execOrder.OrderSource == null
+                                   ? (char)CommonEnums.ORDER_SOURCE.FROM_WEB
+                                   : execOrder.OrderSource[0];
+
+            // Only allow cancel the order keyed by itself.
+            if (orderSource != AppConfig.OrderSource)
+            {
+                LogHandler.Log(
+                    "IsValidCancelOrder: Cannot cancel from other source, Only allow cancel the order keyed by itself, order source = " +
+                    orderSource,
+                    GetType() + ".IsValidCancelOrder",
+                    TraceEventType.Warning);
+                return CommonEnums.REJECT_REASON.NOT_CANCEL_ORDER_FROM_DIFF_SOURCE;
+            }
+
+            // Validate order session
+            int marketId = int.Parse(execOrder.Market);
+            char conPrice = execOrder.ConPrice != null ? execOrder.ConPrice[0] : Constants.ORDER_TYPE_LO;
+            char ordSession = execOrder.MarketStatus != null ? execOrder.MarketStatus[0] : (char)CommonEnums.ORDER_SESSION.SESSION0;
+
+            var marketStatus = (CommonEnums.MARKET_STATUS)Serializer.Deserialize<ResultObject<char>>(this._rtService.MarketStatus(marketId)).Result;
+
+            var tradingStatus = (CommonEnums.MARKET_STATUS)MarketServices.TradingStatus(marketId);
+
+            CommonEnums.ORDER_SESSION currSession = Utils.OrderSession(marketStatus, tradingStatus);
+
+            if (!IsSessionCancel((CommonEnums.ORDER_SESSION)ordSession, conPrice, currSession))
+            {
+                LogHandler.Log(
+                    "IsValidCancelOrder: Cannot cancel in this phase, current session = " + currSession,
+                    GetType() + ".IsValidCancelOrder",
+                    TraceEventType.Warning);
+                return CommonEnums.REJECT_REASON.NOT_CANCEL_IN_THIS_PERIOD_PHASE;
+            }
+
+            return CommonEnums.REJECT_REASON.IS_VALID;
+        }
+
+        /// <summary>
+        /// Determines whether [is session cancel] [the specified ord session].
+        /// </summary>
+        /// <param name="ordSession">The ord session.</param>
+        /// <param name="condPrice">The cond price.</param>
+        /// <param name="currentSession">The current session.</param>
+        /// <returns>
+        /// 	<c>true</c> if [is session cancel] [the specified ord session]; otherwise, <c>false</c>.
+        /// </returns>
+        private System.Boolean IsSessionCancel(CommonEnums.ORDER_SESSION ordSession, char condPrice, CommonEnums.ORDER_SESSION currentSession)
+        {
+            switch (currentSession)
+            {
+                case CommonEnums.ORDER_SESSION.SESSION1:
+                    if (ordSession == CommonEnums.ORDER_SESSION.SESSION1)
+                    {
+                        return true;
+                    }
+
+                    break;
+
+                case CommonEnums.ORDER_SESSION.SESSION5:
+                case CommonEnums.ORDER_SESSION.SESSION4:
+                    if (condPrice == Constants.ORDER_TYPE_ATO)
+                    {
+                        return false;
+                    }
+
+                    if (ordSession == CommonEnums.ORDER_SESSION.SESSION1 ||
+                            ordSession == CommonEnums.ORDER_SESSION.SESSION2 ||
+                            ordSession == CommonEnums.ORDER_SESSION.SESSION3 ||
+                            ordSession == CommonEnums.ORDER_SESSION.SESSION4)
+                    {
+                        return true;
+                    }
+
+                    break;
+                default:
+                    return false;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Determines whether this instance can sell the specified symbol.
+        /// </summary>
+        /// <param name="symbol">The symbol.</param>
+        /// <param name="sellableShare">The sellable share.</param>
+        /// <param name="accountNo">The account no.</param>
+        /// <param name="subCustAccounts">The sub cust accounts.</param>
+        /// <returns>
+        /// 	<c>true</c> if this instance can sell the specified symbol; otherwise, <c>false</c>.
+        /// </returns>
+        public bool CanSell(string symbol, decimal sellableShare, string accountNo, SubCustAccount subCustAccounts)
+        {
+            var stockInfo = Serializer.Deserialize<ResultObject<StockInfo>>(this._rtService.GetStockInfo(symbol));
+
+            if (stockInfo == null || stockInfo.Result == null)
+            {
+                LogHandler.Log(
+                    "CanSell: " + symbol + " not existed in collection", 
+                    GetType() + ".CanSell", 
+                    TraceEventType.Warning);
+                return false;
+            }
+
+            var tradingStatus = (CommonEnums.MARKET_STATUS)MarketServices.TradingStatus(stockInfo.Result.MarketID);
+
+            if (stockInfo.Result.MarketID == (int)CommonEnums.MARKET_ID.HOSE 
+                && tradingStatus != CommonEnums.MARKET_STATUS.READY
+                && tradingStatus != CommonEnums.MARKET_STATUS.PRE_OPEN
+                && tradingStatus != CommonEnums.MARKET_STATUS.OPEN
+                && tradingStatus != CommonEnums.MARKET_STATUS.PRE_CLOSE)
+            {
+                LogHandler.Log(
+                    "CanSell: " + accountNo + " cannot sell " + symbol + " because tradingStatus of HOSE is " + tradingStatus, 
+                    this.GetType() + ".CanSell", 
+                    TraceEventType.Warning);
+                return false;
+            }
+
+            if (stockInfo.Result.MarketID == (int)CommonEnums.MARKET_ID.HNX
+                && tradingStatus != CommonEnums.MARKET_STATUS.READY
+                && tradingStatus != CommonEnums.MARKET_STATUS.OPEN)
+            {
+                LogHandler.Log(
+                    "CanSell: " + accountNo + " cannot sell " + symbol + " because tradingStatus of HNX is " + tradingStatus, 
+                    this.GetType() + ".CanSell", 
+                    TraceEventType.Warning);
+                return false;
+            }
+
+            if (stockInfo.Result.MarketID == (int)CommonEnums.MARKET_ID.UPCoM
+                && tradingStatus != CommonEnums.MARKET_STATUS.READY
+                && tradingStatus != CommonEnums.MARKET_STATUS.OPEN
+                && tradingStatus != CommonEnums.MARKET_STATUS.OPEN_2)
+            {
+                LogHandler.Log(
+                    "CanSell: " + accountNo + " cannot sell " + symbol + " because tradingStatus of Upcom is " + tradingStatus,
+                    this.GetType() + ".CanSell",
+                    TraceEventType.Warning);
+                return false;
+            }
+
+            // TODO: Check IsBond symbol
+            if (stockInfo.Result.MarketID == (int)CommonEnums.MARKET_ID.HOSE
+                && sellableShare < (decimal)CommonEnums.TRADE_RULE.VOL_UNIT_HOSE)
+            {
+                LogHandler.Log(
+                    "CanSell: " + accountNo + " cannot sell " + symbol + " to HOSE because sellable share is " + sellableShare, 
+                    this.GetType() + ".CanSell", 
+                    TraceEventType.Warning);
+                return false;
+            }
+
+            if (stockInfo.Result.MarketID == (int)CommonEnums.MARKET_ID.HNX 
+                && sellableShare < (decimal)CommonEnums.TRADE_RULE.VOL_UNIT_HNX)
+            {
+                LogHandler.Log(
+                    "CanSell: " + accountNo + " cannot sell " + symbol + " to HNX because sellable share is " + sellableShare, 
+                    this.GetType() + ".CanSell", 
+                    TraceEventType.Warning);
+                return false;
+            }
+
+            CommonEnums.REJECT_REASON rejectReason = this.IsValidTradePermission(
+                subCustAccounts, CommonEnums.PERMISSION_TYPE.PORFOLIO);
+
+            if (rejectReason != CommonEnums.REJECT_REASON.IS_VALID)
+            {
+                LogHandler.Log(
+                    "CanSell: " + accountNo + " cannot sell " + symbol + " because " + accountNo + rejectReason + sellableShare, 
+                    this.GetType() + ".CanSell", 
+                    TraceEventType.Warning);
+                return false;
+            }
+
+            return true;
+        }
+    }
+}

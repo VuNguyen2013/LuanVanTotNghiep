@@ -1,0 +1,173 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CashAdvanceServicesTest.cs" company="OTS">
+//   2010
+// </copyright>
+// <summary>
+//   Defines the CashAdvanceServicesTest type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ETradeCore.UnitTests
+{
+    using System;
+    using System.Collections.Generic;
+
+    using AccountManager.Entities;
+
+    using ETradeCommon;
+    using ETradeCommon.Enums;
+
+    using ETradeCore.DataAccess;
+    using ETradeCore.DataAccess.SqlClient;
+    using ETradeCore.Entities;
+    using ETradeCore.Services;
+
+    using ETradeServices.Services;
+
+    using NUnit.Framework;
+
+    using RTDataServices.Entities;
+
+    [TestFixture]
+    [Ignore("Ignore a fixture")]
+    public class CashAdvanceServicesTest
+    {
+        /// <summary>
+        /// Gets the advance history DAO.
+        /// </summary>
+        [Test]
+        public void GetAdvanceHistoryDao()
+        {
+            ISbaCoreProvider sbaCoreProvider = new SqlInformixProvider();
+
+            string accountNo = "0017031";
+            string fromDate = "20100607";
+            string toDate = "20100607";
+
+            List<CashAdvance> cashAdvances = sbaCoreProvider.GetAdvanceHistory(
+                accountNo, string.Empty, string.Empty, fromDate, toDate, string.Empty);
+
+            Assert.IsTrue(cashAdvances != null && cashAdvances.Count > 0);
+
+            foreach (CashAdvance cashAdvance in cashAdvances)
+            {
+                Console.WriteLine("================================");
+                Console.WriteLine("AdvFee: " + cashAdvance.AdvFee);
+                Console.WriteLine("AdvVat: " + cashAdvance.AdvVat);
+                Console.WriteLine("ConfirmTime: " + cashAdvance.ConfirmTime);
+                Console.WriteLine("ConfirmUser: " + cashAdvance.ConfirmUser);
+                Console.WriteLine("CustomerName: " + cashAdvance.CustomerName);
+                Console.WriteLine("CustomerName: " + cashAdvance.CustomerName);
+                Console.WriteLine("CustomerNo: " + cashAdvance.CustomerNo);
+                Console.WriteLine("EditDate: " + cashAdvance.EditDate);
+                Console.WriteLine("EditTime: " + cashAdvance.EditTime);
+                Console.WriteLine("GrossWithDraw: " + cashAdvance.GrossWithDraw);
+                Console.WriteLine("LoanAmt: " + cashAdvance.LoanAmt);
+                Console.WriteLine("NetWithDraw: " + cashAdvance.NetWithDraw);
+                Console.WriteLine("PledgeAmt: " + cashAdvance.PledgeAmt);
+                Console.WriteLine("PledgeValue: " + cashAdvance.PledgeValue);
+                Console.WriteLine("Remark: " + cashAdvance.Remark);
+                Console.WriteLine("SellAmt: " + cashAdvance.SellAmt);
+                Console.WriteLine("SellValue: " + cashAdvance.SellValue);
+                Console.WriteLine("TradeCommission: " + cashAdvance.TradeCommission);
+                Console.WriteLine("TradeDate: " + cashAdvance.TradeDate);
+                Console.WriteLine("UserId: " + cashAdvance.UserId);
+            }
+        }
+
+        /// <summary>
+        /// Gets the advance info.
+        /// </summary>
+        [Test]
+        public void GetAdvanceInfo()
+        {
+            // ETradeServices eTradeServices = new ETradeServices();
+            var cashAdvanceServices = new CashAdvanceServices();
+            
+            var holidayses = new List<Holidays>();
+            ETradeServices.SaveHolidayConfig(holidayses);
+
+            var workingDayses = new List<WorkingDays>
+                {
+                    new WorkingDays { DateId = 2, IsWorkingDay = true },
+                    new WorkingDays { DateId = 3, IsWorkingDay = true },
+                    new WorkingDays { DateId = 4, IsWorkingDay = true },
+                    new WorkingDays { DateId = 5, IsWorkingDay = true },
+                    new WorkingDays { DateId = 6, IsWorkingDay = true },
+                    new WorkingDays { DateId = 7, IsWorkingDay = false },
+                    new WorkingDays { DateId = 8, IsWorkingDay = false }
+                };
+
+            ETradeServices.SaveWorkingDaysConfig(workingDayses);
+
+            var configurationses = new List<Configurations>();
+            ETradeServices.SaveAllConfiguration(configurationses);
+
+            const string accountNo = "0002996";
+
+            List<AdvanceInfo> resultObject = cashAdvanceServices.GetAdvanceInfo(
+                accountNo,
+                new NewestWorkingDatesInfo
+                    {
+                        MarketId = 1,
+                        T = new DateTime(2010, 11, 22),
+                        T1 = new DateTime(2010, 11, 19),
+                        T2 = new DateTime(2010, 11, 01),
+                        T3 = new DateTime(2010, 09, 13)
+                    });
+
+            Assert.IsTrue(
+                resultObject != null &&
+                resultObject.Count > 0);
+
+            foreach (AdvanceInfo advanceInfo in resultObject)
+            {
+                Console.WriteLine("-----------------------------------");
+                Console.WriteLine("TradeDate: " + advanceInfo.TradeDate);
+                Console.WriteLine("AdvanceFinished: " + advanceInfo.AdvanceFinished);
+                Console.WriteLine("DueDate: " + advanceInfo.DueDate);
+                Console.WriteLine("MaxCanAdvance: " + advanceInfo.MaxCanAdvance);
+                Console.WriteLine("SellAmt: " + advanceInfo.SellAmt);
+            }
+        }
+
+        /// <summary>
+        /// News the cash advance.
+        /// </summary>
+        [Test]
+        public void NewCashAdvance()
+        {
+            var eTradeServices = new ETradeServices();
+
+            var holidayses = new List<Holidays>();
+            ETradeServices.SaveHolidayConfig(holidayses);
+
+            var workingDayses = new List<WorkingDays>
+                {
+                    new WorkingDays { DateId = 2, IsWorkingDay = true },
+                    new WorkingDays { DateId = 3, IsWorkingDay = true },
+                    new WorkingDays { DateId = 4, IsWorkingDay = true },
+                    new WorkingDays { DateId = 5, IsWorkingDay = true },
+                    new WorkingDays { DateId = 6, IsWorkingDay = true },
+                    new WorkingDays { DateId = 7, IsWorkingDay = false },
+                    new WorkingDays { DateId = 8, IsWorkingDay = false }
+                };
+
+            ETradeServices.SaveWorkingDaysConfig(workingDayses);
+
+            var configurationses = new List<Configurations>();
+            ETradeServices.SaveAllConfiguration(configurationses);
+
+            string accountNo = "0099771";
+            decimal sellAmt = 12000000;
+            decimal cashAdvance = 500000;
+            decimal maxCanAdvance = 11500000;
+            string tradeDate = "20101102";
+
+            ResultObject<string> retCode = eTradeServices.NewCashAdvance(
+                accountNo, sellAmt, cashAdvance, maxCanAdvance, tradeDate);
+
+            Assert.IsTrue(retCode.RetCode == CommonEnums.RET_CODE.SUCCESS);
+        }
+    }
+}

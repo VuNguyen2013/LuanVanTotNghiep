@@ -1,0 +1,54 @@
+﻿using System;
+using System.Diagnostics;
+using ETradeCommon;
+using RTDataServices;
+using RTDataServices.Updater;
+
+namespace RTWebService
+{
+    public class Global : System.Web.HttpApplication
+    {
+
+        protected void Application_Start(object sender, EventArgs e)
+        {
+            LogHandler.Log("Create inmemory database.", "Application_Start", TraceEventType.Information);
+            // Code that runs on application startup
+            DBServices.CreateInMemDB();
+
+            LogHandler.Log("Start Updater.", "Application_Start", TraceEventType.Information);
+            RealTimeStockUpdater.StartUpdater();
+        }
+
+        protected void Session_Start(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Application_AuthenticateRequest(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Session_End(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Application_End(object sender, EventArgs e)
+        {
+            //  Code that runs on application shutdown
+            RealTimeStockUpdater.StopUpdater();
+            DBServices.ResetRTData();
+        }
+    }
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="LinkOPSConnector">
+</Property><Property Name="Solution File" Value="D:\Projects\OTS\SVN\S2Trader\LinkOPSConnector\LinkOPSConnector.sln">
+</Property><Property Name="User Options File" Value="D:\Projects\OTS\SVN\S2Trader\LinkOPSConnector\LinkOPSConnector.suo">
+</Property><Property Name="Date" Value="Sunday, January 10, 2010">
+</Property><Property Name="Time" Value="9:45 AM">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="LinkOPSConnector.sln" Description="File successfully backed up as D:\Projects\OTS\SVN\S2Trader\LinkOPSConnector\Backup\LinkOPSConnector.sln">
+</Event><Event ErrorLevel="0" Project="" Source="LinkOPSConnector.suo" Description="File successfully backed up as D:\Projects\OTS\SVN\S2Trader\LinkOPSConnector\Backup\LinkOPSConnector.suo">
+</Event><Event ErrorLevel="0" Project="LinkOPSConnector" Source="LinkOPSConnector\LinkOPSConnector.csproj" Description="Project file successfully backed up as D:\Projects\OTS\SVN\S2Trader\LinkOPSConnector\Backup\LinkOPSConnector\LinkOPSConnector.csproj">
+</Event><Event ErrorLevel="0" Project="LinkOPSConnector" Source="LinkOPSConnector\LinkOPS.cs" Description="File successfully backed up as D:\Projects\OTS\SVN\S2Trader\LinkOPSConnector\Backup\LinkOPSConnector\LinkOPS.cs">
+</Event><Event ErrorLevel="0" Project="LinkOPSConnector" Source="LinkOPSConnector\Properties\AssemblyInfo.cs" Description="File successfully backed up as D:\Projects\OTS\SVN\S2Trader\LinkOPSConnector\Backup\LinkOPSConnector\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="LinkOPSConnector" Source="LinkOPSConnector\LinkOPSConnector.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="LinkOPSConnector" Source="LinkOPSConnector\LinkOPSConnector.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="LinkOPSConnector.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="LinkOPSConnector.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="LinkOPSConnector" Source="LinkOPSConnector\LinkOPSConnector.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>
