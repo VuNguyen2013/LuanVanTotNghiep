@@ -1,0 +1,2704 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="StockCore.Models.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="StockCoreModelsStoreContainer">
+          <EntitySet Name="CompanyInfo" EntityType="StockCore.Models.Store.CompanyInfo" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="HNXMarketInfo" EntityType="StockCore.Models.Store.HNXMarketInfo" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="HNXMarketInfoHist" EntityType="StockCore.Models.Store.HNXMarketInfoHist" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="HNXStockInfo" EntityType="StockCore.Models.Store.HNXStockInfo" store:Type="Tables" store:Schema="dbo" store:Name="HNXStockInfo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
+            <DefiningQuery>SELECT 
+      [HNXStockInfo].[id] AS [id], 
+      [HNXStockInfo].[TradeDate] AS [TradeDate], 
+      [HNXStockInfo].[StockSymbol] AS [StockSymbol], 
+      [HNXStockInfo].[Ceiling] AS [Ceiling], 
+      [HNXStockInfo].[Floor] AS [Floor], 
+      [HNXStockInfo].[AvrPrice] AS [AvrPrice], 
+      [HNXStockInfo].[Last] AS [Last], 
+      [HNXStockInfo].[LastVol] AS [LastVol], 
+      [HNXStockInfo].[LastVal] AS [LastVal], 
+      [HNXStockInfo].[Highest] AS [Highest], 
+      [HNXStockInfo].[Lowest] AS [Lowest], 
+      [HNXStockInfo].[Totalshares] AS [Totalshares], 
+      [HNXStockInfo].[TotalValue] AS [TotalValue], 
+      [HNXStockInfo].[Best1Bid] AS [Best1Bid], 
+      [HNXStockInfo].[Best1BidVolume] AS [Best1BidVolume], 
+      [HNXStockInfo].[Best2Bid] AS [Best2Bid], 
+      [HNXStockInfo].[Best2BidVolume] AS [Best2BidVolume], 
+      [HNXStockInfo].[Best3Bid] AS [Best3Bid], 
+      [HNXStockInfo].[Best3BidVolume] AS [Best3BidVolume], 
+      [HNXStockInfo].[Best1Offer] AS [Best1Offer], 
+      [HNXStockInfo].[Best1OfferVolume] AS [Best1OfferVolume], 
+      [HNXStockInfo].[Best2Offer] AS [Best2Offer], 
+      [HNXStockInfo].[Best2OfferVolume] AS [Best2OfferVolume], 
+      [HNXStockInfo].[Best3Offer] AS [Best3Offer], 
+      [HNXStockInfo].[Best3OfferVolume] AS [Best3OfferVolume], 
+      [HNXStockInfo].[SELL_FOREIGN_QTTY] AS [SELL_FOREIGN_QTTY], 
+      [HNXStockInfo].[BUY_FOREIGN_QTTY] AS [BUY_FOREIGN_QTTY]
+      FROM [dbo].[HNXStockInfo] AS [HNXStockInfo]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="HNXStockInfoHist" EntityType="StockCore.Models.Store.HNXStockInfoHist" store:Type="Tables" store:Schema="dbo" store:Name="HNXStockInfoHist" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
+            <DefiningQuery>SELECT 
+      [HNXStockInfoHist].[id] AS [id], 
+      [HNXStockInfoHist].[TradeDate] AS [TradeDate], 
+      [HNXStockInfoHist].[StockSymbol] AS [StockSymbol], 
+      [HNXStockInfoHist].[Ceiling] AS [Ceiling], 
+      [HNXStockInfoHist].[Floor] AS [Floor], 
+      [HNXStockInfoHist].[AvrPrice] AS [AvrPrice], 
+      [HNXStockInfoHist].[Last] AS [Last], 
+      [HNXStockInfoHist].[LastVol] AS [LastVol], 
+      [HNXStockInfoHist].[LastVal] AS [LastVal], 
+      [HNXStockInfoHist].[Highest] AS [Highest], 
+      [HNXStockInfoHist].[Lowest] AS [Lowest], 
+      [HNXStockInfoHist].[Totalshares] AS [Totalshares], 
+      [HNXStockInfoHist].[TotalValue] AS [TotalValue], 
+      [HNXStockInfoHist].[Best1Bid] AS [Best1Bid], 
+      [HNXStockInfoHist].[Best1BidVolume] AS [Best1BidVolume], 
+      [HNXStockInfoHist].[Best2Bid] AS [Best2Bid], 
+      [HNXStockInfoHist].[Best2BidVolume] AS [Best2BidVolume], 
+      [HNXStockInfoHist].[Best3Bid] AS [Best3Bid], 
+      [HNXStockInfoHist].[Best3BidVolume] AS [Best3BidVolume], 
+      [HNXStockInfoHist].[Best1Offer] AS [Best1Offer], 
+      [HNXStockInfoHist].[Best1OfferVolume] AS [Best1OfferVolume], 
+      [HNXStockInfoHist].[Best2Offer] AS [Best2Offer], 
+      [HNXStockInfoHist].[Best2OfferVolume] AS [Best2OfferVolume], 
+      [HNXStockInfoHist].[Best3Offer] AS [Best3Offer], 
+      [HNXStockInfoHist].[Best3OfferVolume] AS [Best3OfferVolume], 
+      [HNXStockInfoHist].[SELL_FOREIGN_QTTY] AS [SELL_FOREIGN_QTTY], 
+      [HNXStockInfoHist].[BUY_FOREIGN_QTTY] AS [BUY_FOREIGN_QTTY]
+      FROM [dbo].[HNXStockInfoHist] AS [HNXStockInfoHist]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="HoseMarketInfo" EntityType="StockCore.Models.Store.HoseMarketInfo" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="HoseMarketInfoHist" EntityType="StockCore.Models.Store.HoseMarketInfoHist" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="HoseStockInfo" EntityType="StockCore.Models.Store.HoseStockInfo" store:Type="Tables" store:Schema="dbo" store:Name="HoseStockInfo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
+            <DefiningQuery>SELECT 
+      [HoseStockInfo].[id] AS [id], 
+      [HoseStockInfo].[TradeDate] AS [TradeDate], 
+      [HoseStockInfo].[StockSymbol] AS [StockSymbol], 
+      [HoseStockInfo].[Ceiling] AS [Ceiling], 
+      [HoseStockInfo].[Floor] AS [Floor], 
+      [HoseStockInfo].[AvrPrice] AS [AvrPrice], 
+      [HoseStockInfo].[Last] AS [Last], 
+      [HoseStockInfo].[LastVol] AS [LastVol], 
+      [HoseStockInfo].[LastVal] AS [LastVal], 
+      [HoseStockInfo].[Highest] AS [Highest], 
+      [HoseStockInfo].[Lowest] AS [Lowest], 
+      [HoseStockInfo].[Totalshares] AS [Totalshares], 
+      [HoseStockInfo].[TotalValue] AS [TotalValue], 
+      [HoseStockInfo].[Best1Bid] AS [Best1Bid], 
+      [HoseStockInfo].[Best1BidVolume] AS [Best1BidVolume], 
+      [HoseStockInfo].[Best2Bid] AS [Best2Bid], 
+      [HoseStockInfo].[Best2BidVolume] AS [Best2BidVolume], 
+      [HoseStockInfo].[Best3Bid] AS [Best3Bid], 
+      [HoseStockInfo].[Best3BidVolume] AS [Best3BidVolume], 
+      [HoseStockInfo].[Best1Offer] AS [Best1Offer], 
+      [HoseStockInfo].[Best1OfferVolume] AS [Best1OfferVolume], 
+      [HoseStockInfo].[Best2Offer] AS [Best2Offer], 
+      [HoseStockInfo].[Best2OfferVolume] AS [Best2OfferVolume], 
+      [HoseStockInfo].[Best3Offer] AS [Best3Offer], 
+      [HoseStockInfo].[Best3OfferVolume] AS [Best3OfferVolume], 
+      [HoseStockInfo].[CurrentRoom] AS [CurrentRoom], 
+      [HoseStockInfo].[StartRoom] AS [StartRoom]
+      FROM [dbo].[HoseStockInfo] AS [HoseStockInfo]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="HoseStockInfoHist" EntityType="StockCore.Models.Store.HoseStockInfoHist" store:Type="Tables" store:Schema="dbo" store:Name="HoseStockInfoHist" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
+            <DefiningQuery>SELECT 
+      [HoseStockInfoHist].[id] AS [id], 
+      [HoseStockInfoHist].[TradeDate] AS [TradeDate], 
+      [HoseStockInfoHist].[StockSymbol] AS [StockSymbol], 
+      [HoseStockInfoHist].[Ceiling] AS [Ceiling], 
+      [HoseStockInfoHist].[Floor] AS [Floor], 
+      [HoseStockInfoHist].[AvrPrice] AS [AvrPrice], 
+      [HoseStockInfoHist].[Last] AS [Last], 
+      [HoseStockInfoHist].[LastVol] AS [LastVol], 
+      [HoseStockInfoHist].[LastVal] AS [LastVal], 
+      [HoseStockInfoHist].[Highest] AS [Highest], 
+      [HoseStockInfoHist].[Lowest] AS [Lowest], 
+      [HoseStockInfoHist].[Totalshares] AS [Totalshares], 
+      [HoseStockInfoHist].[TotalValue] AS [TotalValue], 
+      [HoseStockInfoHist].[Best1Bid] AS [Best1Bid], 
+      [HoseStockInfoHist].[Best1BidVolume] AS [Best1BidVolume], 
+      [HoseStockInfoHist].[Best2Bid] AS [Best2Bid], 
+      [HoseStockInfoHist].[Best2BidVolume] AS [Best2BidVolume], 
+      [HoseStockInfoHist].[Best3Bid] AS [Best3Bid], 
+      [HoseStockInfoHist].[Best3BidVolume] AS [Best3BidVolume], 
+      [HoseStockInfoHist].[Best1Offer] AS [Best1Offer], 
+      [HoseStockInfoHist].[Best1OfferVolume] AS [Best1OfferVolume], 
+      [HoseStockInfoHist].[Best2Offer] AS [Best2Offer], 
+      [HoseStockInfoHist].[Best2OfferVolume] AS [Best2OfferVolume], 
+      [HoseStockInfoHist].[Best3Offer] AS [Best3Offer], 
+      [HoseStockInfoHist].[Best3OfferVolume] AS [Best3OfferVolume], 
+      [HoseStockInfoHist].[CurrentRoom] AS [CurrentRoom], 
+      [HoseStockInfoHist].[StartRoom] AS [StartRoom]
+      FROM [dbo].[HoseStockInfoHist] AS [HoseStockInfoHist]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="MainCustAccount" EntityType="StockCore.Models.Store.MainCustAccount" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Market" EntityType="StockCore.Models.Store.Market" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Matched" EntityType="StockCore.Models.Store.Matched" store:Type="Tables" store:Schema="dbo" store:Name="Matched" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
+            <DefiningQuery>SELECT 
+      [Matched].[SubCustAccountIDSell] AS [SubCustAccountIDSell], 
+      [Matched].[SubCustAccountIDBuy] AS [SubCustAccountIDBuy], 
+      [Matched].[StockSymbol] AS [StockSymbol], 
+      [Matched].[Price] AS [Price], 
+      [Matched].[Amount] AS [Amount], 
+      [Matched].[DateMatched] AS [DateMatched]
+      FROM [dbo].[Matched] AS [Matched]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="MemberStockCompany" EntityType="StockCore.Models.Store.MemberStockCompany" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="StockBalance" EntityType="StockCore.Models.Store.StockBalance" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="SubCustAccount" EntityType="StockCore.Models.Store.SubCustAccount" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="UpComMarketInfo" EntityType="StockCore.Models.Store.UpComMarketInfo" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="UpComMarketInfoHist" EntityType="StockCore.Models.Store.UpComMarketInfoHist" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="UpComStockInfo" EntityType="StockCore.Models.Store.UpComStockInfo" store:Type="Tables" store:Schema="dbo" store:Name="UpComStockInfo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
+            <DefiningQuery>SELECT 
+      [UpComStockInfo].[id] AS [id], 
+      [UpComStockInfo].[TradeDate] AS [TradeDate], 
+      [UpComStockInfo].[StockSymbol] AS [StockSymbol], 
+      [UpComStockInfo].[Ceiling] AS [Ceiling], 
+      [UpComStockInfo].[Floor] AS [Floor], 
+      [UpComStockInfo].[AvrPrice] AS [AvrPrice], 
+      [UpComStockInfo].[Last] AS [Last], 
+      [UpComStockInfo].[LastVol] AS [LastVol], 
+      [UpComStockInfo].[LastVal] AS [LastVal], 
+      [UpComStockInfo].[Highest] AS [Highest], 
+      [UpComStockInfo].[Lowest] AS [Lowest], 
+      [UpComStockInfo].[Totalshares] AS [Totalshares], 
+      [UpComStockInfo].[TotalValue] AS [TotalValue], 
+      [UpComStockInfo].[Best1Bid] AS [Best1Bid], 
+      [UpComStockInfo].[Best1BidVolume] AS [Best1BidVolume], 
+      [UpComStockInfo].[Best2Bid] AS [Best2Bid], 
+      [UpComStockInfo].[Best2BidVolume] AS [Best2BidVolume], 
+      [UpComStockInfo].[Best3Bid] AS [Best3Bid], 
+      [UpComStockInfo].[Best3BidVolume] AS [Best3BidVolume], 
+      [UpComStockInfo].[Best1Offer] AS [Best1Offer], 
+      [UpComStockInfo].[Best1OfferVolume] AS [Best1OfferVolume], 
+      [UpComStockInfo].[Best2Offer] AS [Best2Offer], 
+      [UpComStockInfo].[Best2OfferVolume] AS [Best2OfferVolume], 
+      [UpComStockInfo].[Best3Offer] AS [Best3Offer], 
+      [UpComStockInfo].[Best3OfferVolume] AS [Best3OfferVolume], 
+      [UpComStockInfo].[SELL_FOREIGN_QTTY] AS [SELL_FOREIGN_QTTY], 
+      [UpComStockInfo].[BUY_FOREIGN_QTTY] AS [BUY_FOREIGN_QTTY]
+      FROM [dbo].[UpComStockInfo] AS [UpComStockInfo]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="UpComStockInfoHist" EntityType="StockCore.Models.Store.UpComStockInfoHist" store:Type="Tables" store:Schema="dbo" store:Name="UpComStockInfoHist" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
+            <DefiningQuery>SELECT 
+      [UpComStockInfoHist].[id] AS [id], 
+      [UpComStockInfoHist].[TradeDate] AS [TradeDate], 
+      [UpComStockInfoHist].[StockSymbol] AS [StockSymbol], 
+      [UpComStockInfoHist].[Ceiling] AS [Ceiling], 
+      [UpComStockInfoHist].[Floor] AS [Floor], 
+      [UpComStockInfoHist].[AvrPrice] AS [AvrPrice], 
+      [UpComStockInfoHist].[Last] AS [Last], 
+      [UpComStockInfoHist].[LastVol] AS [LastVol], 
+      [UpComStockInfoHist].[LastVal] AS [LastVal], 
+      [UpComStockInfoHist].[Highest] AS [Highest], 
+      [UpComStockInfoHist].[Lowest] AS [Lowest], 
+      [UpComStockInfoHist].[Totalshares] AS [Totalshares], 
+      [UpComStockInfoHist].[TotalValue] AS [TotalValue], 
+      [UpComStockInfoHist].[Best1Bid] AS [Best1Bid], 
+      [UpComStockInfoHist].[Best1BidVolume] AS [Best1BidVolume], 
+      [UpComStockInfoHist].[Best2Bid] AS [Best2Bid], 
+      [UpComStockInfoHist].[Best2BidVolume] AS [Best2BidVolume], 
+      [UpComStockInfoHist].[Best3Bid] AS [Best3Bid], 
+      [UpComStockInfoHist].[Best3BidVolume] AS [Best3BidVolume], 
+      [UpComStockInfoHist].[Best1Offer] AS [Best1Offer], 
+      [UpComStockInfoHist].[Best1OfferVolume] AS [Best1OfferVolume], 
+      [UpComStockInfoHist].[Best2Offer] AS [Best2Offer], 
+      [UpComStockInfoHist].[Best2OfferVolume] AS [Best2OfferVolume], 
+      [UpComStockInfoHist].[Best3Offer] AS [Best3Offer], 
+      [UpComStockInfoHist].[Best3OfferVolume] AS [Best3OfferVolume], 
+      [UpComStockInfoHist].[SELL_FOREIGN_QTTY] AS [SELL_FOREIGN_QTTY], 
+      [UpComStockInfoHist].[BUY_FOREIGN_QTTY] AS [BUY_FOREIGN_QTTY]
+      FROM [dbo].[UpComStockInfoHist] AS [UpComStockInfoHist]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__CompanyIn__Marke__2E1BDC42" Association="StockCore.Models.Store.FK__CompanyIn__Marke__2E1BDC42">
+            <End Role="Market" EntitySet="Market" />
+            <End Role="CompanyInfo" EntitySet="CompanyInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HNXMarket__Marke__4AB81AF0" Association="StockCore.Models.Store.FK__HNXMarket__Marke__4AB81AF0">
+            <End Role="Market" EntitySet="Market" />
+            <End Role="HNXMarketInfo" EntitySet="HNXMarketInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HNXMarket__Marke__75A278F5" Association="StockCore.Models.Store.FK__HNXMarket__Marke__75A278F5">
+            <End Role="Market" EntitySet="Market" />
+            <End Role="HNXMarketInfoHist" EntitySet="HNXMarketInfoHist" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HNXStockI__Stock__22751F6C" Association="StockCore.Models.Store.FK__HNXStockI__Stock__22751F6C">
+            <End Role="CompanyInfo" EntitySet="CompanyInfo" />
+            <End Role="HNXStockInfo" EntitySet="HNXStockInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HNXStockI__Stock__6FB49575" Association="StockCore.Models.Store.FK__HNXStockI__Stock__6FB49575">
+            <End Role="CompanyInfo" EntitySet="CompanyInfo" />
+            <End Role="HNXStockInfoHist" EntitySet="HNXStockInfoHist" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HoseMarke__Marke__3D5E1FD2" Association="StockCore.Models.Store.FK__HoseMarke__Marke__3D5E1FD2">
+            <End Role="Market" EntitySet="Market" />
+            <End Role="HoseMarketInfo" EntitySet="HoseMarketInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HoseMarke__Marke__68487DD7" Association="StockCore.Models.Store.FK__HoseMarke__Marke__68487DD7">
+            <End Role="Market" EntitySet="Market" />
+            <End Role="HoseMarketInfoHist" EntitySet="HoseMarketInfoHist" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HoseStock__Stock__08B54D69" Association="StockCore.Models.Store.FK__HoseStock__Stock__08B54D69">
+            <End Role="CompanyInfo" EntitySet="CompanyInfo" />
+            <End Role="HoseStockInfo" EntitySet="HoseStockInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HoseStock__Stock__55F4C372" Association="StockCore.Models.Store.FK__HoseStock__Stock__55F4C372">
+            <End Role="CompanyInfo" EntitySet="CompanyInfo" />
+            <End Role="HoseStockInfoHist" EntitySet="HoseStockInfoHist" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Matched__StockSy__61316BF4" Association="StockCore.Models.Store.FK__Matched__StockSy__61316BF4">
+            <End Role="CompanyInfo" EntitySet="CompanyInfo" />
+            <End Role="Matched" EntitySet="Matched" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Matched__SubCust__5F492382" Association="StockCore.Models.Store.FK__Matched__SubCust__5F492382">
+            <End Role="SubCustAccount" EntitySet="SubCustAccount" />
+            <End Role="Matched" EntitySet="Matched" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Matched__SubCust__603D47BB" Association="StockCore.Models.Store.FK__Matched__SubCust__603D47BB">
+            <End Role="SubCustAccount" EntitySet="SubCustAccount" />
+            <End Role="Matched" EntitySet="Matched" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockBala__Stock__57A801BA" Association="StockCore.Models.Store.FK__StockBala__Stock__57A801BA">
+            <End Role="CompanyInfo" EntitySet="CompanyInfo" />
+            <End Role="StockBalance" EntitySet="StockBalance" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockBala__SubCu__56B3DD81" Association="StockCore.Models.Store.FK__StockBala__SubCu__56B3DD81">
+            <End Role="SubCustAccount" EntitySet="SubCustAccount" />
+            <End Role="StockBalance" EntitySet="StockBalance" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SubCustAc__MainC__4E1E9780" Association="StockCore.Models.Store.FK__SubCustAc__MainC__4E1E9780">
+            <End Role="MainCustAccount" EntitySet="MainCustAccount" />
+            <End Role="SubCustAccount" EntitySet="SubCustAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UpComMark__Marke__02FC7413" Association="StockCore.Models.Store.FK__UpComMark__Marke__02FC7413">
+            <End Role="Market" EntitySet="Market" />
+            <End Role="UpComMarketInfoHist" EntitySet="UpComMarketInfoHist" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UpComMark__Marke__5812160E" Association="StockCore.Models.Store.FK__UpComMark__Marke__5812160E">
+            <End Role="Market" EntitySet="Market" />
+            <End Role="UpComMarketInfo" EntitySet="UpComMarketInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UpComStoc__Stock__09746778" Association="StockCore.Models.Store.FK__UpComStoc__Stock__09746778">
+            <End Role="CompanyInfo" EntitySet="CompanyInfo" />
+            <End Role="UpComStockInfoHist" EntitySet="UpComStockInfoHist" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UpComStoc__Stock__3C34F16F" Association="StockCore.Models.Store.FK__UpComStoc__Stock__3C34F16F">
+            <End Role="CompanyInfo" EntitySet="CompanyInfo" />
+            <End Role="UpComStockInfo" EntitySet="UpComStockInfo" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CompanyInfo">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="ShortNameVi" Type="nvarchar" MaxLength="500" />
+          <Property Name="ShortNameEn" Type="nvarchar" MaxLength="500" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="50" />
+          <Property Name="Website" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsPublished" Type="bit" Nullable="false" />
+          <Property Name="MarketId" Type="int" />
+        </EntityType>
+        <EntityType Name="HNXMarketInfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TradeDate" Type="datetime" Nullable="false" />
+          <Property Name="SetIndex" Type="float" Nullable="false" />
+          <Property Name="TotalTrade" Type="bigint" Nullable="false" />
+          <Property Name="Totalshare" Type="bigint" Nullable="false" />
+          <Property Name="TotalValue" Type="bigint" Nullable="false" />
+          <Property Name="Advances" Type="smallint" Nullable="false" />
+          <Property Name="Nochange" Type="smallint" Nullable="false" />
+          <Property Name="Declines" Type="smallint" Nullable="false" />
+          <Property Name="OpenIndex" Type="float" Nullable="false" />
+          <Property Name="MarketId" Type="int" />
+          <Property Name="Status" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="HNXMarketInfoHist">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TradeDate" Type="datetime" Nullable="false" />
+          <Property Name="SetIndex" Type="float" Nullable="false" />
+          <Property Name="TotalTrade" Type="bigint" Nullable="false" />
+          <Property Name="Totalshare" Type="bigint" Nullable="false" />
+          <Property Name="TotalValue" Type="bigint" Nullable="false" />
+          <Property Name="Advances" Type="smallint" Nullable="false" />
+          <Property Name="Nochange" Type="smallint" Nullable="false" />
+          <Property Name="Declines" Type="smallint" Nullable="false" />
+          <Property Name="OpenIndex" Type="float" Nullable="false" />
+          <Property Name="MarketId" Type="int" />
+          <Property Name="Status" Type="char" MaxLength="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'DataStockCore.dbo.HNXStockInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="HNXStockInfo">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="TradeDate" />
+            <PropertyRef Name="Ceiling" />
+            <PropertyRef Name="Floor" />
+            <PropertyRef Name="AvrPrice" />
+            <PropertyRef Name="Last" />
+            <PropertyRef Name="LastVol" />
+            <PropertyRef Name="LastVal" />
+            <PropertyRef Name="Highest" />
+            <PropertyRef Name="Lowest" />
+            <PropertyRef Name="Totalshares" />
+            <PropertyRef Name="TotalValue" />
+            <PropertyRef Name="Best1Bid" />
+            <PropertyRef Name="Best1BidVolume" />
+            <PropertyRef Name="Best2Bid" />
+            <PropertyRef Name="Best2BidVolume" />
+            <PropertyRef Name="Best3Bid" />
+            <PropertyRef Name="Best3BidVolume" />
+            <PropertyRef Name="Best1Offer" />
+            <PropertyRef Name="Best1OfferVolume" />
+            <PropertyRef Name="Best2Offer" />
+            <PropertyRef Name="Best2OfferVolume" />
+            <PropertyRef Name="Best3Offer" />
+            <PropertyRef Name="Best3OfferVolume" />
+            <PropertyRef Name="SELL_FOREIGN_QTTY" />
+            <PropertyRef Name="BUY_FOREIGN_QTTY" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TradeDate" Type="datetime" Nullable="false" />
+          <Property Name="StockSymbol" Type="varchar" MaxLength="10" />
+          <Property Name="Ceiling" Type="bigint" Nullable="false" />
+          <Property Name="Floor" Type="bigint" Nullable="false" />
+          <Property Name="AvrPrice" Type="bigint" Nullable="false" />
+          <Property Name="Last" Type="bigint" Nullable="false" />
+          <Property Name="LastVol" Type="bigint" Nullable="false" />
+          <Property Name="LastVal" Type="bigint" Nullable="false" />
+          <Property Name="Highest" Type="bigint" Nullable="false" />
+          <Property Name="Lowest" Type="bigint" Nullable="false" />
+          <Property Name="Totalshares" Type="bigint" Nullable="false" />
+          <Property Name="TotalValue" Type="bigint" Nullable="false" />
+          <Property Name="Best1Bid" Type="bigint" Nullable="false" />
+          <Property Name="Best1BidVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best2Bid" Type="bigint" Nullable="false" />
+          <Property Name="Best2BidVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best3Bid" Type="bigint" Nullable="false" />
+          <Property Name="Best3BidVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best1Offer" Type="bigint" Nullable="false" />
+          <Property Name="Best1OfferVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best2Offer" Type="bigint" Nullable="false" />
+          <Property Name="Best2OfferVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best3Offer" Type="bigint" Nullable="false" />
+          <Property Name="Best3OfferVolume" Type="bigint" Nullable="false" />
+          <Property Name="SELL_FOREIGN_QTTY" Type="bigint" Nullable="false" />
+          <Property Name="BUY_FOREIGN_QTTY" Type="bigint" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'DataStockCore.dbo.HNXStockInfoHist' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="HNXStockInfoHist">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="TradeDate" />
+            <PropertyRef Name="Ceiling" />
+            <PropertyRef Name="Floor" />
+            <PropertyRef Name="AvrPrice" />
+            <PropertyRef Name="Last" />
+            <PropertyRef Name="LastVol" />
+            <PropertyRef Name="LastVal" />
+            <PropertyRef Name="Highest" />
+            <PropertyRef Name="Lowest" />
+            <PropertyRef Name="Totalshares" />
+            <PropertyRef Name="TotalValue" />
+            <PropertyRef Name="Best1Bid" />
+            <PropertyRef Name="Best1BidVolume" />
+            <PropertyRef Name="Best2Bid" />
+            <PropertyRef Name="Best2BidVolume" />
+            <PropertyRef Name="Best3Bid" />
+            <PropertyRef Name="Best3BidVolume" />
+            <PropertyRef Name="Best1Offer" />
+            <PropertyRef Name="Best1OfferVolume" />
+            <PropertyRef Name="Best2Offer" />
+            <PropertyRef Name="Best2OfferVolume" />
+            <PropertyRef Name="Best3Offer" />
+            <PropertyRef Name="Best3OfferVolume" />
+            <PropertyRef Name="SELL_FOREIGN_QTTY" />
+            <PropertyRef Name="BUY_FOREIGN_QTTY" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TradeDate" Type="datetime" Nullable="false" />
+          <Property Name="StockSymbol" Type="varchar" MaxLength="10" />
+          <Property Name="Ceiling" Type="bigint" Nullable="false" />
+          <Property Name="Floor" Type="bigint" Nullable="false" />
+          <Property Name="AvrPrice" Type="bigint" Nullable="false" />
+          <Property Name="Last" Type="bigint" Nullable="false" />
+          <Property Name="LastVol" Type="bigint" Nullable="false" />
+          <Property Name="LastVal" Type="bigint" Nullable="false" />
+          <Property Name="Highest" Type="bigint" Nullable="false" />
+          <Property Name="Lowest" Type="bigint" Nullable="false" />
+          <Property Name="Totalshares" Type="bigint" Nullable="false" />
+          <Property Name="TotalValue" Type="bigint" Nullable="false" />
+          <Property Name="Best1Bid" Type="bigint" Nullable="false" />
+          <Property Name="Best1BidVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best2Bid" Type="bigint" Nullable="false" />
+          <Property Name="Best2BidVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best3Bid" Type="bigint" Nullable="false" />
+          <Property Name="Best3BidVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best1Offer" Type="bigint" Nullable="false" />
+          <Property Name="Best1OfferVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best2Offer" Type="bigint" Nullable="false" />
+          <Property Name="Best2OfferVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best3Offer" Type="bigint" Nullable="false" />
+          <Property Name="Best3OfferVolume" Type="bigint" Nullable="false" />
+          <Property Name="SELL_FOREIGN_QTTY" Type="bigint" Nullable="false" />
+          <Property Name="BUY_FOREIGN_QTTY" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HoseMarketInfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TradeDate" Type="datetime" Nullable="false" />
+          <Property Name="SetIndex" Type="bigint" Nullable="false" />
+          <Property Name="TotalTrade" Type="bigint" Nullable="false" />
+          <Property Name="Totalshare" Type="bigint" Nullable="false" />
+          <Property Name="TotalValue" Type="bigint" Nullable="false" />
+          <Property Name="UpVolume" Type="bigint" Nullable="false" />
+          <Property Name="DownVolume" Type="bigint" Nullable="false" />
+          <Property Name="NoChangeVolume" Type="bigint" Nullable="false" />
+          <Property Name="Advances" Type="bigint" Nullable="false" />
+          <Property Name="Declines" Type="bigint" Nullable="false" />
+          <Property Name="Nochange" Type="bigint" Nullable="false" />
+          <Property Name="MarketId" Type="int" />
+          <Property Name="Status" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="HoseMarketInfoHist">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TradeDate" Type="datetime" Nullable="false" />
+          <Property Name="SetIndex" Type="bigint" Nullable="false" />
+          <Property Name="TotalTrade" Type="bigint" Nullable="false" />
+          <Property Name="Totalshare" Type="bigint" Nullable="false" />
+          <Property Name="TotalValue" Type="bigint" Nullable="false" />
+          <Property Name="UpVolume" Type="bigint" Nullable="false" />
+          <Property Name="DownVolume" Type="bigint" Nullable="false" />
+          <Property Name="NoChangeVolume" Type="bigint" Nullable="false" />
+          <Property Name="Advances" Type="bigint" Nullable="false" />
+          <Property Name="Declines" Type="bigint" Nullable="false" />
+          <Property Name="Nochange" Type="bigint" Nullable="false" />
+          <Property Name="MarketId" Type="int" />
+          <Property Name="Status" Type="char" MaxLength="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'DataStockCore.dbo.HoseStockInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="HoseStockInfo">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="TradeDate" />
+            <PropertyRef Name="Ceiling" />
+            <PropertyRef Name="Floor" />
+            <PropertyRef Name="AvrPrice" />
+            <PropertyRef Name="Last" />
+            <PropertyRef Name="LastVol" />
+            <PropertyRef Name="LastVal" />
+            <PropertyRef Name="Highest" />
+            <PropertyRef Name="Lowest" />
+            <PropertyRef Name="Totalshares" />
+            <PropertyRef Name="TotalValue" />
+            <PropertyRef Name="Best1Bid" />
+            <PropertyRef Name="Best1BidVolume" />
+            <PropertyRef Name="Best2Bid" />
+            <PropertyRef Name="Best2BidVolume" />
+            <PropertyRef Name="Best3Bid" />
+            <PropertyRef Name="Best3BidVolume" />
+            <PropertyRef Name="Best1Offer" />
+            <PropertyRef Name="Best1OfferVolume" />
+            <PropertyRef Name="Best2Offer" />
+            <PropertyRef Name="Best2OfferVolume" />
+            <PropertyRef Name="Best3Offer" />
+            <PropertyRef Name="Best3OfferVolume" />
+            <PropertyRef Name="CurrentRoom" />
+            <PropertyRef Name="StartRoom" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TradeDate" Type="datetime" Nullable="false" />
+          <Property Name="StockSymbol" Type="varchar" MaxLength="10" />
+          <Property Name="Ceiling" Type="bigint" Nullable="false" />
+          <Property Name="Floor" Type="bigint" Nullable="false" />
+          <Property Name="AvrPrice" Type="bigint" Nullable="false" />
+          <Property Name="Last" Type="bigint" Nullable="false" />
+          <Property Name="LastVol" Type="bigint" Nullable="false" />
+          <Property Name="LastVal" Type="bigint" Nullable="false" />
+          <Property Name="Highest" Type="bigint" Nullable="false" />
+          <Property Name="Lowest" Type="bigint" Nullable="false" />
+          <Property Name="Totalshares" Type="bigint" Nullable="false" />
+          <Property Name="TotalValue" Type="bigint" Nullable="false" />
+          <Property Name="Best1Bid" Type="bigint" Nullable="false" />
+          <Property Name="Best1BidVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best2Bid" Type="bigint" Nullable="false" />
+          <Property Name="Best2BidVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best3Bid" Type="bigint" Nullable="false" />
+          <Property Name="Best3BidVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best1Offer" Type="bigint" Nullable="false" />
+          <Property Name="Best1OfferVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best2Offer" Type="bigint" Nullable="false" />
+          <Property Name="Best2OfferVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best3Offer" Type="bigint" Nullable="false" />
+          <Property Name="Best3OfferVolume" Type="bigint" Nullable="false" />
+          <Property Name="CurrentRoom" Type="bigint" Nullable="false" />
+          <Property Name="StartRoom" Type="bigint" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'DataStockCore.dbo.HoseStockInfoHist' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="HoseStockInfoHist">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="TradeDate" />
+            <PropertyRef Name="Ceiling" />
+            <PropertyRef Name="Floor" />
+            <PropertyRef Name="AvrPrice" />
+            <PropertyRef Name="Last" />
+            <PropertyRef Name="LastVol" />
+            <PropertyRef Name="LastVal" />
+            <PropertyRef Name="Highest" />
+            <PropertyRef Name="Lowest" />
+            <PropertyRef Name="Totalshares" />
+            <PropertyRef Name="TotalValue" />
+            <PropertyRef Name="Best1Bid" />
+            <PropertyRef Name="Best1BidVolume" />
+            <PropertyRef Name="Best2Bid" />
+            <PropertyRef Name="Best2BidVolume" />
+            <PropertyRef Name="Best3Bid" />
+            <PropertyRef Name="Best3BidVolume" />
+            <PropertyRef Name="Best1Offer" />
+            <PropertyRef Name="Best1OfferVolume" />
+            <PropertyRef Name="Best2Offer" />
+            <PropertyRef Name="Best2OfferVolume" />
+            <PropertyRef Name="Best3Offer" />
+            <PropertyRef Name="Best3OfferVolume" />
+            <PropertyRef Name="CurrentRoom" />
+            <PropertyRef Name="StartRoom" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TradeDate" Type="datetime" Nullable="false" />
+          <Property Name="StockSymbol" Type="varchar" MaxLength="10" />
+          <Property Name="Ceiling" Type="bigint" Nullable="false" />
+          <Property Name="Floor" Type="bigint" Nullable="false" />
+          <Property Name="AvrPrice" Type="bigint" Nullable="false" />
+          <Property Name="Last" Type="bigint" Nullable="false" />
+          <Property Name="LastVol" Type="bigint" Nullable="false" />
+          <Property Name="LastVal" Type="bigint" Nullable="false" />
+          <Property Name="Highest" Type="bigint" Nullable="false" />
+          <Property Name="Lowest" Type="bigint" Nullable="false" />
+          <Property Name="Totalshares" Type="bigint" Nullable="false" />
+          <Property Name="TotalValue" Type="bigint" Nullable="false" />
+          <Property Name="Best1Bid" Type="bigint" Nullable="false" />
+          <Property Name="Best1BidVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best2Bid" Type="bigint" Nullable="false" />
+          <Property Name="Best2BidVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best3Bid" Type="bigint" Nullable="false" />
+          <Property Name="Best3BidVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best1Offer" Type="bigint" Nullable="false" />
+          <Property Name="Best1OfferVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best2Offer" Type="bigint" Nullable="false" />
+          <Property Name="Best2OfferVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best3Offer" Type="bigint" Nullable="false" />
+          <Property Name="Best3OfferVolume" Type="bigint" Nullable="false" />
+          <Property Name="CurrentRoom" Type="bigint" Nullable="false" />
+          <Property Name="StartRoom" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MainCustAccount">
+          <Key>
+            <PropertyRef Name="MainCustAccountID" />
+          </Key>
+          <Property Name="MainCustAccountID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="30" />
+          <Property Name="Phone" Type="varchar" MaxLength="20" />
+          <Property Name="Actived" Type="bit" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="PIN" Type="varchar" MaxLength="50" />
+          <Property Name="PassLockReason" Type="int" />
+          <Property Name="PINLockReason" Type="int" />
+          <Property Name="LockReason" Type="int" />
+          <Property Name="TokenID" Type="varchar" MaxLength="20" />
+          <Property Name="TokenName" Type="varchar" MaxLength="20" />
+          <Property Name="TokenActived" Type="varchar" MaxLength="10" />
+          <Property Name="BrokerID" Type="varchar" MaxLength="20" />
+          <Property Name="PassIsNew" Type="bit" />
+          <Property Name="PINIsNew" Type="bit" />
+          <Property Name="PassExpDate" Type="datetime" />
+          <Property Name="PINExpDate" Type="datetime" />
+          <Property Name="CustomerType" Type="int" Nullable="false" />
+          <Property Name="AuthType" Type="smallint" Nullable="false" />
+          <Property Name="PinType" Type="smallint" Nullable="false" />
+          <Property Name="LanguageId" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="FailedLoginCount" Type="int" />
+          <Property Name="FailedLoginTime" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedUser" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="UpdatedUser" Type="varchar" MaxLength="20" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Market">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="10" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'DataStockCore.dbo.Matched' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="Matched">
+          <Key>
+            <PropertyRef Name="Price" />
+            <PropertyRef Name="Amount" />
+            <PropertyRef Name="DateMatched" />
+          </Key>
+          <Property Name="SubCustAccountIDSell" Type="varchar" MaxLength="20" />
+          <Property Name="SubCustAccountIDBuy" Type="varchar" MaxLength="20" />
+          <Property Name="StockSymbol" Type="varchar" MaxLength="10" />
+          <Property Name="Price" Type="bigint" Nullable="false" />
+          <Property Name="Amount" Type="smallint" Nullable="false" />
+          <Property Name="DateMatched" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MemberStockCompany">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="ShortNameVi" Type="nvarchar" MaxLength="500" />
+          <Property Name="ShortNameEn" Type="nvarchar" MaxLength="500" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="50" />
+          <Property Name="Website" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsPublished" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StockBalance">
+          <Key>
+            <PropertyRef Name="SubCustAccountID" />
+            <PropertyRef Name="StockSymbol" />
+          </Key>
+          <Property Name="SubCustAccountID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="StockSymbol" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="Available" Type="bigint" Nullable="false" />
+          <Property Name="Total" Type="bigint" Nullable="false" />
+          <Property Name="WTR_T1" Type="bigint" Nullable="false" />
+          <Property Name="WTR_T2" Type="bigint" Nullable="false" />
+          <Property Name="WTS_T1" Type="bigint" Nullable="false" />
+          <Property Name="WTS_T2" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubCustAccount">
+          <Key>
+            <PropertyRef Name="SubCustAccountID" />
+          </Key>
+          <Property Name="SubCustAccountID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Actived" Type="bit" />
+          <Property Name="LockAccountReason" Type="smallint" />
+          <Property Name="MainCustAccountID" Type="varchar" MaxLength="20" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedUser" Type="varchar" MaxLength="20" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedUser" Type="varchar" MaxLength="20" />
+          <Property Name="WithDraw" Type="bigint" Nullable="false" />
+          <Property Name="BuyCredit" Type="bigint" Nullable="false" />
+          <Property Name="TotalBuy" Type="bigint" Nullable="false" />
+          <Property Name="TotalSell" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UpComMarketInfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TradeDate" Type="datetime" Nullable="false" />
+          <Property Name="SetIndex" Type="float" Nullable="false" />
+          <Property Name="TotalTrade" Type="bigint" Nullable="false" />
+          <Property Name="Totalshare" Type="bigint" Nullable="false" />
+          <Property Name="TotalValue" Type="bigint" Nullable="false" />
+          <Property Name="Advances" Type="smallint" Nullable="false" />
+          <Property Name="Nochange" Type="smallint" Nullable="false" />
+          <Property Name="Declines" Type="smallint" Nullable="false" />
+          <Property Name="OpenIndex" Type="float" Nullable="false" />
+          <Property Name="Marketid" Type="int" />
+          <Property Name="Status" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="UpComMarketInfoHist">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TradeDate" Type="datetime" Nullable="false" />
+          <Property Name="SetIndex" Type="float" Nullable="false" />
+          <Property Name="TotalTrade" Type="bigint" Nullable="false" />
+          <Property Name="Totalshare" Type="bigint" Nullable="false" />
+          <Property Name="TotalValue" Type="bigint" Nullable="false" />
+          <Property Name="Advances" Type="smallint" Nullable="false" />
+          <Property Name="Nochange" Type="smallint" Nullable="false" />
+          <Property Name="Declines" Type="smallint" Nullable="false" />
+          <Property Name="OpenIndex" Type="float" Nullable="false" />
+          <Property Name="Marketid" Type="int" />
+          <Property Name="Status" Type="char" MaxLength="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'DataStockCore.dbo.UpComStockInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="UpComStockInfo">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="TradeDate" />
+            <PropertyRef Name="Ceiling" />
+            <PropertyRef Name="Floor" />
+            <PropertyRef Name="AvrPrice" />
+            <PropertyRef Name="Last" />
+            <PropertyRef Name="LastVol" />
+            <PropertyRef Name="LastVal" />
+            <PropertyRef Name="Highest" />
+            <PropertyRef Name="Lowest" />
+            <PropertyRef Name="Totalshares" />
+            <PropertyRef Name="TotalValue" />
+            <PropertyRef Name="Best1Bid" />
+            <PropertyRef Name="Best1BidVolume" />
+            <PropertyRef Name="Best2Bid" />
+            <PropertyRef Name="Best2BidVolume" />
+            <PropertyRef Name="Best3Bid" />
+            <PropertyRef Name="Best3BidVolume" />
+            <PropertyRef Name="Best1Offer" />
+            <PropertyRef Name="Best1OfferVolume" />
+            <PropertyRef Name="Best2Offer" />
+            <PropertyRef Name="Best2OfferVolume" />
+            <PropertyRef Name="Best3Offer" />
+            <PropertyRef Name="Best3OfferVolume" />
+            <PropertyRef Name="SELL_FOREIGN_QTTY" />
+            <PropertyRef Name="BUY_FOREIGN_QTTY" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TradeDate" Type="datetime" Nullable="false" />
+          <Property Name="StockSymbol" Type="varchar" MaxLength="10" />
+          <Property Name="Ceiling" Type="bigint" Nullable="false" />
+          <Property Name="Floor" Type="bigint" Nullable="false" />
+          <Property Name="AvrPrice" Type="bigint" Nullable="false" />
+          <Property Name="Last" Type="bigint" Nullable="false" />
+          <Property Name="LastVol" Type="bigint" Nullable="false" />
+          <Property Name="LastVal" Type="bigint" Nullable="false" />
+          <Property Name="Highest" Type="bigint" Nullable="false" />
+          <Property Name="Lowest" Type="bigint" Nullable="false" />
+          <Property Name="Totalshares" Type="bigint" Nullable="false" />
+          <Property Name="TotalValue" Type="bigint" Nullable="false" />
+          <Property Name="Best1Bid" Type="bigint" Nullable="false" />
+          <Property Name="Best1BidVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best2Bid" Type="bigint" Nullable="false" />
+          <Property Name="Best2BidVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best3Bid" Type="bigint" Nullable="false" />
+          <Property Name="Best3BidVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best1Offer" Type="bigint" Nullable="false" />
+          <Property Name="Best1OfferVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best2Offer" Type="bigint" Nullable="false" />
+          <Property Name="Best2OfferVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best3Offer" Type="bigint" Nullable="false" />
+          <Property Name="Best3OfferVolume" Type="bigint" Nullable="false" />
+          <Property Name="SELL_FOREIGN_QTTY" Type="bigint" Nullable="false" />
+          <Property Name="BUY_FOREIGN_QTTY" Type="bigint" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'DataStockCore.dbo.UpComStockInfoHist' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="UpComStockInfoHist">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="TradeDate" />
+            <PropertyRef Name="Ceiling" />
+            <PropertyRef Name="Floor" />
+            <PropertyRef Name="AvrPrice" />
+            <PropertyRef Name="Last" />
+            <PropertyRef Name="LastVol" />
+            <PropertyRef Name="LastVal" />
+            <PropertyRef Name="Highest" />
+            <PropertyRef Name="Lowest" />
+            <PropertyRef Name="Totalshares" />
+            <PropertyRef Name="TotalValue" />
+            <PropertyRef Name="Best1Bid" />
+            <PropertyRef Name="Best1BidVolume" />
+            <PropertyRef Name="Best2Bid" />
+            <PropertyRef Name="Best2BidVolume" />
+            <PropertyRef Name="Best3Bid" />
+            <PropertyRef Name="Best3BidVolume" />
+            <PropertyRef Name="Best1Offer" />
+            <PropertyRef Name="Best1OfferVolume" />
+            <PropertyRef Name="Best2Offer" />
+            <PropertyRef Name="Best2OfferVolume" />
+            <PropertyRef Name="Best3Offer" />
+            <PropertyRef Name="Best3OfferVolume" />
+            <PropertyRef Name="SELL_FOREIGN_QTTY" />
+            <PropertyRef Name="BUY_FOREIGN_QTTY" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TradeDate" Type="datetime" Nullable="false" />
+          <Property Name="StockSymbol" Type="varchar" MaxLength="10" />
+          <Property Name="Ceiling" Type="bigint" Nullable="false" />
+          <Property Name="Floor" Type="bigint" Nullable="false" />
+          <Property Name="AvrPrice" Type="bigint" Nullable="false" />
+          <Property Name="Last" Type="bigint" Nullable="false" />
+          <Property Name="LastVol" Type="bigint" Nullable="false" />
+          <Property Name="LastVal" Type="bigint" Nullable="false" />
+          <Property Name="Highest" Type="bigint" Nullable="false" />
+          <Property Name="Lowest" Type="bigint" Nullable="false" />
+          <Property Name="Totalshares" Type="bigint" Nullable="false" />
+          <Property Name="TotalValue" Type="bigint" Nullable="false" />
+          <Property Name="Best1Bid" Type="bigint" Nullable="false" />
+          <Property Name="Best1BidVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best2Bid" Type="bigint" Nullable="false" />
+          <Property Name="Best2BidVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best3Bid" Type="bigint" Nullable="false" />
+          <Property Name="Best3BidVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best1Offer" Type="bigint" Nullable="false" />
+          <Property Name="Best1OfferVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best2Offer" Type="bigint" Nullable="false" />
+          <Property Name="Best2OfferVolume" Type="bigint" Nullable="false" />
+          <Property Name="Best3Offer" Type="bigint" Nullable="false" />
+          <Property Name="Best3OfferVolume" Type="bigint" Nullable="false" />
+          <Property Name="SELL_FOREIGN_QTTY" Type="bigint" Nullable="false" />
+          <Property Name="BUY_FOREIGN_QTTY" Type="bigint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__CompanyIn__Marke__2E1BDC42">
+          <End Role="Market" Type="StockCore.Models.Store.Market" Multiplicity="0..1" />
+          <End Role="CompanyInfo" Type="StockCore.Models.Store.CompanyInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Market">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CompanyInfo">
+              <PropertyRef Name="MarketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HNXMarket__Marke__4AB81AF0">
+          <End Role="Market" Type="StockCore.Models.Store.Market" Multiplicity="0..1" />
+          <End Role="HNXMarketInfo" Type="StockCore.Models.Store.HNXMarketInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Market">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HNXMarketInfo">
+              <PropertyRef Name="MarketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HNXMarket__Marke__75A278F5">
+          <End Role="Market" Type="StockCore.Models.Store.Market" Multiplicity="0..1" />
+          <End Role="HNXMarketInfoHist" Type="StockCore.Models.Store.HNXMarketInfoHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Market">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HNXMarketInfoHist">
+              <PropertyRef Name="MarketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HNXStockI__Stock__22751F6C">
+          <End Role="CompanyInfo" Type="StockCore.Models.Store.CompanyInfo" Multiplicity="0..1" />
+          <End Role="HNXStockInfo" Type="StockCore.Models.Store.HNXStockInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyInfo">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="HNXStockInfo">
+              <PropertyRef Name="StockSymbol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HNXStockI__Stock__6FB49575">
+          <End Role="CompanyInfo" Type="StockCore.Models.Store.CompanyInfo" Multiplicity="0..1" />
+          <End Role="HNXStockInfoHist" Type="StockCore.Models.Store.HNXStockInfoHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyInfo">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="HNXStockInfoHist">
+              <PropertyRef Name="StockSymbol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HoseMarke__Marke__3D5E1FD2">
+          <End Role="Market" Type="StockCore.Models.Store.Market" Multiplicity="0..1" />
+          <End Role="HoseMarketInfo" Type="StockCore.Models.Store.HoseMarketInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Market">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HoseMarketInfo">
+              <PropertyRef Name="MarketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HoseMarke__Marke__68487DD7">
+          <End Role="Market" Type="StockCore.Models.Store.Market" Multiplicity="0..1" />
+          <End Role="HoseMarketInfoHist" Type="StockCore.Models.Store.HoseMarketInfoHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Market">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HoseMarketInfoHist">
+              <PropertyRef Name="MarketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HoseStock__Stock__08B54D69">
+          <End Role="CompanyInfo" Type="StockCore.Models.Store.CompanyInfo" Multiplicity="0..1" />
+          <End Role="HoseStockInfo" Type="StockCore.Models.Store.HoseStockInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyInfo">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="HoseStockInfo">
+              <PropertyRef Name="StockSymbol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HoseStock__Stock__55F4C372">
+          <End Role="CompanyInfo" Type="StockCore.Models.Store.CompanyInfo" Multiplicity="0..1" />
+          <End Role="HoseStockInfoHist" Type="StockCore.Models.Store.HoseStockInfoHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyInfo">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="HoseStockInfoHist">
+              <PropertyRef Name="StockSymbol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Matched__StockSy__61316BF4">
+          <End Role="CompanyInfo" Type="StockCore.Models.Store.CompanyInfo" Multiplicity="0..1" />
+          <End Role="Matched" Type="StockCore.Models.Store.Matched" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyInfo">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Matched">
+              <PropertyRef Name="StockSymbol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Matched__SubCust__5F492382">
+          <End Role="SubCustAccount" Type="StockCore.Models.Store.SubCustAccount" Multiplicity="0..1" />
+          <End Role="Matched" Type="StockCore.Models.Store.Matched" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCustAccount">
+              <PropertyRef Name="SubCustAccountID" />
+            </Principal>
+            <Dependent Role="Matched">
+              <PropertyRef Name="SubCustAccountIDSell" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Matched__SubCust__603D47BB">
+          <End Role="SubCustAccount" Type="StockCore.Models.Store.SubCustAccount" Multiplicity="0..1" />
+          <End Role="Matched" Type="StockCore.Models.Store.Matched" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCustAccount">
+              <PropertyRef Name="SubCustAccountID" />
+            </Principal>
+            <Dependent Role="Matched">
+              <PropertyRef Name="SubCustAccountIDBuy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StockBala__Stock__57A801BA">
+          <End Role="CompanyInfo" Type="StockCore.Models.Store.CompanyInfo" Multiplicity="1" />
+          <End Role="StockBalance" Type="StockCore.Models.Store.StockBalance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyInfo">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="StockBalance">
+              <PropertyRef Name="StockSymbol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StockBala__SubCu__56B3DD81">
+          <End Role="SubCustAccount" Type="StockCore.Models.Store.SubCustAccount" Multiplicity="1" />
+          <End Role="StockBalance" Type="StockCore.Models.Store.StockBalance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCustAccount">
+              <PropertyRef Name="SubCustAccountID" />
+            </Principal>
+            <Dependent Role="StockBalance">
+              <PropertyRef Name="SubCustAccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SubCustAc__MainC__4E1E9780">
+          <End Role="MainCustAccount" Type="StockCore.Models.Store.MainCustAccount" Multiplicity="0..1" />
+          <End Role="SubCustAccount" Type="StockCore.Models.Store.SubCustAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MainCustAccount">
+              <PropertyRef Name="MainCustAccountID" />
+            </Principal>
+            <Dependent Role="SubCustAccount">
+              <PropertyRef Name="MainCustAccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UpComMark__Marke__02FC7413">
+          <End Role="Market" Type="StockCore.Models.Store.Market" Multiplicity="0..1" />
+          <End Role="UpComMarketInfoHist" Type="StockCore.Models.Store.UpComMarketInfoHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Market">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UpComMarketInfoHist">
+              <PropertyRef Name="Marketid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UpComMark__Marke__5812160E">
+          <End Role="Market" Type="StockCore.Models.Store.Market" Multiplicity="0..1" />
+          <End Role="UpComMarketInfo" Type="StockCore.Models.Store.UpComMarketInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Market">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UpComMarketInfo">
+              <PropertyRef Name="Marketid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UpComStoc__Stock__09746778">
+          <End Role="CompanyInfo" Type="StockCore.Models.Store.CompanyInfo" Multiplicity="0..1" />
+          <End Role="UpComStockInfoHist" Type="StockCore.Models.Store.UpComStockInfoHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyInfo">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="UpComStockInfoHist">
+              <PropertyRef Name="StockSymbol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UpComStoc__Stock__3C34F16F">
+          <End Role="CompanyInfo" Type="StockCore.Models.Store.CompanyInfo" Multiplicity="0..1" />
+          <End Role="UpComStockInfo" Type="StockCore.Models.Store.UpComStockInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyInfo">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="UpComStockInfo">
+              <PropertyRef Name="StockSymbol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StockCore.Models" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="DataStockCoreEntities">
+          <EntitySet Name="CompanyInfoes" EntityType="StockCore.Models.CompanyInfo" />
+          <EntitySet Name="HNXMarketInfoes" EntityType="StockCore.Models.HNXMarketInfo" />
+          <EntitySet Name="HNXMarketInfoHists" EntityType="StockCore.Models.HNXMarketInfoHist" />
+          <EntitySet Name="HNXStockInfoes" EntityType="StockCore.Models.HNXStockInfo" />
+          <EntitySet Name="HNXStockInfoHists" EntityType="StockCore.Models.HNXStockInfoHist" />
+          <EntitySet Name="HoseMarketInfoes" EntityType="StockCore.Models.HoseMarketInfo" />
+          <EntitySet Name="HoseMarketInfoHists" EntityType="StockCore.Models.HoseMarketInfoHist" />
+          <EntitySet Name="HoseStockInfoes" EntityType="StockCore.Models.HoseStockInfo" />
+          <EntitySet Name="HoseStockInfoHists" EntityType="StockCore.Models.HoseStockInfoHist" />
+          <EntitySet Name="MainCustAccounts" EntityType="StockCore.Models.MainCustAccount" />
+          <EntitySet Name="Markets" EntityType="StockCore.Models.Market" />
+          <EntitySet Name="Matcheds" EntityType="StockCore.Models.Matched" />
+          <EntitySet Name="MemberStockCompanies" EntityType="StockCore.Models.MemberStockCompany" />
+          <EntitySet Name="StockBalances" EntityType="StockCore.Models.StockBalance" />
+          <EntitySet Name="SubCustAccounts" EntityType="StockCore.Models.SubCustAccount" />
+          <EntitySet Name="UpComMarketInfoes" EntityType="StockCore.Models.UpComMarketInfo" />
+          <EntitySet Name="UpComMarketInfoHists" EntityType="StockCore.Models.UpComMarketInfoHist" />
+          <EntitySet Name="UpComStockInfoes" EntityType="StockCore.Models.UpComStockInfo" />
+          <EntitySet Name="UpComStockInfoHists" EntityType="StockCore.Models.UpComStockInfoHist" />
+          <AssociationSet Name="FK__CompanyIn__Marke__2E1BDC42" Association="StockCore.Models.FK__CompanyIn__Marke__2E1BDC42">
+            <End Role="Market" EntitySet="Markets" />
+            <End Role="CompanyInfo" EntitySet="CompanyInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HNXStockI__Stock__22751F6C" Association="StockCore.Models.FK__HNXStockI__Stock__22751F6C">
+            <End Role="CompanyInfo" EntitySet="CompanyInfoes" />
+            <End Role="HNXStockInfo" EntitySet="HNXStockInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HNXStockI__Stock__6FB49575" Association="StockCore.Models.FK__HNXStockI__Stock__6FB49575">
+            <End Role="CompanyInfo" EntitySet="CompanyInfoes" />
+            <End Role="HNXStockInfoHist" EntitySet="HNXStockInfoHists" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HoseStock__Stock__08B54D69" Association="StockCore.Models.FK__HoseStock__Stock__08B54D69">
+            <End Role="CompanyInfo" EntitySet="CompanyInfoes" />
+            <End Role="HoseStockInfo" EntitySet="HoseStockInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HoseStock__Stock__55F4C372" Association="StockCore.Models.FK__HoseStock__Stock__55F4C372">
+            <End Role="CompanyInfo" EntitySet="CompanyInfoes" />
+            <End Role="HoseStockInfoHist" EntitySet="HoseStockInfoHists" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Matched__StockSy__61316BF4" Association="StockCore.Models.FK__Matched__StockSy__61316BF4">
+            <End Role="CompanyInfo" EntitySet="CompanyInfoes" />
+            <End Role="Matched" EntitySet="Matcheds" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockBala__Stock__57A801BA" Association="StockCore.Models.FK__StockBala__Stock__57A801BA">
+            <End Role="CompanyInfo" EntitySet="CompanyInfoes" />
+            <End Role="StockBalance" EntitySet="StockBalances" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UpComStoc__Stock__09746778" Association="StockCore.Models.FK__UpComStoc__Stock__09746778">
+            <End Role="CompanyInfo" EntitySet="CompanyInfoes" />
+            <End Role="UpComStockInfoHist" EntitySet="UpComStockInfoHists" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UpComStoc__Stock__3C34F16F" Association="StockCore.Models.FK__UpComStoc__Stock__3C34F16F">
+            <End Role="CompanyInfo" EntitySet="CompanyInfoes" />
+            <End Role="UpComStockInfo" EntitySet="UpComStockInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HNXMarket__Marke__4AB81AF0" Association="StockCore.Models.FK__HNXMarket__Marke__4AB81AF0">
+            <End Role="Market" EntitySet="Markets" />
+            <End Role="HNXMarketInfo" EntitySet="HNXMarketInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HNXMarket__Marke__75A278F5" Association="StockCore.Models.FK__HNXMarket__Marke__75A278F5">
+            <End Role="Market" EntitySet="Markets" />
+            <End Role="HNXMarketInfoHist" EntitySet="HNXMarketInfoHists" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HoseMarke__Marke__3D5E1FD2" Association="StockCore.Models.FK__HoseMarke__Marke__3D5E1FD2">
+            <End Role="Market" EntitySet="Markets" />
+            <End Role="HoseMarketInfo" EntitySet="HoseMarketInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HoseMarke__Marke__68487DD7" Association="StockCore.Models.FK__HoseMarke__Marke__68487DD7">
+            <End Role="Market" EntitySet="Markets" />
+            <End Role="HoseMarketInfoHist" EntitySet="HoseMarketInfoHists" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SubCustAc__MainC__4E1E9780" Association="StockCore.Models.FK__SubCustAc__MainC__4E1E9780">
+            <End Role="MainCustAccount" EntitySet="MainCustAccounts" />
+            <End Role="SubCustAccount" EntitySet="SubCustAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UpComMark__Marke__02FC7413" Association="StockCore.Models.FK__UpComMark__Marke__02FC7413">
+            <End Role="Market" EntitySet="Markets" />
+            <End Role="UpComMarketInfoHist" EntitySet="UpComMarketInfoHists" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UpComMark__Marke__5812160E" Association="StockCore.Models.FK__UpComMark__Marke__5812160E">
+            <End Role="Market" EntitySet="Markets" />
+            <End Role="UpComMarketInfo" EntitySet="UpComMarketInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Matched__SubCust__5F492382" Association="StockCore.Models.FK__Matched__SubCust__5F492382">
+            <End Role="SubCustAccount" EntitySet="SubCustAccounts" />
+            <End Role="Matched" EntitySet="Matcheds" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Matched__SubCust__603D47BB" Association="StockCore.Models.FK__Matched__SubCust__603D47BB">
+            <End Role="SubCustAccount" EntitySet="SubCustAccounts" />
+            <End Role="Matched" EntitySet="Matcheds" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockBala__SubCu__56B3DD81" Association="StockCore.Models.FK__StockBala__SubCu__56B3DD81">
+            <End Role="SubCustAccount" EntitySet="SubCustAccounts" />
+            <End Role="StockBalance" EntitySet="StockBalances" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CompanyInfo">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="ShortNameVi" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="ShortNameEn" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Fax" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Website" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="IsPublished" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Market" Relationship="StockCore.Models.FK__CompanyIn__Marke__2E1BDC42" FromRole="CompanyInfo" ToRole="Market" />
+          <NavigationProperty Name="HNXStockInfoes" Relationship="StockCore.Models.FK__HNXStockI__Stock__22751F6C" FromRole="CompanyInfo" ToRole="HNXStockInfo" />
+          <NavigationProperty Name="HNXStockInfoHists" Relationship="StockCore.Models.FK__HNXStockI__Stock__6FB49575" FromRole="CompanyInfo" ToRole="HNXStockInfoHist" />
+          <NavigationProperty Name="HoseStockInfoes" Relationship="StockCore.Models.FK__HoseStock__Stock__08B54D69" FromRole="CompanyInfo" ToRole="HoseStockInfo" />
+          <NavigationProperty Name="HoseStockInfoHists" Relationship="StockCore.Models.FK__HoseStock__Stock__55F4C372" FromRole="CompanyInfo" ToRole="HoseStockInfoHist" />
+          <NavigationProperty Name="Matcheds" Relationship="StockCore.Models.FK__Matched__StockSy__61316BF4" FromRole="CompanyInfo" ToRole="Matched" />
+          <NavigationProperty Name="StockBalances" Relationship="StockCore.Models.FK__StockBala__Stock__57A801BA" FromRole="CompanyInfo" ToRole="StockBalance" />
+          <NavigationProperty Name="UpComStockInfoHists" Relationship="StockCore.Models.FK__UpComStoc__Stock__09746778" FromRole="CompanyInfo" ToRole="UpComStockInfoHist" />
+          <NavigationProperty Name="UpComStockInfoes" Relationship="StockCore.Models.FK__UpComStoc__Stock__3C34F16F" FromRole="CompanyInfo" ToRole="UpComStockInfo" />
+        </EntityType>
+        <EntityType Name="HNXMarketInfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="TradeDate" Type="DateTime" Nullable="false" />
+          <Property Name="SetIndex" Type="Double" Nullable="false" />
+          <Property Name="TotalTrade" Type="Int64" Nullable="false" />
+          <Property Name="Totalshare" Type="Int64" Nullable="false" />
+          <Property Name="TotalValue" Type="Int64" Nullable="false" />
+          <Property Name="Advances" Type="Int16" Nullable="false" />
+          <Property Name="Nochange" Type="Int16" Nullable="false" />
+          <Property Name="Declines" Type="Int16" Nullable="false" />
+          <Property Name="OpenIndex" Type="Double" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="Market" Relationship="StockCore.Models.FK__HNXMarket__Marke__4AB81AF0" FromRole="HNXMarketInfo" ToRole="Market" />
+        </EntityType>
+        <EntityType Name="HNXMarketInfoHist">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="TradeDate" Type="DateTime" Nullable="false" />
+          <Property Name="SetIndex" Type="Double" Nullable="false" />
+          <Property Name="TotalTrade" Type="Int64" Nullable="false" />
+          <Property Name="Totalshare" Type="Int64" Nullable="false" />
+          <Property Name="TotalValue" Type="Int64" Nullable="false" />
+          <Property Name="Advances" Type="Int16" Nullable="false" />
+          <Property Name="Nochange" Type="Int16" Nullable="false" />
+          <Property Name="Declines" Type="Int16" Nullable="false" />
+          <Property Name="OpenIndex" Type="Double" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="Market" Relationship="StockCore.Models.FK__HNXMarket__Marke__75A278F5" FromRole="HNXMarketInfoHist" ToRole="Market" />
+        </EntityType>
+        <EntityType Name="HNXStockInfo">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="TradeDate" />
+            <PropertyRef Name="Ceiling" />
+            <PropertyRef Name="Floor" />
+            <PropertyRef Name="AvrPrice" />
+            <PropertyRef Name="Last" />
+            <PropertyRef Name="LastVol" />
+            <PropertyRef Name="LastVal" />
+            <PropertyRef Name="Highest" />
+            <PropertyRef Name="Lowest" />
+            <PropertyRef Name="Totalshares" />
+            <PropertyRef Name="TotalValue" />
+            <PropertyRef Name="Best1Bid" />
+            <PropertyRef Name="Best1BidVolume" />
+            <PropertyRef Name="Best2Bid" />
+            <PropertyRef Name="Best2BidVolume" />
+            <PropertyRef Name="Best3Bid" />
+            <PropertyRef Name="Best3BidVolume" />
+            <PropertyRef Name="Best1Offer" />
+            <PropertyRef Name="Best1OfferVolume" />
+            <PropertyRef Name="Best2Offer" />
+            <PropertyRef Name="Best2OfferVolume" />
+            <PropertyRef Name="Best3Offer" />
+            <PropertyRef Name="Best3OfferVolume" />
+            <PropertyRef Name="SELL_FOREIGN_QTTY" />
+            <PropertyRef Name="BUY_FOREIGN_QTTY" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="TradeDate" Type="DateTime" Nullable="false" />
+          <Property Name="Ceiling" Type="Int64" Nullable="false" />
+          <Property Name="Floor" Type="Int64" Nullable="false" />
+          <Property Name="AvrPrice" Type="Int64" Nullable="false" />
+          <Property Name="Last" Type="Int64" Nullable="false" />
+          <Property Name="LastVol" Type="Int64" Nullable="false" />
+          <Property Name="LastVal" Type="Int64" Nullable="false" />
+          <Property Name="Highest" Type="Int64" Nullable="false" />
+          <Property Name="Lowest" Type="Int64" Nullable="false" />
+          <Property Name="Totalshares" Type="Int64" Nullable="false" />
+          <Property Name="TotalValue" Type="Int64" Nullable="false" />
+          <Property Name="Best1Bid" Type="Int64" Nullable="false" />
+          <Property Name="Best1BidVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best2Bid" Type="Int64" Nullable="false" />
+          <Property Name="Best2BidVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best3Bid" Type="Int64" Nullable="false" />
+          <Property Name="Best3BidVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best1Offer" Type="Int64" Nullable="false" />
+          <Property Name="Best1OfferVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best2Offer" Type="Int64" Nullable="false" />
+          <Property Name="Best2OfferVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best3Offer" Type="Int64" Nullable="false" />
+          <Property Name="Best3OfferVolume" Type="Int64" Nullable="false" />
+          <Property Name="SELL_FOREIGN_QTTY" Type="Int64" Nullable="false" />
+          <Property Name="BUY_FOREIGN_QTTY" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="CompanyInfo" Relationship="StockCore.Models.FK__HNXStockI__Stock__22751F6C" FromRole="HNXStockInfo" ToRole="CompanyInfo" />
+        </EntityType>
+        <EntityType Name="HNXStockInfoHist">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="TradeDate" />
+            <PropertyRef Name="Ceiling" />
+            <PropertyRef Name="Floor" />
+            <PropertyRef Name="AvrPrice" />
+            <PropertyRef Name="Last" />
+            <PropertyRef Name="LastVol" />
+            <PropertyRef Name="LastVal" />
+            <PropertyRef Name="Highest" />
+            <PropertyRef Name="Lowest" />
+            <PropertyRef Name="Totalshares" />
+            <PropertyRef Name="TotalValue" />
+            <PropertyRef Name="Best1Bid" />
+            <PropertyRef Name="Best1BidVolume" />
+            <PropertyRef Name="Best2Bid" />
+            <PropertyRef Name="Best2BidVolume" />
+            <PropertyRef Name="Best3Bid" />
+            <PropertyRef Name="Best3BidVolume" />
+            <PropertyRef Name="Best1Offer" />
+            <PropertyRef Name="Best1OfferVolume" />
+            <PropertyRef Name="Best2Offer" />
+            <PropertyRef Name="Best2OfferVolume" />
+            <PropertyRef Name="Best3Offer" />
+            <PropertyRef Name="Best3OfferVolume" />
+            <PropertyRef Name="SELL_FOREIGN_QTTY" />
+            <PropertyRef Name="BUY_FOREIGN_QTTY" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="TradeDate" Type="DateTime" Nullable="false" />
+          <Property Name="Ceiling" Type="Int64" Nullable="false" />
+          <Property Name="Floor" Type="Int64" Nullable="false" />
+          <Property Name="AvrPrice" Type="Int64" Nullable="false" />
+          <Property Name="Last" Type="Int64" Nullable="false" />
+          <Property Name="LastVol" Type="Int64" Nullable="false" />
+          <Property Name="LastVal" Type="Int64" Nullable="false" />
+          <Property Name="Highest" Type="Int64" Nullable="false" />
+          <Property Name="Lowest" Type="Int64" Nullable="false" />
+          <Property Name="Totalshares" Type="Int64" Nullable="false" />
+          <Property Name="TotalValue" Type="Int64" Nullable="false" />
+          <Property Name="Best1Bid" Type="Int64" Nullable="false" />
+          <Property Name="Best1BidVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best2Bid" Type="Int64" Nullable="false" />
+          <Property Name="Best2BidVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best3Bid" Type="Int64" Nullable="false" />
+          <Property Name="Best3BidVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best1Offer" Type="Int64" Nullable="false" />
+          <Property Name="Best1OfferVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best2Offer" Type="Int64" Nullable="false" />
+          <Property Name="Best2OfferVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best3Offer" Type="Int64" Nullable="false" />
+          <Property Name="Best3OfferVolume" Type="Int64" Nullable="false" />
+          <Property Name="SELL_FOREIGN_QTTY" Type="Int64" Nullable="false" />
+          <Property Name="BUY_FOREIGN_QTTY" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="CompanyInfo" Relationship="StockCore.Models.FK__HNXStockI__Stock__6FB49575" FromRole="HNXStockInfoHist" ToRole="CompanyInfo" />
+        </EntityType>
+        <EntityType Name="HoseMarketInfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="TradeDate" Type="DateTime" Nullable="false" />
+          <Property Name="SetIndex" Type="Int64" Nullable="false" />
+          <Property Name="TotalTrade" Type="Int64" Nullable="false" />
+          <Property Name="Totalshare" Type="Int64" Nullable="false" />
+          <Property Name="TotalValue" Type="Int64" Nullable="false" />
+          <Property Name="UpVolume" Type="Int64" Nullable="false" />
+          <Property Name="DownVolume" Type="Int64" Nullable="false" />
+          <Property Name="NoChangeVolume" Type="Int64" Nullable="false" />
+          <Property Name="Advances" Type="Int64" Nullable="false" />
+          <Property Name="Declines" Type="Int64" Nullable="false" />
+          <Property Name="Nochange" Type="Int64" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="Market" Relationship="StockCore.Models.FK__HoseMarke__Marke__3D5E1FD2" FromRole="HoseMarketInfo" ToRole="Market" />
+        </EntityType>
+        <EntityType Name="HoseMarketInfoHist">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="TradeDate" Type="DateTime" Nullable="false" />
+          <Property Name="SetIndex" Type="Int64" Nullable="false" />
+          <Property Name="TotalTrade" Type="Int64" Nullable="false" />
+          <Property Name="Totalshare" Type="Int64" Nullable="false" />
+          <Property Name="TotalValue" Type="Int64" Nullable="false" />
+          <Property Name="UpVolume" Type="Int64" Nullable="false" />
+          <Property Name="DownVolume" Type="Int64" Nullable="false" />
+          <Property Name="NoChangeVolume" Type="Int64" Nullable="false" />
+          <Property Name="Advances" Type="Int64" Nullable="false" />
+          <Property Name="Declines" Type="Int64" Nullable="false" />
+          <Property Name="Nochange" Type="Int64" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="Market" Relationship="StockCore.Models.FK__HoseMarke__Marke__68487DD7" FromRole="HoseMarketInfoHist" ToRole="Market" />
+        </EntityType>
+        <EntityType Name="HoseStockInfo">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="TradeDate" />
+            <PropertyRef Name="Ceiling" />
+            <PropertyRef Name="Floor" />
+            <PropertyRef Name="AvrPrice" />
+            <PropertyRef Name="Last" />
+            <PropertyRef Name="LastVol" />
+            <PropertyRef Name="LastVal" />
+            <PropertyRef Name="Highest" />
+            <PropertyRef Name="Lowest" />
+            <PropertyRef Name="Totalshares" />
+            <PropertyRef Name="TotalValue" />
+            <PropertyRef Name="Best1Bid" />
+            <PropertyRef Name="Best1BidVolume" />
+            <PropertyRef Name="Best2Bid" />
+            <PropertyRef Name="Best2BidVolume" />
+            <PropertyRef Name="Best3Bid" />
+            <PropertyRef Name="Best3BidVolume" />
+            <PropertyRef Name="Best1Offer" />
+            <PropertyRef Name="Best1OfferVolume" />
+            <PropertyRef Name="Best2Offer" />
+            <PropertyRef Name="Best2OfferVolume" />
+            <PropertyRef Name="Best3Offer" />
+            <PropertyRef Name="Best3OfferVolume" />
+            <PropertyRef Name="CurrentRoom" />
+            <PropertyRef Name="StartRoom" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="TradeDate" Type="DateTime" Nullable="false" />
+          <Property Name="Ceiling" Type="Int64" Nullable="false" />
+          <Property Name="Floor" Type="Int64" Nullable="false" />
+          <Property Name="AvrPrice" Type="Int64" Nullable="false" />
+          <Property Name="Last" Type="Int64" Nullable="false" />
+          <Property Name="LastVol" Type="Int64" Nullable="false" />
+          <Property Name="LastVal" Type="Int64" Nullable="false" />
+          <Property Name="Highest" Type="Int64" Nullable="false" />
+          <Property Name="Lowest" Type="Int64" Nullable="false" />
+          <Property Name="Totalshares" Type="Int64" Nullable="false" />
+          <Property Name="TotalValue" Type="Int64" Nullable="false" />
+          <Property Name="Best1Bid" Type="Int64" Nullable="false" />
+          <Property Name="Best1BidVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best2Bid" Type="Int64" Nullable="false" />
+          <Property Name="Best2BidVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best3Bid" Type="Int64" Nullable="false" />
+          <Property Name="Best3BidVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best1Offer" Type="Int64" Nullable="false" />
+          <Property Name="Best1OfferVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best2Offer" Type="Int64" Nullable="false" />
+          <Property Name="Best2OfferVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best3Offer" Type="Int64" Nullable="false" />
+          <Property Name="Best3OfferVolume" Type="Int64" Nullable="false" />
+          <Property Name="CurrentRoom" Type="Int64" Nullable="false" />
+          <Property Name="StartRoom" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="CompanyInfo" Relationship="StockCore.Models.FK__HoseStock__Stock__08B54D69" FromRole="HoseStockInfo" ToRole="CompanyInfo" />
+        </EntityType>
+        <EntityType Name="HoseStockInfoHist">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="TradeDate" />
+            <PropertyRef Name="Ceiling" />
+            <PropertyRef Name="Floor" />
+            <PropertyRef Name="AvrPrice" />
+            <PropertyRef Name="Last" />
+            <PropertyRef Name="LastVol" />
+            <PropertyRef Name="LastVal" />
+            <PropertyRef Name="Highest" />
+            <PropertyRef Name="Lowest" />
+            <PropertyRef Name="Totalshares" />
+            <PropertyRef Name="TotalValue" />
+            <PropertyRef Name="Best1Bid" />
+            <PropertyRef Name="Best1BidVolume" />
+            <PropertyRef Name="Best2Bid" />
+            <PropertyRef Name="Best2BidVolume" />
+            <PropertyRef Name="Best3Bid" />
+            <PropertyRef Name="Best3BidVolume" />
+            <PropertyRef Name="Best1Offer" />
+            <PropertyRef Name="Best1OfferVolume" />
+            <PropertyRef Name="Best2Offer" />
+            <PropertyRef Name="Best2OfferVolume" />
+            <PropertyRef Name="Best3Offer" />
+            <PropertyRef Name="Best3OfferVolume" />
+            <PropertyRef Name="CurrentRoom" />
+            <PropertyRef Name="StartRoom" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="TradeDate" Type="DateTime" Nullable="false" />
+          <Property Name="Ceiling" Type="Int64" Nullable="false" />
+          <Property Name="Floor" Type="Int64" Nullable="false" />
+          <Property Name="AvrPrice" Type="Int64" Nullable="false" />
+          <Property Name="Last" Type="Int64" Nullable="false" />
+          <Property Name="LastVol" Type="Int64" Nullable="false" />
+          <Property Name="LastVal" Type="Int64" Nullable="false" />
+          <Property Name="Highest" Type="Int64" Nullable="false" />
+          <Property Name="Lowest" Type="Int64" Nullable="false" />
+          <Property Name="Totalshares" Type="Int64" Nullable="false" />
+          <Property Name="TotalValue" Type="Int64" Nullable="false" />
+          <Property Name="Best1Bid" Type="Int64" Nullable="false" />
+          <Property Name="Best1BidVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best2Bid" Type="Int64" Nullable="false" />
+          <Property Name="Best2BidVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best3Bid" Type="Int64" Nullable="false" />
+          <Property Name="Best3BidVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best1Offer" Type="Int64" Nullable="false" />
+          <Property Name="Best1OfferVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best2Offer" Type="Int64" Nullable="false" />
+          <Property Name="Best2OfferVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best3Offer" Type="Int64" Nullable="false" />
+          <Property Name="Best3OfferVolume" Type="Int64" Nullable="false" />
+          <Property Name="CurrentRoom" Type="Int64" Nullable="false" />
+          <Property Name="StartRoom" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="CompanyInfo" Relationship="StockCore.Models.FK__HoseStock__Stock__55F4C372" FromRole="HoseStockInfoHist" ToRole="CompanyInfo" />
+        </EntityType>
+        <EntityType Name="MainCustAccount">
+          <Key>
+            <PropertyRef Name="MainCustAccountID" />
+          </Key>
+          <Property Name="MainCustAccountID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="FullName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="Phone" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="Actived" Type="Boolean" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="PIN" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="PassLockReason" Type="Int32" />
+          <Property Name="PINLockReason" Type="Int32" />
+          <Property Name="LockReason" Type="Int32" />
+          <Property Name="TokenID" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="TokenName" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="TokenActived" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="BrokerID" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="PassIsNew" Type="Boolean" />
+          <Property Name="PINIsNew" Type="Boolean" />
+          <Property Name="PassExpDate" Type="DateTime" />
+          <Property Name="PINExpDate" Type="DateTime" />
+          <Property Name="CustomerType" Type="Int32" Nullable="false" />
+          <Property Name="AuthType" Type="Int16" Nullable="false" />
+          <Property Name="PinType" Type="Int16" Nullable="false" />
+          <Property Name="LanguageId" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="FailedLoginCount" Type="Int32" />
+          <Property Name="FailedLoginTime" Type="DateTime" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedUser" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="UpdatedUser" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="UpdatedDate" Type="DateTime" />
+          <NavigationProperty Name="SubCustAccounts" Relationship="StockCore.Models.FK__SubCustAc__MainC__4E1E9780" FromRole="MainCustAccount" ToRole="SubCustAccount" />
+        </EntityType>
+        <EntityType Name="Market">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="CompanyInfoes" Relationship="StockCore.Models.FK__CompanyIn__Marke__2E1BDC42" FromRole="Market" ToRole="CompanyInfo" />
+          <NavigationProperty Name="HNXMarketInfoes" Relationship="StockCore.Models.FK__HNXMarket__Marke__4AB81AF0" FromRole="Market" ToRole="HNXMarketInfo" />
+          <NavigationProperty Name="HNXMarketInfoHists" Relationship="StockCore.Models.FK__HNXMarket__Marke__75A278F5" FromRole="Market" ToRole="HNXMarketInfoHist" />
+          <NavigationProperty Name="HoseMarketInfoes" Relationship="StockCore.Models.FK__HoseMarke__Marke__3D5E1FD2" FromRole="Market" ToRole="HoseMarketInfo" />
+          <NavigationProperty Name="HoseMarketInfoHists" Relationship="StockCore.Models.FK__HoseMarke__Marke__68487DD7" FromRole="Market" ToRole="HoseMarketInfoHist" />
+          <NavigationProperty Name="UpComMarketInfoHists" Relationship="StockCore.Models.FK__UpComMark__Marke__02FC7413" FromRole="Market" ToRole="UpComMarketInfoHist" />
+          <NavigationProperty Name="UpComMarketInfoes" Relationship="StockCore.Models.FK__UpComMark__Marke__5812160E" FromRole="Market" ToRole="UpComMarketInfo" />
+        </EntityType>
+        <EntityType Name="Matched">
+          <Key>
+            <PropertyRef Name="Price" />
+            <PropertyRef Name="Amount" />
+            <PropertyRef Name="DateMatched" />
+          </Key>
+          <Property Name="Price" Type="Int64" Nullable="false" />
+          <Property Name="Amount" Type="Int16" Nullable="false" />
+          <Property Name="DateMatched" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="CompanyInfo" Relationship="StockCore.Models.FK__Matched__StockSy__61316BF4" FromRole="Matched" ToRole="CompanyInfo" />
+          <NavigationProperty Name="SubCustAccount" Relationship="StockCore.Models.FK__Matched__SubCust__5F492382" FromRole="Matched" ToRole="SubCustAccount" />
+          <NavigationProperty Name="SubCustAccount1" Relationship="StockCore.Models.FK__Matched__SubCust__603D47BB" FromRole="Matched" ToRole="SubCustAccount" />
+        </EntityType>
+        <EntityType Name="MemberStockCompany">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="ShortNameVi" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="ShortNameEn" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Fax" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Website" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="IsPublished" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StockBalance">
+          <Key>
+            <PropertyRef Name="SubCustAccountID" />
+            <PropertyRef Name="StockSymbol" />
+          </Key>
+          <Property Name="SubCustAccountID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="StockSymbol" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="Available" Type="Int64" Nullable="false" />
+          <Property Name="Total" Type="Int64" Nullable="false" />
+          <Property Name="WTR_T1" Type="Int64" Nullable="false" />
+          <Property Name="WTR_T2" Type="Int64" Nullable="false" />
+          <Property Name="WTS_T1" Type="Int64" Nullable="false" />
+          <Property Name="WTS_T2" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="CompanyInfo" Relationship="StockCore.Models.FK__StockBala__Stock__57A801BA" FromRole="StockBalance" ToRole="CompanyInfo" />
+          <NavigationProperty Name="SubCustAccount" Relationship="StockCore.Models.FK__StockBala__SubCu__56B3DD81" FromRole="StockBalance" ToRole="SubCustAccount" />
+        </EntityType>
+        <EntityType Name="SubCustAccount">
+          <Key>
+            <PropertyRef Name="SubCustAccountID" />
+          </Key>
+          <Property Name="SubCustAccountID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="Name" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Actived" Type="Boolean" />
+          <Property Name="LockAccountReason" Type="Int16" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="UpdatedDate" Type="DateTime" />
+          <Property Name="UpdatedUser" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="WithDraw" Type="Int64" Nullable="false" />
+          <Property Name="BuyCredit" Type="Int64" Nullable="false" />
+          <Property Name="TotalBuy" Type="Int64" Nullable="false" />
+          <Property Name="TotalSell" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="MainCustAccount" Relationship="StockCore.Models.FK__SubCustAc__MainC__4E1E9780" FromRole="SubCustAccount" ToRole="MainCustAccount" />
+          <NavigationProperty Name="Matcheds" Relationship="StockCore.Models.FK__Matched__SubCust__5F492382" FromRole="SubCustAccount" ToRole="Matched" />
+          <NavigationProperty Name="Matcheds1" Relationship="StockCore.Models.FK__Matched__SubCust__603D47BB" FromRole="SubCustAccount" ToRole="Matched" />
+          <NavigationProperty Name="StockBalances" Relationship="StockCore.Models.FK__StockBala__SubCu__56B3DD81" FromRole="SubCustAccount" ToRole="StockBalance" />
+        </EntityType>
+        <EntityType Name="UpComMarketInfo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="TradeDate" Type="DateTime" Nullable="false" />
+          <Property Name="SetIndex" Type="Double" Nullable="false" />
+          <Property Name="TotalTrade" Type="Int64" Nullable="false" />
+          <Property Name="Totalshare" Type="Int64" Nullable="false" />
+          <Property Name="TotalValue" Type="Int64" Nullable="false" />
+          <Property Name="Advances" Type="Int16" Nullable="false" />
+          <Property Name="Nochange" Type="Int16" Nullable="false" />
+          <Property Name="Declines" Type="Int16" Nullable="false" />
+          <Property Name="OpenIndex" Type="Double" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="Market" Relationship="StockCore.Models.FK__UpComMark__Marke__5812160E" FromRole="UpComMarketInfo" ToRole="Market" />
+        </EntityType>
+        <EntityType Name="UpComMarketInfoHist">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="TradeDate" Type="DateTime" Nullable="false" />
+          <Property Name="SetIndex" Type="Double" Nullable="false" />
+          <Property Name="TotalTrade" Type="Int64" Nullable="false" />
+          <Property Name="Totalshare" Type="Int64" Nullable="false" />
+          <Property Name="TotalValue" Type="Int64" Nullable="false" />
+          <Property Name="Advances" Type="Int16" Nullable="false" />
+          <Property Name="Nochange" Type="Int16" Nullable="false" />
+          <Property Name="Declines" Type="Int16" Nullable="false" />
+          <Property Name="OpenIndex" Type="Double" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="Market" Relationship="StockCore.Models.FK__UpComMark__Marke__02FC7413" FromRole="UpComMarketInfoHist" ToRole="Market" />
+        </EntityType>
+        <EntityType Name="UpComStockInfo">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="TradeDate" />
+            <PropertyRef Name="Ceiling" />
+            <PropertyRef Name="Floor" />
+            <PropertyRef Name="AvrPrice" />
+            <PropertyRef Name="Last" />
+            <PropertyRef Name="LastVol" />
+            <PropertyRef Name="LastVal" />
+            <PropertyRef Name="Highest" />
+            <PropertyRef Name="Lowest" />
+            <PropertyRef Name="Totalshares" />
+            <PropertyRef Name="TotalValue" />
+            <PropertyRef Name="Best1Bid" />
+            <PropertyRef Name="Best1BidVolume" />
+            <PropertyRef Name="Best2Bid" />
+            <PropertyRef Name="Best2BidVolume" />
+            <PropertyRef Name="Best3Bid" />
+            <PropertyRef Name="Best3BidVolume" />
+            <PropertyRef Name="Best1Offer" />
+            <PropertyRef Name="Best1OfferVolume" />
+            <PropertyRef Name="Best2Offer" />
+            <PropertyRef Name="Best2OfferVolume" />
+            <PropertyRef Name="Best3Offer" />
+            <PropertyRef Name="Best3OfferVolume" />
+            <PropertyRef Name="SELL_FOREIGN_QTTY" />
+            <PropertyRef Name="BUY_FOREIGN_QTTY" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="TradeDate" Type="DateTime" Nullable="false" />
+          <Property Name="Ceiling" Type="Int64" Nullable="false" />
+          <Property Name="Floor" Type="Int64" Nullable="false" />
+          <Property Name="AvrPrice" Type="Int64" Nullable="false" />
+          <Property Name="Last" Type="Int64" Nullable="false" />
+          <Property Name="LastVol" Type="Int64" Nullable="false" />
+          <Property Name="LastVal" Type="Int64" Nullable="false" />
+          <Property Name="Highest" Type="Int64" Nullable="false" />
+          <Property Name="Lowest" Type="Int64" Nullable="false" />
+          <Property Name="Totalshares" Type="Int64" Nullable="false" />
+          <Property Name="TotalValue" Type="Int64" Nullable="false" />
+          <Property Name="Best1Bid" Type="Int64" Nullable="false" />
+          <Property Name="Best1BidVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best2Bid" Type="Int64" Nullable="false" />
+          <Property Name="Best2BidVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best3Bid" Type="Int64" Nullable="false" />
+          <Property Name="Best3BidVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best1Offer" Type="Int64" Nullable="false" />
+          <Property Name="Best1OfferVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best2Offer" Type="Int64" Nullable="false" />
+          <Property Name="Best2OfferVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best3Offer" Type="Int64" Nullable="false" />
+          <Property Name="Best3OfferVolume" Type="Int64" Nullable="false" />
+          <Property Name="SELL_FOREIGN_QTTY" Type="Int64" Nullable="false" />
+          <Property Name="BUY_FOREIGN_QTTY" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="CompanyInfo" Relationship="StockCore.Models.FK__UpComStoc__Stock__3C34F16F" FromRole="UpComStockInfo" ToRole="CompanyInfo" />
+        </EntityType>
+        <EntityType Name="UpComStockInfoHist">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="TradeDate" />
+            <PropertyRef Name="Ceiling" />
+            <PropertyRef Name="Floor" />
+            <PropertyRef Name="AvrPrice" />
+            <PropertyRef Name="Last" />
+            <PropertyRef Name="LastVol" />
+            <PropertyRef Name="LastVal" />
+            <PropertyRef Name="Highest" />
+            <PropertyRef Name="Lowest" />
+            <PropertyRef Name="Totalshares" />
+            <PropertyRef Name="TotalValue" />
+            <PropertyRef Name="Best1Bid" />
+            <PropertyRef Name="Best1BidVolume" />
+            <PropertyRef Name="Best2Bid" />
+            <PropertyRef Name="Best2BidVolume" />
+            <PropertyRef Name="Best3Bid" />
+            <PropertyRef Name="Best3BidVolume" />
+            <PropertyRef Name="Best1Offer" />
+            <PropertyRef Name="Best1OfferVolume" />
+            <PropertyRef Name="Best2Offer" />
+            <PropertyRef Name="Best2OfferVolume" />
+            <PropertyRef Name="Best3Offer" />
+            <PropertyRef Name="Best3OfferVolume" />
+            <PropertyRef Name="SELL_FOREIGN_QTTY" />
+            <PropertyRef Name="BUY_FOREIGN_QTTY" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="TradeDate" Type="DateTime" Nullable="false" />
+          <Property Name="Ceiling" Type="Int64" Nullable="false" />
+          <Property Name="Floor" Type="Int64" Nullable="false" />
+          <Property Name="AvrPrice" Type="Int64" Nullable="false" />
+          <Property Name="Last" Type="Int64" Nullable="false" />
+          <Property Name="LastVol" Type="Int64" Nullable="false" />
+          <Property Name="LastVal" Type="Int64" Nullable="false" />
+          <Property Name="Highest" Type="Int64" Nullable="false" />
+          <Property Name="Lowest" Type="Int64" Nullable="false" />
+          <Property Name="Totalshares" Type="Int64" Nullable="false" />
+          <Property Name="TotalValue" Type="Int64" Nullable="false" />
+          <Property Name="Best1Bid" Type="Int64" Nullable="false" />
+          <Property Name="Best1BidVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best2Bid" Type="Int64" Nullable="false" />
+          <Property Name="Best2BidVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best3Bid" Type="Int64" Nullable="false" />
+          <Property Name="Best3BidVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best1Offer" Type="Int64" Nullable="false" />
+          <Property Name="Best1OfferVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best2Offer" Type="Int64" Nullable="false" />
+          <Property Name="Best2OfferVolume" Type="Int64" Nullable="false" />
+          <Property Name="Best3Offer" Type="Int64" Nullable="false" />
+          <Property Name="Best3OfferVolume" Type="Int64" Nullable="false" />
+          <Property Name="SELL_FOREIGN_QTTY" Type="Int64" Nullable="false" />
+          <Property Name="BUY_FOREIGN_QTTY" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="CompanyInfo" Relationship="StockCore.Models.FK__UpComStoc__Stock__09746778" FromRole="UpComStockInfoHist" ToRole="CompanyInfo" />
+        </EntityType>
+        <Association Name="FK__CompanyIn__Marke__2E1BDC42">
+          <End Role="Market" Type="StockCore.Models.Market" Multiplicity="0..1" />
+          <End Role="CompanyInfo" Type="StockCore.Models.CompanyInfo" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__HNXStockI__Stock__22751F6C">
+          <End Role="CompanyInfo" Type="StockCore.Models.CompanyInfo" Multiplicity="0..1" />
+          <End Role="HNXStockInfo" Type="StockCore.Models.HNXStockInfo" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__HNXStockI__Stock__6FB49575">
+          <End Role="CompanyInfo" Type="StockCore.Models.CompanyInfo" Multiplicity="0..1" />
+          <End Role="HNXStockInfoHist" Type="StockCore.Models.HNXStockInfoHist" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__HoseStock__Stock__08B54D69">
+          <End Role="CompanyInfo" Type="StockCore.Models.CompanyInfo" Multiplicity="0..1" />
+          <End Role="HoseStockInfo" Type="StockCore.Models.HoseStockInfo" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__HoseStock__Stock__55F4C372">
+          <End Role="CompanyInfo" Type="StockCore.Models.CompanyInfo" Multiplicity="0..1" />
+          <End Role="HoseStockInfoHist" Type="StockCore.Models.HoseStockInfoHist" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__Matched__StockSy__61316BF4">
+          <End Role="CompanyInfo" Type="StockCore.Models.CompanyInfo" Multiplicity="0..1" />
+          <End Role="Matched" Type="StockCore.Models.Matched" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__StockBala__Stock__57A801BA">
+          <End Role="CompanyInfo" Type="StockCore.Models.CompanyInfo" Multiplicity="1" />
+          <End Role="StockBalance" Type="StockCore.Models.StockBalance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyInfo">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="StockBalance">
+              <PropertyRef Name="StockSymbol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UpComStoc__Stock__09746778">
+          <End Role="CompanyInfo" Type="StockCore.Models.CompanyInfo" Multiplicity="0..1" />
+          <End Role="UpComStockInfoHist" Type="StockCore.Models.UpComStockInfoHist" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__UpComStoc__Stock__3C34F16F">
+          <End Role="CompanyInfo" Type="StockCore.Models.CompanyInfo" Multiplicity="0..1" />
+          <End Role="UpComStockInfo" Type="StockCore.Models.UpComStockInfo" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__HNXMarket__Marke__4AB81AF0">
+          <End Role="Market" Type="StockCore.Models.Market" Multiplicity="0..1" />
+          <End Role="HNXMarketInfo" Type="StockCore.Models.HNXMarketInfo" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__HNXMarket__Marke__75A278F5">
+          <End Role="Market" Type="StockCore.Models.Market" Multiplicity="0..1" />
+          <End Role="HNXMarketInfoHist" Type="StockCore.Models.HNXMarketInfoHist" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__HoseMarke__Marke__3D5E1FD2">
+          <End Role="Market" Type="StockCore.Models.Market" Multiplicity="0..1" />
+          <End Role="HoseMarketInfo" Type="StockCore.Models.HoseMarketInfo" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__HoseMarke__Marke__68487DD7">
+          <End Role="Market" Type="StockCore.Models.Market" Multiplicity="0..1" />
+          <End Role="HoseMarketInfoHist" Type="StockCore.Models.HoseMarketInfoHist" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__SubCustAc__MainC__4E1E9780">
+          <End Role="MainCustAccount" Type="StockCore.Models.MainCustAccount" Multiplicity="0..1" />
+          <End Role="SubCustAccount" Type="StockCore.Models.SubCustAccount" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__UpComMark__Marke__02FC7413">
+          <End Role="Market" Type="StockCore.Models.Market" Multiplicity="0..1" />
+          <End Role="UpComMarketInfoHist" Type="StockCore.Models.UpComMarketInfoHist" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__UpComMark__Marke__5812160E">
+          <End Role="Market" Type="StockCore.Models.Market" Multiplicity="0..1" />
+          <End Role="UpComMarketInfo" Type="StockCore.Models.UpComMarketInfo" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__Matched__SubCust__5F492382">
+          <End Role="SubCustAccount" Type="StockCore.Models.SubCustAccount" Multiplicity="0..1" />
+          <End Role="Matched" Type="StockCore.Models.Matched" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__Matched__SubCust__603D47BB">
+          <End Role="SubCustAccount" Type="StockCore.Models.SubCustAccount" Multiplicity="0..1" />
+          <End Role="Matched" Type="StockCore.Models.Matched" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__StockBala__SubCu__56B3DD81">
+          <End Role="SubCustAccount" Type="StockCore.Models.SubCustAccount" Multiplicity="1" />
+          <End Role="StockBalance" Type="StockCore.Models.StockBalance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCustAccount">
+              <PropertyRef Name="SubCustAccountID" />
+            </Principal>
+            <Dependent Role="StockBalance">
+              <PropertyRef Name="SubCustAccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StockCoreModelsStoreContainer" CdmEntityContainer="DataStockCoreEntities">
+          <EntitySetMapping Name="CompanyInfoes"><EntityTypeMapping TypeName="StockCore.Models.CompanyInfo"><MappingFragment StoreEntitySet="CompanyInfo">
+            <ScalarProperty Name="Code" ColumnName="Code" />
+            <ScalarProperty Name="ShortNameVi" ColumnName="ShortNameVi" />
+            <ScalarProperty Name="ShortNameEn" ColumnName="ShortNameEn" />
+            <ScalarProperty Name="Phone" ColumnName="Phone" />
+            <ScalarProperty Name="Email" ColumnName="Email" />
+            <ScalarProperty Name="Fax" ColumnName="Fax" />
+            <ScalarProperty Name="Website" ColumnName="Website" />
+            <ScalarProperty Name="IsPublished" ColumnName="IsPublished" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="HNXMarketInfoes"><EntityTypeMapping TypeName="StockCore.Models.HNXMarketInfo"><MappingFragment StoreEntitySet="HNXMarketInfo">
+            <ScalarProperty Name="id" ColumnName="id" />
+            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+            <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
+            <ScalarProperty Name="TotalTrade" ColumnName="TotalTrade" />
+            <ScalarProperty Name="Totalshare" ColumnName="Totalshare" />
+            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+            <ScalarProperty Name="Advances" ColumnName="Advances" />
+            <ScalarProperty Name="Nochange" ColumnName="Nochange" />
+            <ScalarProperty Name="Declines" ColumnName="Declines" />
+            <ScalarProperty Name="OpenIndex" ColumnName="OpenIndex" />
+            <ScalarProperty Name="Status" ColumnName="Status" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="HNXMarketInfoHists"><EntityTypeMapping TypeName="StockCore.Models.HNXMarketInfoHist"><MappingFragment StoreEntitySet="HNXMarketInfoHist">
+            <ScalarProperty Name="id" ColumnName="id" />
+            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+            <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
+            <ScalarProperty Name="TotalTrade" ColumnName="TotalTrade" />
+            <ScalarProperty Name="Totalshare" ColumnName="Totalshare" />
+            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+            <ScalarProperty Name="Advances" ColumnName="Advances" />
+            <ScalarProperty Name="Nochange" ColumnName="Nochange" />
+            <ScalarProperty Name="Declines" ColumnName="Declines" />
+            <ScalarProperty Name="OpenIndex" ColumnName="OpenIndex" />
+            <ScalarProperty Name="Status" ColumnName="Status" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="HNXStockInfoes"><EntityTypeMapping TypeName="StockCore.Models.HNXStockInfo"><MappingFragment StoreEntitySet="HNXStockInfo">
+            <ScalarProperty Name="id" ColumnName="id" />
+            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+            <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
+            <ScalarProperty Name="Floor" ColumnName="Floor" />
+            <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
+            <ScalarProperty Name="Last" ColumnName="Last" />
+            <ScalarProperty Name="LastVol" ColumnName="LastVol" />
+            <ScalarProperty Name="LastVal" ColumnName="LastVal" />
+            <ScalarProperty Name="Highest" ColumnName="Highest" />
+            <ScalarProperty Name="Lowest" ColumnName="Lowest" />
+            <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
+            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+            <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
+            <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
+            <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
+            <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
+            <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
+            <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
+            <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
+            <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
+            <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
+            <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
+            <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
+            <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
+            <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
+            <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="HNXStockInfoHists"><EntityTypeMapping TypeName="StockCore.Models.HNXStockInfoHist"><MappingFragment StoreEntitySet="HNXStockInfoHist">
+            <ScalarProperty Name="id" ColumnName="id" />
+            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+            <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
+            <ScalarProperty Name="Floor" ColumnName="Floor" />
+            <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
+            <ScalarProperty Name="Last" ColumnName="Last" />
+            <ScalarProperty Name="LastVol" ColumnName="LastVol" />
+            <ScalarProperty Name="LastVal" ColumnName="LastVal" />
+            <ScalarProperty Name="Highest" ColumnName="Highest" />
+            <ScalarProperty Name="Lowest" ColumnName="Lowest" />
+            <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
+            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+            <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
+            <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
+            <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
+            <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
+            <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
+            <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
+            <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
+            <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
+            <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
+            <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
+            <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
+            <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
+            <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
+            <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="HoseMarketInfoes"><EntityTypeMapping TypeName="StockCore.Models.HoseMarketInfo"><MappingFragment StoreEntitySet="HoseMarketInfo">
+            <ScalarProperty Name="id" ColumnName="id" />
+            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+            <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
+            <ScalarProperty Name="TotalTrade" ColumnName="TotalTrade" />
+            <ScalarProperty Name="Totalshare" ColumnName="Totalshare" />
+            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+            <ScalarProperty Name="UpVolume" ColumnName="UpVolume" />
+            <ScalarProperty Name="DownVolume" ColumnName="DownVolume" />
+            <ScalarProperty Name="NoChangeVolume" ColumnName="NoChangeVolume" />
+            <ScalarProperty Name="Advances" ColumnName="Advances" />
+            <ScalarProperty Name="Declines" ColumnName="Declines" />
+            <ScalarProperty Name="Nochange" ColumnName="Nochange" />
+            <ScalarProperty Name="Status" ColumnName="Status" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="HoseMarketInfoHists"><EntityTypeMapping TypeName="StockCore.Models.HoseMarketInfoHist"><MappingFragment StoreEntitySet="HoseMarketInfoHist">
+            <ScalarProperty Name="id" ColumnName="id" />
+            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+            <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
+            <ScalarProperty Name="TotalTrade" ColumnName="TotalTrade" />
+            <ScalarProperty Name="Totalshare" ColumnName="Totalshare" />
+            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+            <ScalarProperty Name="UpVolume" ColumnName="UpVolume" />
+            <ScalarProperty Name="DownVolume" ColumnName="DownVolume" />
+            <ScalarProperty Name="NoChangeVolume" ColumnName="NoChangeVolume" />
+            <ScalarProperty Name="Advances" ColumnName="Advances" />
+            <ScalarProperty Name="Declines" ColumnName="Declines" />
+            <ScalarProperty Name="Nochange" ColumnName="Nochange" />
+            <ScalarProperty Name="Status" ColumnName="Status" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="HoseStockInfoes"><EntityTypeMapping TypeName="StockCore.Models.HoseStockInfo"><MappingFragment StoreEntitySet="HoseStockInfo">
+            <ScalarProperty Name="id" ColumnName="id" />
+            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+            <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
+            <ScalarProperty Name="Floor" ColumnName="Floor" />
+            <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
+            <ScalarProperty Name="Last" ColumnName="Last" />
+            <ScalarProperty Name="LastVol" ColumnName="LastVol" />
+            <ScalarProperty Name="LastVal" ColumnName="LastVal" />
+            <ScalarProperty Name="Highest" ColumnName="Highest" />
+            <ScalarProperty Name="Lowest" ColumnName="Lowest" />
+            <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
+            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+            <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
+            <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
+            <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
+            <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
+            <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
+            <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
+            <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
+            <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
+            <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
+            <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
+            <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
+            <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
+            <ScalarProperty Name="CurrentRoom" ColumnName="CurrentRoom" />
+            <ScalarProperty Name="StartRoom" ColumnName="StartRoom" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="HoseStockInfoHists"><EntityTypeMapping TypeName="StockCore.Models.HoseStockInfoHist"><MappingFragment StoreEntitySet="HoseStockInfoHist">
+            <ScalarProperty Name="id" ColumnName="id" />
+            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+            <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
+            <ScalarProperty Name="Floor" ColumnName="Floor" />
+            <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
+            <ScalarProperty Name="Last" ColumnName="Last" />
+            <ScalarProperty Name="LastVol" ColumnName="LastVol" />
+            <ScalarProperty Name="LastVal" ColumnName="LastVal" />
+            <ScalarProperty Name="Highest" ColumnName="Highest" />
+            <ScalarProperty Name="Lowest" ColumnName="Lowest" />
+            <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
+            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+            <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
+            <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
+            <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
+            <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
+            <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
+            <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
+            <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
+            <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
+            <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
+            <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
+            <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
+            <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
+            <ScalarProperty Name="CurrentRoom" ColumnName="CurrentRoom" />
+            <ScalarProperty Name="StartRoom" ColumnName="StartRoom" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="MainCustAccounts"><EntityTypeMapping TypeName="StockCore.Models.MainCustAccount"><MappingFragment StoreEntitySet="MainCustAccount">
+            <ScalarProperty Name="MainCustAccountID" ColumnName="MainCustAccountID" />
+            <ScalarProperty Name="FullName" ColumnName="FullName" />
+            <ScalarProperty Name="Email" ColumnName="Email" />
+            <ScalarProperty Name="Phone" ColumnName="Phone" />
+            <ScalarProperty Name="Actived" ColumnName="Actived" />
+            <ScalarProperty Name="Password" ColumnName="Password" />
+            <ScalarProperty Name="PIN" ColumnName="PIN" />
+            <ScalarProperty Name="PassLockReason" ColumnName="PassLockReason" />
+            <ScalarProperty Name="PINLockReason" ColumnName="PINLockReason" />
+            <ScalarProperty Name="LockReason" ColumnName="LockReason" />
+            <ScalarProperty Name="TokenID" ColumnName="TokenID" />
+            <ScalarProperty Name="TokenName" ColumnName="TokenName" />
+            <ScalarProperty Name="TokenActived" ColumnName="TokenActived" />
+            <ScalarProperty Name="BrokerID" ColumnName="BrokerID" />
+            <ScalarProperty Name="PassIsNew" ColumnName="PassIsNew" />
+            <ScalarProperty Name="PINIsNew" ColumnName="PINIsNew" />
+            <ScalarProperty Name="PassExpDate" ColumnName="PassExpDate" />
+            <ScalarProperty Name="PINExpDate" ColumnName="PINExpDate" />
+            <ScalarProperty Name="CustomerType" ColumnName="CustomerType" />
+            <ScalarProperty Name="AuthType" ColumnName="AuthType" />
+            <ScalarProperty Name="PinType" ColumnName="PinType" />
+            <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
+            <ScalarProperty Name="FailedLoginCount" ColumnName="FailedLoginCount" />
+            <ScalarProperty Name="FailedLoginTime" ColumnName="FailedLoginTime" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+            <ScalarProperty Name="UpdatedUser" ColumnName="UpdatedUser" />
+            <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Markets"><EntityTypeMapping TypeName="StockCore.Models.Market"><MappingFragment StoreEntitySet="Market">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Matcheds"><EntityTypeMapping TypeName="StockCore.Models.Matched"><MappingFragment StoreEntitySet="Matched">
+            <ScalarProperty Name="Price" ColumnName="Price" />
+            <ScalarProperty Name="Amount" ColumnName="Amount" />
+            <ScalarProperty Name="DateMatched" ColumnName="DateMatched" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="MemberStockCompanies"><EntityTypeMapping TypeName="StockCore.Models.MemberStockCompany"><MappingFragment StoreEntitySet="MemberStockCompany">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="ShortNameVi" ColumnName="ShortNameVi" />
+            <ScalarProperty Name="ShortNameEn" ColumnName="ShortNameEn" />
+            <ScalarProperty Name="Phone" ColumnName="Phone" />
+            <ScalarProperty Name="Email" ColumnName="Email" />
+            <ScalarProperty Name="Fax" ColumnName="Fax" />
+            <ScalarProperty Name="Website" ColumnName="Website" />
+            <ScalarProperty Name="IsPublished" ColumnName="IsPublished" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="StockBalances"><EntityTypeMapping TypeName="StockCore.Models.StockBalance"><MappingFragment StoreEntitySet="StockBalance">
+            <ScalarProperty Name="SubCustAccountID" ColumnName="SubCustAccountID" />
+            <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
+            <ScalarProperty Name="Available" ColumnName="Available" />
+            <ScalarProperty Name="Total" ColumnName="Total" />
+            <ScalarProperty Name="WTR_T1" ColumnName="WTR_T1" />
+            <ScalarProperty Name="WTR_T2" ColumnName="WTR_T2" />
+            <ScalarProperty Name="WTS_T1" ColumnName="WTS_T1" />
+            <ScalarProperty Name="WTS_T2" ColumnName="WTS_T2" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="SubCustAccounts"><EntityTypeMapping TypeName="StockCore.Models.SubCustAccount"><MappingFragment StoreEntitySet="SubCustAccount">
+            <ScalarProperty Name="SubCustAccountID" ColumnName="SubCustAccountID" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Actived" ColumnName="Actived" />
+            <ScalarProperty Name="LockAccountReason" ColumnName="LockAccountReason" />
+            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+            <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+            <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+            <ScalarProperty Name="UpdatedUser" ColumnName="UpdatedUser" />
+            <ScalarProperty Name="WithDraw" ColumnName="WithDraw" />
+            <ScalarProperty Name="BuyCredit" ColumnName="BuyCredit" />
+            <ScalarProperty Name="TotalBuy" ColumnName="TotalBuy" />
+            <ScalarProperty Name="TotalSell" ColumnName="TotalSell" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="UpComMarketInfoes"><EntityTypeMapping TypeName="StockCore.Models.UpComMarketInfo"><MappingFragment StoreEntitySet="UpComMarketInfo">
+            <ScalarProperty Name="id" ColumnName="id" />
+            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+            <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
+            <ScalarProperty Name="TotalTrade" ColumnName="TotalTrade" />
+            <ScalarProperty Name="Totalshare" ColumnName="Totalshare" />
+            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+            <ScalarProperty Name="Advances" ColumnName="Advances" />
+            <ScalarProperty Name="Nochange" ColumnName="Nochange" />
+            <ScalarProperty Name="Declines" ColumnName="Declines" />
+            <ScalarProperty Name="OpenIndex" ColumnName="OpenIndex" />
+            <ScalarProperty Name="Status" ColumnName="Status" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="UpComMarketInfoHists"><EntityTypeMapping TypeName="StockCore.Models.UpComMarketInfoHist"><MappingFragment StoreEntitySet="UpComMarketInfoHist">
+            <ScalarProperty Name="id" ColumnName="id" />
+            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+            <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
+            <ScalarProperty Name="TotalTrade" ColumnName="TotalTrade" />
+            <ScalarProperty Name="Totalshare" ColumnName="Totalshare" />
+            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+            <ScalarProperty Name="Advances" ColumnName="Advances" />
+            <ScalarProperty Name="Nochange" ColumnName="Nochange" />
+            <ScalarProperty Name="Declines" ColumnName="Declines" />
+            <ScalarProperty Name="OpenIndex" ColumnName="OpenIndex" />
+            <ScalarProperty Name="Status" ColumnName="Status" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="UpComStockInfoes"><EntityTypeMapping TypeName="StockCore.Models.UpComStockInfo"><MappingFragment StoreEntitySet="UpComStockInfo">
+            <ScalarProperty Name="id" ColumnName="id" />
+            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+            <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
+            <ScalarProperty Name="Floor" ColumnName="Floor" />
+            <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
+            <ScalarProperty Name="Last" ColumnName="Last" />
+            <ScalarProperty Name="LastVol" ColumnName="LastVol" />
+            <ScalarProperty Name="LastVal" ColumnName="LastVal" />
+            <ScalarProperty Name="Highest" ColumnName="Highest" />
+            <ScalarProperty Name="Lowest" ColumnName="Lowest" />
+            <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
+            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+            <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
+            <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
+            <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
+            <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
+            <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
+            <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
+            <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
+            <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
+            <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
+            <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
+            <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
+            <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
+            <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
+            <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="UpComStockInfoHists"><EntityTypeMapping TypeName="StockCore.Models.UpComStockInfoHist"><MappingFragment StoreEntitySet="UpComStockInfoHist">
+            <ScalarProperty Name="id" ColumnName="id" />
+            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+            <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
+            <ScalarProperty Name="Floor" ColumnName="Floor" />
+            <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
+            <ScalarProperty Name="Last" ColumnName="Last" />
+            <ScalarProperty Name="LastVol" ColumnName="LastVol" />
+            <ScalarProperty Name="LastVal" ColumnName="LastVal" />
+            <ScalarProperty Name="Highest" ColumnName="Highest" />
+            <ScalarProperty Name="Lowest" ColumnName="Lowest" />
+            <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
+            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+            <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
+            <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
+            <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
+            <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
+            <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
+            <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
+            <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
+            <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
+            <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
+            <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
+            <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
+            <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
+            <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
+            <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <AssociationSetMapping Name="FK__CompanyIn__Marke__2E1BDC42" TypeName="StockCore.Models.FK__CompanyIn__Marke__2E1BDC42" StoreEntitySet="CompanyInfo">
+            <EndProperty Name="Market">
+              <ScalarProperty Name="Id" ColumnName="MarketId" />
+            </EndProperty>
+            <EndProperty Name="CompanyInfo">
+              <ScalarProperty Name="Code" ColumnName="Code" />
+            </EndProperty>
+            <Condition ColumnName="MarketId" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__HNXStockI__Stock__22751F6C" TypeName="StockCore.Models.FK__HNXStockI__Stock__22751F6C" StoreEntitySet="HNXStockInfo">
+            <EndProperty Name="CompanyInfo">
+              <ScalarProperty Name="Code" ColumnName="StockSymbol" />
+            </EndProperty>
+            <EndProperty Name="HNXStockInfo">
+              <ScalarProperty Name="id" ColumnName="id" />
+              <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+              <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
+              <ScalarProperty Name="Floor" ColumnName="Floor" />
+              <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
+              <ScalarProperty Name="Last" ColumnName="Last" />
+              <ScalarProperty Name="LastVol" ColumnName="LastVol" />
+              <ScalarProperty Name="LastVal" ColumnName="LastVal" />
+              <ScalarProperty Name="Highest" ColumnName="Highest" />
+              <ScalarProperty Name="Lowest" ColumnName="Lowest" />
+              <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
+              <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+              <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
+              <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
+              <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
+              <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
+              <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
+              <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
+              <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
+              <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
+              <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
+              <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
+              <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
+              <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
+              <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
+              <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
+            </EndProperty>
+            <Condition ColumnName="StockSymbol" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__HNXStockI__Stock__6FB49575" TypeName="StockCore.Models.FK__HNXStockI__Stock__6FB49575" StoreEntitySet="HNXStockInfoHist">
+            <EndProperty Name="CompanyInfo">
+              <ScalarProperty Name="Code" ColumnName="StockSymbol" />
+            </EndProperty>
+            <EndProperty Name="HNXStockInfoHist">
+              <ScalarProperty Name="id" ColumnName="id" />
+              <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+              <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
+              <ScalarProperty Name="Floor" ColumnName="Floor" />
+              <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
+              <ScalarProperty Name="Last" ColumnName="Last" />
+              <ScalarProperty Name="LastVol" ColumnName="LastVol" />
+              <ScalarProperty Name="LastVal" ColumnName="LastVal" />
+              <ScalarProperty Name="Highest" ColumnName="Highest" />
+              <ScalarProperty Name="Lowest" ColumnName="Lowest" />
+              <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
+              <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+              <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
+              <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
+              <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
+              <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
+              <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
+              <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
+              <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
+              <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
+              <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
+              <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
+              <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
+              <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
+              <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
+              <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
+            </EndProperty>
+            <Condition ColumnName="StockSymbol" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__HoseStock__Stock__08B54D69" TypeName="StockCore.Models.FK__HoseStock__Stock__08B54D69" StoreEntitySet="HoseStockInfo">
+            <EndProperty Name="CompanyInfo">
+              <ScalarProperty Name="Code" ColumnName="StockSymbol" />
+            </EndProperty>
+            <EndProperty Name="HoseStockInfo">
+              <ScalarProperty Name="id" ColumnName="id" />
+              <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+              <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
+              <ScalarProperty Name="Floor" ColumnName="Floor" />
+              <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
+              <ScalarProperty Name="Last" ColumnName="Last" />
+              <ScalarProperty Name="LastVol" ColumnName="LastVol" />
+              <ScalarProperty Name="LastVal" ColumnName="LastVal" />
+              <ScalarProperty Name="Highest" ColumnName="Highest" />
+              <ScalarProperty Name="Lowest" ColumnName="Lowest" />
+              <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
+              <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+              <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
+              <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
+              <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
+              <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
+              <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
+              <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
+              <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
+              <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
+              <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
+              <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
+              <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
+              <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
+              <ScalarProperty Name="CurrentRoom" ColumnName="CurrentRoom" />
+              <ScalarProperty Name="StartRoom" ColumnName="StartRoom" />
+            </EndProperty>
+            <Condition ColumnName="StockSymbol" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__HoseStock__Stock__55F4C372" TypeName="StockCore.Models.FK__HoseStock__Stock__55F4C372" StoreEntitySet="HoseStockInfoHist">
+            <EndProperty Name="CompanyInfo">
+              <ScalarProperty Name="Code" ColumnName="StockSymbol" />
+            </EndProperty>
+            <EndProperty Name="HoseStockInfoHist">
+              <ScalarProperty Name="id" ColumnName="id" />
+              <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+              <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
+              <ScalarProperty Name="Floor" ColumnName="Floor" />
+              <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
+              <ScalarProperty Name="Last" ColumnName="Last" />
+              <ScalarProperty Name="LastVol" ColumnName="LastVol" />
+              <ScalarProperty Name="LastVal" ColumnName="LastVal" />
+              <ScalarProperty Name="Highest" ColumnName="Highest" />
+              <ScalarProperty Name="Lowest" ColumnName="Lowest" />
+              <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
+              <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+              <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
+              <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
+              <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
+              <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
+              <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
+              <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
+              <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
+              <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
+              <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
+              <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
+              <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
+              <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
+              <ScalarProperty Name="CurrentRoom" ColumnName="CurrentRoom" />
+              <ScalarProperty Name="StartRoom" ColumnName="StartRoom" />
+            </EndProperty>
+            <Condition ColumnName="StockSymbol" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__Matched__StockSy__61316BF4" TypeName="StockCore.Models.FK__Matched__StockSy__61316BF4" StoreEntitySet="Matched">
+            <EndProperty Name="CompanyInfo">
+              <ScalarProperty Name="Code" ColumnName="StockSymbol" />
+            </EndProperty>
+            <EndProperty Name="Matched">
+              <ScalarProperty Name="Price" ColumnName="Price" />
+              <ScalarProperty Name="Amount" ColumnName="Amount" />
+              <ScalarProperty Name="DateMatched" ColumnName="DateMatched" />
+            </EndProperty>
+            <Condition ColumnName="StockSymbol" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__StockBala__Stock__57A801BA" TypeName="StockCore.Models.FK__StockBala__Stock__57A801BA" StoreEntitySet="StockBalance">
+            <EndProperty Name="CompanyInfo">
+              <ScalarProperty Name="Code" ColumnName="StockSymbol" />
+            </EndProperty>
+            <EndProperty Name="StockBalance">
+              <ScalarProperty Name="SubCustAccountID" ColumnName="SubCustAccountID" />
+              <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__UpComStoc__Stock__09746778" TypeName="StockCore.Models.FK__UpComStoc__Stock__09746778" StoreEntitySet="UpComStockInfoHist">
+            <EndProperty Name="CompanyInfo">
+              <ScalarProperty Name="Code" ColumnName="StockSymbol" />
+            </EndProperty>
+            <EndProperty Name="UpComStockInfoHist">
+              <ScalarProperty Name="id" ColumnName="id" />
+              <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+              <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
+              <ScalarProperty Name="Floor" ColumnName="Floor" />
+              <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
+              <ScalarProperty Name="Last" ColumnName="Last" />
+              <ScalarProperty Name="LastVol" ColumnName="LastVol" />
+              <ScalarProperty Name="LastVal" ColumnName="LastVal" />
+              <ScalarProperty Name="Highest" ColumnName="Highest" />
+              <ScalarProperty Name="Lowest" ColumnName="Lowest" />
+              <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
+              <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+              <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
+              <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
+              <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
+              <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
+              <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
+              <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
+              <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
+              <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
+              <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
+              <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
+              <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
+              <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
+              <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
+              <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
+            </EndProperty>
+            <Condition ColumnName="StockSymbol" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__UpComStoc__Stock__3C34F16F" TypeName="StockCore.Models.FK__UpComStoc__Stock__3C34F16F" StoreEntitySet="UpComStockInfo">
+            <EndProperty Name="CompanyInfo">
+              <ScalarProperty Name="Code" ColumnName="StockSymbol" />
+            </EndProperty>
+            <EndProperty Name="UpComStockInfo">
+              <ScalarProperty Name="id" ColumnName="id" />
+              <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+              <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
+              <ScalarProperty Name="Floor" ColumnName="Floor" />
+              <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
+              <ScalarProperty Name="Last" ColumnName="Last" />
+              <ScalarProperty Name="LastVol" ColumnName="LastVol" />
+              <ScalarProperty Name="LastVal" ColumnName="LastVal" />
+              <ScalarProperty Name="Highest" ColumnName="Highest" />
+              <ScalarProperty Name="Lowest" ColumnName="Lowest" />
+              <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
+              <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+              <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
+              <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
+              <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
+              <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
+              <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
+              <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
+              <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
+              <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
+              <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
+              <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
+              <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
+              <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
+              <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
+              <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
+            </EndProperty>
+            <Condition ColumnName="StockSymbol" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__HNXMarket__Marke__4AB81AF0" TypeName="StockCore.Models.FK__HNXMarket__Marke__4AB81AF0" StoreEntitySet="HNXMarketInfo">
+            <EndProperty Name="Market">
+              <ScalarProperty Name="Id" ColumnName="MarketId" />
+            </EndProperty>
+            <EndProperty Name="HNXMarketInfo">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+            <Condition ColumnName="MarketId" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__HNXMarket__Marke__75A278F5" TypeName="StockCore.Models.FK__HNXMarket__Marke__75A278F5" StoreEntitySet="HNXMarketInfoHist">
+            <EndProperty Name="Market">
+              <ScalarProperty Name="Id" ColumnName="MarketId" />
+            </EndProperty>
+            <EndProperty Name="HNXMarketInfoHist">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+            <Condition ColumnName="MarketId" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__HoseMarke__Marke__3D5E1FD2" TypeName="StockCore.Models.FK__HoseMarke__Marke__3D5E1FD2" StoreEntitySet="HoseMarketInfo">
+            <EndProperty Name="Market">
+              <ScalarProperty Name="Id" ColumnName="MarketId" />
+            </EndProperty>
+            <EndProperty Name="HoseMarketInfo">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+            <Condition ColumnName="MarketId" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__HoseMarke__Marke__68487DD7" TypeName="StockCore.Models.FK__HoseMarke__Marke__68487DD7" StoreEntitySet="HoseMarketInfoHist">
+            <EndProperty Name="Market">
+              <ScalarProperty Name="Id" ColumnName="MarketId" />
+            </EndProperty>
+            <EndProperty Name="HoseMarketInfoHist">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+            <Condition ColumnName="MarketId" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__SubCustAc__MainC__4E1E9780" TypeName="StockCore.Models.FK__SubCustAc__MainC__4E1E9780" StoreEntitySet="SubCustAccount">
+            <EndProperty Name="MainCustAccount">
+              <ScalarProperty Name="MainCustAccountID" ColumnName="MainCustAccountID" />
+            </EndProperty>
+            <EndProperty Name="SubCustAccount">
+              <ScalarProperty Name="SubCustAccountID" ColumnName="SubCustAccountID" />
+            </EndProperty>
+            <Condition ColumnName="MainCustAccountID" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__UpComMark__Marke__02FC7413" TypeName="StockCore.Models.FK__UpComMark__Marke__02FC7413" StoreEntitySet="UpComMarketInfoHist">
+            <EndProperty Name="Market">
+              <ScalarProperty Name="Id" ColumnName="Marketid" />
+            </EndProperty>
+            <EndProperty Name="UpComMarketInfoHist">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+            <Condition ColumnName="Marketid" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__UpComMark__Marke__5812160E" TypeName="StockCore.Models.FK__UpComMark__Marke__5812160E" StoreEntitySet="UpComMarketInfo">
+            <EndProperty Name="Market">
+              <ScalarProperty Name="Id" ColumnName="Marketid" />
+            </EndProperty>
+            <EndProperty Name="UpComMarketInfo">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+            <Condition ColumnName="Marketid" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__Matched__SubCust__5F492382" TypeName="StockCore.Models.FK__Matched__SubCust__5F492382" StoreEntitySet="Matched">
+            <EndProperty Name="SubCustAccount">
+              <ScalarProperty Name="SubCustAccountID" ColumnName="SubCustAccountIDSell" />
+            </EndProperty>
+            <EndProperty Name="Matched">
+              <ScalarProperty Name="Price" ColumnName="Price" />
+              <ScalarProperty Name="Amount" ColumnName="Amount" />
+              <ScalarProperty Name="DateMatched" ColumnName="DateMatched" />
+            </EndProperty>
+            <Condition ColumnName="SubCustAccountIDSell" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__Matched__SubCust__603D47BB" TypeName="StockCore.Models.FK__Matched__SubCust__603D47BB" StoreEntitySet="Matched">
+            <EndProperty Name="SubCustAccount">
+              <ScalarProperty Name="SubCustAccountID" ColumnName="SubCustAccountIDBuy" />
+            </EndProperty>
+            <EndProperty Name="Matched">
+              <ScalarProperty Name="Price" ColumnName="Price" />
+              <ScalarProperty Name="Amount" ColumnName="Amount" />
+              <ScalarProperty Name="DateMatched" ColumnName="DateMatched" />
+            </EndProperty>
+            <Condition ColumnName="SubCustAccountIDBuy" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__StockBala__SubCu__56B3DD81" TypeName="StockCore.Models.FK__StockBala__SubCu__56B3DD81" StoreEntitySet="StockBalance">
+            <EndProperty Name="SubCustAccount">
+              <ScalarProperty Name="SubCustAccountID" ColumnName="SubCustAccountID" />
+            </EndProperty>
+            <EndProperty Name="StockBalance">
+              <ScalarProperty Name="SubCustAccountID" ColumnName="SubCustAccountID" />
+              <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="DataStockCore">
+        <EntityTypeShape EntityType="StockCore.Models.CompanyInfo" Width="1.5" PointX="3" PointY="27.25" Height="4.2879036458333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockCore.Models.HNXMarketInfo" Width="1.5" PointX="3" PointY="50.625" Height="3.326396484374996" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockCore.Models.HNXMarketInfoHist" Width="1.5" PointX="3" PointY="54.75" Height="3.326396484374996" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockCore.Models.HNXStockInfo" Width="1.5" PointX="5.25" PointY="8.875" Height="6.2109179687500031" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockCore.Models.HNXStockInfoHist" Width="1.5" PointX="5.25" PointY="15.875" Height="6.2109179687500031" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockCore.Models.HoseMarketInfo" Width="1.5" PointX="3" PointY="58.875" Height="3.7109993489583246" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockCore.Models.HoseMarketInfoHist" Width="1.5" PointX="3" PointY="63.25" Height="3.7109993489583246" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockCore.Models.HoseStockInfo" Width="1.5" PointX="5.25" PointY="22.875" Height="6.2109179687500031" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockCore.Models.HoseStockInfoHist" Width="1.5" PointX="5.25" PointY="29.75" Height="6.2109179687500031" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockCore.Models.MainCustAccount" Width="1.5" PointX="3.75" PointY="0.75" Height="6.5955208333333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockCore.Models.Market" Width="1.5" PointX="0.75" PointY="40.625" Height="2.7494921875000102" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockCore.Models.Matched" Width="1.5" PointX="8.25" PointY="28.375" Height="2.1725878906250031" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockCore.Models.MemberStockCompany" Width="1.5" PointX="0.75" PointY="1.875" Height="2.5571907552083388" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockCore.Models.StockBalance" Width="1.5" PointX="8.25" PointY="23.875" Height="2.9417936197916674" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockCore.Models.SubCustAccount" Width="1.5" PointX="6" PointY="2.375" Height="4.0956022135416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockCore.Models.UpComMarketInfo" Width="1.5" PointX="3" PointY="67.75" Height="3.3263964843750102" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockCore.Models.UpComMarketInfoHist" Width="1.5" PointX="3" PointY="71.875" Height="3.3263964843750102" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockCore.Models.UpComStockInfo" Width="1.5" PointX="5.25" PointY="43.375" Height="6.21091796875001" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockCore.Models.UpComStockInfoHist" Width="1.5" PointX="5.25" PointY="50.375" Height="6.210917968749996" IsExpanded="true" />
+        <AssociationConnector Association="StockCore.Models.FK__CompanyIn__Marke__2E1BDC42" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.5" PointY="40.625" />
+          <ConnectorPoint PointX="1.5" PointY="29.393951822916666" />
+          <ConnectorPoint PointX="3" PointY="29.393951822916666" />
+        </AssociationConnector>
+        <AssociationConnector Association="StockCore.Models.FK__HNXStockI__Stock__22751F6C" ManuallyRouted="false">
+          <ConnectorPoint PointX="3.75" PointY="27.25" />
+          <ConnectorPoint PointX="3.75" PointY="11.980458984375002" />
+          <ConnectorPoint PointX="5.25" PointY="11.980458984375002" />
+        </AssociationConnector>
+        <AssociationConnector Association="StockCore.Models.FK__HNXStockI__Stock__6FB49575" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.1562525" PointY="27.25" />
+          <ConnectorPoint PointX="4.1562525" PointY="18.980458984375" />
+          <ConnectorPoint PointX="5.25" PointY="18.980458984375" />
+        </AssociationConnector>
+        <AssociationConnector Association="StockCore.Models.FK__HoseStock__Stock__08B54D69" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="28.167958984375" />
+          <ConnectorPoint PointX="5.25" PointY="28.167958984375" />
+        </AssociationConnector>
+        <AssociationConnector Association="StockCore.Models.FK__HoseStock__Stock__55F4C372" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="30.643951822916666" />
+          <ConnectorPoint PointX="5.25" PointY="30.643951822916666" />
+        </AssociationConnector>
+        <AssociationConnector Association="StockCore.Models.FK__Matched__StockSy__61316BF4" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="29.417958984375" />
+          <ConnectorPoint PointX="7.072916666666667" PointY="29.417958984375" />
+          <ConnectorPoint PointX="7.239583333333333" PointY="29.417958984375" />
+          <ConnectorPoint PointX="8.25" PointY="29.417958984375" />
+        </AssociationConnector>
+        <AssociationConnector Association="StockCore.Models.FK__StockBala__Stock__57A801BA" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="29.2519359765625" />
+          <ConnectorPoint PointX="7.072916666666667" PointY="29.2519359765625" />
+          <ConnectorPoint PointX="7.239583333333333" PointY="29.2519359765625" />
+          <ConnectorPoint PointX="8" PointY="29.2519359765625" />
+          <ConnectorPoint PointX="8" PointY="28.125" />
+          <ConnectorPoint PointX="9" PointY="28.125" />
+          <ConnectorPoint PointX="9" PointY="26.816793619791667" />
+        </AssociationConnector>
+        <AssociationConnector Association="StockCore.Models.FK__UpComStoc__Stock__09746778" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="31.537903645833332" />
+          <ConnectorPoint PointX="4.875" PointY="31.912903645833332" />
+          <ConnectorPoint PointX="4.875" PointY="53.480458984375" />
+          <ConnectorPoint PointX="5.25" PointY="53.480458984375" />
+        </AssociationConnector>
+        <AssociationConnector Association="StockCore.Models.FK__UpComStoc__Stock__3C34F16F" ManuallyRouted="false">
+          <ConnectorPoint PointX="3.7187475" PointY="31.537903645833332" />
+          <ConnectorPoint PointX="3.7187475" PointY="46.480458984375005" />
+          <ConnectorPoint PointX="4.791666666666667" PointY="46.480458984375005" />
+          <ConnectorPoint PointX="4.958333333333333" PointY="46.480458984375005" />
+          <ConnectorPoint PointX="5.25" PointY="46.480458984375005" />
+        </AssociationConnector>
+        <AssociationConnector Association="StockCore.Models.FK__HNXMarket__Marke__4AB81AF0" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.5" PointY="43.37449218750001" />
+          <ConnectorPoint PointX="1.5" PointY="52.2881982421875" />
+          <ConnectorPoint PointX="1.6197929166666667" PointY="52.2881982421875" />
+          <ConnectorPoint PointX="1.7864595833333332" PointY="52.2881982421875" />
+          <ConnectorPoint PointX="1.8229191666666667" PointY="52.2881982421875" />
+          <ConnectorPoint PointX="1.9895858333333332" PointY="52.2881982421875" />
+          <ConnectorPoint PointX="2.0260454166666664" PointY="52.2881982421875" />
+          <ConnectorPoint PointX="2.1927120833333333" PointY="52.2881982421875" />
+          <ConnectorPoint PointX="3" PointY="52.2881982421875" />
+        </AssociationConnector>
+        <AssociationConnector Association="StockCore.Models.FK__HNXMarket__Marke__75A278F5" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.9062525" PointY="43.37449218750001" />
+          <ConnectorPoint PointX="1.9062525" PointY="56.4131982421875" />
+          <ConnectorPoint PointX="2.0260454166666664" PointY="56.4131982421875" />
+          <ConnectorPoint PointX="2.1927120833333333" PointY="56.4131982421875" />
+          <ConnectorPoint PointX="3" PointY="56.4131982421875" />
+        </AssociationConnector>
+        <AssociationConnector Association="StockCore.Models.FK__HoseMarke__Marke__3D5E1FD2" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.0937475" PointY="43.37449218750001" />
+          <ConnectorPoint PointX="1.0937475" PointY="60.730499674479162" />
+          <ConnectorPoint PointX="1.2135404166666668" PointY="60.730499674479162" />
+          <ConnectorPoint PointX="1.3802070833333333" PointY="60.730499674479162" />
+          <ConnectorPoint PointX="1.6197929166666667" PointY="60.730499674479162" />
+          <ConnectorPoint PointX="1.7864595833333332" PointY="60.730499674479162" />
+          <ConnectorPoint PointX="2.0260454166666664" PointY="60.730499674479162" />
+          <ConnectorPoint PointX="2.1927120833333333" PointY="60.730499674479162" />
+          <ConnectorPoint PointX="3" PointY="60.730499674479162" />
+        </AssociationConnector>
+        <AssociationConnector Association="StockCore.Models.FK__HoseMarke__Marke__68487DD7" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.10937875" PointY="43.37449218750001" />
+          <ConnectorPoint PointX="2.10937875" PointY="65.105499674479162" />
+          <ConnectorPoint PointX="3" PointY="65.105499674479162" />
+        </AssociationConnector>
+        <AssociationConnector Association="StockCore.Models.FK__SubCustAc__MainC__4E1E9780" ManuallyRouted="false">
+          <ConnectorPoint PointX="5.25" PointY="4.4228011067708337" />
+          <ConnectorPoint PointX="6" PointY="4.4228011067708337" />
+        </AssociationConnector>
+        <AssociationConnector Association="StockCore.Models.FK__UpComMark__Marke__02FC7413" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.70312625" PointY="43.37449218750001" />
+          <ConnectorPoint PointX="1.70312625" PointY="73.5381982421875" />
+          <ConnectorPoint PointX="3" PointY="73.5381982421875" />
+        </AssociationConnector>
+        <AssociationConnector Association="StockCore.Models.FK__UpComMark__Marke__5812160E" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.29687375" PointY="43.37449218750001" />
+          <ConnectorPoint PointX="1.29687375" PointY="69.4131982421875" />
+          <ConnectorPoint PointX="1.6197929166666667" PointY="69.4131982421875" />
+          <ConnectorPoint PointX="1.7864595833333332" PointY="69.4131982421875" />
+          <ConnectorPoint PointX="3" PointY="69.4131982421875" />
+        </AssociationConnector>
+        <AssociationConnector Association="StockCore.Models.FK__Matched__SubCust__5F492382" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.15625" PointY="6.4706022135416674" />
+          <ConnectorPoint PointX="7.15625" PointY="29.583981992187503" />
+          <ConnectorPoint PointX="8.25" PointY="29.583981992187503" />
+        </AssociationConnector>
+        <AssociationConnector Association="StockCore.Models.FK__Matched__SubCust__603D47BB" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.3593775" PointY="6.4706022135416674" />
+          <ConnectorPoint PointX="7.3593775" PointY="29.200176972656251" />
+          <ConnectorPoint PointX="8.25" PointY="29.200176972656251" />
+        </AssociationConnector>
+        <AssociationConnector Association="StockCore.Models.FK__StockBala__SubCu__56B3DD81" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.5" PointY="4.4228011067708337" />
+          <ConnectorPoint PointX="9" PointY="4.4228011067708337" />
+          <ConnectorPoint PointX="9" PointY="23.875" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DD882392-A38A-49D3-8CFF-BBF0F6270183}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>StockCore.Models</RootNamespace>
+    <AssemblyName>StockCore.Models</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\..\..\..\..\OTS\SMSMedicalRegister\source\trunk\SMSMedicalRegisterWCF\SMSMedicalRegister.Models\bin\Debug\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CompanyInfo.cs">
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataStockCore.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataStockCore.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataStockCore.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataStockCore.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataStockCore.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="HNXMarketInfo.cs">
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HNXMarketInfoHist.cs">
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HNXStockInfo.cs">
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HNXStockInfoHist.cs">
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HoseMarketInfo.cs">
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HoseMarketInfoHist.cs">
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HoseStockInfo.cs">
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HoseStockInfoHist.cs">
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MainCustAccount.cs">
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Market.cs">
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Matched.cs">
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberStockCompany.cs">
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StockBalance.cs">
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubCustAccount.cs">
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UpComMarketInfo.cs">
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UpComMarketInfoHist.cs">
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UpComStockInfo.cs">
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UpComStockInfoHist.cs">
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="DataStockCore.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DataStockCore.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataStockCore.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DataStockCore.Context.cs</LastGenOutput>
+    </None>
+    <None Include="DataStockCore.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DataStockCore.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
