@@ -51,6 +51,7 @@ namespace Updater
                 {
                     _hoseStatus = false;
                 }
+                Thread.Sleep(100);
             }
         }
         private void SetBackColorStatus(Panel panel,bool status)
@@ -93,9 +94,6 @@ namespace Updater
                 tmStatus.Start();
                 threadHoseMarket = new Thread(GetHOSEMarketData);
                 threadHoseMarket.Start();
-                //GetHOSEMarketData();
-                //GetHNXMarketData();
-                //GetUpComMarketData();
             }
             else
             {

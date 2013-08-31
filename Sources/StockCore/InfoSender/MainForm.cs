@@ -12,6 +12,7 @@ namespace StockCore.InfoSender
     public partial class MainForm : Form
     {
         private bool _status = true;
+
         public MainForm()
         {
             InitializeComponent();
@@ -83,7 +84,8 @@ namespace StockCore.InfoSender
         private void tmAction_Tick(object sender, EventArgs e)
         {
             InfoSender.Entities.SendData senData = new Entities.SendData();
-            senData.SendMarketData(_listIP,ref _status);
+            senData.SendMarketData(_listIP,ref _status);            
+            
             if (pnStatus.BackColor == Color.DodgerBlue)
             {
                 pnStatus.BackColor = Color.Transparent;

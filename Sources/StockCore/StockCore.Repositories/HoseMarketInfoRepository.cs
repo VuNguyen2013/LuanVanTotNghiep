@@ -31,7 +31,7 @@ namespace StockCore.Repositories
                           Nochange = item.Nochange,
                           Status = item.Status
                     };
-                
+                result.Add(hoseMarketInfoData);
             }
             return result;
         }

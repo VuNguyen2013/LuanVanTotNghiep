@@ -137,7 +137,7 @@
             // 
             // tmStatus
             // 
-            this.tmStatus.Interval = 600;
+            this.tmStatus.Interval = 2000;
             this.tmStatus.Tick += new System.EventHandler(this.tmStatus_Tick);
             // 
             // MainForm

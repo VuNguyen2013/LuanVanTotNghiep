@@ -31,21 +31,21 @@ namespace StockCore.InfoSender.Entities
 
         public void SendMarketData(List<string> listIP,ref bool status)
         {
-            //server send data via UPD
+            
             foreach (var ipStr in listIP)
             {
+                //server send  hose data via UPD
                 IPAddress ipAddress = IPAddress.Parse(ipStr);
                 IPEndPoint ipEndPoint = new IPEndPoint(ipAddress, HoseMarketPort);
 
                 HoseMarketInfoRepository hoseRepo = new HoseMarketInfoRepository();
-                var data = hoseRepo.GetAll();
+                var hoseData = hoseRepo.GetAll();
 
-                byte[] content = Encoding.ASCII.GetBytes(_serialization.Serialize(data));
+                byte[] hoseContent = Encoding.ASCII.GetBytes(_serialization.Serialize(hoseData));
                 UdpClient udpClient = new UdpClient();
                 try
                 {
-                    udpClient.Send(content, content.Length, ipEndPoint);
-                    udpClient.Close();
+                    udpClient.Send(hoseContent, hoseContent.Length, ipEndPoint);
                     status = true;
                 }
                 catch 
@@ -53,7 +53,45 @@ namespace StockCore.InfoSender.Entities
                     status = false;
                     throw;
                 }
-            }
+
+                //server send  hnx data via UPD
+                ipEndPoint = new IPEndPoint(ipAddress, HNXMarketPort);
+
+                HNXMarketInfoRepository hnxRepo = new HNXMarketInfoRepository();
+                var hnxData = hoseRepo.GetAll();
+
+                byte[] hnxContent = Encoding.ASCII.GetBytes(_serialization.Serialize(hnxData));
+                try
+                {
+                    udpClient.Send(hnxContent, hnxContent.Length, ipEndPoint);
+                    status = true;
+                }
+                catch 
+                {
+                    status = false;
+                    throw;
+                }
+
+                //server send  upcom data via UPD
+                ipEndPoint = new IPEndPoint(ipAddress, UpComMarketPort);
+
+                HNXMarketInfoRepository upcomRepo = new HNXMarketInfoRepository();
+                var upcomData = hoseRepo.GetAll();
+
+                byte[] upcomContent = Encoding.ASCII.GetBytes(_serialization.Serialize(hnxData));
+                try
+                {
+                    udpClient.Send(upcomContent, upcomContent.Length, ipEndPoint);
+                    status = true;
+                }
+                catch
+                {
+                    status = false;
+                    throw;
+                }
+            
+            }           
+        
         }
     }
 }
