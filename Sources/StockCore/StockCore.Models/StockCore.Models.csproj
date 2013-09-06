@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CashTempDeduction.cs">
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
     <Compile Include="CompanyInfo.cs">
       <DependentUpon>DataStockCore.tt</DependentUpon>
     </Compile>
@@ -100,8 +103,14 @@
     <Compile Include="MemberStockCompany.cs">
       <DependentUpon>DataStockCore.tt</DependentUpon>
     </Compile>
+    <Compile Include="Order.cs">
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StockBalance.cs">
+      <DependentUpon>DataStockCore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockTempDeduction.cs">
       <DependentUpon>DataStockCore.tt</DependentUpon>
     </Compile>
     <Compile Include="SubCustAccount.cs">
@@ -121,15 +130,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
     <EntityDeploy Include="DataStockCore.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DataStockCore.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="DataStockCore.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DataStockCore.Context.cs</LastGenOutput>

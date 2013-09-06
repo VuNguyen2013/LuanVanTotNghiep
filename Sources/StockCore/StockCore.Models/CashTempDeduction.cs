@@ -12,16 +12,16 @@ using System.Collections.Generic;
 
 namespace StockCore.Models
 {
-    public partial class Matched
+    public partial class CashTempDeduction
     {
-        public long OrderSellID { get; set; }
-        public long OrderBuyID { get; set; }
-        public long MatchedPrice { get; set; }
-        public short MatchedVol { get; set; }
-        public System.DateTime DateMatched { get; set; }
+        public long ID { get; set; }
+        public string AccountNo { get; set; }
+        public long Amount { get; set; }
+        public System.DateTime DeductedDate { get; set; }
+        public short Status { get; set; }
+        public bool IsAdd { get; set; }
     
-        public virtual Order Order { get; set; }
-        public virtual Order Order1 { get; set; }
+        public virtual SubCustAccount SubCustAccount { get; set; }
     }
     
 }

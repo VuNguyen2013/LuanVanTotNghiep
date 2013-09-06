@@ -16,6 +16,7 @@ namespace StockCore.Models
     {
         public long id { get; set; }
         public System.DateTime TradeDate { get; set; }
+        public string StockSymbol { get; set; }
         public long Ceiling { get; set; }
         public long Floor { get; set; }
         public long AvrPrice { get; set; }

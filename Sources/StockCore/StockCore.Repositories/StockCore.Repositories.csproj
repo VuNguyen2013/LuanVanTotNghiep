@@ -37,16 +37,26 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CashDeductRepository.cs" />
     <Compile Include="HNXMarketInfoRepository.cs" />
+    <Compile Include="HNXStockInfoRepository.cs" />
     <Compile Include="HoseMarketInfoRepository.cs" />
+    <Compile Include="HoseStockInfoRepository.cs" />
+    <Compile Include="MatchedRepository.cs" />
+    <Compile Include="OrderRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StockBalanceRespository.cs" />
+    <Compile Include="StockDeductRepository.cs" />
+    <Compile Include="SubCustAccountRepository.cs" />
     <Compile Include="UpcomMarketInfoRepository.cs" />
+    <Compile Include="UpComStockInfoRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StockCore.Common\StockCore.Common.csproj">

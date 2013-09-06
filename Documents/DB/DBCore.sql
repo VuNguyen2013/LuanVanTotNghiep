@@ -225,10 +225,42 @@ create table StockBalance
 )
 create table [Matched]
 (
-	[SubCustAccountIDSell] varchar(20) foreign key references [SubCustAccount]([SubCustAccountID]),
-	[SubCustAccountIDBuy] varchar(20) foreign key references [SubCustAccount]([SubCustAccountID]),
-	[StockSymbol] varchar(10)foreign key references CompanyInfo(Code),
-	Price bigint not null,
-	Amount smallint not null,
+	OrderSellID BIGINT NOT NULL FOREIGN KEY REFERENCES  [Order](Id),
+	OrderBuyID BIGINT NOT NULL FOREIGN KEY REFERENCES  [Order](Id),
+	MatchedPrice bigint not null,
+	MatchedVol smallint not null,
 	DateMatched datetime not null default getdate()
+)
+
+CREATE TABLE [Order]
+(
+	Id BIGINT IDENTITY(1,1) PRIMARY KEY,
+	AccountNo VARCHAR(20) FOREIGN KEY REFERENCES dbo.SubCustAccount(SubCustAccountID),
+	StockSymbol VARCHAR(10) FOREIGN KEY REFERENCES dbo.CompanyInfo(Code),
+	Price BIGINT NOT NULL,
+	Volume SMALLINT NOT NULL,
+	MatchedVol SMALLINT NOT NULL DEFAULT 0,
+	Side CHAR(1) NOT NULL,
+	TradeDate DATETIME NOT NULL DEFAULT GETDATE(),
+	[Status] SMALLINT NOT NULL,
+)
+
+CREATE TABLE CashTempDeduction
+(
+	ID BIGINT PRIMARY KEY IDENTITY(1,1),
+	AccountNo VARCHAR(20) FOREIGN KEY REFERENCES dbo.SubCustAccount(SubCustAccountID),
+	Amount BIGINT NOT NULL DEFAULT 0,
+	DeductedDate DATETIME NOT NULL DEFAULT GETDATE(),
+	[Status] SMALLINT NOT NULL,
+	IsAdd BIT NOT NULL
+)
+CREATE TABLE StockTempDeduction
+(
+	ID BIGINT PRIMARY KEY IDENTITY(1,1),
+	AccountNo VARCHAR(20) FOREIGN KEY REFERENCES dbo.SubCustAccount(SubCustAccountID),
+	StockSymbol VARCHAR(10) FOREIGN KEY REFERENCES dbo.CompanyInfo(Code),
+	Volume BIGINT NOT NULL DEFAULT 0,
+	DeductedDate DATETIME NOT NULL DEFAULT GETDATE(),
+	[Status] SMALLINT NOT NULL,
+	IsAdd BIT NOT NULL
 )

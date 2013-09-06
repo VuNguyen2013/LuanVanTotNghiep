@@ -3,22 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace Updater.Repository
 {
     public class HoseMarketInfoRepository
     {
+        private readonly string RTStockDataConnectionString = ConfigurationManager.ConnectionStrings["RTStockDataTest"].ConnectionString;
         public bool Insert(string content)
         {
             System.Web.Script.Serialization.JavaScriptSerializer _serialization = new System.Web.Script.Serialization.JavaScriptSerializer();
             var listData = _serialization.Deserialize<List<StockCore.Common.HoseMarketInfoData>>(content);
             try
             {
-                SqlConnection con = new SqlConnection();
+                SqlConnection con = new SqlConnection(RTStockDataConnectionString);
                 SqlCommand com = con.CreateCommand();
                 com.CommandType = System.Data.CommandType.StoredProcedure;
                 com.CommandText = "HV_InsertHoseMarketInfo";
-                com.Parameters.AddWithValue("@TradeDate",listData[0].TradeDate);
+                com.Parameters.AddWithValue("@TradeDate",StockCore.Common.CommonFunction.ConvertToSqlDateTime(listData[0].TradeDate));                
                 com.Parameters.AddWithValue("@SetIndex", listData[0].SetIndex);
                 com.Parameters.AddWithValue("@TotalTrade", listData[0].TotalTrade);
                 com.Parameters.AddWithValue("@Totalshare", listData[0].Totalshare);

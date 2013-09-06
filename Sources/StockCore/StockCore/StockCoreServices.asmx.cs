@@ -18,7 +18,7 @@ namespace StockCore.Services
     {
 
         [WebMethod]
-        public string HelloWorld()
+        public string ReceiveOrder(string accountNo,string stockSymbol,long price,short volume,char side)
         {
             return "Hello World";
         }

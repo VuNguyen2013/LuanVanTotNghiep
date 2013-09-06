@@ -16,15 +16,17 @@ namespace StockCore.Models
     {
         public SubCustAccount()
         {
-            this.Matcheds = new HashSet<Matched>();
-            this.Matcheds1 = new HashSet<Matched>();
+            this.Orders = new HashSet<Order>();
             this.StockBalances = new HashSet<StockBalance>();
+            this.CashTempDeductions = new HashSet<CashTempDeduction>();
+            this.StockTempDeductions = new HashSet<StockTempDeduction>();
         }
     
         public string SubCustAccountID { get; set; }
         public string Name { get; set; }
         public Nullable<bool> Actived { get; set; }
         public Nullable<short> LockAccountReason { get; set; }
+        public string MainCustAccountID { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string CreatedUser { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
@@ -35,9 +37,10 @@ namespace StockCore.Models
         public long TotalSell { get; set; }
     
         public virtual MainCustAccount MainCustAccount { get; set; }
-        public virtual ICollection<Matched> Matcheds { get; set; }
-        public virtual ICollection<Matched> Matcheds1 { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<StockBalance> StockBalances { get; set; }
+        public virtual ICollection<CashTempDeduction> CashTempDeductions { get; set; }
+        public virtual ICollection<StockTempDeduction> StockTempDeductions { get; set; }
     }
     
 }

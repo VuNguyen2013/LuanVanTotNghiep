@@ -11,8 +11,7 @@ namespace StockCore.InfoSender
 {
     public partial class MainForm : Form
     {
-        private bool _status = true;
-
+        InfoSender.Entities.SendData sendData = null;
         public MainForm()
         {
             InitializeComponent();
@@ -72,6 +71,9 @@ namespace StockCore.InfoSender
             {
                 btAction.Text = "Ngưng";
                 tmAction.Start();
+                sendData = new Entities.SendData(_listIP);
+                sendData.SendInfo();            
+            
             }
             else
             {
@@ -82,18 +84,20 @@ namespace StockCore.InfoSender
         }
 
         private void tmAction_Tick(object sender, EventArgs e)
-        {
-            InfoSender.Entities.SendData senData = new Entities.SendData();
-            senData.SendMarketData(_listIP,ref _status);            
-            
+        {          
             if (pnStatus.BackColor == Color.DodgerBlue)
             {
                 pnStatus.BackColor = Color.Transparent;
             }
-            else if (_status)
+            else if (sendData.Status)
             {
                 pnStatus.BackColor = Color.DodgerBlue;
             }
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }

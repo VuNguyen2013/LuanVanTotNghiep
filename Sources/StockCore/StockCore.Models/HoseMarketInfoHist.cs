@@ -26,6 +26,7 @@ namespace StockCore.Models
         public long Advances { get; set; }
         public long Declines { get; set; }
         public long Nochange { get; set; }
+        public Nullable<int> MarketId { get; set; }
         public string Status { get; set; }
     
         public virtual Market Market { get; set; }

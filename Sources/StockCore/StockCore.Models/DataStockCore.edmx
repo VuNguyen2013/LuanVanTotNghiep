@@ -4,12 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="StockCore.Models.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
-        <EntityContainer Name="StockCoreModelsStoreContainer">
-          <EntitySet Name="CompanyInfo" EntityType="StockCore.Models.Store.CompanyInfo" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="HNXMarketInfo" EntityType="StockCore.Models.Store.HNXMarketInfo" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="HNXMarketInfoHist" EntityType="StockCore.Models.Store.HNXMarketInfoHist" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="HNXStockInfo" EntityType="StockCore.Models.Store.HNXStockInfo" store:Type="Tables" store:Schema="dbo" store:Name="HNXStockInfo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
+    <Schema Namespace="DataStockCoreModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="DataStockCoreModelStoreContainer">
+          <EntitySet Name="CashTempDeduction" EntityType="DataStockCoreModel.Store.CashTempDeduction" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CompanyInfo" EntityType="DataStockCoreModel.Store.CompanyInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="HNXMarketInfo" EntityType="DataStockCoreModel.Store.HNXMarketInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="HNXMarketInfoHist" EntityType="DataStockCoreModel.Store.HNXMarketInfoHist" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="HNXStockInfo" EntityType="DataStockCoreModel.Store.HNXStockInfo" store:Type="Tables" store:Schema="dbo" store:Name="HNXStockInfo">
             <DefiningQuery>SELECT 
       [HNXStockInfo].[id] AS [id], 
       [HNXStockInfo].[TradeDate] AS [TradeDate], 
@@ -40,7 +41,7 @@
       [HNXStockInfo].[BUY_FOREIGN_QTTY] AS [BUY_FOREIGN_QTTY]
       FROM [dbo].[HNXStockInfo] AS [HNXStockInfo]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="HNXStockInfoHist" EntityType="StockCore.Models.Store.HNXStockInfoHist" store:Type="Tables" store:Schema="dbo" store:Name="HNXStockInfoHist" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
+          <EntitySet Name="HNXStockInfoHist" EntityType="DataStockCoreModel.Store.HNXStockInfoHist" store:Type="Tables" store:Schema="dbo" store:Name="HNXStockInfoHist">
             <DefiningQuery>SELECT 
       [HNXStockInfoHist].[id] AS [id], 
       [HNXStockInfoHist].[TradeDate] AS [TradeDate], 
@@ -71,9 +72,9 @@
       [HNXStockInfoHist].[BUY_FOREIGN_QTTY] AS [BUY_FOREIGN_QTTY]
       FROM [dbo].[HNXStockInfoHist] AS [HNXStockInfoHist]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="HoseMarketInfo" EntityType="StockCore.Models.Store.HoseMarketInfo" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="HoseMarketInfoHist" EntityType="StockCore.Models.Store.HoseMarketInfoHist" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="HoseStockInfo" EntityType="StockCore.Models.Store.HoseStockInfo" store:Type="Tables" store:Schema="dbo" store:Name="HoseStockInfo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
+          <EntitySet Name="HoseMarketInfo" EntityType="DataStockCoreModel.Store.HoseMarketInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="HoseMarketInfoHist" EntityType="DataStockCoreModel.Store.HoseMarketInfoHist" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="HoseStockInfo" EntityType="DataStockCoreModel.Store.HoseStockInfo" store:Type="Tables" store:Schema="dbo" store:Name="HoseStockInfo">
             <DefiningQuery>SELECT 
       [HoseStockInfo].[id] AS [id], 
       [HoseStockInfo].[TradeDate] AS [TradeDate], 
@@ -104,7 +105,7 @@
       [HoseStockInfo].[StartRoom] AS [StartRoom]
       FROM [dbo].[HoseStockInfo] AS [HoseStockInfo]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="HoseStockInfoHist" EntityType="StockCore.Models.Store.HoseStockInfoHist" store:Type="Tables" store:Schema="dbo" store:Name="HoseStockInfoHist" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
+          <EntitySet Name="HoseStockInfoHist" EntityType="DataStockCoreModel.Store.HoseStockInfoHist" store:Type="Tables" store:Schema="dbo" store:Name="HoseStockInfoHist">
             <DefiningQuery>SELECT 
       [HoseStockInfoHist].[id] AS [id], 
       [HoseStockInfoHist].[TradeDate] AS [TradeDate], 
@@ -135,24 +136,25 @@
       [HoseStockInfoHist].[StartRoom] AS [StartRoom]
       FROM [dbo].[HoseStockInfoHist] AS [HoseStockInfoHist]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="MainCustAccount" EntityType="StockCore.Models.Store.MainCustAccount" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="Market" EntityType="StockCore.Models.Store.Market" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="Matched" EntityType="StockCore.Models.Store.Matched" store:Type="Tables" store:Schema="dbo" store:Name="Matched" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
+          <EntitySet Name="MainCustAccount" EntityType="DataStockCoreModel.Store.MainCustAccount" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Market" EntityType="DataStockCoreModel.Store.Market" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Matched" EntityType="DataStockCoreModel.Store.Matched" store:Type="Tables" store:Schema="dbo" store:Name="Matched">
             <DefiningQuery>SELECT 
-      [Matched].[SubCustAccountIDSell] AS [SubCustAccountIDSell], 
-      [Matched].[SubCustAccountIDBuy] AS [SubCustAccountIDBuy], 
-      [Matched].[StockSymbol] AS [StockSymbol], 
-      [Matched].[Price] AS [Price], 
-      [Matched].[Amount] AS [Amount], 
+      [Matched].[OrderSellID] AS [OrderSellID], 
+      [Matched].[OrderBuyID] AS [OrderBuyID], 
+      [Matched].[MatchedPrice] AS [MatchedPrice], 
+      [Matched].[MatchedVol] AS [MatchedVol], 
       [Matched].[DateMatched] AS [DateMatched]
       FROM [dbo].[Matched] AS [Matched]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="MemberStockCompany" EntityType="StockCore.Models.Store.MemberStockCompany" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="StockBalance" EntityType="StockCore.Models.Store.StockBalance" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="SubCustAccount" EntityType="StockCore.Models.Store.SubCustAccount" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="UpComMarketInfo" EntityType="StockCore.Models.Store.UpComMarketInfo" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="UpComMarketInfoHist" EntityType="StockCore.Models.Store.UpComMarketInfoHist" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="UpComStockInfo" EntityType="StockCore.Models.Store.UpComStockInfo" store:Type="Tables" store:Schema="dbo" store:Name="UpComStockInfo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
+          <EntitySet Name="MemberStockCompany" EntityType="DataStockCoreModel.Store.MemberStockCompany" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Order" EntityType="DataStockCoreModel.Store.Order" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="StockBalance" EntityType="DataStockCoreModel.Store.StockBalance" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="StockTempDeduction" EntityType="DataStockCoreModel.Store.StockTempDeduction" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SubCustAccount" EntityType="DataStockCoreModel.Store.SubCustAccount" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UpComMarketInfo" EntityType="DataStockCoreModel.Store.UpComMarketInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UpComMarketInfoHist" EntityType="DataStockCoreModel.Store.UpComMarketInfoHist" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UpComStockInfo" EntityType="DataStockCoreModel.Store.UpComStockInfo" store:Type="Tables" store:Schema="dbo" store:Name="UpComStockInfo">
             <DefiningQuery>SELECT 
       [UpComStockInfo].[id] AS [id], 
       [UpComStockInfo].[TradeDate] AS [TradeDate], 
@@ -183,7 +185,7 @@
       [UpComStockInfo].[BUY_FOREIGN_QTTY] AS [BUY_FOREIGN_QTTY]
       FROM [dbo].[UpComStockInfo] AS [UpComStockInfo]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="UpComStockInfoHist" EntityType="StockCore.Models.Store.UpComStockInfoHist" store:Type="Tables" store:Schema="dbo" store:Name="UpComStockInfoHist" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
+          <EntitySet Name="UpComStockInfoHist" EntityType="DataStockCoreModel.Store.UpComStockInfoHist" store:Type="Tables" store:Schema="dbo" store:Name="UpComStockInfoHist">
             <DefiningQuery>SELECT 
       [UpComStockInfoHist].[id] AS [id], 
       [UpComStockInfoHist].[TradeDate] AS [TradeDate], 
@@ -214,83 +216,110 @@
       [UpComStockInfoHist].[BUY_FOREIGN_QTTY] AS [BUY_FOREIGN_QTTY]
       FROM [dbo].[UpComStockInfoHist] AS [UpComStockInfoHist]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__CompanyIn__Marke__2E1BDC42" Association="StockCore.Models.Store.FK__CompanyIn__Marke__2E1BDC42">
+          <AssociationSet Name="FK__CashTempD__Accou__019E3B86" Association="DataStockCoreModel.Store.FK__CashTempD__Accou__019E3B86">
+            <End Role="SubCustAccount" EntitySet="SubCustAccount" />
+            <End Role="CashTempDeduction" EntitySet="CashTempDeduction" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CompanyIn__Marke__2E1BDC42" Association="DataStockCoreModel.Store.FK__CompanyIn__Marke__2E1BDC42">
             <End Role="Market" EntitySet="Market" />
             <End Role="CompanyInfo" EntitySet="CompanyInfo" />
           </AssociationSet>
-          <AssociationSet Name="FK__HNXMarket__Marke__4AB81AF0" Association="StockCore.Models.Store.FK__HNXMarket__Marke__4AB81AF0">
+          <AssociationSet Name="FK__HNXMarket__Marke__4AB81AF0" Association="DataStockCoreModel.Store.FK__HNXMarket__Marke__4AB81AF0">
             <End Role="Market" EntitySet="Market" />
             <End Role="HNXMarketInfo" EntitySet="HNXMarketInfo" />
           </AssociationSet>
-          <AssociationSet Name="FK__HNXMarket__Marke__75A278F5" Association="StockCore.Models.Store.FK__HNXMarket__Marke__75A278F5">
+          <AssociationSet Name="FK__HNXMarket__Marke__75A278F5" Association="DataStockCoreModel.Store.FK__HNXMarket__Marke__75A278F5">
             <End Role="Market" EntitySet="Market" />
             <End Role="HNXMarketInfoHist" EntitySet="HNXMarketInfoHist" />
           </AssociationSet>
-          <AssociationSet Name="FK__HNXStockI__Stock__22751F6C" Association="StockCore.Models.Store.FK__HNXStockI__Stock__22751F6C">
+          <AssociationSet Name="FK__HNXStockI__Stock__22751F6C" Association="DataStockCoreModel.Store.FK__HNXStockI__Stock__22751F6C">
             <End Role="CompanyInfo" EntitySet="CompanyInfo" />
             <End Role="HNXStockInfo" EntitySet="HNXStockInfo" />
           </AssociationSet>
-          <AssociationSet Name="FK__HNXStockI__Stock__6FB49575" Association="StockCore.Models.Store.FK__HNXStockI__Stock__6FB49575">
+          <AssociationSet Name="FK__HNXStockI__Stock__6FB49575" Association="DataStockCoreModel.Store.FK__HNXStockI__Stock__6FB49575">
             <End Role="CompanyInfo" EntitySet="CompanyInfo" />
             <End Role="HNXStockInfoHist" EntitySet="HNXStockInfoHist" />
           </AssociationSet>
-          <AssociationSet Name="FK__HoseMarke__Marke__3D5E1FD2" Association="StockCore.Models.Store.FK__HoseMarke__Marke__3D5E1FD2">
+          <AssociationSet Name="FK__HoseMarke__Marke__3D5E1FD2" Association="DataStockCoreModel.Store.FK__HoseMarke__Marke__3D5E1FD2">
             <End Role="Market" EntitySet="Market" />
             <End Role="HoseMarketInfo" EntitySet="HoseMarketInfo" />
           </AssociationSet>
-          <AssociationSet Name="FK__HoseMarke__Marke__68487DD7" Association="StockCore.Models.Store.FK__HoseMarke__Marke__68487DD7">
+          <AssociationSet Name="FK__HoseMarke__Marke__68487DD7" Association="DataStockCoreModel.Store.FK__HoseMarke__Marke__68487DD7">
             <End Role="Market" EntitySet="Market" />
             <End Role="HoseMarketInfoHist" EntitySet="HoseMarketInfoHist" />
           </AssociationSet>
-          <AssociationSet Name="FK__HoseStock__Stock__08B54D69" Association="StockCore.Models.Store.FK__HoseStock__Stock__08B54D69">
+          <AssociationSet Name="FK__HoseStock__Stock__08B54D69" Association="DataStockCoreModel.Store.FK__HoseStock__Stock__08B54D69">
             <End Role="CompanyInfo" EntitySet="CompanyInfo" />
             <End Role="HoseStockInfo" EntitySet="HoseStockInfo" />
           </AssociationSet>
-          <AssociationSet Name="FK__HoseStock__Stock__55F4C372" Association="StockCore.Models.Store.FK__HoseStock__Stock__55F4C372">
+          <AssociationSet Name="FK__HoseStock__Stock__55F4C372" Association="DataStockCoreModel.Store.FK__HoseStock__Stock__55F4C372">
             <End Role="CompanyInfo" EntitySet="CompanyInfo" />
             <End Role="HoseStockInfoHist" EntitySet="HoseStockInfoHist" />
           </AssociationSet>
-          <AssociationSet Name="FK__Matched__StockSy__61316BF4" Association="StockCore.Models.Store.FK__Matched__StockSy__61316BF4">
+          <AssociationSet Name="FK__Matched__OrderBu__7BE56230" Association="DataStockCoreModel.Store.FK__Matched__OrderBu__7BE56230">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="Matched" EntitySet="Matched" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Matched__OrderSe__7AF13DF7" Association="DataStockCoreModel.Store.FK__Matched__OrderSe__7AF13DF7">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="Matched" EntitySet="Matched" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__AccountNo__762C88DA" Association="DataStockCoreModel.Store.FK__Order__AccountNo__762C88DA">
+            <End Role="SubCustAccount" EntitySet="SubCustAccount" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__StockSymb__7720AD13" Association="DataStockCoreModel.Store.FK__Order__StockSymb__7720AD13">
             <End Role="CompanyInfo" EntitySet="CompanyInfo" />
-            <End Role="Matched" EntitySet="Matched" />
+            <End Role="Order" EntitySet="Order" />
           </AssociationSet>
-          <AssociationSet Name="FK__Matched__SubCust__5F492382" Association="StockCore.Models.Store.FK__Matched__SubCust__5F492382">
-            <End Role="SubCustAccount" EntitySet="SubCustAccount" />
-            <End Role="Matched" EntitySet="Matched" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Matched__SubCust__603D47BB" Association="StockCore.Models.Store.FK__Matched__SubCust__603D47BB">
-            <End Role="SubCustAccount" EntitySet="SubCustAccount" />
-            <End Role="Matched" EntitySet="Matched" />
-          </AssociationSet>
-          <AssociationSet Name="FK__StockBala__Stock__57A801BA" Association="StockCore.Models.Store.FK__StockBala__Stock__57A801BA">
+          <AssociationSet Name="FK__StockBala__Stock__57A801BA" Association="DataStockCoreModel.Store.FK__StockBala__Stock__57A801BA">
             <End Role="CompanyInfo" EntitySet="CompanyInfo" />
             <End Role="StockBalance" EntitySet="StockBalance" />
           </AssociationSet>
-          <AssociationSet Name="FK__StockBala__SubCu__56B3DD81" Association="StockCore.Models.Store.FK__StockBala__SubCu__56B3DD81">
+          <AssociationSet Name="FK__StockBala__SubCu__56B3DD81" Association="DataStockCoreModel.Store.FK__StockBala__SubCu__56B3DD81">
             <End Role="SubCustAccount" EntitySet="SubCustAccount" />
             <End Role="StockBalance" EntitySet="StockBalance" />
           </AssociationSet>
-          <AssociationSet Name="FK__SubCustAc__MainC__4E1E9780" Association="StockCore.Models.Store.FK__SubCustAc__MainC__4E1E9780">
+          <AssociationSet Name="FK__StockTemp__Accou__0E04126B" Association="DataStockCoreModel.Store.FK__StockTemp__Accou__0E04126B">
+            <End Role="SubCustAccount" EntitySet="SubCustAccount" />
+            <End Role="StockTempDeduction" EntitySet="StockTempDeduction" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockTemp__Stock__0EF836A4" Association="DataStockCoreModel.Store.FK__StockTemp__Stock__0EF836A4">
+            <End Role="CompanyInfo" EntitySet="CompanyInfo" />
+            <End Role="StockTempDeduction" EntitySet="StockTempDeduction" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SubCustAc__MainC__4E1E9780" Association="DataStockCoreModel.Store.FK__SubCustAc__MainC__4E1E9780">
             <End Role="MainCustAccount" EntitySet="MainCustAccount" />
             <End Role="SubCustAccount" EntitySet="SubCustAccount" />
           </AssociationSet>
-          <AssociationSet Name="FK__UpComMark__Marke__02FC7413" Association="StockCore.Models.Store.FK__UpComMark__Marke__02FC7413">
+          <AssociationSet Name="FK__UpComMark__Marke__02FC7413" Association="DataStockCoreModel.Store.FK__UpComMark__Marke__02FC7413">
             <End Role="Market" EntitySet="Market" />
             <End Role="UpComMarketInfoHist" EntitySet="UpComMarketInfoHist" />
           </AssociationSet>
-          <AssociationSet Name="FK__UpComMark__Marke__5812160E" Association="StockCore.Models.Store.FK__UpComMark__Marke__5812160E">
+          <AssociationSet Name="FK__UpComMark__Marke__5812160E" Association="DataStockCoreModel.Store.FK__UpComMark__Marke__5812160E">
             <End Role="Market" EntitySet="Market" />
             <End Role="UpComMarketInfo" EntitySet="UpComMarketInfo" />
           </AssociationSet>
-          <AssociationSet Name="FK__UpComStoc__Stock__09746778" Association="StockCore.Models.Store.FK__UpComStoc__Stock__09746778">
+          <AssociationSet Name="FK__UpComStoc__Stock__09746778" Association="DataStockCoreModel.Store.FK__UpComStoc__Stock__09746778">
             <End Role="CompanyInfo" EntitySet="CompanyInfo" />
             <End Role="UpComStockInfoHist" EntitySet="UpComStockInfoHist" />
           </AssociationSet>
-          <AssociationSet Name="FK__UpComStoc__Stock__3C34F16F" Association="StockCore.Models.Store.FK__UpComStoc__Stock__3C34F16F">
+          <AssociationSet Name="FK__UpComStoc__Stock__3C34F16F" Association="DataStockCoreModel.Store.FK__UpComStoc__Stock__3C34F16F">
             <End Role="CompanyInfo" EntitySet="CompanyInfo" />
             <End Role="UpComStockInfo" EntitySet="UpComStockInfo" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="CashTempDeduction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="AccountNo" Type="varchar" MaxLength="20" />
+          <Property Name="Amount" Type="bigint" Nullable="false" />
+          <Property Name="DeductedDate" Type="datetime" Nullable="false" />
+          <Property Name="Status" Type="smallint" Nullable="false" />
+          <Property Name="IsAdd" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="CompanyInfo">
           <Key>
             <PropertyRef Name="Code" />
@@ -662,15 +691,16 @@
       -->
         <EntityType Name="Matched">
           <Key>
-            <PropertyRef Name="Price" />
-            <PropertyRef Name="Amount" />
+            <PropertyRef Name="OrderSellID" />
+            <PropertyRef Name="OrderBuyID" />
+            <PropertyRef Name="MatchedPrice" />
+            <PropertyRef Name="MatchedVol" />
             <PropertyRef Name="DateMatched" />
           </Key>
-          <Property Name="SubCustAccountIDSell" Type="varchar" MaxLength="20" />
-          <Property Name="SubCustAccountIDBuy" Type="varchar" MaxLength="20" />
-          <Property Name="StockSymbol" Type="varchar" MaxLength="10" />
-          <Property Name="Price" Type="bigint" Nullable="false" />
-          <Property Name="Amount" Type="smallint" Nullable="false" />
+          <Property Name="OrderSellID" Type="bigint" Nullable="false" />
+          <Property Name="OrderBuyID" Type="bigint" Nullable="false" />
+          <Property Name="MatchedPrice" Type="bigint" Nullable="false" />
+          <Property Name="MatchedVol" Type="smallint" Nullable="false" />
           <Property Name="DateMatched" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="MemberStockCompany">
@@ -686,6 +716,20 @@
           <Property Name="Website" Type="nvarchar" MaxLength="50" />
           <Property Name="IsPublished" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="AccountNo" Type="varchar" MaxLength="20" />
+          <Property Name="StockSymbol" Type="varchar" MaxLength="10" />
+          <Property Name="Price" Type="bigint" Nullable="false" />
+          <Property Name="Volume" Type="smallint" Nullable="false" />
+          <Property Name="MatchedVol" Type="smallint" Nullable="false" />
+          <Property Name="Side" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="TradeDate" Type="datetime" Nullable="false" />
+          <Property Name="Status" Type="smallint" Nullable="false" />
+        </EntityType>
         <EntityType Name="StockBalance">
           <Key>
             <PropertyRef Name="SubCustAccountID" />
@@ -699,6 +743,18 @@
           <Property Name="WTR_T2" Type="bigint" Nullable="false" />
           <Property Name="WTS_T1" Type="bigint" Nullable="false" />
           <Property Name="WTS_T2" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StockTempDeduction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="AccountNo" Type="varchar" MaxLength="20" />
+          <Property Name="StockSymbol" Type="varchar" MaxLength="10" />
+          <Property Name="Volume" Type="bigint" Nullable="false" />
+          <Property Name="DeductedDate" Type="datetime" Nullable="false" />
+          <Property Name="Status" Type="smallint" Nullable="false" />
+          <Property Name="IsAdd" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="SubCustAccount">
           <Key>
@@ -872,9 +928,21 @@
           <Property Name="SELL_FOREIGN_QTTY" Type="bigint" Nullable="false" />
           <Property Name="BUY_FOREIGN_QTTY" Type="bigint" Nullable="false" />
         </EntityType>
+        <Association Name="FK__CashTempD__Accou__019E3B86">
+          <End Role="SubCustAccount" Type="DataStockCoreModel.Store.SubCustAccount" Multiplicity="0..1" />
+          <End Role="CashTempDeduction" Type="DataStockCoreModel.Store.CashTempDeduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCustAccount">
+              <PropertyRef Name="SubCustAccountID" />
+            </Principal>
+            <Dependent Role="CashTempDeduction">
+              <PropertyRef Name="AccountNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__CompanyIn__Marke__2E1BDC42">
-          <End Role="Market" Type="StockCore.Models.Store.Market" Multiplicity="0..1" />
-          <End Role="CompanyInfo" Type="StockCore.Models.Store.CompanyInfo" Multiplicity="*" />
+          <End Role="Market" Type="DataStockCoreModel.Store.Market" Multiplicity="0..1" />
+          <End Role="CompanyInfo" Type="DataStockCoreModel.Store.CompanyInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Market">
               <PropertyRef Name="Id" />
@@ -885,8 +953,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__HNXMarket__Marke__4AB81AF0">
-          <End Role="Market" Type="StockCore.Models.Store.Market" Multiplicity="0..1" />
-          <End Role="HNXMarketInfo" Type="StockCore.Models.Store.HNXMarketInfo" Multiplicity="*" />
+          <End Role="Market" Type="DataStockCoreModel.Store.Market" Multiplicity="0..1" />
+          <End Role="HNXMarketInfo" Type="DataStockCoreModel.Store.HNXMarketInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Market">
               <PropertyRef Name="Id" />
@@ -897,8 +965,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__HNXMarket__Marke__75A278F5">
-          <End Role="Market" Type="StockCore.Models.Store.Market" Multiplicity="0..1" />
-          <End Role="HNXMarketInfoHist" Type="StockCore.Models.Store.HNXMarketInfoHist" Multiplicity="*" />
+          <End Role="Market" Type="DataStockCoreModel.Store.Market" Multiplicity="0..1" />
+          <End Role="HNXMarketInfoHist" Type="DataStockCoreModel.Store.HNXMarketInfoHist" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Market">
               <PropertyRef Name="Id" />
@@ -909,8 +977,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__HNXStockI__Stock__22751F6C">
-          <End Role="CompanyInfo" Type="StockCore.Models.Store.CompanyInfo" Multiplicity="0..1" />
-          <End Role="HNXStockInfo" Type="StockCore.Models.Store.HNXStockInfo" Multiplicity="*" />
+          <End Role="CompanyInfo" Type="DataStockCoreModel.Store.CompanyInfo" Multiplicity="0..1" />
+          <End Role="HNXStockInfo" Type="DataStockCoreModel.Store.HNXStockInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CompanyInfo">
               <PropertyRef Name="Code" />
@@ -921,8 +989,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__HNXStockI__Stock__6FB49575">
-          <End Role="CompanyInfo" Type="StockCore.Models.Store.CompanyInfo" Multiplicity="0..1" />
-          <End Role="HNXStockInfoHist" Type="StockCore.Models.Store.HNXStockInfoHist" Multiplicity="*" />
+          <End Role="CompanyInfo" Type="DataStockCoreModel.Store.CompanyInfo" Multiplicity="0..1" />
+          <End Role="HNXStockInfoHist" Type="DataStockCoreModel.Store.HNXStockInfoHist" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CompanyInfo">
               <PropertyRef Name="Code" />
@@ -933,8 +1001,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__HoseMarke__Marke__3D5E1FD2">
-          <End Role="Market" Type="StockCore.Models.Store.Market" Multiplicity="0..1" />
-          <End Role="HoseMarketInfo" Type="StockCore.Models.Store.HoseMarketInfo" Multiplicity="*" />
+          <End Role="Market" Type="DataStockCoreModel.Store.Market" Multiplicity="0..1" />
+          <End Role="HoseMarketInfo" Type="DataStockCoreModel.Store.HoseMarketInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Market">
               <PropertyRef Name="Id" />
@@ -945,8 +1013,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__HoseMarke__Marke__68487DD7">
-          <End Role="Market" Type="StockCore.Models.Store.Market" Multiplicity="0..1" />
-          <End Role="HoseMarketInfoHist" Type="StockCore.Models.Store.HoseMarketInfoHist" Multiplicity="*" />
+          <End Role="Market" Type="DataStockCoreModel.Store.Market" Multiplicity="0..1" />
+          <End Role="HoseMarketInfoHist" Type="DataStockCoreModel.Store.HoseMarketInfoHist" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Market">
               <PropertyRef Name="Id" />
@@ -957,8 +1025,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__HoseStock__Stock__08B54D69">
-          <End Role="CompanyInfo" Type="StockCore.Models.Store.CompanyInfo" Multiplicity="0..1" />
-          <End Role="HoseStockInfo" Type="StockCore.Models.Store.HoseStockInfo" Multiplicity="*" />
+          <End Role="CompanyInfo" Type="DataStockCoreModel.Store.CompanyInfo" Multiplicity="0..1" />
+          <End Role="HoseStockInfo" Type="DataStockCoreModel.Store.HoseStockInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CompanyInfo">
               <PropertyRef Name="Code" />
@@ -969,8 +1037,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__HoseStock__Stock__55F4C372">
-          <End Role="CompanyInfo" Type="StockCore.Models.Store.CompanyInfo" Multiplicity="0..1" />
-          <End Role="HoseStockInfoHist" Type="StockCore.Models.Store.HoseStockInfoHist" Multiplicity="*" />
+          <End Role="CompanyInfo" Type="DataStockCoreModel.Store.CompanyInfo" Multiplicity="0..1" />
+          <End Role="HoseStockInfoHist" Type="DataStockCoreModel.Store.HoseStockInfoHist" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CompanyInfo">
               <PropertyRef Name="Code" />
@@ -980,45 +1048,57 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Matched__StockSy__61316BF4">
-          <End Role="CompanyInfo" Type="StockCore.Models.Store.CompanyInfo" Multiplicity="0..1" />
-          <End Role="Matched" Type="StockCore.Models.Store.Matched" Multiplicity="*" />
+        <Association Name="FK__Matched__OrderBu__7BE56230">
+          <End Role="Order" Type="DataStockCoreModel.Store.Order" Multiplicity="1" />
+          <End Role="Matched" Type="DataStockCoreModel.Store.Matched" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matched">
+              <PropertyRef Name="OrderBuyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Matched__OrderSe__7AF13DF7">
+          <End Role="Order" Type="DataStockCoreModel.Store.Order" Multiplicity="1" />
+          <End Role="Matched" Type="DataStockCoreModel.Store.Matched" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matched">
+              <PropertyRef Name="OrderSellID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__AccountNo__762C88DA">
+          <End Role="SubCustAccount" Type="DataStockCoreModel.Store.SubCustAccount" Multiplicity="0..1" />
+          <End Role="Order" Type="DataStockCoreModel.Store.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCustAccount">
+              <PropertyRef Name="SubCustAccountID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="AccountNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__StockSymb__7720AD13">
+          <End Role="CompanyInfo" Type="DataStockCoreModel.Store.CompanyInfo" Multiplicity="0..1" />
+          <End Role="Order" Type="DataStockCoreModel.Store.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CompanyInfo">
               <PropertyRef Name="Code" />
             </Principal>
-            <Dependent Role="Matched">
+            <Dependent Role="Order">
               <PropertyRef Name="StockSymbol" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Matched__SubCust__5F492382">
-          <End Role="SubCustAccount" Type="StockCore.Models.Store.SubCustAccount" Multiplicity="0..1" />
-          <End Role="Matched" Type="StockCore.Models.Store.Matched" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SubCustAccount">
-              <PropertyRef Name="SubCustAccountID" />
-            </Principal>
-            <Dependent Role="Matched">
-              <PropertyRef Name="SubCustAccountIDSell" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Matched__SubCust__603D47BB">
-          <End Role="SubCustAccount" Type="StockCore.Models.Store.SubCustAccount" Multiplicity="0..1" />
-          <End Role="Matched" Type="StockCore.Models.Store.Matched" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SubCustAccount">
-              <PropertyRef Name="SubCustAccountID" />
-            </Principal>
-            <Dependent Role="Matched">
-              <PropertyRef Name="SubCustAccountIDBuy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__StockBala__Stock__57A801BA">
-          <End Role="CompanyInfo" Type="StockCore.Models.Store.CompanyInfo" Multiplicity="1" />
-          <End Role="StockBalance" Type="StockCore.Models.Store.StockBalance" Multiplicity="*" />
+          <End Role="CompanyInfo" Type="DataStockCoreModel.Store.CompanyInfo" Multiplicity="1" />
+          <End Role="StockBalance" Type="DataStockCoreModel.Store.StockBalance" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CompanyInfo">
               <PropertyRef Name="Code" />
@@ -1029,8 +1109,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__StockBala__SubCu__56B3DD81">
-          <End Role="SubCustAccount" Type="StockCore.Models.Store.SubCustAccount" Multiplicity="1" />
-          <End Role="StockBalance" Type="StockCore.Models.Store.StockBalance" Multiplicity="*" />
+          <End Role="SubCustAccount" Type="DataStockCoreModel.Store.SubCustAccount" Multiplicity="1" />
+          <End Role="StockBalance" Type="DataStockCoreModel.Store.StockBalance" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SubCustAccount">
               <PropertyRef Name="SubCustAccountID" />
@@ -1040,9 +1120,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__StockTemp__Accou__0E04126B">
+          <End Role="SubCustAccount" Type="DataStockCoreModel.Store.SubCustAccount" Multiplicity="0..1" />
+          <End Role="StockTempDeduction" Type="DataStockCoreModel.Store.StockTempDeduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCustAccount">
+              <PropertyRef Name="SubCustAccountID" />
+            </Principal>
+            <Dependent Role="StockTempDeduction">
+              <PropertyRef Name="AccountNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StockTemp__Stock__0EF836A4">
+          <End Role="CompanyInfo" Type="DataStockCoreModel.Store.CompanyInfo" Multiplicity="0..1" />
+          <End Role="StockTempDeduction" Type="DataStockCoreModel.Store.StockTempDeduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyInfo">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="StockTempDeduction">
+              <PropertyRef Name="StockSymbol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__SubCustAc__MainC__4E1E9780">
-          <End Role="MainCustAccount" Type="StockCore.Models.Store.MainCustAccount" Multiplicity="0..1" />
-          <End Role="SubCustAccount" Type="StockCore.Models.Store.SubCustAccount" Multiplicity="*" />
+          <End Role="MainCustAccount" Type="DataStockCoreModel.Store.MainCustAccount" Multiplicity="0..1" />
+          <End Role="SubCustAccount" Type="DataStockCoreModel.Store.SubCustAccount" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MainCustAccount">
               <PropertyRef Name="MainCustAccountID" />
@@ -1053,8 +1157,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__UpComMark__Marke__02FC7413">
-          <End Role="Market" Type="StockCore.Models.Store.Market" Multiplicity="0..1" />
-          <End Role="UpComMarketInfoHist" Type="StockCore.Models.Store.UpComMarketInfoHist" Multiplicity="*" />
+          <End Role="Market" Type="DataStockCoreModel.Store.Market" Multiplicity="0..1" />
+          <End Role="UpComMarketInfoHist" Type="DataStockCoreModel.Store.UpComMarketInfoHist" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Market">
               <PropertyRef Name="Id" />
@@ -1065,8 +1169,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__UpComMark__Marke__5812160E">
-          <End Role="Market" Type="StockCore.Models.Store.Market" Multiplicity="0..1" />
-          <End Role="UpComMarketInfo" Type="StockCore.Models.Store.UpComMarketInfo" Multiplicity="*" />
+          <End Role="Market" Type="DataStockCoreModel.Store.Market" Multiplicity="0..1" />
+          <End Role="UpComMarketInfo" Type="DataStockCoreModel.Store.UpComMarketInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Market">
               <PropertyRef Name="Id" />
@@ -1077,8 +1181,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__UpComStoc__Stock__09746778">
-          <End Role="CompanyInfo" Type="StockCore.Models.Store.CompanyInfo" Multiplicity="0..1" />
-          <End Role="UpComStockInfoHist" Type="StockCore.Models.Store.UpComStockInfoHist" Multiplicity="*" />
+          <End Role="CompanyInfo" Type="DataStockCoreModel.Store.CompanyInfo" Multiplicity="0..1" />
+          <End Role="UpComStockInfoHist" Type="DataStockCoreModel.Store.UpComStockInfoHist" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CompanyInfo">
               <PropertyRef Name="Code" />
@@ -1089,8 +1193,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__UpComStoc__Stock__3C34F16F">
-          <End Role="CompanyInfo" Type="StockCore.Models.Store.CompanyInfo" Multiplicity="0..1" />
-          <End Role="UpComStockInfo" Type="StockCore.Models.Store.UpComStockInfo" Multiplicity="*" />
+          <End Role="CompanyInfo" Type="DataStockCoreModel.Store.CompanyInfo" Multiplicity="0..1" />
+          <End Role="UpComStockInfo" Type="DataStockCoreModel.Store.UpComStockInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CompanyInfo">
               <PropertyRef Name="Code" />
@@ -1100,106 +1204,124 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="StockCore.Models" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-        <EntityContainer Name="DataStockCoreEntities">
-          <EntitySet Name="CompanyInfoes" EntityType="StockCore.Models.CompanyInfo" />
-          <EntitySet Name="HNXMarketInfoes" EntityType="StockCore.Models.HNXMarketInfo" />
-          <EntitySet Name="HNXMarketInfoHists" EntityType="StockCore.Models.HNXMarketInfoHist" />
-          <EntitySet Name="HNXStockInfoes" EntityType="StockCore.Models.HNXStockInfo" />
-          <EntitySet Name="HNXStockInfoHists" EntityType="StockCore.Models.HNXStockInfoHist" />
-          <EntitySet Name="HoseMarketInfoes" EntityType="StockCore.Models.HoseMarketInfo" />
-          <EntitySet Name="HoseMarketInfoHists" EntityType="StockCore.Models.HoseMarketInfoHist" />
-          <EntitySet Name="HoseStockInfoes" EntityType="StockCore.Models.HoseStockInfo" />
-          <EntitySet Name="HoseStockInfoHists" EntityType="StockCore.Models.HoseStockInfoHist" />
-          <EntitySet Name="MainCustAccounts" EntityType="StockCore.Models.MainCustAccount" />
-          <EntitySet Name="Markets" EntityType="StockCore.Models.Market" />
-          <EntitySet Name="Matcheds" EntityType="StockCore.Models.Matched" />
-          <EntitySet Name="MemberStockCompanies" EntityType="StockCore.Models.MemberStockCompany" />
-          <EntitySet Name="StockBalances" EntityType="StockCore.Models.StockBalance" />
-          <EntitySet Name="SubCustAccounts" EntityType="StockCore.Models.SubCustAccount" />
-          <EntitySet Name="UpComMarketInfoes" EntityType="StockCore.Models.UpComMarketInfo" />
-          <EntitySet Name="UpComMarketInfoHists" EntityType="StockCore.Models.UpComMarketInfoHist" />
-          <EntitySet Name="UpComStockInfoes" EntityType="StockCore.Models.UpComStockInfo" />
-          <EntitySet Name="UpComStockInfoHists" EntityType="StockCore.Models.UpComStockInfoHist" />
-          <AssociationSet Name="FK__CompanyIn__Marke__2E1BDC42" Association="StockCore.Models.FK__CompanyIn__Marke__2E1BDC42">
+      <Schema Namespace="DataStockCoreModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="DataStockCoreEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CompanyInfoes" EntityType="DataStockCoreModel.CompanyInfo" />
+          <EntitySet Name="HNXMarketInfoes" EntityType="DataStockCoreModel.HNXMarketInfo" />
+          <EntitySet Name="HNXMarketInfoHists" EntityType="DataStockCoreModel.HNXMarketInfoHist" />
+          <EntitySet Name="HNXStockInfoes" EntityType="DataStockCoreModel.HNXStockInfo" />
+          <EntitySet Name="HNXStockInfoHists" EntityType="DataStockCoreModel.HNXStockInfoHist" />
+          <EntitySet Name="HoseMarketInfoes" EntityType="DataStockCoreModel.HoseMarketInfo" />
+          <EntitySet Name="HoseMarketInfoHists" EntityType="DataStockCoreModel.HoseMarketInfoHist" />
+          <EntitySet Name="HoseStockInfoes" EntityType="DataStockCoreModel.HoseStockInfo" />
+          <EntitySet Name="HoseStockInfoHists" EntityType="DataStockCoreModel.HoseStockInfoHist" />
+          <EntitySet Name="MainCustAccounts" EntityType="DataStockCoreModel.MainCustAccount" />
+          <EntitySet Name="Markets" EntityType="DataStockCoreModel.Market" />
+          <EntitySet Name="Matcheds" EntityType="DataStockCoreModel.Matched" />
+          <EntitySet Name="MemberStockCompanies" EntityType="DataStockCoreModel.MemberStockCompany" />
+          <EntitySet Name="Orders" EntityType="DataStockCoreModel.Order" />
+          <EntitySet Name="StockBalances" EntityType="DataStockCoreModel.StockBalance" />
+          <EntitySet Name="SubCustAccounts" EntityType="DataStockCoreModel.SubCustAccount" />
+          <EntitySet Name="UpComMarketInfoes" EntityType="DataStockCoreModel.UpComMarketInfo" />
+          <EntitySet Name="UpComMarketInfoHists" EntityType="DataStockCoreModel.UpComMarketInfoHist" />
+          <EntitySet Name="UpComStockInfoes" EntityType="DataStockCoreModel.UpComStockInfo" />
+          <EntitySet Name="UpComStockInfoHists" EntityType="DataStockCoreModel.UpComStockInfoHist" />
+          <AssociationSet Name="FK__CompanyIn__Marke__2E1BDC42" Association="DataStockCoreModel.FK__CompanyIn__Marke__2E1BDC42">
             <End Role="Market" EntitySet="Markets" />
             <End Role="CompanyInfo" EntitySet="CompanyInfoes" />
           </AssociationSet>
-          <AssociationSet Name="FK__HNXStockI__Stock__22751F6C" Association="StockCore.Models.FK__HNXStockI__Stock__22751F6C">
+          <AssociationSet Name="FK__HNXStockI__Stock__22751F6C" Association="DataStockCoreModel.FK__HNXStockI__Stock__22751F6C">
             <End Role="CompanyInfo" EntitySet="CompanyInfoes" />
             <End Role="HNXStockInfo" EntitySet="HNXStockInfoes" />
           </AssociationSet>
-          <AssociationSet Name="FK__HNXStockI__Stock__6FB49575" Association="StockCore.Models.FK__HNXStockI__Stock__6FB49575">
+          <AssociationSet Name="FK__HNXStockI__Stock__6FB49575" Association="DataStockCoreModel.FK__HNXStockI__Stock__6FB49575">
             <End Role="CompanyInfo" EntitySet="CompanyInfoes" />
             <End Role="HNXStockInfoHist" EntitySet="HNXStockInfoHists" />
           </AssociationSet>
-          <AssociationSet Name="FK__HoseStock__Stock__08B54D69" Association="StockCore.Models.FK__HoseStock__Stock__08B54D69">
+          <AssociationSet Name="FK__HoseStock__Stock__08B54D69" Association="DataStockCoreModel.FK__HoseStock__Stock__08B54D69">
             <End Role="CompanyInfo" EntitySet="CompanyInfoes" />
             <End Role="HoseStockInfo" EntitySet="HoseStockInfoes" />
           </AssociationSet>
-          <AssociationSet Name="FK__HoseStock__Stock__55F4C372" Association="StockCore.Models.FK__HoseStock__Stock__55F4C372">
+          <AssociationSet Name="FK__HoseStock__Stock__55F4C372" Association="DataStockCoreModel.FK__HoseStock__Stock__55F4C372">
             <End Role="CompanyInfo" EntitySet="CompanyInfoes" />
             <End Role="HoseStockInfoHist" EntitySet="HoseStockInfoHists" />
           </AssociationSet>
-          <AssociationSet Name="FK__Matched__StockSy__61316BF4" Association="StockCore.Models.FK__Matched__StockSy__61316BF4">
+          <AssociationSet Name="FK__Order__StockSymb__7720AD13" Association="DataStockCoreModel.FK__Order__StockSymb__7720AD13">
             <End Role="CompanyInfo" EntitySet="CompanyInfoes" />
-            <End Role="Matched" EntitySet="Matcheds" />
+            <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__StockBala__Stock__57A801BA" Association="StockCore.Models.FK__StockBala__Stock__57A801BA">
+          <AssociationSet Name="FK__StockBala__Stock__57A801BA" Association="DataStockCoreModel.FK__StockBala__Stock__57A801BA">
             <End Role="CompanyInfo" EntitySet="CompanyInfoes" />
             <End Role="StockBalance" EntitySet="StockBalances" />
           </AssociationSet>
-          <AssociationSet Name="FK__UpComStoc__Stock__09746778" Association="StockCore.Models.FK__UpComStoc__Stock__09746778">
+          <AssociationSet Name="FK__UpComStoc__Stock__09746778" Association="DataStockCoreModel.FK__UpComStoc__Stock__09746778">
             <End Role="CompanyInfo" EntitySet="CompanyInfoes" />
             <End Role="UpComStockInfoHist" EntitySet="UpComStockInfoHists" />
           </AssociationSet>
-          <AssociationSet Name="FK__UpComStoc__Stock__3C34F16F" Association="StockCore.Models.FK__UpComStoc__Stock__3C34F16F">
+          <AssociationSet Name="FK__UpComStoc__Stock__3C34F16F" Association="DataStockCoreModel.FK__UpComStoc__Stock__3C34F16F">
             <End Role="CompanyInfo" EntitySet="CompanyInfoes" />
             <End Role="UpComStockInfo" EntitySet="UpComStockInfoes" />
           </AssociationSet>
-          <AssociationSet Name="FK__HNXMarket__Marke__4AB81AF0" Association="StockCore.Models.FK__HNXMarket__Marke__4AB81AF0">
+          <AssociationSet Name="FK__HNXMarket__Marke__4AB81AF0" Association="DataStockCoreModel.FK__HNXMarket__Marke__4AB81AF0">
             <End Role="Market" EntitySet="Markets" />
             <End Role="HNXMarketInfo" EntitySet="HNXMarketInfoes" />
           </AssociationSet>
-          <AssociationSet Name="FK__HNXMarket__Marke__75A278F5" Association="StockCore.Models.FK__HNXMarket__Marke__75A278F5">
+          <AssociationSet Name="FK__HNXMarket__Marke__75A278F5" Association="DataStockCoreModel.FK__HNXMarket__Marke__75A278F5">
             <End Role="Market" EntitySet="Markets" />
             <End Role="HNXMarketInfoHist" EntitySet="HNXMarketInfoHists" />
           </AssociationSet>
-          <AssociationSet Name="FK__HoseMarke__Marke__3D5E1FD2" Association="StockCore.Models.FK__HoseMarke__Marke__3D5E1FD2">
+          <AssociationSet Name="FK__HoseMarke__Marke__3D5E1FD2" Association="DataStockCoreModel.FK__HoseMarke__Marke__3D5E1FD2">
             <End Role="Market" EntitySet="Markets" />
             <End Role="HoseMarketInfo" EntitySet="HoseMarketInfoes" />
           </AssociationSet>
-          <AssociationSet Name="FK__HoseMarke__Marke__68487DD7" Association="StockCore.Models.FK__HoseMarke__Marke__68487DD7">
+          <AssociationSet Name="FK__HoseMarke__Marke__68487DD7" Association="DataStockCoreModel.FK__HoseMarke__Marke__68487DD7">
             <End Role="Market" EntitySet="Markets" />
             <End Role="HoseMarketInfoHist" EntitySet="HoseMarketInfoHists" />
           </AssociationSet>
-          <AssociationSet Name="FK__SubCustAc__MainC__4E1E9780" Association="StockCore.Models.FK__SubCustAc__MainC__4E1E9780">
+          <AssociationSet Name="FK__SubCustAc__MainC__4E1E9780" Association="DataStockCoreModel.FK__SubCustAc__MainC__4E1E9780">
             <End Role="MainCustAccount" EntitySet="MainCustAccounts" />
             <End Role="SubCustAccount" EntitySet="SubCustAccounts" />
           </AssociationSet>
-          <AssociationSet Name="FK__UpComMark__Marke__02FC7413" Association="StockCore.Models.FK__UpComMark__Marke__02FC7413">
+          <AssociationSet Name="FK__UpComMark__Marke__02FC7413" Association="DataStockCoreModel.FK__UpComMark__Marke__02FC7413">
             <End Role="Market" EntitySet="Markets" />
             <End Role="UpComMarketInfoHist" EntitySet="UpComMarketInfoHists" />
           </AssociationSet>
-          <AssociationSet Name="FK__UpComMark__Marke__5812160E" Association="StockCore.Models.FK__UpComMark__Marke__5812160E">
+          <AssociationSet Name="FK__UpComMark__Marke__5812160E" Association="DataStockCoreModel.FK__UpComMark__Marke__5812160E">
             <End Role="Market" EntitySet="Markets" />
             <End Role="UpComMarketInfo" EntitySet="UpComMarketInfoes" />
           </AssociationSet>
-          <AssociationSet Name="FK__Matched__SubCust__5F492382" Association="StockCore.Models.FK__Matched__SubCust__5F492382">
-            <End Role="SubCustAccount" EntitySet="SubCustAccounts" />
+          <AssociationSet Name="FK__Matched__OrderBu__7BE56230" Association="DataStockCoreModel.FK__Matched__OrderBu__7BE56230">
+            <End Role="Order" EntitySet="Orders" />
             <End Role="Matched" EntitySet="Matcheds" />
           </AssociationSet>
-          <AssociationSet Name="FK__Matched__SubCust__603D47BB" Association="StockCore.Models.FK__Matched__SubCust__603D47BB">
-            <End Role="SubCustAccount" EntitySet="SubCustAccounts" />
+          <AssociationSet Name="FK__Matched__OrderSe__7AF13DF7" Association="DataStockCoreModel.FK__Matched__OrderSe__7AF13DF7">
+            <End Role="Order" EntitySet="Orders" />
             <End Role="Matched" EntitySet="Matcheds" />
           </AssociationSet>
-          <AssociationSet Name="FK__StockBala__SubCu__56B3DD81" Association="StockCore.Models.FK__StockBala__SubCu__56B3DD81">
+          <AssociationSet Name="FK__Order__AccountNo__762C88DA" Association="DataStockCoreModel.FK__Order__AccountNo__762C88DA">
+            <End Role="SubCustAccount" EntitySet="SubCustAccounts" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockBala__SubCu__56B3DD81" Association="DataStockCoreModel.FK__StockBala__SubCu__56B3DD81">
             <End Role="SubCustAccount" EntitySet="SubCustAccounts" />
             <End Role="StockBalance" EntitySet="StockBalances" />
+          </AssociationSet>
+          <EntitySet Name="CashTempDeductions" EntityType="DataStockCoreModel.CashTempDeduction" />
+          <EntitySet Name="StockTempDeductions" EntityType="DataStockCoreModel.StockTempDeduction" />
+          <AssociationSet Name="FK__CashTempD__Accou__019E3B86" Association="DataStockCoreModel.FK__CashTempD__Accou__019E3B86">
+            <End Role="SubCustAccount" EntitySet="SubCustAccounts" />
+            <End Role="CashTempDeduction" EntitySet="CashTempDeductions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockTemp__Stock__0EF836A4" Association="DataStockCoreModel.FK__StockTemp__Stock__0EF836A4">
+            <End Role="CompanyInfo" EntitySet="CompanyInfoes" />
+            <End Role="StockTempDeduction" EntitySet="StockTempDeductions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockTemp__Accou__0E04126B" Association="DataStockCoreModel.FK__StockTemp__Accou__0E04126B">
+            <End Role="SubCustAccount" EntitySet="SubCustAccounts" />
+            <End Role="StockTempDeduction" EntitySet="StockTempDeductions" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="CompanyInfo">
@@ -1214,21 +1336,23 @@
           <Property Name="Fax" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="Website" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="IsPublished" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Market" Relationship="StockCore.Models.FK__CompanyIn__Marke__2E1BDC42" FromRole="CompanyInfo" ToRole="Market" />
-          <NavigationProperty Name="HNXStockInfoes" Relationship="StockCore.Models.FK__HNXStockI__Stock__22751F6C" FromRole="CompanyInfo" ToRole="HNXStockInfo" />
-          <NavigationProperty Name="HNXStockInfoHists" Relationship="StockCore.Models.FK__HNXStockI__Stock__6FB49575" FromRole="CompanyInfo" ToRole="HNXStockInfoHist" />
-          <NavigationProperty Name="HoseStockInfoes" Relationship="StockCore.Models.FK__HoseStock__Stock__08B54D69" FromRole="CompanyInfo" ToRole="HoseStockInfo" />
-          <NavigationProperty Name="HoseStockInfoHists" Relationship="StockCore.Models.FK__HoseStock__Stock__55F4C372" FromRole="CompanyInfo" ToRole="HoseStockInfoHist" />
-          <NavigationProperty Name="Matcheds" Relationship="StockCore.Models.FK__Matched__StockSy__61316BF4" FromRole="CompanyInfo" ToRole="Matched" />
-          <NavigationProperty Name="StockBalances" Relationship="StockCore.Models.FK__StockBala__Stock__57A801BA" FromRole="CompanyInfo" ToRole="StockBalance" />
-          <NavigationProperty Name="UpComStockInfoHists" Relationship="StockCore.Models.FK__UpComStoc__Stock__09746778" FromRole="CompanyInfo" ToRole="UpComStockInfoHist" />
-          <NavigationProperty Name="UpComStockInfoes" Relationship="StockCore.Models.FK__UpComStoc__Stock__3C34F16F" FromRole="CompanyInfo" ToRole="UpComStockInfo" />
+          <Property Name="MarketId" Type="Int32" />
+          <NavigationProperty Name="Market" Relationship="DataStockCoreModel.FK__CompanyIn__Marke__2E1BDC42" FromRole="CompanyInfo" ToRole="Market" />
+          <NavigationProperty Name="HNXStockInfoes" Relationship="DataStockCoreModel.FK__HNXStockI__Stock__22751F6C" FromRole="CompanyInfo" ToRole="HNXStockInfo" />
+          <NavigationProperty Name="HNXStockInfoHists" Relationship="DataStockCoreModel.FK__HNXStockI__Stock__6FB49575" FromRole="CompanyInfo" ToRole="HNXStockInfoHist" />
+          <NavigationProperty Name="HoseStockInfoes" Relationship="DataStockCoreModel.FK__HoseStock__Stock__08B54D69" FromRole="CompanyInfo" ToRole="HoseStockInfo" />
+          <NavigationProperty Name="HoseStockInfoHists" Relationship="DataStockCoreModel.FK__HoseStock__Stock__55F4C372" FromRole="CompanyInfo" ToRole="HoseStockInfoHist" />
+          <NavigationProperty Name="Orders" Relationship="DataStockCoreModel.FK__Order__StockSymb__7720AD13" FromRole="CompanyInfo" ToRole="Order" />
+          <NavigationProperty Name="StockBalances" Relationship="DataStockCoreModel.FK__StockBala__Stock__57A801BA" FromRole="CompanyInfo" ToRole="StockBalance" />
+          <NavigationProperty Name="UpComStockInfoHists" Relationship="DataStockCoreModel.FK__UpComStoc__Stock__09746778" FromRole="CompanyInfo" ToRole="UpComStockInfoHist" />
+          <NavigationProperty Name="UpComStockInfoes" Relationship="DataStockCoreModel.FK__UpComStoc__Stock__3C34F16F" FromRole="CompanyInfo" ToRole="UpComStockInfo" />
+          <NavigationProperty Name="StockTempDeductions" Relationship="DataStockCoreModel.FK__StockTemp__Stock__0EF836A4" FromRole="CompanyInfo" ToRole="StockTempDeduction" />
         </EntityType>
         <EntityType Name="HNXMarketInfo">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TradeDate" Type="DateTime" Nullable="false" />
           <Property Name="SetIndex" Type="Double" Nullable="false" />
           <Property Name="TotalTrade" Type="Int64" Nullable="false" />
@@ -1238,14 +1362,15 @@
           <Property Name="Nochange" Type="Int16" Nullable="false" />
           <Property Name="Declines" Type="Int16" Nullable="false" />
           <Property Name="OpenIndex" Type="Double" Nullable="false" />
+          <Property Name="MarketId" Type="Int32" />
           <Property Name="Status" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
-          <NavigationProperty Name="Market" Relationship="StockCore.Models.FK__HNXMarket__Marke__4AB81AF0" FromRole="HNXMarketInfo" ToRole="Market" />
+          <NavigationProperty Name="Market" Relationship="DataStockCoreModel.FK__HNXMarket__Marke__4AB81AF0" FromRole="HNXMarketInfo" ToRole="Market" />
         </EntityType>
         <EntityType Name="HNXMarketInfoHist">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TradeDate" Type="DateTime" Nullable="false" />
           <Property Name="SetIndex" Type="Double" Nullable="false" />
           <Property Name="TotalTrade" Type="Int64" Nullable="false" />
@@ -1255,8 +1380,9 @@
           <Property Name="Nochange" Type="Int16" Nullable="false" />
           <Property Name="Declines" Type="Int16" Nullable="false" />
           <Property Name="OpenIndex" Type="Double" Nullable="false" />
+          <Property Name="MarketId" Type="Int32" />
           <Property Name="Status" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
-          <NavigationProperty Name="Market" Relationship="StockCore.Models.FK__HNXMarket__Marke__75A278F5" FromRole="HNXMarketInfoHist" ToRole="Market" />
+          <NavigationProperty Name="Market" Relationship="DataStockCoreModel.FK__HNXMarket__Marke__75A278F5" FromRole="HNXMarketInfoHist" ToRole="Market" />
         </EntityType>
         <EntityType Name="HNXStockInfo">
           <Key>
@@ -1287,8 +1413,9 @@
             <PropertyRef Name="SELL_FOREIGN_QTTY" />
             <PropertyRef Name="BUY_FOREIGN_QTTY" />
           </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TradeDate" Type="DateTime" Nullable="false" />
+          <Property Name="StockSymbol" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
           <Property Name="Ceiling" Type="Int64" Nullable="false" />
           <Property Name="Floor" Type="Int64" Nullable="false" />
           <Property Name="AvrPrice" Type="Int64" Nullable="false" />
@@ -1313,7 +1440,7 @@
           <Property Name="Best3OfferVolume" Type="Int64" Nullable="false" />
           <Property Name="SELL_FOREIGN_QTTY" Type="Int64" Nullable="false" />
           <Property Name="BUY_FOREIGN_QTTY" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="CompanyInfo" Relationship="StockCore.Models.FK__HNXStockI__Stock__22751F6C" FromRole="HNXStockInfo" ToRole="CompanyInfo" />
+          <NavigationProperty Name="CompanyInfo" Relationship="DataStockCoreModel.FK__HNXStockI__Stock__22751F6C" FromRole="HNXStockInfo" ToRole="CompanyInfo" />
         </EntityType>
         <EntityType Name="HNXStockInfoHist">
           <Key>
@@ -1344,8 +1471,9 @@
             <PropertyRef Name="SELL_FOREIGN_QTTY" />
             <PropertyRef Name="BUY_FOREIGN_QTTY" />
           </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TradeDate" Type="DateTime" Nullable="false" />
+          <Property Name="StockSymbol" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
           <Property Name="Ceiling" Type="Int64" Nullable="false" />
           <Property Name="Floor" Type="Int64" Nullable="false" />
           <Property Name="AvrPrice" Type="Int64" Nullable="false" />
@@ -1370,13 +1498,13 @@
           <Property Name="Best3OfferVolume" Type="Int64" Nullable="false" />
           <Property Name="SELL_FOREIGN_QTTY" Type="Int64" Nullable="false" />
           <Property Name="BUY_FOREIGN_QTTY" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="CompanyInfo" Relationship="StockCore.Models.FK__HNXStockI__Stock__6FB49575" FromRole="HNXStockInfoHist" ToRole="CompanyInfo" />
+          <NavigationProperty Name="CompanyInfo" Relationship="DataStockCoreModel.FK__HNXStockI__Stock__6FB49575" FromRole="HNXStockInfoHist" ToRole="CompanyInfo" />
         </EntityType>
         <EntityType Name="HoseMarketInfo">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TradeDate" Type="DateTime" Nullable="false" />
           <Property Name="SetIndex" Type="Int64" Nullable="false" />
           <Property Name="TotalTrade" Type="Int64" Nullable="false" />
@@ -1388,14 +1516,15 @@
           <Property Name="Advances" Type="Int64" Nullable="false" />
           <Property Name="Declines" Type="Int64" Nullable="false" />
           <Property Name="Nochange" Type="Int64" Nullable="false" />
+          <Property Name="MarketId" Type="Int32" />
           <Property Name="Status" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
-          <NavigationProperty Name="Market" Relationship="StockCore.Models.FK__HoseMarke__Marke__3D5E1FD2" FromRole="HoseMarketInfo" ToRole="Market" />
+          <NavigationProperty Name="Market" Relationship="DataStockCoreModel.FK__HoseMarke__Marke__3D5E1FD2" FromRole="HoseMarketInfo" ToRole="Market" />
         </EntityType>
         <EntityType Name="HoseMarketInfoHist">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TradeDate" Type="DateTime" Nullable="false" />
           <Property Name="SetIndex" Type="Int64" Nullable="false" />
           <Property Name="TotalTrade" Type="Int64" Nullable="false" />
@@ -1407,8 +1536,9 @@
           <Property Name="Advances" Type="Int64" Nullable="false" />
           <Property Name="Declines" Type="Int64" Nullable="false" />
           <Property Name="Nochange" Type="Int64" Nullable="false" />
+          <Property Name="MarketId" Type="Int32" />
           <Property Name="Status" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
-          <NavigationProperty Name="Market" Relationship="StockCore.Models.FK__HoseMarke__Marke__68487DD7" FromRole="HoseMarketInfoHist" ToRole="Market" />
+          <NavigationProperty Name="Market" Relationship="DataStockCoreModel.FK__HoseMarke__Marke__68487DD7" FromRole="HoseMarketInfoHist" ToRole="Market" />
         </EntityType>
         <EntityType Name="HoseStockInfo">
           <Key>
@@ -1439,8 +1569,9 @@
             <PropertyRef Name="CurrentRoom" />
             <PropertyRef Name="StartRoom" />
           </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TradeDate" Type="DateTime" Nullable="false" />
+          <Property Name="StockSymbol" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
           <Property Name="Ceiling" Type="Int64" Nullable="false" />
           <Property Name="Floor" Type="Int64" Nullable="false" />
           <Property Name="AvrPrice" Type="Int64" Nullable="false" />
@@ -1465,7 +1596,7 @@
           <Property Name="Best3OfferVolume" Type="Int64" Nullable="false" />
           <Property Name="CurrentRoom" Type="Int64" Nullable="false" />
           <Property Name="StartRoom" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="CompanyInfo" Relationship="StockCore.Models.FK__HoseStock__Stock__08B54D69" FromRole="HoseStockInfo" ToRole="CompanyInfo" />
+          <NavigationProperty Name="CompanyInfo" Relationship="DataStockCoreModel.FK__HoseStock__Stock__08B54D69" FromRole="HoseStockInfo" ToRole="CompanyInfo" />
         </EntityType>
         <EntityType Name="HoseStockInfoHist">
           <Key>
@@ -1496,8 +1627,9 @@
             <PropertyRef Name="CurrentRoom" />
             <PropertyRef Name="StartRoom" />
           </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TradeDate" Type="DateTime" Nullable="false" />
+          <Property Name="StockSymbol" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
           <Property Name="Ceiling" Type="Int64" Nullable="false" />
           <Property Name="Floor" Type="Int64" Nullable="false" />
           <Property Name="AvrPrice" Type="Int64" Nullable="false" />
@@ -1522,7 +1654,7 @@
           <Property Name="Best3OfferVolume" Type="Int64" Nullable="false" />
           <Property Name="CurrentRoom" Type="Int64" Nullable="false" />
           <Property Name="StartRoom" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="CompanyInfo" Relationship="StockCore.Models.FK__HoseStock__Stock__55F4C372" FromRole="HoseStockInfoHist" ToRole="CompanyInfo" />
+          <NavigationProperty Name="CompanyInfo" Relationship="DataStockCoreModel.FK__HoseStock__Stock__55F4C372" FromRole="HoseStockInfoHist" ToRole="CompanyInfo" />
         </EntityType>
         <EntityType Name="MainCustAccount">
           <Key>
@@ -1556,7 +1688,7 @@
           <Property Name="CreatedUser" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="UpdatedUser" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="UpdatedDate" Type="DateTime" />
-          <NavigationProperty Name="SubCustAccounts" Relationship="StockCore.Models.FK__SubCustAc__MainC__4E1E9780" FromRole="MainCustAccount" ToRole="SubCustAccount" />
+          <NavigationProperty Name="SubCustAccounts" Relationship="DataStockCoreModel.FK__SubCustAc__MainC__4E1E9780" FromRole="MainCustAccount" ToRole="SubCustAccount" />
         </EntityType>
         <EntityType Name="Market">
           <Key>
@@ -1564,26 +1696,29 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="CompanyInfoes" Relationship="StockCore.Models.FK__CompanyIn__Marke__2E1BDC42" FromRole="Market" ToRole="CompanyInfo" />
-          <NavigationProperty Name="HNXMarketInfoes" Relationship="StockCore.Models.FK__HNXMarket__Marke__4AB81AF0" FromRole="Market" ToRole="HNXMarketInfo" />
-          <NavigationProperty Name="HNXMarketInfoHists" Relationship="StockCore.Models.FK__HNXMarket__Marke__75A278F5" FromRole="Market" ToRole="HNXMarketInfoHist" />
-          <NavigationProperty Name="HoseMarketInfoes" Relationship="StockCore.Models.FK__HoseMarke__Marke__3D5E1FD2" FromRole="Market" ToRole="HoseMarketInfo" />
-          <NavigationProperty Name="HoseMarketInfoHists" Relationship="StockCore.Models.FK__HoseMarke__Marke__68487DD7" FromRole="Market" ToRole="HoseMarketInfoHist" />
-          <NavigationProperty Name="UpComMarketInfoHists" Relationship="StockCore.Models.FK__UpComMark__Marke__02FC7413" FromRole="Market" ToRole="UpComMarketInfoHist" />
-          <NavigationProperty Name="UpComMarketInfoes" Relationship="StockCore.Models.FK__UpComMark__Marke__5812160E" FromRole="Market" ToRole="UpComMarketInfo" />
+          <NavigationProperty Name="CompanyInfoes" Relationship="DataStockCoreModel.FK__CompanyIn__Marke__2E1BDC42" FromRole="Market" ToRole="CompanyInfo" />
+          <NavigationProperty Name="HNXMarketInfoes" Relationship="DataStockCoreModel.FK__HNXMarket__Marke__4AB81AF0" FromRole="Market" ToRole="HNXMarketInfo" />
+          <NavigationProperty Name="HNXMarketInfoHists" Relationship="DataStockCoreModel.FK__HNXMarket__Marke__75A278F5" FromRole="Market" ToRole="HNXMarketInfoHist" />
+          <NavigationProperty Name="HoseMarketInfoes" Relationship="DataStockCoreModel.FK__HoseMarke__Marke__3D5E1FD2" FromRole="Market" ToRole="HoseMarketInfo" />
+          <NavigationProperty Name="HoseMarketInfoHists" Relationship="DataStockCoreModel.FK__HoseMarke__Marke__68487DD7" FromRole="Market" ToRole="HoseMarketInfoHist" />
+          <NavigationProperty Name="UpComMarketInfoHists" Relationship="DataStockCoreModel.FK__UpComMark__Marke__02FC7413" FromRole="Market" ToRole="UpComMarketInfoHist" />
+          <NavigationProperty Name="UpComMarketInfoes" Relationship="DataStockCoreModel.FK__UpComMark__Marke__5812160E" FromRole="Market" ToRole="UpComMarketInfo" />
         </EntityType>
         <EntityType Name="Matched">
           <Key>
-            <PropertyRef Name="Price" />
-            <PropertyRef Name="Amount" />
+            <PropertyRef Name="OrderSellID" />
+            <PropertyRef Name="OrderBuyID" />
+            <PropertyRef Name="MatchedPrice" />
+            <PropertyRef Name="MatchedVol" />
             <PropertyRef Name="DateMatched" />
           </Key>
-          <Property Name="Price" Type="Int64" Nullable="false" />
-          <Property Name="Amount" Type="Int16" Nullable="false" />
+          <Property Name="OrderSellID" Type="Int64" Nullable="false" />
+          <Property Name="OrderBuyID" Type="Int64" Nullable="false" />
+          <Property Name="MatchedPrice" Type="Int64" Nullable="false" />
+          <Property Name="MatchedVol" Type="Int16" Nullable="false" />
           <Property Name="DateMatched" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="CompanyInfo" Relationship="StockCore.Models.FK__Matched__StockSy__61316BF4" FromRole="Matched" ToRole="CompanyInfo" />
-          <NavigationProperty Name="SubCustAccount" Relationship="StockCore.Models.FK__Matched__SubCust__5F492382" FromRole="Matched" ToRole="SubCustAccount" />
-          <NavigationProperty Name="SubCustAccount1" Relationship="StockCore.Models.FK__Matched__SubCust__603D47BB" FromRole="Matched" ToRole="SubCustAccount" />
+          <NavigationProperty Name="Order" Relationship="DataStockCoreModel.FK__Matched__OrderBu__7BE56230" FromRole="Matched" ToRole="Order" />
+          <NavigationProperty Name="Order1" Relationship="DataStockCoreModel.FK__Matched__OrderSe__7AF13DF7" FromRole="Matched" ToRole="Order" />
         </EntityType>
         <EntityType Name="MemberStockCompany">
           <Key>
@@ -1598,6 +1733,24 @@
           <Property Name="Website" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="IsPublished" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountNo" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="StockSymbol" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="Price" Type="Int64" Nullable="false" />
+          <Property Name="Volume" Type="Int16" Nullable="false" />
+          <Property Name="MatchedVol" Type="Int16" Nullable="false" />
+          <Property Name="Side" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
+          <Property Name="TradeDate" Type="DateTime" Nullable="false" />
+          <Property Name="Status" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="CompanyInfo" Relationship="DataStockCoreModel.FK__Order__StockSymb__7720AD13" FromRole="Order" ToRole="CompanyInfo" />
+          <NavigationProperty Name="Matcheds" Relationship="DataStockCoreModel.FK__Matched__OrderBu__7BE56230" FromRole="Order" ToRole="Matched" />
+          <NavigationProperty Name="Matcheds1" Relationship="DataStockCoreModel.FK__Matched__OrderSe__7AF13DF7" FromRole="Order" ToRole="Matched" />
+          <NavigationProperty Name="SubCustAccount" Relationship="DataStockCoreModel.FK__Order__AccountNo__762C88DA" FromRole="Order" ToRole="SubCustAccount" />
+        </EntityType>
         <EntityType Name="StockBalance">
           <Key>
             <PropertyRef Name="SubCustAccountID" />
@@ -1611,8 +1764,8 @@
           <Property Name="WTR_T2" Type="Int64" Nullable="false" />
           <Property Name="WTS_T1" Type="Int64" Nullable="false" />
           <Property Name="WTS_T2" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="CompanyInfo" Relationship="StockCore.Models.FK__StockBala__Stock__57A801BA" FromRole="StockBalance" ToRole="CompanyInfo" />
-          <NavigationProperty Name="SubCustAccount" Relationship="StockCore.Models.FK__StockBala__SubCu__56B3DD81" FromRole="StockBalance" ToRole="SubCustAccount" />
+          <NavigationProperty Name="CompanyInfo" Relationship="DataStockCoreModel.FK__StockBala__Stock__57A801BA" FromRole="StockBalance" ToRole="CompanyInfo" />
+          <NavigationProperty Name="SubCustAccount" Relationship="DataStockCoreModel.FK__StockBala__SubCu__56B3DD81" FromRole="StockBalance" ToRole="SubCustAccount" />
         </EntityType>
         <EntityType Name="SubCustAccount">
           <Key>
@@ -1622,6 +1775,7 @@
           <Property Name="Name" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="Actived" Type="Boolean" />
           <Property Name="LockAccountReason" Type="Int16" />
+          <Property Name="MainCustAccountID" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedUser" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="UpdatedDate" Type="DateTime" />
@@ -1630,16 +1784,17 @@
           <Property Name="BuyCredit" Type="Int64" Nullable="false" />
           <Property Name="TotalBuy" Type="Int64" Nullable="false" />
           <Property Name="TotalSell" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="MainCustAccount" Relationship="StockCore.Models.FK__SubCustAc__MainC__4E1E9780" FromRole="SubCustAccount" ToRole="MainCustAccount" />
-          <NavigationProperty Name="Matcheds" Relationship="StockCore.Models.FK__Matched__SubCust__5F492382" FromRole="SubCustAccount" ToRole="Matched" />
-          <NavigationProperty Name="Matcheds1" Relationship="StockCore.Models.FK__Matched__SubCust__603D47BB" FromRole="SubCustAccount" ToRole="Matched" />
-          <NavigationProperty Name="StockBalances" Relationship="StockCore.Models.FK__StockBala__SubCu__56B3DD81" FromRole="SubCustAccount" ToRole="StockBalance" />
+          <NavigationProperty Name="MainCustAccount" Relationship="DataStockCoreModel.FK__SubCustAc__MainC__4E1E9780" FromRole="SubCustAccount" ToRole="MainCustAccount" />
+          <NavigationProperty Name="Orders" Relationship="DataStockCoreModel.FK__Order__AccountNo__762C88DA" FromRole="SubCustAccount" ToRole="Order" />
+          <NavigationProperty Name="StockBalances" Relationship="DataStockCoreModel.FK__StockBala__SubCu__56B3DD81" FromRole="SubCustAccount" ToRole="StockBalance" />
+          <NavigationProperty Name="CashTempDeductions" Relationship="DataStockCoreModel.FK__CashTempD__Accou__019E3B86" FromRole="SubCustAccount" ToRole="CashTempDeduction" />
+          <NavigationProperty Name="StockTempDeductions" Relationship="DataStockCoreModel.FK__StockTemp__Accou__0E04126B" FromRole="SubCustAccount" ToRole="StockTempDeduction" />
         </EntityType>
         <EntityType Name="UpComMarketInfo">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TradeDate" Type="DateTime" Nullable="false" />
           <Property Name="SetIndex" Type="Double" Nullable="false" />
           <Property Name="TotalTrade" Type="Int64" Nullable="false" />
@@ -1649,14 +1804,15 @@
           <Property Name="Nochange" Type="Int16" Nullable="false" />
           <Property Name="Declines" Type="Int16" Nullable="false" />
           <Property Name="OpenIndex" Type="Double" Nullable="false" />
+          <Property Name="Marketid" Type="Int32" />
           <Property Name="Status" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
-          <NavigationProperty Name="Market" Relationship="StockCore.Models.FK__UpComMark__Marke__5812160E" FromRole="UpComMarketInfo" ToRole="Market" />
+          <NavigationProperty Name="Market" Relationship="DataStockCoreModel.FK__UpComMark__Marke__5812160E" FromRole="UpComMarketInfo" ToRole="Market" />
         </EntityType>
         <EntityType Name="UpComMarketInfoHist">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TradeDate" Type="DateTime" Nullable="false" />
           <Property Name="SetIndex" Type="Double" Nullable="false" />
           <Property Name="TotalTrade" Type="Int64" Nullable="false" />
@@ -1666,8 +1822,9 @@
           <Property Name="Nochange" Type="Int16" Nullable="false" />
           <Property Name="Declines" Type="Int16" Nullable="false" />
           <Property Name="OpenIndex" Type="Double" Nullable="false" />
+          <Property Name="Marketid" Type="Int32" />
           <Property Name="Status" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
-          <NavigationProperty Name="Market" Relationship="StockCore.Models.FK__UpComMark__Marke__02FC7413" FromRole="UpComMarketInfoHist" ToRole="Market" />
+          <NavigationProperty Name="Market" Relationship="DataStockCoreModel.FK__UpComMark__Marke__02FC7413" FromRole="UpComMarketInfoHist" ToRole="Market" />
         </EntityType>
         <EntityType Name="UpComStockInfo">
           <Key>
@@ -1698,8 +1855,9 @@
             <PropertyRef Name="SELL_FOREIGN_QTTY" />
             <PropertyRef Name="BUY_FOREIGN_QTTY" />
           </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TradeDate" Type="DateTime" Nullable="false" />
+          <Property Name="StockSymbol" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
           <Property Name="Ceiling" Type="Int64" Nullable="false" />
           <Property Name="Floor" Type="Int64" Nullable="false" />
           <Property Name="AvrPrice" Type="Int64" Nullable="false" />
@@ -1724,7 +1882,7 @@
           <Property Name="Best3OfferVolume" Type="Int64" Nullable="false" />
           <Property Name="SELL_FOREIGN_QTTY" Type="Int64" Nullable="false" />
           <Property Name="BUY_FOREIGN_QTTY" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="CompanyInfo" Relationship="StockCore.Models.FK__UpComStoc__Stock__3C34F16F" FromRole="UpComStockInfo" ToRole="CompanyInfo" />
+          <NavigationProperty Name="CompanyInfo" Relationship="DataStockCoreModel.FK__UpComStoc__Stock__3C34F16F" FromRole="UpComStockInfo" ToRole="CompanyInfo" />
         </EntityType>
         <EntityType Name="UpComStockInfoHist">
           <Key>
@@ -1755,8 +1913,9 @@
             <PropertyRef Name="SELL_FOREIGN_QTTY" />
             <PropertyRef Name="BUY_FOREIGN_QTTY" />
           </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TradeDate" Type="DateTime" Nullable="false" />
+          <Property Name="StockSymbol" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
           <Property Name="Ceiling" Type="Int64" Nullable="false" />
           <Property Name="Floor" Type="Int64" Nullable="false" />
           <Property Name="AvrPrice" Type="Int64" Nullable="false" />
@@ -1781,35 +1940,83 @@
           <Property Name="Best3OfferVolume" Type="Int64" Nullable="false" />
           <Property Name="SELL_FOREIGN_QTTY" Type="Int64" Nullable="false" />
           <Property Name="BUY_FOREIGN_QTTY" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="CompanyInfo" Relationship="StockCore.Models.FK__UpComStoc__Stock__09746778" FromRole="UpComStockInfoHist" ToRole="CompanyInfo" />
+          <NavigationProperty Name="CompanyInfo" Relationship="DataStockCoreModel.FK__UpComStoc__Stock__09746778" FromRole="UpComStockInfoHist" ToRole="CompanyInfo" />
         </EntityType>
         <Association Name="FK__CompanyIn__Marke__2E1BDC42">
-          <End Role="Market" Type="StockCore.Models.Market" Multiplicity="0..1" />
-          <End Role="CompanyInfo" Type="StockCore.Models.CompanyInfo" Multiplicity="*" />
+          <End Role="Market" Type="DataStockCoreModel.Market" Multiplicity="0..1" />
+          <End Role="CompanyInfo" Type="DataStockCoreModel.CompanyInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Market">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CompanyInfo">
+              <PropertyRef Name="MarketId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK__HNXStockI__Stock__22751F6C">
-          <End Role="CompanyInfo" Type="StockCore.Models.CompanyInfo" Multiplicity="0..1" />
-          <End Role="HNXStockInfo" Type="StockCore.Models.HNXStockInfo" Multiplicity="*" />
+          <End Role="CompanyInfo" Type="DataStockCoreModel.CompanyInfo" Multiplicity="0..1" />
+          <End Role="HNXStockInfo" Type="DataStockCoreModel.HNXStockInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyInfo">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="HNXStockInfo">
+              <PropertyRef Name="StockSymbol" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK__HNXStockI__Stock__6FB49575">
-          <End Role="CompanyInfo" Type="StockCore.Models.CompanyInfo" Multiplicity="0..1" />
-          <End Role="HNXStockInfoHist" Type="StockCore.Models.HNXStockInfoHist" Multiplicity="*" />
+          <End Role="CompanyInfo" Type="DataStockCoreModel.CompanyInfo" Multiplicity="0..1" />
+          <End Role="HNXStockInfoHist" Type="DataStockCoreModel.HNXStockInfoHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyInfo">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="HNXStockInfoHist">
+              <PropertyRef Name="StockSymbol" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK__HoseStock__Stock__08B54D69">
-          <End Role="CompanyInfo" Type="StockCore.Models.CompanyInfo" Multiplicity="0..1" />
-          <End Role="HoseStockInfo" Type="StockCore.Models.HoseStockInfo" Multiplicity="*" />
+          <End Role="CompanyInfo" Type="DataStockCoreModel.CompanyInfo" Multiplicity="0..1" />
+          <End Role="HoseStockInfo" Type="DataStockCoreModel.HoseStockInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyInfo">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="HoseStockInfo">
+              <PropertyRef Name="StockSymbol" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK__HoseStock__Stock__55F4C372">
-          <End Role="CompanyInfo" Type="StockCore.Models.CompanyInfo" Multiplicity="0..1" />
-          <End Role="HoseStockInfoHist" Type="StockCore.Models.HoseStockInfoHist" Multiplicity="*" />
+          <End Role="CompanyInfo" Type="DataStockCoreModel.CompanyInfo" Multiplicity="0..1" />
+          <End Role="HoseStockInfoHist" Type="DataStockCoreModel.HoseStockInfoHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyInfo">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="HoseStockInfoHist">
+              <PropertyRef Name="StockSymbol" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Matched__StockSy__61316BF4">
-          <End Role="CompanyInfo" Type="StockCore.Models.CompanyInfo" Multiplicity="0..1" />
-          <End Role="Matched" Type="StockCore.Models.Matched" Multiplicity="*" />
+        <Association Name="FK__Order__StockSymb__7720AD13">
+          <End Role="CompanyInfo" Type="DataStockCoreModel.CompanyInfo" Multiplicity="0..1" />
+          <End Role="Order" Type="DataStockCoreModel.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyInfo">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="StockSymbol" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK__StockBala__Stock__57A801BA">
-          <End Role="CompanyInfo" Type="StockCore.Models.CompanyInfo" Multiplicity="1" />
-          <End Role="StockBalance" Type="StockCore.Models.StockBalance" Multiplicity="*" />
+          <End Role="CompanyInfo" Type="DataStockCoreModel.CompanyInfo" Multiplicity="1" />
+          <End Role="StockBalance" Type="DataStockCoreModel.StockBalance" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CompanyInfo">
               <PropertyRef Name="Code" />
@@ -1820,52 +2027,152 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__UpComStoc__Stock__09746778">
-          <End Role="CompanyInfo" Type="StockCore.Models.CompanyInfo" Multiplicity="0..1" />
-          <End Role="UpComStockInfoHist" Type="StockCore.Models.UpComStockInfoHist" Multiplicity="*" />
+          <End Role="CompanyInfo" Type="DataStockCoreModel.CompanyInfo" Multiplicity="0..1" />
+          <End Role="UpComStockInfoHist" Type="DataStockCoreModel.UpComStockInfoHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyInfo">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="UpComStockInfoHist">
+              <PropertyRef Name="StockSymbol" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK__UpComStoc__Stock__3C34F16F">
-          <End Role="CompanyInfo" Type="StockCore.Models.CompanyInfo" Multiplicity="0..1" />
-          <End Role="UpComStockInfo" Type="StockCore.Models.UpComStockInfo" Multiplicity="*" />
+          <End Role="CompanyInfo" Type="DataStockCoreModel.CompanyInfo" Multiplicity="0..1" />
+          <End Role="UpComStockInfo" Type="DataStockCoreModel.UpComStockInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyInfo">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="UpComStockInfo">
+              <PropertyRef Name="StockSymbol" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK__HNXMarket__Marke__4AB81AF0">
-          <End Role="Market" Type="StockCore.Models.Market" Multiplicity="0..1" />
-          <End Role="HNXMarketInfo" Type="StockCore.Models.HNXMarketInfo" Multiplicity="*" />
+          <End Role="Market" Type="DataStockCoreModel.Market" Multiplicity="0..1" />
+          <End Role="HNXMarketInfo" Type="DataStockCoreModel.HNXMarketInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Market">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HNXMarketInfo">
+              <PropertyRef Name="MarketId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK__HNXMarket__Marke__75A278F5">
-          <End Role="Market" Type="StockCore.Models.Market" Multiplicity="0..1" />
-          <End Role="HNXMarketInfoHist" Type="StockCore.Models.HNXMarketInfoHist" Multiplicity="*" />
+          <End Role="Market" Type="DataStockCoreModel.Market" Multiplicity="0..1" />
+          <End Role="HNXMarketInfoHist" Type="DataStockCoreModel.HNXMarketInfoHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Market">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HNXMarketInfoHist">
+              <PropertyRef Name="MarketId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK__HoseMarke__Marke__3D5E1FD2">
-          <End Role="Market" Type="StockCore.Models.Market" Multiplicity="0..1" />
-          <End Role="HoseMarketInfo" Type="StockCore.Models.HoseMarketInfo" Multiplicity="*" />
+          <End Role="Market" Type="DataStockCoreModel.Market" Multiplicity="0..1" />
+          <End Role="HoseMarketInfo" Type="DataStockCoreModel.HoseMarketInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Market">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HoseMarketInfo">
+              <PropertyRef Name="MarketId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK__HoseMarke__Marke__68487DD7">
-          <End Role="Market" Type="StockCore.Models.Market" Multiplicity="0..1" />
-          <End Role="HoseMarketInfoHist" Type="StockCore.Models.HoseMarketInfoHist" Multiplicity="*" />
+          <End Role="Market" Type="DataStockCoreModel.Market" Multiplicity="0..1" />
+          <End Role="HoseMarketInfoHist" Type="DataStockCoreModel.HoseMarketInfoHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Market">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HoseMarketInfoHist">
+              <PropertyRef Name="MarketId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK__SubCustAc__MainC__4E1E9780">
-          <End Role="MainCustAccount" Type="StockCore.Models.MainCustAccount" Multiplicity="0..1" />
-          <End Role="SubCustAccount" Type="StockCore.Models.SubCustAccount" Multiplicity="*" />
+          <End Role="MainCustAccount" Type="DataStockCoreModel.MainCustAccount" Multiplicity="0..1" />
+          <End Role="SubCustAccount" Type="DataStockCoreModel.SubCustAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MainCustAccount">
+              <PropertyRef Name="MainCustAccountID" />
+            </Principal>
+            <Dependent Role="SubCustAccount">
+              <PropertyRef Name="MainCustAccountID" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK__UpComMark__Marke__02FC7413">
-          <End Role="Market" Type="StockCore.Models.Market" Multiplicity="0..1" />
-          <End Role="UpComMarketInfoHist" Type="StockCore.Models.UpComMarketInfoHist" Multiplicity="*" />
+          <End Role="Market" Type="DataStockCoreModel.Market" Multiplicity="0..1" />
+          <End Role="UpComMarketInfoHist" Type="DataStockCoreModel.UpComMarketInfoHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Market">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UpComMarketInfoHist">
+              <PropertyRef Name="Marketid" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK__UpComMark__Marke__5812160E">
-          <End Role="Market" Type="StockCore.Models.Market" Multiplicity="0..1" />
-          <End Role="UpComMarketInfo" Type="StockCore.Models.UpComMarketInfo" Multiplicity="*" />
+          <End Role="Market" Type="DataStockCoreModel.Market" Multiplicity="0..1" />
+          <End Role="UpComMarketInfo" Type="DataStockCoreModel.UpComMarketInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Market">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UpComMarketInfo">
+              <PropertyRef Name="Marketid" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Matched__SubCust__5F492382">
-          <End Role="SubCustAccount" Type="StockCore.Models.SubCustAccount" Multiplicity="0..1" />
-          <End Role="Matched" Type="StockCore.Models.Matched" Multiplicity="*" />
+        <Association Name="FK__Matched__OrderBu__7BE56230">
+          <End Role="Order" Type="DataStockCoreModel.Order" Multiplicity="1" />
+          <End Role="Matched" Type="DataStockCoreModel.Matched" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matched">
+              <PropertyRef Name="OrderBuyID" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Matched__SubCust__603D47BB">
-          <End Role="SubCustAccount" Type="StockCore.Models.SubCustAccount" Multiplicity="0..1" />
-          <End Role="Matched" Type="StockCore.Models.Matched" Multiplicity="*" />
+        <Association Name="FK__Matched__OrderSe__7AF13DF7">
+          <End Role="Order" Type="DataStockCoreModel.Order" Multiplicity="1" />
+          <End Role="Matched" Type="DataStockCoreModel.Matched" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matched">
+              <PropertyRef Name="OrderSellID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__AccountNo__762C88DA">
+          <End Role="SubCustAccount" Type="DataStockCoreModel.SubCustAccount" Multiplicity="0..1" />
+          <End Role="Order" Type="DataStockCoreModel.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCustAccount">
+              <PropertyRef Name="SubCustAccountID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="AccountNo" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK__StockBala__SubCu__56B3DD81">
-          <End Role="SubCustAccount" Type="StockCore.Models.SubCustAccount" Multiplicity="1" />
-          <End Role="StockBalance" Type="StockCore.Models.StockBalance" Multiplicity="*" />
+          <End Role="SubCustAccount" Type="DataStockCoreModel.SubCustAccount" Multiplicity="1" />
+          <End Role="StockBalance" Type="DataStockCoreModel.StockBalance" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SubCustAccount">
               <PropertyRef Name="SubCustAccountID" />
@@ -1875,13 +2182,75 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CashTempDeduction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="AccountNo" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Int64" Name="Amount" Nullable="false" />
+          <Property Type="DateTime" Name="DeductedDate" Nullable="false" />
+          <Property Type="Int16" Name="Status" Nullable="false" />
+          <Property Type="Boolean" Name="IsAdd" Nullable="false" />
+          <NavigationProperty Name="SubCustAccount" Relationship="DataStockCoreModel.FK__CashTempD__Accou__019E3B86" FromRole="CashTempDeduction" ToRole="SubCustAccount" />
+        </EntityType>
+        <EntityType Name="StockTempDeduction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="AccountNo" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="StockSymbol" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="Int64" Name="Volume" Nullable="false" />
+          <Property Type="DateTime" Name="DeductedDate" Nullable="false" />
+          <Property Type="Int16" Name="Status" Nullable="false" />
+          <Property Type="Boolean" Name="IsAdd" Nullable="false" />
+          <NavigationProperty Name="CompanyInfo" Relationship="DataStockCoreModel.FK__StockTemp__Stock__0EF836A4" FromRole="StockTempDeduction" ToRole="CompanyInfo" />
+          <NavigationProperty Name="SubCustAccount" Relationship="DataStockCoreModel.FK__StockTemp__Accou__0E04126B" FromRole="StockTempDeduction" ToRole="SubCustAccount" />
+        </EntityType>
+        <Association Name="FK__CashTempD__Accou__019E3B86">
+          <End Type="DataStockCoreModel.SubCustAccount" Role="SubCustAccount" Multiplicity="0..1" />
+          <End Type="DataStockCoreModel.CashTempDeduction" Role="CashTempDeduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCustAccount">
+              <PropertyRef Name="SubCustAccountID" />
+            </Principal>
+            <Dependent Role="CashTempDeduction">
+              <PropertyRef Name="AccountNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StockTemp__Stock__0EF836A4">
+          <End Type="DataStockCoreModel.CompanyInfo" Role="CompanyInfo" Multiplicity="0..1" />
+          <End Type="DataStockCoreModel.StockTempDeduction" Role="StockTempDeduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyInfo">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="StockTempDeduction">
+              <PropertyRef Name="StockSymbol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StockTemp__Accou__0E04126B">
+          <End Type="DataStockCoreModel.SubCustAccount" Role="SubCustAccount" Multiplicity="0..1" />
+          <End Type="DataStockCoreModel.StockTempDeduction" Role="StockTempDeduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCustAccount">
+              <PropertyRef Name="SubCustAccountID" />
+            </Principal>
+            <Dependent Role="StockTempDeduction">
+              <PropertyRef Name="AccountNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="StockCoreModelsStoreContainer" CdmEntityContainer="DataStockCoreEntities">
-          <EntitySetMapping Name="CompanyInfoes"><EntityTypeMapping TypeName="StockCore.Models.CompanyInfo"><MappingFragment StoreEntitySet="CompanyInfo">
+        <EntityContainerMapping StorageEntityContainer="DataStockCoreModelStoreContainer" CdmEntityContainer="DataStockCoreEntities">
+          <EntitySetMapping Name="CompanyInfoes"><EntityTypeMapping TypeName="DataStockCoreModel.CompanyInfo"><MappingFragment StoreEntitySet="CompanyInfo">
             <ScalarProperty Name="Code" ColumnName="Code" />
             <ScalarProperty Name="ShortNameVi" ColumnName="ShortNameVi" />
             <ScalarProperty Name="ShortNameEn" ColumnName="ShortNameEn" />
@@ -1890,8 +2259,9 @@
             <ScalarProperty Name="Fax" ColumnName="Fax" />
             <ScalarProperty Name="Website" ColumnName="Website" />
             <ScalarProperty Name="IsPublished" ColumnName="IsPublished" />
+            <ScalarProperty Name="MarketId" ColumnName="MarketId" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="HNXMarketInfoes"><EntityTypeMapping TypeName="StockCore.Models.HNXMarketInfo"><MappingFragment StoreEntitySet="HNXMarketInfo">
+          <EntitySetMapping Name="HNXMarketInfoes"><EntityTypeMapping TypeName="DataStockCoreModel.HNXMarketInfo"><MappingFragment StoreEntitySet="HNXMarketInfo">
             <ScalarProperty Name="id" ColumnName="id" />
             <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
             <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
@@ -1902,9 +2272,10 @@
             <ScalarProperty Name="Nochange" ColumnName="Nochange" />
             <ScalarProperty Name="Declines" ColumnName="Declines" />
             <ScalarProperty Name="OpenIndex" ColumnName="OpenIndex" />
+            <ScalarProperty Name="MarketId" ColumnName="MarketId" />
             <ScalarProperty Name="Status" ColumnName="Status" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="HNXMarketInfoHists"><EntityTypeMapping TypeName="StockCore.Models.HNXMarketInfoHist"><MappingFragment StoreEntitySet="HNXMarketInfoHist">
+          <EntitySetMapping Name="HNXMarketInfoHists"><EntityTypeMapping TypeName="DataStockCoreModel.HNXMarketInfoHist"><MappingFragment StoreEntitySet="HNXMarketInfoHist">
             <ScalarProperty Name="id" ColumnName="id" />
             <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
             <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
@@ -1915,11 +2286,13 @@
             <ScalarProperty Name="Nochange" ColumnName="Nochange" />
             <ScalarProperty Name="Declines" ColumnName="Declines" />
             <ScalarProperty Name="OpenIndex" ColumnName="OpenIndex" />
+            <ScalarProperty Name="MarketId" ColumnName="MarketId" />
             <ScalarProperty Name="Status" ColumnName="Status" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="HNXStockInfoes"><EntityTypeMapping TypeName="StockCore.Models.HNXStockInfo"><MappingFragment StoreEntitySet="HNXStockInfo">
+          <EntitySetMapping Name="HNXStockInfoes"><EntityTypeMapping TypeName="DataStockCoreModel.HNXStockInfo"><MappingFragment StoreEntitySet="HNXStockInfo">
             <ScalarProperty Name="id" ColumnName="id" />
             <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+            <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
             <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
             <ScalarProperty Name="Floor" ColumnName="Floor" />
             <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
@@ -1945,9 +2318,10 @@
             <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
             <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="HNXStockInfoHists"><EntityTypeMapping TypeName="StockCore.Models.HNXStockInfoHist"><MappingFragment StoreEntitySet="HNXStockInfoHist">
+          <EntitySetMapping Name="HNXStockInfoHists"><EntityTypeMapping TypeName="DataStockCoreModel.HNXStockInfoHist"><MappingFragment StoreEntitySet="HNXStockInfoHist">
             <ScalarProperty Name="id" ColumnName="id" />
             <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+            <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
             <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
             <ScalarProperty Name="Floor" ColumnName="Floor" />
             <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
@@ -1973,7 +2347,7 @@
             <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
             <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="HoseMarketInfoes"><EntityTypeMapping TypeName="StockCore.Models.HoseMarketInfo"><MappingFragment StoreEntitySet="HoseMarketInfo">
+          <EntitySetMapping Name="HoseMarketInfoes"><EntityTypeMapping TypeName="DataStockCoreModel.HoseMarketInfo"><MappingFragment StoreEntitySet="HoseMarketInfo">
             <ScalarProperty Name="id" ColumnName="id" />
             <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
             <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
@@ -1986,9 +2360,10 @@
             <ScalarProperty Name="Advances" ColumnName="Advances" />
             <ScalarProperty Name="Declines" ColumnName="Declines" />
             <ScalarProperty Name="Nochange" ColumnName="Nochange" />
+            <ScalarProperty Name="MarketId" ColumnName="MarketId" />
             <ScalarProperty Name="Status" ColumnName="Status" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="HoseMarketInfoHists"><EntityTypeMapping TypeName="StockCore.Models.HoseMarketInfoHist"><MappingFragment StoreEntitySet="HoseMarketInfoHist">
+          <EntitySetMapping Name="HoseMarketInfoHists"><EntityTypeMapping TypeName="DataStockCoreModel.HoseMarketInfoHist"><MappingFragment StoreEntitySet="HoseMarketInfoHist">
             <ScalarProperty Name="id" ColumnName="id" />
             <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
             <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
@@ -2001,11 +2376,13 @@
             <ScalarProperty Name="Advances" ColumnName="Advances" />
             <ScalarProperty Name="Declines" ColumnName="Declines" />
             <ScalarProperty Name="Nochange" ColumnName="Nochange" />
+            <ScalarProperty Name="MarketId" ColumnName="MarketId" />
             <ScalarProperty Name="Status" ColumnName="Status" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="HoseStockInfoes"><EntityTypeMapping TypeName="StockCore.Models.HoseStockInfo"><MappingFragment StoreEntitySet="HoseStockInfo">
+          <EntitySetMapping Name="HoseStockInfoes"><EntityTypeMapping TypeName="DataStockCoreModel.HoseStockInfo"><MappingFragment StoreEntitySet="HoseStockInfo">
             <ScalarProperty Name="id" ColumnName="id" />
             <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+            <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
             <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
             <ScalarProperty Name="Floor" ColumnName="Floor" />
             <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
@@ -2031,9 +2408,10 @@
             <ScalarProperty Name="CurrentRoom" ColumnName="CurrentRoom" />
             <ScalarProperty Name="StartRoom" ColumnName="StartRoom" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="HoseStockInfoHists"><EntityTypeMapping TypeName="StockCore.Models.HoseStockInfoHist"><MappingFragment StoreEntitySet="HoseStockInfoHist">
+          <EntitySetMapping Name="HoseStockInfoHists"><EntityTypeMapping TypeName="DataStockCoreModel.HoseStockInfoHist"><MappingFragment StoreEntitySet="HoseStockInfoHist">
             <ScalarProperty Name="id" ColumnName="id" />
             <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+            <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
             <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
             <ScalarProperty Name="Floor" ColumnName="Floor" />
             <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
@@ -2059,7 +2437,7 @@
             <ScalarProperty Name="CurrentRoom" ColumnName="CurrentRoom" />
             <ScalarProperty Name="StartRoom" ColumnName="StartRoom" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="MainCustAccounts"><EntityTypeMapping TypeName="StockCore.Models.MainCustAccount"><MappingFragment StoreEntitySet="MainCustAccount">
+          <EntitySetMapping Name="MainCustAccounts"><EntityTypeMapping TypeName="DataStockCoreModel.MainCustAccount"><MappingFragment StoreEntitySet="MainCustAccount">
             <ScalarProperty Name="MainCustAccountID" ColumnName="MainCustAccountID" />
             <ScalarProperty Name="FullName" ColumnName="FullName" />
             <ScalarProperty Name="Email" ColumnName="Email" />
@@ -2089,16 +2467,18 @@
             <ScalarProperty Name="UpdatedUser" ColumnName="UpdatedUser" />
             <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="Markets"><EntityTypeMapping TypeName="StockCore.Models.Market"><MappingFragment StoreEntitySet="Market">
+          <EntitySetMapping Name="Markets"><EntityTypeMapping TypeName="DataStockCoreModel.Market"><MappingFragment StoreEntitySet="Market">
             <ScalarProperty Name="Id" ColumnName="Id" />
             <ScalarProperty Name="Name" ColumnName="Name" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="Matcheds"><EntityTypeMapping TypeName="StockCore.Models.Matched"><MappingFragment StoreEntitySet="Matched">
-            <ScalarProperty Name="Price" ColumnName="Price" />
-            <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <EntitySetMapping Name="Matcheds"><EntityTypeMapping TypeName="DataStockCoreModel.Matched"><MappingFragment StoreEntitySet="Matched">
+            <ScalarProperty Name="OrderSellID" ColumnName="OrderSellID" />
+            <ScalarProperty Name="OrderBuyID" ColumnName="OrderBuyID" />
+            <ScalarProperty Name="MatchedPrice" ColumnName="MatchedPrice" />
+            <ScalarProperty Name="MatchedVol" ColumnName="MatchedVol" />
             <ScalarProperty Name="DateMatched" ColumnName="DateMatched" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="MemberStockCompanies"><EntityTypeMapping TypeName="StockCore.Models.MemberStockCompany"><MappingFragment StoreEntitySet="MemberStockCompany">
+          <EntitySetMapping Name="MemberStockCompanies"><EntityTypeMapping TypeName="DataStockCoreModel.MemberStockCompany"><MappingFragment StoreEntitySet="MemberStockCompany">
             <ScalarProperty Name="Id" ColumnName="Id" />
             <ScalarProperty Name="ShortNameVi" ColumnName="ShortNameVi" />
             <ScalarProperty Name="ShortNameEn" ColumnName="ShortNameEn" />
@@ -2108,7 +2488,18 @@
             <ScalarProperty Name="Website" ColumnName="Website" />
             <ScalarProperty Name="IsPublished" ColumnName="IsPublished" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="StockBalances"><EntityTypeMapping TypeName="StockCore.Models.StockBalance"><MappingFragment StoreEntitySet="StockBalance">
+          <EntitySetMapping Name="Orders"><EntityTypeMapping TypeName="DataStockCoreModel.Order"><MappingFragment StoreEntitySet="Order">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+            <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
+            <ScalarProperty Name="Price" ColumnName="Price" />
+            <ScalarProperty Name="Volume" ColumnName="Volume" />
+            <ScalarProperty Name="MatchedVol" ColumnName="MatchedVol" />
+            <ScalarProperty Name="Side" ColumnName="Side" />
+            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+            <ScalarProperty Name="Status" ColumnName="Status" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="StockBalances"><EntityTypeMapping TypeName="DataStockCoreModel.StockBalance"><MappingFragment StoreEntitySet="StockBalance">
             <ScalarProperty Name="SubCustAccountID" ColumnName="SubCustAccountID" />
             <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
             <ScalarProperty Name="Available" ColumnName="Available" />
@@ -2118,11 +2509,12 @@
             <ScalarProperty Name="WTS_T1" ColumnName="WTS_T1" />
             <ScalarProperty Name="WTS_T2" ColumnName="WTS_T2" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="SubCustAccounts"><EntityTypeMapping TypeName="StockCore.Models.SubCustAccount"><MappingFragment StoreEntitySet="SubCustAccount">
+          <EntitySetMapping Name="SubCustAccounts"><EntityTypeMapping TypeName="DataStockCoreModel.SubCustAccount"><MappingFragment StoreEntitySet="SubCustAccount">
             <ScalarProperty Name="SubCustAccountID" ColumnName="SubCustAccountID" />
             <ScalarProperty Name="Name" ColumnName="Name" />
             <ScalarProperty Name="Actived" ColumnName="Actived" />
             <ScalarProperty Name="LockAccountReason" ColumnName="LockAccountReason" />
+            <ScalarProperty Name="MainCustAccountID" ColumnName="MainCustAccountID" />
             <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
             <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
             <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
@@ -2132,7 +2524,7 @@
             <ScalarProperty Name="TotalBuy" ColumnName="TotalBuy" />
             <ScalarProperty Name="TotalSell" ColumnName="TotalSell" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="UpComMarketInfoes"><EntityTypeMapping TypeName="StockCore.Models.UpComMarketInfo"><MappingFragment StoreEntitySet="UpComMarketInfo">
+          <EntitySetMapping Name="UpComMarketInfoes"><EntityTypeMapping TypeName="DataStockCoreModel.UpComMarketInfo"><MappingFragment StoreEntitySet="UpComMarketInfo">
             <ScalarProperty Name="id" ColumnName="id" />
             <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
             <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
@@ -2143,9 +2535,10 @@
             <ScalarProperty Name="Nochange" ColumnName="Nochange" />
             <ScalarProperty Name="Declines" ColumnName="Declines" />
             <ScalarProperty Name="OpenIndex" ColumnName="OpenIndex" />
+            <ScalarProperty Name="Marketid" ColumnName="Marketid" />
             <ScalarProperty Name="Status" ColumnName="Status" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="UpComMarketInfoHists"><EntityTypeMapping TypeName="StockCore.Models.UpComMarketInfoHist"><MappingFragment StoreEntitySet="UpComMarketInfoHist">
+          <EntitySetMapping Name="UpComMarketInfoHists"><EntityTypeMapping TypeName="DataStockCoreModel.UpComMarketInfoHist"><MappingFragment StoreEntitySet="UpComMarketInfoHist">
             <ScalarProperty Name="id" ColumnName="id" />
             <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
             <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
@@ -2156,11 +2549,13 @@
             <ScalarProperty Name="Nochange" ColumnName="Nochange" />
             <ScalarProperty Name="Declines" ColumnName="Declines" />
             <ScalarProperty Name="OpenIndex" ColumnName="OpenIndex" />
+            <ScalarProperty Name="Marketid" ColumnName="Marketid" />
             <ScalarProperty Name="Status" ColumnName="Status" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="UpComStockInfoes"><EntityTypeMapping TypeName="StockCore.Models.UpComStockInfo"><MappingFragment StoreEntitySet="UpComStockInfo">
+          <EntitySetMapping Name="UpComStockInfoes"><EntityTypeMapping TypeName="DataStockCoreModel.UpComStockInfo"><MappingFragment StoreEntitySet="UpComStockInfo">
             <ScalarProperty Name="id" ColumnName="id" />
             <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+            <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
             <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
             <ScalarProperty Name="Floor" ColumnName="Floor" />
             <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
@@ -2186,9 +2581,10 @@
             <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
             <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="UpComStockInfoHists"><EntityTypeMapping TypeName="StockCore.Models.UpComStockInfoHist"><MappingFragment StoreEntitySet="UpComStockInfoHist">
+          <EntitySetMapping Name="UpComStockInfoHists"><EntityTypeMapping TypeName="DataStockCoreModel.UpComStockInfoHist"><MappingFragment StoreEntitySet="UpComStockInfoHist">
             <ScalarProperty Name="id" ColumnName="id" />
             <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+            <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
             <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
             <ScalarProperty Name="Floor" ColumnName="Floor" />
             <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
@@ -2214,333 +2610,31 @@
             <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
             <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <AssociationSetMapping Name="FK__CompanyIn__Marke__2E1BDC42" TypeName="StockCore.Models.FK__CompanyIn__Marke__2E1BDC42" StoreEntitySet="CompanyInfo">
-            <EndProperty Name="Market">
-              <ScalarProperty Name="Id" ColumnName="MarketId" />
-            </EndProperty>
-            <EndProperty Name="CompanyInfo">
-              <ScalarProperty Name="Code" ColumnName="Code" />
-            </EndProperty>
-            <Condition ColumnName="MarketId" IsNull="false" />
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__HNXStockI__Stock__22751F6C" TypeName="StockCore.Models.FK__HNXStockI__Stock__22751F6C" StoreEntitySet="HNXStockInfo">
-            <EndProperty Name="CompanyInfo">
-              <ScalarProperty Name="Code" ColumnName="StockSymbol" />
-            </EndProperty>
-            <EndProperty Name="HNXStockInfo">
-              <ScalarProperty Name="id" ColumnName="id" />
-              <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
-              <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
-              <ScalarProperty Name="Floor" ColumnName="Floor" />
-              <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
-              <ScalarProperty Name="Last" ColumnName="Last" />
-              <ScalarProperty Name="LastVol" ColumnName="LastVol" />
-              <ScalarProperty Name="LastVal" ColumnName="LastVal" />
-              <ScalarProperty Name="Highest" ColumnName="Highest" />
-              <ScalarProperty Name="Lowest" ColumnName="Lowest" />
-              <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
-              <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
-              <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
-              <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
-              <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
-              <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
-              <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
-              <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
-              <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
-              <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
-              <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
-              <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
-              <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
-              <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
-              <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
-              <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
-            </EndProperty>
-            <Condition ColumnName="StockSymbol" IsNull="false" />
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__HNXStockI__Stock__6FB49575" TypeName="StockCore.Models.FK__HNXStockI__Stock__6FB49575" StoreEntitySet="HNXStockInfoHist">
-            <EndProperty Name="CompanyInfo">
-              <ScalarProperty Name="Code" ColumnName="StockSymbol" />
-            </EndProperty>
-            <EndProperty Name="HNXStockInfoHist">
-              <ScalarProperty Name="id" ColumnName="id" />
-              <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
-              <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
-              <ScalarProperty Name="Floor" ColumnName="Floor" />
-              <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
-              <ScalarProperty Name="Last" ColumnName="Last" />
-              <ScalarProperty Name="LastVol" ColumnName="LastVol" />
-              <ScalarProperty Name="LastVal" ColumnName="LastVal" />
-              <ScalarProperty Name="Highest" ColumnName="Highest" />
-              <ScalarProperty Name="Lowest" ColumnName="Lowest" />
-              <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
-              <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
-              <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
-              <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
-              <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
-              <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
-              <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
-              <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
-              <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
-              <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
-              <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
-              <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
-              <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
-              <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
-              <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
-              <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
-            </EndProperty>
-            <Condition ColumnName="StockSymbol" IsNull="false" />
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__HoseStock__Stock__08B54D69" TypeName="StockCore.Models.FK__HoseStock__Stock__08B54D69" StoreEntitySet="HoseStockInfo">
-            <EndProperty Name="CompanyInfo">
-              <ScalarProperty Name="Code" ColumnName="StockSymbol" />
-            </EndProperty>
-            <EndProperty Name="HoseStockInfo">
-              <ScalarProperty Name="id" ColumnName="id" />
-              <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
-              <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
-              <ScalarProperty Name="Floor" ColumnName="Floor" />
-              <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
-              <ScalarProperty Name="Last" ColumnName="Last" />
-              <ScalarProperty Name="LastVol" ColumnName="LastVol" />
-              <ScalarProperty Name="LastVal" ColumnName="LastVal" />
-              <ScalarProperty Name="Highest" ColumnName="Highest" />
-              <ScalarProperty Name="Lowest" ColumnName="Lowest" />
-              <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
-              <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
-              <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
-              <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
-              <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
-              <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
-              <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
-              <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
-              <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
-              <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
-              <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
-              <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
-              <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
-              <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
-              <ScalarProperty Name="CurrentRoom" ColumnName="CurrentRoom" />
-              <ScalarProperty Name="StartRoom" ColumnName="StartRoom" />
-            </EndProperty>
-            <Condition ColumnName="StockSymbol" IsNull="false" />
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__HoseStock__Stock__55F4C372" TypeName="StockCore.Models.FK__HoseStock__Stock__55F4C372" StoreEntitySet="HoseStockInfoHist">
-            <EndProperty Name="CompanyInfo">
-              <ScalarProperty Name="Code" ColumnName="StockSymbol" />
-            </EndProperty>
-            <EndProperty Name="HoseStockInfoHist">
-              <ScalarProperty Name="id" ColumnName="id" />
-              <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
-              <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
-              <ScalarProperty Name="Floor" ColumnName="Floor" />
-              <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
-              <ScalarProperty Name="Last" ColumnName="Last" />
-              <ScalarProperty Name="LastVol" ColumnName="LastVol" />
-              <ScalarProperty Name="LastVal" ColumnName="LastVal" />
-              <ScalarProperty Name="Highest" ColumnName="Highest" />
-              <ScalarProperty Name="Lowest" ColumnName="Lowest" />
-              <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
-              <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
-              <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
-              <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
-              <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
-              <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
-              <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
-              <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
-              <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
-              <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
-              <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
-              <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
-              <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
-              <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
-              <ScalarProperty Name="CurrentRoom" ColumnName="CurrentRoom" />
-              <ScalarProperty Name="StartRoom" ColumnName="StartRoom" />
-            </EndProperty>
-            <Condition ColumnName="StockSymbol" IsNull="false" />
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__Matched__StockSy__61316BF4" TypeName="StockCore.Models.FK__Matched__StockSy__61316BF4" StoreEntitySet="Matched">
-            <EndProperty Name="CompanyInfo">
-              <ScalarProperty Name="Code" ColumnName="StockSymbol" />
-            </EndProperty>
-            <EndProperty Name="Matched">
-              <ScalarProperty Name="Price" ColumnName="Price" />
-              <ScalarProperty Name="Amount" ColumnName="Amount" />
-              <ScalarProperty Name="DateMatched" ColumnName="DateMatched" />
-            </EndProperty>
-            <Condition ColumnName="StockSymbol" IsNull="false" />
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__StockBala__Stock__57A801BA" TypeName="StockCore.Models.FK__StockBala__Stock__57A801BA" StoreEntitySet="StockBalance">
-            <EndProperty Name="CompanyInfo">
-              <ScalarProperty Name="Code" ColumnName="StockSymbol" />
-            </EndProperty>
-            <EndProperty Name="StockBalance">
-              <ScalarProperty Name="SubCustAccountID" ColumnName="SubCustAccountID" />
-              <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__UpComStoc__Stock__09746778" TypeName="StockCore.Models.FK__UpComStoc__Stock__09746778" StoreEntitySet="UpComStockInfoHist">
-            <EndProperty Name="CompanyInfo">
-              <ScalarProperty Name="Code" ColumnName="StockSymbol" />
-            </EndProperty>
-            <EndProperty Name="UpComStockInfoHist">
-              <ScalarProperty Name="id" ColumnName="id" />
-              <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
-              <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
-              <ScalarProperty Name="Floor" ColumnName="Floor" />
-              <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
-              <ScalarProperty Name="Last" ColumnName="Last" />
-              <ScalarProperty Name="LastVol" ColumnName="LastVol" />
-              <ScalarProperty Name="LastVal" ColumnName="LastVal" />
-              <ScalarProperty Name="Highest" ColumnName="Highest" />
-              <ScalarProperty Name="Lowest" ColumnName="Lowest" />
-              <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
-              <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
-              <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
-              <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
-              <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
-              <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
-              <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
-              <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
-              <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
-              <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
-              <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
-              <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
-              <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
-              <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
-              <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
-              <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
-            </EndProperty>
-            <Condition ColumnName="StockSymbol" IsNull="false" />
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__UpComStoc__Stock__3C34F16F" TypeName="StockCore.Models.FK__UpComStoc__Stock__3C34F16F" StoreEntitySet="UpComStockInfo">
-            <EndProperty Name="CompanyInfo">
-              <ScalarProperty Name="Code" ColumnName="StockSymbol" />
-            </EndProperty>
-            <EndProperty Name="UpComStockInfo">
-              <ScalarProperty Name="id" ColumnName="id" />
-              <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
-              <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
-              <ScalarProperty Name="Floor" ColumnName="Floor" />
-              <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
-              <ScalarProperty Name="Last" ColumnName="Last" />
-              <ScalarProperty Name="LastVol" ColumnName="LastVol" />
-              <ScalarProperty Name="LastVal" ColumnName="LastVal" />
-              <ScalarProperty Name="Highest" ColumnName="Highest" />
-              <ScalarProperty Name="Lowest" ColumnName="Lowest" />
-              <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
-              <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
-              <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
-              <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
-              <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
-              <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
-              <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
-              <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
-              <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
-              <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
-              <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
-              <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
-              <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
-              <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
-              <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
-              <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
-            </EndProperty>
-            <Condition ColumnName="StockSymbol" IsNull="false" />
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__HNXMarket__Marke__4AB81AF0" TypeName="StockCore.Models.FK__HNXMarket__Marke__4AB81AF0" StoreEntitySet="HNXMarketInfo">
-            <EndProperty Name="Market">
-              <ScalarProperty Name="Id" ColumnName="MarketId" />
-            </EndProperty>
-            <EndProperty Name="HNXMarketInfo">
-              <ScalarProperty Name="id" ColumnName="id" />
-            </EndProperty>
-            <Condition ColumnName="MarketId" IsNull="false" />
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__HNXMarket__Marke__75A278F5" TypeName="StockCore.Models.FK__HNXMarket__Marke__75A278F5" StoreEntitySet="HNXMarketInfoHist">
-            <EndProperty Name="Market">
-              <ScalarProperty Name="Id" ColumnName="MarketId" />
-            </EndProperty>
-            <EndProperty Name="HNXMarketInfoHist">
-              <ScalarProperty Name="id" ColumnName="id" />
-            </EndProperty>
-            <Condition ColumnName="MarketId" IsNull="false" />
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__HoseMarke__Marke__3D5E1FD2" TypeName="StockCore.Models.FK__HoseMarke__Marke__3D5E1FD2" StoreEntitySet="HoseMarketInfo">
-            <EndProperty Name="Market">
-              <ScalarProperty Name="Id" ColumnName="MarketId" />
-            </EndProperty>
-            <EndProperty Name="HoseMarketInfo">
-              <ScalarProperty Name="id" ColumnName="id" />
-            </EndProperty>
-            <Condition ColumnName="MarketId" IsNull="false" />
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__HoseMarke__Marke__68487DD7" TypeName="StockCore.Models.FK__HoseMarke__Marke__68487DD7" StoreEntitySet="HoseMarketInfoHist">
-            <EndProperty Name="Market">
-              <ScalarProperty Name="Id" ColumnName="MarketId" />
-            </EndProperty>
-            <EndProperty Name="HoseMarketInfoHist">
-              <ScalarProperty Name="id" ColumnName="id" />
-            </EndProperty>
-            <Condition ColumnName="MarketId" IsNull="false" />
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__SubCustAc__MainC__4E1E9780" TypeName="StockCore.Models.FK__SubCustAc__MainC__4E1E9780" StoreEntitySet="SubCustAccount">
-            <EndProperty Name="MainCustAccount">
-              <ScalarProperty Name="MainCustAccountID" ColumnName="MainCustAccountID" />
-            </EndProperty>
-            <EndProperty Name="SubCustAccount">
-              <ScalarProperty Name="SubCustAccountID" ColumnName="SubCustAccountID" />
-            </EndProperty>
-            <Condition ColumnName="MainCustAccountID" IsNull="false" />
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__UpComMark__Marke__02FC7413" TypeName="StockCore.Models.FK__UpComMark__Marke__02FC7413" StoreEntitySet="UpComMarketInfoHist">
-            <EndProperty Name="Market">
-              <ScalarProperty Name="Id" ColumnName="Marketid" />
-            </EndProperty>
-            <EndProperty Name="UpComMarketInfoHist">
-              <ScalarProperty Name="id" ColumnName="id" />
-            </EndProperty>
-            <Condition ColumnName="Marketid" IsNull="false" />
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__UpComMark__Marke__5812160E" TypeName="StockCore.Models.FK__UpComMark__Marke__5812160E" StoreEntitySet="UpComMarketInfo">
-            <EndProperty Name="Market">
-              <ScalarProperty Name="Id" ColumnName="Marketid" />
-            </EndProperty>
-            <EndProperty Name="UpComMarketInfo">
-              <ScalarProperty Name="id" ColumnName="id" />
-            </EndProperty>
-            <Condition ColumnName="Marketid" IsNull="false" />
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__Matched__SubCust__5F492382" TypeName="StockCore.Models.FK__Matched__SubCust__5F492382" StoreEntitySet="Matched">
-            <EndProperty Name="SubCustAccount">
-              <ScalarProperty Name="SubCustAccountID" ColumnName="SubCustAccountIDSell" />
-            </EndProperty>
-            <EndProperty Name="Matched">
-              <ScalarProperty Name="Price" ColumnName="Price" />
-              <ScalarProperty Name="Amount" ColumnName="Amount" />
-              <ScalarProperty Name="DateMatched" ColumnName="DateMatched" />
-            </EndProperty>
-            <Condition ColumnName="SubCustAccountIDSell" IsNull="false" />
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__Matched__SubCust__603D47BB" TypeName="StockCore.Models.FK__Matched__SubCust__603D47BB" StoreEntitySet="Matched">
-            <EndProperty Name="SubCustAccount">
-              <ScalarProperty Name="SubCustAccountID" ColumnName="SubCustAccountIDBuy" />
-            </EndProperty>
-            <EndProperty Name="Matched">
-              <ScalarProperty Name="Price" ColumnName="Price" />
-              <ScalarProperty Name="Amount" ColumnName="Amount" />
-              <ScalarProperty Name="DateMatched" ColumnName="DateMatched" />
-            </EndProperty>
-            <Condition ColumnName="SubCustAccountIDBuy" IsNull="false" />
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK__StockBala__SubCu__56B3DD81" TypeName="StockCore.Models.FK__StockBala__SubCu__56B3DD81" StoreEntitySet="StockBalance">
-            <EndProperty Name="SubCustAccount">
-              <ScalarProperty Name="SubCustAccountID" ColumnName="SubCustAccountID" />
-            </EndProperty>
-            <EndProperty Name="StockBalance">
-              <ScalarProperty Name="SubCustAccountID" ColumnName="SubCustAccountID" />
-              <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
-            </EndProperty>
-          </AssociationSetMapping>
+          <EntitySetMapping Name="CashTempDeductions">
+            <EntityTypeMapping TypeName="DataStockCoreModel.CashTempDeduction">
+              <MappingFragment StoreEntitySet="CashTempDeduction">
+                <ScalarProperty Name="IsAdd" ColumnName="IsAdd" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DeductedDate" ColumnName="DeductedDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockTempDeductions">
+            <EntityTypeMapping TypeName="DataStockCoreModel.StockTempDeduction">
+              <MappingFragment StoreEntitySet="StockTempDeduction">
+                <ScalarProperty Name="IsAdd" ColumnName="IsAdd" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DeductedDate" ColumnName="DeductedDate" />
+                <ScalarProperty Name="Volume" ColumnName="Volume" />
+                <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
+                <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2556,147 +2650,192 @@
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="True" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="DataStockCore">
-        <EntityTypeShape EntityType="StockCore.Models.CompanyInfo" Width="1.5" PointX="3" PointY="27.25" Height="4.2879036458333317" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockCore.Models.HNXMarketInfo" Width="1.5" PointX="3" PointY="50.625" Height="3.326396484374996" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockCore.Models.HNXMarketInfoHist" Width="1.5" PointX="3" PointY="54.75" Height="3.326396484374996" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockCore.Models.HNXStockInfo" Width="1.5" PointX="5.25" PointY="8.875" Height="6.2109179687500031" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockCore.Models.HNXStockInfoHist" Width="1.5" PointX="5.25" PointY="15.875" Height="6.2109179687500031" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockCore.Models.HoseMarketInfo" Width="1.5" PointX="3" PointY="58.875" Height="3.7109993489583246" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockCore.Models.HoseMarketInfoHist" Width="1.5" PointX="3" PointY="63.25" Height="3.7109993489583246" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockCore.Models.HoseStockInfo" Width="1.5" PointX="5.25" PointY="22.875" Height="6.2109179687500031" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockCore.Models.HoseStockInfoHist" Width="1.5" PointX="5.25" PointY="29.75" Height="6.2109179687500031" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockCore.Models.MainCustAccount" Width="1.5" PointX="3.75" PointY="0.75" Height="6.5955208333333317" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockCore.Models.Market" Width="1.5" PointX="0.75" PointY="40.625" Height="2.7494921875000102" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockCore.Models.Matched" Width="1.5" PointX="8.25" PointY="28.375" Height="2.1725878906250031" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockCore.Models.MemberStockCompany" Width="1.5" PointX="0.75" PointY="1.875" Height="2.5571907552083388" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockCore.Models.StockBalance" Width="1.5" PointX="8.25" PointY="23.875" Height="2.9417936197916674" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockCore.Models.SubCustAccount" Width="1.5" PointX="6" PointY="2.375" Height="4.0956022135416674" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockCore.Models.UpComMarketInfo" Width="1.5" PointX="3" PointY="67.75" Height="3.3263964843750102" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockCore.Models.UpComMarketInfoHist" Width="1.5" PointX="3" PointY="71.875" Height="3.3263964843750102" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockCore.Models.UpComStockInfo" Width="1.5" PointX="5.25" PointY="43.375" Height="6.21091796875001" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockCore.Models.UpComStockInfoHist" Width="1.5" PointX="5.25" PointY="50.375" Height="6.210917968749996" IsExpanded="true" />
-        <AssociationConnector Association="StockCore.Models.FK__CompanyIn__Marke__2E1BDC42" ManuallyRouted="false">
-          <ConnectorPoint PointX="1.5" PointY="40.625" />
-          <ConnectorPoint PointX="1.5" PointY="29.393951822916666" />
-          <ConnectorPoint PointX="3" PointY="29.393951822916666" />
+        <EntityTypeShape EntityType="DataStockCoreModel.CompanyInfo" Width="1.5" PointX="3" PointY="27.5" Height="4.4802050781250031" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataStockCoreModel.HNXMarketInfo" Width="1.5" PointX="3" PointY="51.5" Height="3.5186979166666674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataStockCoreModel.HNXMarketInfoHist" Width="1.5" PointX="3" PointY="55.875" Height="3.5186979166666674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataStockCoreModel.HNXStockInfo" Width="1.5" PointX="5.25" PointY="8.625" Height="6.4032194010416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataStockCoreModel.HNXStockInfoHist" Width="1.5" PointX="5.25" PointY="15.75" Height="6.4032194010416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataStockCoreModel.HoseMarketInfo" Width="1.5" PointX="3" PointY="60.125" Height="3.903300781249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataStockCoreModel.HoseMarketInfoHist" Width="1.5" PointX="3" PointY="64.75" Height="3.9033007812500102" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataStockCoreModel.HoseStockInfo" Width="1.5" PointX="5.25" PointY="22.875" Height="6.4032194010416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataStockCoreModel.HoseStockInfoHist" Width="1.5" PointX="5.25" PointY="30.125" Height="6.4032194010416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataStockCoreModel.MainCustAccount" Width="1.5" PointX="3.75" PointY="37.375" Height="6.5955208333333246" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataStockCoreModel.Market" Width="1.5" PointX="0.75" PointY="41.5" Height="2.749492187499996" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataStockCoreModel.Matched" Width="1.5" PointX="10.5" PointY="28.5" Height="2.3648893229166674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataStockCoreModel.MemberStockCompany" Width="1.5" PointX="0.75" PointY="0.75" Height="2.5571907552083388" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataStockCoreModel.Order" Width="1.5" PointX="8.25" PointY="28" Height="3.5186979166666674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataStockCoreModel.StockBalance" Width="1.5" PointX="8.25" PointY="24.25" Height="2.9417936197916674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataStockCoreModel.SubCustAccount" Width="1.5" PointX="6" PointY="38.625" Height="4.0956022135416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataStockCoreModel.UpComMarketInfo" Width="1.5" PointX="3" PointY="69.375" Height="3.5186979166666674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataStockCoreModel.UpComMarketInfoHist" Width="1.5" PointX="3" PointY="73.625" Height="3.5186979166666674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataStockCoreModel.UpComStockInfo" Width="1.5" PointX="5.25" PointY="45.25" Height="6.4032194010416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataStockCoreModel.UpComStockInfoHist" Width="1.5" PointX="5.25" PointY="52.375" Height="6.4032194010416674" IsExpanded="true" />
+        <AssociationConnector Association="DataStockCoreModel.FK__CompanyIn__Marke__2E1BDC42" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.5" PointY="41.5" />
+          <ConnectorPoint PointX="1.5" PointY="29.836253255208334" />
+          <ConnectorPoint PointX="3" PointY="29.836253255208334" />
         </AssociationConnector>
-        <AssociationConnector Association="StockCore.Models.FK__HNXStockI__Stock__22751F6C" ManuallyRouted="false">
-          <ConnectorPoint PointX="3.75" PointY="27.25" />
-          <ConnectorPoint PointX="3.75" PointY="11.980458984375002" />
-          <ConnectorPoint PointX="5.25" PointY="11.980458984375002" />
+        <AssociationConnector Association="DataStockCoreModel.FK__HNXStockI__Stock__22751F6C" ManuallyRouted="false">
+          <ConnectorPoint PointX="3.54687375" PointY="27.5" />
+          <ConnectorPoint PointX="3.54687375" PointY="11.826609700520834" />
+          <ConnectorPoint PointX="5.25" PointY="11.826609700520834" />
         </AssociationConnector>
-        <AssociationConnector Association="StockCore.Models.FK__HNXStockI__Stock__6FB49575" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.1562525" PointY="27.25" />
-          <ConnectorPoint PointX="4.1562525" PointY="18.980458984375" />
-          <ConnectorPoint PointX="5.25" PointY="18.980458984375" />
+        <AssociationConnector Association="DataStockCoreModel.FK__HNXStockI__Stock__6FB49575" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.054689375" PointY="27.5" />
+          <ConnectorPoint PointX="4.054689375" PointY="18.951609700520834" />
+          <ConnectorPoint PointX="5.25" PointY="18.951609700520834" />
         </AssociationConnector>
-        <AssociationConnector Association="StockCore.Models.FK__HoseStock__Stock__08B54D69" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="28.167958984375" />
-          <ConnectorPoint PointX="5.25" PointY="28.167958984375" />
+        <AssociationConnector Association="DataStockCoreModel.FK__HoseStock__Stock__08B54D69" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="28.157255437825519" />
+          <ConnectorPoint PointX="5.25" PointY="28.157255437825519" />
         </AssociationConnector>
-        <AssociationConnector Association="StockCore.Models.FK__HoseStock__Stock__55F4C372" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="30.643951822916666" />
-          <ConnectorPoint PointX="5.25" PointY="30.643951822916666" />
+        <AssociationConnector Association="DataStockCoreModel.FK__HoseStock__Stock__55F4C372" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="31.337306315104168" />
+          <ConnectorPoint PointX="4.854166666666667" PointY="31.337306315104168" />
+          <ConnectorPoint PointX="5.083333333333333" PointY="31.337306315104168" />
+          <ConnectorPoint PointX="5.25" PointY="31.337306315104168" />
         </AssociationConnector>
-        <AssociationConnector Association="StockCore.Models.FK__Matched__StockSy__61316BF4" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="29.417958984375" />
-          <ConnectorPoint PointX="7.072916666666667" PointY="29.417958984375" />
-          <ConnectorPoint PointX="7.239583333333333" PointY="29.417958984375" />
-          <ConnectorPoint PointX="8.25" PointY="29.417958984375" />
+        <AssociationConnector Association="DataStockCoreModel.FK__Order__StockSymb__7720AD13" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="29.70160970052083" />
+          <ConnectorPoint PointX="4.854166666666667" PointY="29.70160970052083" />
+          <ConnectorPoint PointX="5.020833333333333" PointY="29.70160970052083" />
+          <ConnectorPoint PointX="7.791666666666667" PointY="29.70160970052083" />
+          <ConnectorPoint PointX="7.958333333333333" PointY="29.70160970052083" />
+          <ConnectorPoint PointX="8.25" PointY="29.70160970052083" />
         </AssociationConnector>
-        <AssociationConnector Association="StockCore.Models.FK__StockBala__Stock__57A801BA" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="29.2519359765625" />
-          <ConnectorPoint PointX="7.072916666666667" PointY="29.2519359765625" />
-          <ConnectorPoint PointX="7.239583333333333" PointY="29.2519359765625" />
-          <ConnectorPoint PointX="8" PointY="29.2519359765625" />
-          <ConnectorPoint PointX="8" PointY="28.125" />
-          <ConnectorPoint PointX="9" PointY="28.125" />
-          <ConnectorPoint PointX="9" PointY="26.816793619791667" />
+        <AssociationConnector Association="DataStockCoreModel.FK__StockBala__Stock__57A801BA" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="29.48991205078125" />
+          <ConnectorPoint PointX="4.854166666666667" PointY="29.48991205078125" />
+          <ConnectorPoint PointX="5.020833333333333" PointY="29.48991205078125" />
+          <ConnectorPoint PointX="7.791666666666667" PointY="29.48991205078125" />
+          <ConnectorPoint PointX="7.958333333333333" PointY="29.48991205078125" />
+          <ConnectorPoint PointX="8" PointY="29.48991205078125" />
+          <ConnectorPoint PointX="8" PointY="27.75" />
+          <ConnectorPoint PointX="9" PointY="27.75" />
+          <ConnectorPoint PointX="9" PointY="27.191793619791667" />
         </AssociationConnector>
-        <AssociationConnector Association="StockCore.Models.FK__UpComStoc__Stock__09746778" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="31.537903645833332" />
-          <ConnectorPoint PointX="4.875" PointY="31.912903645833332" />
-          <ConnectorPoint PointX="4.875" PointY="53.480458984375" />
-          <ConnectorPoint PointX="5.25" PointY="53.480458984375" />
+        <AssociationConnector Association="DataStockCoreModel.FK__UpComStoc__Stock__09746778" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="30.5194580078125" />
+          <ConnectorPoint PointX="5" PointY="30.5194580078125" />
+          <ConnectorPoint PointX="5" PointY="37.125" />
+          <ConnectorPoint PointX="5.75" PointY="37.125" />
+          <ConnectorPoint PointX="5.75" PointY="45" />
+          <ConnectorPoint PointX="5" PointY="45" />
+          <ConnectorPoint PointX="5" PointY="52" />
+          <ConnectorPoint PointX="6" PointY="52" />
+          <ConnectorPoint PointX="6" PointY="52.375" />
         </AssociationConnector>
-        <AssociationConnector Association="StockCore.Models.FK__UpComStoc__Stock__3C34F16F" ManuallyRouted="false">
-          <ConnectorPoint PointX="3.7187475" PointY="31.537903645833332" />
-          <ConnectorPoint PointX="3.7187475" PointY="46.480458984375005" />
-          <ConnectorPoint PointX="4.791666666666667" PointY="46.480458984375005" />
-          <ConnectorPoint PointX="4.958333333333333" PointY="46.480458984375005" />
-          <ConnectorPoint PointX="5.25" PointY="46.480458984375005" />
+        <AssociationConnector Association="DataStockCoreModel.FK__UpComStoc__Stock__3C34F16F" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="28.823583744303384" />
+          <ConnectorPoint PointX="4.9375" PointY="28.823583744303384" />
+          <ConnectorPoint PointX="4.9375" PointY="36.875" />
+          <ConnectorPoint PointX="5.6875" PointY="36.875" />
+          <ConnectorPoint PointX="5.6875" PointY="44.875" />
+          <ConnectorPoint PointX="6.2499994999999995" PointY="44.875" />
+          <ConnectorPoint PointX="6.2499994999999995" PointY="45.25" />
         </AssociationConnector>
-        <AssociationConnector Association="StockCore.Models.FK__HNXMarket__Marke__4AB81AF0" ManuallyRouted="false">
-          <ConnectorPoint PointX="1.5" PointY="43.37449218750001" />
-          <ConnectorPoint PointX="1.5" PointY="52.2881982421875" />
-          <ConnectorPoint PointX="1.6197929166666667" PointY="52.2881982421875" />
-          <ConnectorPoint PointX="1.7864595833333332" PointY="52.2881982421875" />
-          <ConnectorPoint PointX="1.8229191666666667" PointY="52.2881982421875" />
-          <ConnectorPoint PointX="1.9895858333333332" PointY="52.2881982421875" />
-          <ConnectorPoint PointX="2.0260454166666664" PointY="52.2881982421875" />
-          <ConnectorPoint PointX="2.1927120833333333" PointY="52.2881982421875" />
-          <ConnectorPoint PointX="3" PointY="52.2881982421875" />
+        <AssociationConnector Association="DataStockCoreModel.FK__HNXMarket__Marke__4AB81AF0" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.5" PointY="44.249492187499996" />
+          <ConnectorPoint PointX="1.5" PointY="53.259348958333334" />
+          <ConnectorPoint PointX="1.6197929166666667" PointY="53.259348958333334" />
+          <ConnectorPoint PointX="1.7864595833333332" PointY="53.259348958333334" />
+          <ConnectorPoint PointX="1.8229191666666667" PointY="53.259348958333334" />
+          <ConnectorPoint PointX="1.9895858333333332" PointY="53.259348958333334" />
+          <ConnectorPoint PointX="2.0260454166666664" PointY="53.259348958333334" />
+          <ConnectorPoint PointX="2.1927120833333333" PointY="53.259348958333334" />
+          <ConnectorPoint PointX="3" PointY="53.259348958333334" />
         </AssociationConnector>
-        <AssociationConnector Association="StockCore.Models.FK__HNXMarket__Marke__75A278F5" ManuallyRouted="false">
-          <ConnectorPoint PointX="1.9062525" PointY="43.37449218750001" />
-          <ConnectorPoint PointX="1.9062525" PointY="56.4131982421875" />
-          <ConnectorPoint PointX="2.0260454166666664" PointY="56.4131982421875" />
-          <ConnectorPoint PointX="2.1927120833333333" PointY="56.4131982421875" />
-          <ConnectorPoint PointX="3" PointY="56.4131982421875" />
+        <AssociationConnector Association="DataStockCoreModel.FK__HNXMarket__Marke__75A278F5" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.9062525" PointY="44.249492187499996" />
+          <ConnectorPoint PointX="1.9062525" PointY="57.634348958333334" />
+          <ConnectorPoint PointX="2.0260454166666664" PointY="57.634348958333334" />
+          <ConnectorPoint PointX="2.1927120833333333" PointY="57.634348958333334" />
+          <ConnectorPoint PointX="3" PointY="57.634348958333334" />
         </AssociationConnector>
-        <AssociationConnector Association="StockCore.Models.FK__HoseMarke__Marke__3D5E1FD2" ManuallyRouted="false">
-          <ConnectorPoint PointX="1.0937475" PointY="43.37449218750001" />
-          <ConnectorPoint PointX="1.0937475" PointY="60.730499674479162" />
-          <ConnectorPoint PointX="1.2135404166666668" PointY="60.730499674479162" />
-          <ConnectorPoint PointX="1.3802070833333333" PointY="60.730499674479162" />
-          <ConnectorPoint PointX="1.6197929166666667" PointY="60.730499674479162" />
-          <ConnectorPoint PointX="1.7864595833333332" PointY="60.730499674479162" />
-          <ConnectorPoint PointX="2.0260454166666664" PointY="60.730499674479162" />
-          <ConnectorPoint PointX="2.1927120833333333" PointY="60.730499674479162" />
-          <ConnectorPoint PointX="3" PointY="60.730499674479162" />
+        <AssociationConnector Association="DataStockCoreModel.FK__HoseMarke__Marke__3D5E1FD2" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.0937475" PointY="44.249492187499996" />
+          <ConnectorPoint PointX="1.0937475" PointY="62.076650390625" />
+          <ConnectorPoint PointX="1.2135404166666668" PointY="62.076650390625" />
+          <ConnectorPoint PointX="1.3802070833333333" PointY="62.076650390625" />
+          <ConnectorPoint PointX="1.6197929166666667" PointY="62.076650390625" />
+          <ConnectorPoint PointX="1.7864595833333332" PointY="62.076650390625" />
+          <ConnectorPoint PointX="2.0260454166666664" PointY="62.076650390625" />
+          <ConnectorPoint PointX="2.1927120833333333" PointY="62.076650390625" />
+          <ConnectorPoint PointX="3" PointY="62.076650390625" />
         </AssociationConnector>
-        <AssociationConnector Association="StockCore.Models.FK__HoseMarke__Marke__68487DD7" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.10937875" PointY="43.37449218750001" />
-          <ConnectorPoint PointX="2.10937875" PointY="65.105499674479162" />
-          <ConnectorPoint PointX="3" PointY="65.105499674479162" />
+        <AssociationConnector Association="DataStockCoreModel.FK__HoseMarke__Marke__68487DD7" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.10937875" PointY="44.249492187499996" />
+          <ConnectorPoint PointX="2.10937875" PointY="66.701650390625" />
+          <ConnectorPoint PointX="3" PointY="66.701650390625" />
         </AssociationConnector>
-        <AssociationConnector Association="StockCore.Models.FK__SubCustAc__MainC__4E1E9780" ManuallyRouted="false">
-          <ConnectorPoint PointX="5.25" PointY="4.4228011067708337" />
-          <ConnectorPoint PointX="6" PointY="4.4228011067708337" />
+        <AssociationConnector Association="DataStockCoreModel.FK__SubCustAc__MainC__4E1E9780" ManuallyRouted="false">
+          <ConnectorPoint PointX="5.25" PointY="40.865102539062505" />
+          <ConnectorPoint PointX="5.604166666666667" PointY="40.865102539062505" />
+          <ConnectorPoint PointX="5.833333333333333" PointY="40.865102539062505" />
+          <ConnectorPoint PointX="6" PointY="40.865102539062505" />
         </AssociationConnector>
-        <AssociationConnector Association="StockCore.Models.FK__UpComMark__Marke__02FC7413" ManuallyRouted="false">
-          <ConnectorPoint PointX="1.70312625" PointY="43.37449218750001" />
-          <ConnectorPoint PointX="1.70312625" PointY="73.5381982421875" />
-          <ConnectorPoint PointX="3" PointY="73.5381982421875" />
+        <AssociationConnector Association="DataStockCoreModel.FK__UpComMark__Marke__02FC7413" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.70312625" PointY="44.249492187499996" />
+          <ConnectorPoint PointX="1.70312625" PointY="75.384348958333334" />
+          <ConnectorPoint PointX="3" PointY="75.384348958333334" />
         </AssociationConnector>
-        <AssociationConnector Association="StockCore.Models.FK__UpComMark__Marke__5812160E" ManuallyRouted="false">
-          <ConnectorPoint PointX="1.29687375" PointY="43.37449218750001" />
-          <ConnectorPoint PointX="1.29687375" PointY="69.4131982421875" />
-          <ConnectorPoint PointX="1.6197929166666667" PointY="69.4131982421875" />
-          <ConnectorPoint PointX="1.7864595833333332" PointY="69.4131982421875" />
-          <ConnectorPoint PointX="3" PointY="69.4131982421875" />
+        <AssociationConnector Association="DataStockCoreModel.FK__UpComMark__Marke__5812160E" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.29687375" PointY="44.249492187499996" />
+          <ConnectorPoint PointX="1.29687375" PointY="71.134348958333334" />
+          <ConnectorPoint PointX="1.6197929166666667" PointY="71.134348958333334" />
+          <ConnectorPoint PointX="1.7864595833333332" PointY="71.134348958333334" />
+          <ConnectorPoint PointX="3" PointY="71.134348958333334" />
         </AssociationConnector>
-        <AssociationConnector Association="StockCore.Models.FK__Matched__SubCust__5F492382" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.15625" PointY="6.4706022135416674" />
-          <ConnectorPoint PointX="7.15625" PointY="29.583981992187503" />
-          <ConnectorPoint PointX="8.25" PointY="29.583981992187503" />
+        <AssociationConnector Association="DataStockCoreModel.FK__Matched__OrderBu__7BE56230" ManuallyRouted="false">
+          <ConnectorPoint PointX="9.75" PointY="29.682444661458334" />
+          <ConnectorPoint PointX="10.5" PointY="29.682444661458334" />
         </AssociationConnector>
-        <AssociationConnector Association="StockCore.Models.FK__Matched__SubCust__603D47BB" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.3593775" PointY="6.4706022135416674" />
-          <ConnectorPoint PointX="7.3593775" PointY="29.200176972656251" />
-          <ConnectorPoint PointX="8.25" PointY="29.200176972656251" />
+        <AssociationConnector Association="DataStockCoreModel.FK__Matched__OrderSe__7AF13DF7" ManuallyRouted="false">
+          <ConnectorPoint PointX="9.75" PointY="29.028722330729167" />
+          <ConnectorPoint PointX="10.5" PointY="29.028722330729167" />
         </AssociationConnector>
-        <AssociationConnector Association="StockCore.Models.FK__StockBala__SubCu__56B3DD81" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.5" PointY="4.4228011067708337" />
-          <ConnectorPoint PointX="9" PointY="4.4228011067708337" />
-          <ConnectorPoint PointX="9" PointY="23.875" />
+        <AssociationConnector Association="DataStockCoreModel.FK__Order__AccountNo__762C88DA" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.124997500000001" PointY="38.625" />
+          <ConnectorPoint PointX="7.124997500000001" PointY="29.913307350260411" />
+          <ConnectorPoint PointX="7.791666666666667" PointY="29.913307350260411" />
+          <ConnectorPoint PointX="7.958333333333333" PointY="29.913307350260411" />
+          <ConnectorPoint PointX="8.25" PointY="29.913307350260411" />
+        </AssociationConnector>
+        <AssociationConnector Association="DataStockCoreModel.FK__StockBala__SubCu__56B3DD81" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.4757692307692318" PointY="38.625" />
+          <ConnectorPoint PointX="7.875" PointY="38.225769230769231" />
+          <ConnectorPoint PointX="7.875" PointY="25.720896809895834" />
+          <ConnectorPoint PointX="8.25" PointY="25.720896809895834" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="DataStockCoreModel.CashTempDeduction" Width="1.5" PointX="8.25" PointY="39.625" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="DataStockCoreModel.StockTempDeduction" Width="1.5" PointX="8.25" PointY="33.875" Height="2.7494921875000102" />
+        <AssociationConnector Association="DataStockCoreModel.FK__CashTempD__Accou__019E3B86" >
+          <ConnectorPoint PointX="7.5" PointY="40.807444661458334" />
+          <ConnectorPoint PointX="8.25" PointY="40.807444661458334" />
+        </AssociationConnector>
+        <AssociationConnector Association="DataStockCoreModel.FK__StockTemp__Stock__0EF836A4" >
+          <ConnectorPoint PointX="3.75" PointY="32.172506510416667" />
+          <ConnectorPoint PointX="3.75" PointY="36.607605794270839" />
+          <ConnectorPoint PointX="4.854166666666667" PointY="36.607605794270839" />
+          <ConnectorPoint PointX="5.083333333333333" PointY="36.607605794270839" />
+          <ConnectorPoint PointX="7.0416641666666679" PointY="36.607605794270839" />
+          <ConnectorPoint PointX="7.208330833333334" PointY="36.607605794270839" />
+          <ConnectorPoint PointX="7.791666666666667" PointY="36.607605794270839" />
+          <ConnectorPoint PointX="8.1145833333333339" PointY="36.607605794270839" />
+          <ConnectorPoint PointX="8.25" PointY="36.607605794270839" />
+        </AssociationConnector>
+        <AssociationConnector Association="DataStockCoreModel.FK__StockTemp__Accou__0E04126B" >
+          <ConnectorPoint PointX="7.5" PointY="38.681537461538461" />
+          <ConnectorPoint PointX="8.03125" PointY="38.150287461538461" />
+          <ConnectorPoint PointX="8.03125" PointY="35.210050897135424" />
+          <ConnectorPoint PointX="8.25" PointY="35.210050897135424" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

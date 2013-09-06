@@ -49,4 +49,94 @@ namespace StockCore.Common
         public double OpenIndex { get; set; }
         public string Status { get; set; }
     }
+    public class HoseStockInfoData
+    {
+        public long id { get; set; }
+        public string StockSymbol { get; set; }
+        public System.DateTime TradeDate { get; set; }
+        public long Ceiling { get; set; }
+        public long Floor { get; set; }
+        public long AvrPrice { get; set; }
+        public long Last { get; set; }
+        public long LastVol { get; set; }
+        public long LastVal { get; set; }
+        public long Highest { get; set; }
+        public long Lowest { get; set; }
+        public long Totalshares { get; set; }
+        public long TotalValue { get; set; }
+        public long Best1Bid { get; set; }
+        public long Best1BidVolume { get; set; }
+        public long Best2Bid { get; set; }
+        public long Best2BidVolume { get; set; }
+        public long Best3Bid { get; set; }
+        public long Best3BidVolume { get; set; }
+        public long Best1Offer { get; set; }
+        public long Best1OfferVolume { get; set; }
+        public long Best2Offer { get; set; }
+        public long Best2OfferVolume { get; set; }
+        public long Best3Offer { get; set; }
+        public long Best3OfferVolume { get; set; }
+        public long CurrentRoom { get; set; }
+        public long StartRoom { get; set; }
+    }
+    public class HNXStockInfoData
+    {
+        public long id { get; set; }
+        public string StockSymbol { get; set; }
+        public System.DateTime TradeDate { get; set; }
+        public long Ceiling { get; set; }
+        public long Floor { get; set; }
+        public long AvrPrice { get; set; }
+        public long Last { get; set; }
+        public long LastVol { get; set; }
+        public long LastVal { get; set; }
+        public long Highest { get; set; }
+        public long Lowest { get; set; }
+        public long Totalshares { get; set; }
+        public long TotalValue { get; set; }
+        public long Best1Bid { get; set; }
+        public long Best1BidVolume { get; set; }
+        public long Best2Bid { get; set; }
+        public long Best2BidVolume { get; set; }
+        public long Best3Bid { get; set; }
+        public long Best3BidVolume { get; set; }
+        public long Best1Offer { get; set; }
+        public long Best1OfferVolume { get; set; }
+        public long Best2Offer { get; set; }
+        public long Best2OfferVolume { get; set; }
+        public long Best3Offer { get; set; }
+        public long Best3OfferVolume { get; set; }
+        public long SELL_FOREIGN_QTTY { get; set; }
+        public long BUY_FOREIGN_QTTY { get; set; }
+    }
+    public class UpComStockInfoData
+    {
+        public long id { get; set; }
+        public string StockSymbol { get; set; }
+        public System.DateTime TradeDate { get; set; }
+        public long Ceiling { get; set; }
+        public long Floor { get; set; }
+        public long AvrPrice { get; set; }
+        public long Last { get; set; }
+        public long LastVol { get; set; }
+        public long LastVal { get; set; }
+        public long Highest { get; set; }
+        public long Lowest { get; set; }
+        public long Totalshares { get; set; }
+        public long TotalValue { get; set; }
+        public long Best1Bid { get; set; }
+        public long Best1BidVolume { get; set; }
+        public long Best2Bid { get; set; }
+        public long Best2BidVolume { get; set; }
+        public long Best3Bid { get; set; }
+        public long Best3BidVolume { get; set; }
+        public long Best1Offer { get; set; }
+        public long Best1OfferVolume { get; set; }
+        public long Best2Offer { get; set; }
+        public long Best2OfferVolume { get; set; }
+        public long Best3Offer { get; set; }
+        public long Best3OfferVolume { get; set; }
+        public long SELL_FOREIGN_QTTY { get; set; }
+        public long BUY_FOREIGN_QTTY { get; set; }
+    }
 }

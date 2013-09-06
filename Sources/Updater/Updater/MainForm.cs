@@ -25,6 +25,11 @@ namespace Updater
         private bool _hnxStatus = true;
         private bool _upcomStatus = true;
         Thread threadHoseMarket;
+        Thread threadHNXMarket;
+        Thread threadUpcomMarket;
+        Thread threadHoseStockInfo;
+        Thread threadHNXStockInfo;
+        Thread threadUpComStockInfo;
 
         public MainForm()
         {
@@ -44,6 +49,8 @@ namespace Updater
                     {
                         string message = Encoding.ASCII.GetString(content);
                         udpClient.Close();
+                        Repository.HoseMarketInfoRepository hoseRep = new Repository.HoseMarketInfoRepository();
+                        hoseRep.Insert(message);
                     }
                     _hoseStatus = true;
                 }
@@ -67,23 +74,127 @@ namespace Updater
         }
         private void GetHNXMarketData()
         {
-            try
+            while (true)
             {
-               
-            }
-            catch
-            {
-                _hnxStatus = false;
+                try
+                {
+                    UdpClient udpClient = new UdpClient();
+                    udpClient.Client.Bind(new IPEndPoint(IPAddress.Any, HNXMarketPort));
+                    IPEndPoint remoteIPEndPoint = new IPEndPoint(IPAddress.Any, HNXMarketPort);
+                    byte[] content = udpClient.Receive(ref remoteIPEndPoint);
+                    if (content.Length > 0)
+                    {
+                        string message = Encoding.ASCII.GetString(content);
+                        udpClient.Close();
+                        Repository.HNXMarketInfoRepository hnxRep = new Repository.HNXMarketInfoRepository();
+                        hnxRep.Insert(message);
+                    }
+                    _hnxStatus = true;
+                }
+                catch
+                {
+                    _hnxStatus = false;
+                }
             }
         }
         private void GetUpComMarketData()
         {
-            try
+            while (true)
             {
+                try
+                {
+                    UdpClient udpClient = new UdpClient();
+                    udpClient.Client.Bind(new IPEndPoint(IPAddress.Any, UpComMarketPort));
+                    IPEndPoint remoteIPEndPoint = new IPEndPoint(IPAddress.Any, UpComMarketPort);
+                    byte[] content = udpClient.Receive(ref remoteIPEndPoint);
+                    if (content.Length > 0)
+                    {
+                        string message = Encoding.ASCII.GetString(content);
+                        udpClient.Close();
+                        Repository.UpcomMarketInfoRepository upcomRep = new Repository.UpcomMarketInfoRepository();
+                        upcomRep.Insert(message);
+                    }
+                    _upcomStatus = true;
+                }
+                catch
+                {
+                    _upcomStatus = false;
+                }
             }
-            catch
+        }
+        private void GetHoseStockInfoData()
+        {
+            while (true)
             {
-                _upcomStatus = false;
+                try
+                {
+                    UdpClient udpClient = new UdpClient();
+                    udpClient.Client.Bind(new IPEndPoint(IPAddress.Any, HoseStockInfoPort));
+                    IPEndPoint remoteIPEndPoint = new IPEndPoint(IPAddress.Any, HoseStockInfoPort);
+                    byte[] content = udpClient.Receive(ref remoteIPEndPoint);
+                    if (content.Length > 0)
+                    {
+                        string message = Encoding.ASCII.GetString(content);
+                        udpClient.Close();
+                        Repository.HoseStockInfoRepository upcomRep = new Repository.HoseStockInfoRepository();
+                        upcomRep.Insert(message);
+                    }
+                    _upcomStatus = true;
+                }
+                catch
+                {
+                    _upcomStatus = false;
+                }
+            }
+        }
+        private void GetHNXStockInfoData()
+        {
+            while (true)
+            {
+                try
+                {
+                    UdpClient udpClient = new UdpClient();
+                    udpClient.Client.Bind(new IPEndPoint(IPAddress.Any, HNXStockInfoPort));
+                    IPEndPoint remoteIPEndPoint = new IPEndPoint(IPAddress.Any, HNXStockInfoPort);
+                    byte[] content = udpClient.Receive(ref remoteIPEndPoint);
+                    if (content.Length > 0)
+                    {
+                        string message = Encoding.ASCII.GetString(content);
+                        udpClient.Close();
+                        Repository.HNXStockInfoRepository upcomRep = new Repository.HNXStockInfoRepository();
+                        upcomRep.Insert(message);
+                    }
+                    _upcomStatus = true;
+                }
+                catch
+                {
+                    _upcomStatus = false;
+                }
+            }
+        }
+        private void GetUpComStockInfoData()
+        {
+            while (true)
+            {
+                try
+                {
+                    UdpClient udpClient = new UdpClient();
+                    udpClient.Client.Bind(new IPEndPoint(IPAddress.Any, UpComStockInfoPort));
+                    IPEndPoint remoteIPEndPoint = new IPEndPoint(IPAddress.Any, UpComStockInfoPort);
+                    byte[] content = udpClient.Receive(ref remoteIPEndPoint);
+                    if (content.Length > 0)
+                    {
+                        string message = Encoding.ASCII.GetString(content);
+                        udpClient.Close();
+                        Repository.UpComStockInfoRepository upcomRep = new Repository.UpComStockInfoRepository();
+                        upcomRep.Insert(message);
+                    }
+                    _upcomStatus = true;
+                }
+                catch
+                {
+                    _upcomStatus = false;
+                }
             }
         }
         private void btAction_Click(object sender, EventArgs e)
@@ -92,13 +203,26 @@ namespace Updater
             {
                 btAction.Text = "Ngưng";
                 tmStatus.Start();
-                threadHoseMarket = new Thread(GetHOSEMarketData);
-                threadHoseMarket.Start();
+                //threadHoseMarket = new Thread(GetHOSEMarketData);
+                //threadHoseMarket.Start();
+                //threadHNXMarket = new Thread(GetHNXMarketData);
+                //threadHNXMarket.Start();
+                //threadUpcomMarket = new Thread(GetUpComMarketData);
+                //threadUpcomMarket.Start();
+                threadHoseStockInfo = new Thread(GetHoseStockInfoData);
+                threadHoseStockInfo.Start();
+                threadHNXStockInfo = new Thread(GetHNXStockInfoData);
+                threadHNXStockInfo.Start();
+                threadUpComStockInfo = new Thread(GetUpComStockInfoData);
+                threadUpComStockInfo.Start();
+                
             }
             else
             {
                 btAction.Text = "Bắt đầu";
                 threadHoseMarket.Abort();
+                threadHNXMarket.Abort();
+                threadUpcomMarket.Abort();
                 tmStatus.Stop();
                 pnHoseStatus.BackColor = Color.Transparent;
                 pnHNXStatus.BackColor = Color.Transparent;

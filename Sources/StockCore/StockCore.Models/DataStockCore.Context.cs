@@ -38,11 +38,14 @@ namespace StockCore.Models
         public DbSet<Market> Markets { get; set; }
         public DbSet<Matched> Matcheds { get; set; }
         public DbSet<MemberStockCompany> MemberStockCompanies { get; set; }
+        public DbSet<Order> Orders { get; set; }
         public DbSet<StockBalance> StockBalances { get; set; }
         public DbSet<SubCustAccount> SubCustAccounts { get; set; }
         public DbSet<UpComMarketInfo> UpComMarketInfoes { get; set; }
         public DbSet<UpComMarketInfoHist> UpComMarketInfoHists { get; set; }
         public DbSet<UpComStockInfo> UpComStockInfoes { get; set; }
         public DbSet<UpComStockInfoHist> UpComStockInfoHists { get; set; }
+        public DbSet<CashTempDeduction> CashTempDeductions { get; set; }
+        public DbSet<StockTempDeduction> StockTempDeductions { get; set; }
     }
 }
