@@ -21,5 +21,24 @@ namespace StockCore.Repositories
                 return false;
             }
         }
+        public Models.CashTempDeduction GetByOrderId(long orderId)
+        {
+            return _entities.CashTempDeductions.Where(x=>x.OrderId==orderId).SingleOrDefault();
+        }
+        public bool Update(Models.CashTempDeduction cashDeduct)
+        {
+            try
+            {
+                _entities.CashTempDeductions.Attach(cashDeduct);
+                var entry = _entities.Entry(cashDeduct);
+                entry.State = System.Data.EntityState.Modified;
+                _entities.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

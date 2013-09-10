@@ -21,9 +21,11 @@ namespace StockCore.Models
         public System.DateTime DeductedDate { get; set; }
         public short Status { get; set; }
         public bool IsAdd { get; set; }
+        public Nullable<long> OrderId { get; set; }
     
         public virtual CompanyInfo CompanyInfo { get; set; }
         public virtual SubCustAccount SubCustAccount { get; set; }
+        public virtual Order Order { get; set; }
     }
     
 }

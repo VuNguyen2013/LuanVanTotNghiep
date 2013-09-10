@@ -21,5 +21,24 @@ namespace StockCore.Repositories
                 return false;
             }
         }
+        public Models.StockTempDeduction GetByOrderId(long orderId)
+        {
+            return _entities.StockTempDeductions.Where(x=>x.OrderId==orderId).SingleOrDefault();
+        }
+        public bool Update(Models.StockTempDeduction stockDeduct)
+        {
+            try
+            {
+                _entities.StockTempDeductions.Attach(stockDeduct);
+                var entry = _entities.Entry(stockDeduct);
+                entry.State = System.Data.EntityState.Modified;
+                _entities.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

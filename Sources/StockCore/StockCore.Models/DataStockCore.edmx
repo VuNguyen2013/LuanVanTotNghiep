@@ -220,6 +220,10 @@
             <End Role="SubCustAccount" EntitySet="SubCustAccount" />
             <End Role="CashTempDeduction" EntitySet="CashTempDeduction" />
           </AssociationSet>
+          <AssociationSet Name="FK__CashTempD__Order__12C8C788" Association="DataStockCoreModel.Store.FK__CashTempD__Order__12C8C788">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="CashTempDeduction" EntitySet="CashTempDeduction" />
+          </AssociationSet>
           <AssociationSet Name="FK__CompanyIn__Marke__2E1BDC42" Association="DataStockCoreModel.Store.FK__CompanyIn__Marke__2E1BDC42">
             <End Role="Market" EntitySet="Market" />
             <End Role="CompanyInfo" EntitySet="CompanyInfo" />
@@ -256,6 +260,10 @@
             <End Role="CompanyInfo" EntitySet="CompanyInfo" />
             <End Role="HoseStockInfoHist" EntitySet="HoseStockInfoHist" />
           </AssociationSet>
+          <AssociationSet Name="FK__MainCustA__Membe__11D4A34F" Association="DataStockCoreModel.Store.FK__MainCustA__Membe__11D4A34F">
+            <End Role="MemberStockCompany" EntitySet="MemberStockCompany" />
+            <End Role="MainCustAccount" EntitySet="MainCustAccount" />
+          </AssociationSet>
           <AssociationSet Name="FK__Matched__OrderBu__7BE56230" Association="DataStockCoreModel.Store.FK__Matched__OrderBu__7BE56230">
             <End Role="Order" EntitySet="Order" />
             <End Role="Matched" EntitySet="Matched" />
@@ -282,6 +290,10 @@
           </AssociationSet>
           <AssociationSet Name="FK__StockTemp__Accou__0E04126B" Association="DataStockCoreModel.Store.FK__StockTemp__Accou__0E04126B">
             <End Role="SubCustAccount" EntitySet="SubCustAccount" />
+            <End Role="StockTempDeduction" EntitySet="StockTempDeduction" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockTemp__Order__13BCEBC1" Association="DataStockCoreModel.Store.FK__StockTemp__Order__13BCEBC1">
+            <End Role="Order" EntitySet="Order" />
             <End Role="StockTempDeduction" EntitySet="StockTempDeduction" />
           </AssociationSet>
           <AssociationSet Name="FK__StockTemp__Stock__0EF836A4" Association="DataStockCoreModel.Store.FK__StockTemp__Stock__0EF836A4">
@@ -319,6 +331,7 @@
           <Property Name="DeductedDate" Type="datetime" Nullable="false" />
           <Property Name="Status" Type="smallint" Nullable="false" />
           <Property Name="IsAdd" Type="bit" Nullable="false" />
+          <Property Name="OrderId" Type="bigint" />
         </EntityType>
         <EntityType Name="CompanyInfo">
           <Key>
@@ -678,6 +691,7 @@
           <Property Name="CreatedUser" Type="varchar" Nullable="false" MaxLength="20" />
           <Property Name="UpdatedUser" Type="varchar" MaxLength="20" />
           <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="MemberStockCompanyID" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Market">
           <Key>
@@ -729,6 +743,7 @@
           <Property Name="Side" Type="char" Nullable="false" MaxLength="1" />
           <Property Name="TradeDate" Type="datetime" Nullable="false" />
           <Property Name="Status" Type="smallint" Nullable="false" />
+          <Property Name="ClientID" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="StockBalance">
           <Key>
@@ -755,6 +770,7 @@
           <Property Name="DeductedDate" Type="datetime" Nullable="false" />
           <Property Name="Status" Type="smallint" Nullable="false" />
           <Property Name="IsAdd" Type="bit" Nullable="false" />
+          <Property Name="OrderId" Type="bigint" />
         </EntityType>
         <EntityType Name="SubCustAccount">
           <Key>
@@ -940,6 +956,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__CashTempD__Order__12C8C788">
+          <End Role="Order" Type="DataStockCoreModel.Store.Order" Multiplicity="0..1" />
+          <End Role="CashTempDeduction" Type="DataStockCoreModel.Store.CashTempDeduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CashTempDeduction">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__CompanyIn__Marke__2E1BDC42">
           <End Role="Market" Type="DataStockCoreModel.Store.Market" Multiplicity="0..1" />
           <End Role="CompanyInfo" Type="DataStockCoreModel.Store.CompanyInfo" Multiplicity="*" />
@@ -1048,6 +1076,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__MainCustA__Membe__11D4A34F">
+          <End Role="MemberStockCompany" Type="DataStockCoreModel.Store.MemberStockCompany" Multiplicity="0..1" />
+          <End Role="MainCustAccount" Type="DataStockCoreModel.Store.MainCustAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberStockCompany">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MainCustAccount">
+              <PropertyRef Name="MemberStockCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Matched__OrderBu__7BE56230">
           <End Role="Order" Type="DataStockCoreModel.Store.Order" Multiplicity="1" />
           <End Role="Matched" Type="DataStockCoreModel.Store.Matched" Multiplicity="*" />
@@ -1129,6 +1169,18 @@
             </Principal>
             <Dependent Role="StockTempDeduction">
               <PropertyRef Name="AccountNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StockTemp__Order__13BCEBC1">
+          <End Role="Order" Type="DataStockCoreModel.Store.Order" Multiplicity="0..1" />
+          <End Role="StockTempDeduction" Type="DataStockCoreModel.Store.StockTempDeduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StockTempDeduction">
+              <PropertyRef Name="OrderId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1321,6 +1373,18 @@
           </AssociationSet>
           <AssociationSet Name="FK__StockTemp__Accou__0E04126B" Association="DataStockCoreModel.FK__StockTemp__Accou__0E04126B">
             <End Role="SubCustAccount" EntitySet="SubCustAccounts" />
+            <End Role="StockTempDeduction" EntitySet="StockTempDeductions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MainCustA__Membe__11D4A34F" Association="DataStockCoreModel.FK__MainCustA__Membe__11D4A34F">
+            <End Role="MemberStockCompany" EntitySet="MemberStockCompanies" />
+            <End Role="MainCustAccount" EntitySet="MainCustAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CashTempD__Order__12C8C788" Association="DataStockCoreModel.FK__CashTempD__Order__12C8C788">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="CashTempDeduction" EntitySet="CashTempDeductions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockTemp__Order__13BCEBC1" Association="DataStockCoreModel.FK__StockTemp__Order__13BCEBC1">
+            <End Role="Order" EntitySet="Orders" />
             <End Role="StockTempDeduction" EntitySet="StockTempDeductions" />
           </AssociationSet>
         </EntityContainer>
@@ -1689,6 +1753,8 @@
           <Property Name="UpdatedUser" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="UpdatedDate" Type="DateTime" />
           <NavigationProperty Name="SubCustAccounts" Relationship="DataStockCoreModel.FK__SubCustAc__MainC__4E1E9780" FromRole="MainCustAccount" ToRole="SubCustAccount" />
+          <Property Type="String" Name="MemberStockCompanyID" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MemberStockCompany" Relationship="DataStockCoreModel.FK__MainCustA__Membe__11D4A34F" FromRole="MainCustAccount" ToRole="MemberStockCompany" />
         </EntityType>
         <EntityType Name="Market">
           <Key>
@@ -1732,6 +1798,7 @@
           <Property Name="Fax" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="Website" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="IsPublished" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="MainCustAccounts" Relationship="DataStockCoreModel.FK__MainCustA__Membe__11D4A34F" FromRole="MemberStockCompany" ToRole="MainCustAccount" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -1750,6 +1817,9 @@
           <NavigationProperty Name="Matcheds" Relationship="DataStockCoreModel.FK__Matched__OrderBu__7BE56230" FromRole="Order" ToRole="Matched" />
           <NavigationProperty Name="Matcheds1" Relationship="DataStockCoreModel.FK__Matched__OrderSe__7AF13DF7" FromRole="Order" ToRole="Matched" />
           <NavigationProperty Name="SubCustAccount" Relationship="DataStockCoreModel.FK__Order__AccountNo__762C88DA" FromRole="Order" ToRole="SubCustAccount" />
+          <Property Type="Int64" Name="ClientID" Nullable="false" />
+          <NavigationProperty Name="CashTempDeductions" Relationship="DataStockCoreModel.FK__CashTempD__Order__12C8C788" FromRole="Order" ToRole="CashTempDeduction" />
+          <NavigationProperty Name="StockTempDeductions" Relationship="DataStockCoreModel.FK__StockTemp__Order__13BCEBC1" FromRole="Order" ToRole="StockTempDeduction" />
         </EntityType>
         <EntityType Name="StockBalance">
           <Key>
@@ -2193,6 +2263,8 @@
           <Property Type="Int16" Name="Status" Nullable="false" />
           <Property Type="Boolean" Name="IsAdd" Nullable="false" />
           <NavigationProperty Name="SubCustAccount" Relationship="DataStockCoreModel.FK__CashTempD__Accou__019E3B86" FromRole="CashTempDeduction" ToRole="SubCustAccount" />
+          <Property Type="Int64" Name="OrderId" />
+          <NavigationProperty Name="Order" Relationship="DataStockCoreModel.FK__CashTempD__Order__12C8C788" FromRole="CashTempDeduction" ToRole="Order" />
         </EntityType>
         <EntityType Name="StockTempDeduction">
           <Key>
@@ -2207,6 +2279,8 @@
           <Property Type="Boolean" Name="IsAdd" Nullable="false" />
           <NavigationProperty Name="CompanyInfo" Relationship="DataStockCoreModel.FK__StockTemp__Stock__0EF836A4" FromRole="StockTempDeduction" ToRole="CompanyInfo" />
           <NavigationProperty Name="SubCustAccount" Relationship="DataStockCoreModel.FK__StockTemp__Accou__0E04126B" FromRole="StockTempDeduction" ToRole="SubCustAccount" />
+          <Property Type="Int64" Name="OrderId" />
+          <NavigationProperty Name="Order" Relationship="DataStockCoreModel.FK__StockTemp__Order__13BCEBC1" FromRole="StockTempDeduction" ToRole="Order" />
         </EntityType>
         <Association Name="FK__CashTempD__Accou__019E3B86">
           <End Type="DataStockCoreModel.SubCustAccount" Role="SubCustAccount" Multiplicity="0..1" />
@@ -2241,6 +2315,42 @@
             </Principal>
             <Dependent Role="StockTempDeduction">
               <PropertyRef Name="AccountNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MainCustA__Membe__11D4A34F">
+          <End Type="DataStockCoreModel.MemberStockCompany" Role="MemberStockCompany" Multiplicity="0..1" />
+          <End Type="DataStockCoreModel.MainCustAccount" Role="MainCustAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberStockCompany">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MainCustAccount">
+              <PropertyRef Name="MemberStockCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CashTempD__Order__12C8C788">
+          <End Type="DataStockCoreModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="DataStockCoreModel.CashTempDeduction" Role="CashTempDeduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CashTempDeduction">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StockTemp__Order__13BCEBC1">
+          <End Type="DataStockCoreModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="DataStockCoreModel.StockTempDeduction" Role="StockTempDeduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StockTempDeduction">
+              <PropertyRef Name="OrderId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2438,7 +2548,8 @@
             <ScalarProperty Name="StartRoom" ColumnName="StartRoom" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="MainCustAccounts"><EntityTypeMapping TypeName="DataStockCoreModel.MainCustAccount"><MappingFragment StoreEntitySet="MainCustAccount">
-            <ScalarProperty Name="MainCustAccountID" ColumnName="MainCustAccountID" />
+            <ScalarProperty Name="MemberStockCompanyID" ColumnName="MemberStockCompanyID" />
+                <ScalarProperty Name="MainCustAccountID" ColumnName="MainCustAccountID" />
             <ScalarProperty Name="FullName" ColumnName="FullName" />
             <ScalarProperty Name="Email" ColumnName="Email" />
             <ScalarProperty Name="Phone" ColumnName="Phone" />
@@ -2489,7 +2600,8 @@
             <ScalarProperty Name="IsPublished" ColumnName="IsPublished" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Orders"><EntityTypeMapping TypeName="DataStockCoreModel.Order"><MappingFragment StoreEntitySet="Order">
-            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
             <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
             <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
             <ScalarProperty Name="Price" ColumnName="Price" />
@@ -2613,6 +2725,7 @@
           <EntitySetMapping Name="CashTempDeductions">
             <EntityTypeMapping TypeName="DataStockCoreModel.CashTempDeduction">
               <MappingFragment StoreEntitySet="CashTempDeduction">
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="IsAdd" ColumnName="IsAdd" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="DeductedDate" ColumnName="DeductedDate" />
@@ -2625,6 +2738,7 @@
           <EntitySetMapping Name="StockTempDeductions">
             <EntityTypeMapping TypeName="DataStockCoreModel.StockTempDeduction">
               <MappingFragment StoreEntitySet="StockTempDeduction">
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="IsAdd" ColumnName="IsAdd" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="DeductedDate" ColumnName="DeductedDate" />
@@ -2683,35 +2797,47 @@
           <ConnectorPoint PointX="3" PointY="29.836253255208334" />
         </AssociationConnector>
         <AssociationConnector Association="DataStockCoreModel.FK__HNXStockI__Stock__22751F6C" ManuallyRouted="false">
-          <ConnectorPoint PointX="3.54687375" PointY="27.5" />
-          <ConnectorPoint PointX="3.54687375" PointY="11.826609700520834" />
+          <ConnectorPoint PointX="3.4960921875" PointY="27.5" />
+          <ConnectorPoint PointX="3.4960921875" PointY="11.826609700520834" />
+          <ConnectorPoint PointX="4.666666666666667" PointY="11.826609700520834" />
+          <ConnectorPoint PointX="4.833333333333333" PointY="11.826609700520834" />
           <ConnectorPoint PointX="5.25" PointY="11.826609700520834" />
         </AssociationConnector>
         <AssociationConnector Association="DataStockCoreModel.FK__HNXStockI__Stock__6FB49575" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.054689375" PointY="27.5" />
-          <ConnectorPoint PointX="4.054689375" PointY="18.951609700520834" />
+          <ConnectorPoint PointX="4.02929859375" PointY="27.5" />
+          <ConnectorPoint PointX="4.02929859375" PointY="18.951609700520834" />
+          <ConnectorPoint PointX="4.666666666666667" PointY="18.951609700520834" />
+          <ConnectorPoint PointX="4.833333333333333" PointY="18.951609700520834" />
           <ConnectorPoint PointX="5.25" PointY="18.951609700520834" />
         </AssociationConnector>
         <AssociationConnector Association="DataStockCoreModel.FK__HoseStock__Stock__08B54D69" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="28.157255437825519" />
-          <ConnectorPoint PointX="5.25" PointY="28.157255437825519" />
+          <ConnectorPoint PointX="4.5" PointY="28.099291872151692" />
+          <ConnectorPoint PointX="4.666666666666667" PointY="28.099291872151692" />
+          <ConnectorPoint PointX="4.833333333333333" PointY="28.099291872151692" />
+          <ConnectorPoint PointX="5.25" PointY="28.099291872151692" />
         </AssociationConnector>
         <AssociationConnector Association="DataStockCoreModel.FK__HoseStock__Stock__55F4C372" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="31.337306315104168" />
-          <ConnectorPoint PointX="4.854166666666667" PointY="31.337306315104168" />
-          <ConnectorPoint PointX="5.083333333333333" PointY="31.337306315104168" />
-          <ConnectorPoint PointX="5.25" PointY="31.337306315104168" />
+          <ConnectorPoint PointX="4.5" PointY="31.408482259114585" />
+          <ConnectorPoint PointX="4.666666666666667" PointY="31.408482259114585" />
+          <ConnectorPoint PointX="4.833333333333333" PointY="31.408482259114585" />
+          <ConnectorPoint PointX="4.854166666666667" PointY="31.408482259114585" />
+          <ConnectorPoint PointX="5.083333333333333" PointY="31.408482259114585" />
+          <ConnectorPoint PointX="5.25" PointY="31.408482259114585" />
         </AssociationConnector>
         <AssociationConnector Association="DataStockCoreModel.FK__Order__StockSymb__7720AD13" ManuallyRouted="false">
           <ConnectorPoint PointX="4.5" PointY="29.70160970052083" />
-          <ConnectorPoint PointX="4.854166666666667" PointY="29.70160970052083" />
-          <ConnectorPoint PointX="5.020833333333333" PointY="29.70160970052083" />
+          <ConnectorPoint PointX="4.697916666666667" PointY="29.70160970052083" />
+          <ConnectorPoint PointX="4.864583333333333" PointY="29.70160970052083" />
+          <ConnectorPoint PointX="4.947916666666667" PointY="29.70160970052083" />
+          <ConnectorPoint PointX="5.114583333333333" PointY="29.70160970052083" />
           <ConnectorPoint PointX="7.791666666666667" PointY="29.70160970052083" />
           <ConnectorPoint PointX="7.958333333333333" PointY="29.70160970052083" />
           <ConnectorPoint PointX="8.25" PointY="29.70160970052083" />
         </AssociationConnector>
         <AssociationConnector Association="DataStockCoreModel.FK__StockBala__Stock__57A801BA" ManuallyRouted="false">
           <ConnectorPoint PointX="4.5" PointY="29.48991205078125" />
+          <ConnectorPoint PointX="4.666666666666667" PointY="29.48991205078125" />
+          <ConnectorPoint PointX="4.833333333333333" PointY="29.48991205078125" />
           <ConnectorPoint PointX="4.854166666666667" PointY="29.48991205078125" />
           <ConnectorPoint PointX="5.020833333333333" PointY="29.48991205078125" />
           <ConnectorPoint PointX="7.791666666666667" PointY="29.48991205078125" />
@@ -2722,8 +2848,10 @@
           <ConnectorPoint PointX="9" PointY="27.191793619791667" />
         </AssociationConnector>
         <AssociationConnector Association="DataStockCoreModel.FK__UpComStoc__Stock__09746778" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="30.5194580078125" />
-          <ConnectorPoint PointX="5" PointY="30.5194580078125" />
+          <ConnectorPoint PointX="4.5" PointY="30.563942972819007" />
+          <ConnectorPoint PointX="4.697916666666667" PointY="30.563942972819007" />
+          <ConnectorPoint PointX="4.864583333333333" PointY="30.563942972819007" />
+          <ConnectorPoint PointX="5" PointY="30.563942972819007" />
           <ConnectorPoint PointX="5" PointY="37.125" />
           <ConnectorPoint PointX="5.75" PointY="37.125" />
           <ConnectorPoint PointX="5.75" PointY="45" />
@@ -2733,10 +2861,12 @@
           <ConnectorPoint PointX="6" PointY="52.375" />
         </AssociationConnector>
         <AssociationConnector Association="DataStockCoreModel.FK__UpComStoc__Stock__3C34F16F" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="28.823583744303384" />
-          <ConnectorPoint PointX="4.9375" PointY="28.823583744303384" />
-          <ConnectorPoint PointX="4.9375" PointY="36.875" />
-          <ConnectorPoint PointX="5.6875" PointY="36.875" />
+          <ConnectorPoint PointX="4.5" PointY="28.787356515757242" />
+          <ConnectorPoint PointX="4.697916666666667" PointY="28.787356515757242" />
+          <ConnectorPoint PointX="4.864583333333333" PointY="28.787356515757242" />
+          <ConnectorPoint PointX="5.03125" PointY="28.787356515757242" />
+          <ConnectorPoint PointX="5.03125" PointY="37.109375" />
+          <ConnectorPoint PointX="5.6875" PointY="37.109375" />
           <ConnectorPoint PointX="5.6875" PointY="44.875" />
           <ConnectorPoint PointX="6.2499994999999995" PointY="44.875" />
           <ConnectorPoint PointX="6.2499994999999995" PointY="45.25" />
@@ -2794,16 +2924,16 @@
           <ConnectorPoint PointX="3" PointY="71.134348958333334" />
         </AssociationConnector>
         <AssociationConnector Association="DataStockCoreModel.FK__Matched__OrderBu__7BE56230" ManuallyRouted="false">
-          <ConnectorPoint PointX="9.75" PointY="29.682444661458334" />
-          <ConnectorPoint PointX="10.5" PointY="29.682444661458334" />
+          <ConnectorPoint PointX="9.75" PointY="30.11144994099935" />
+          <ConnectorPoint PointX="10.5" PointY="30.11144994099935" />
         </AssociationConnector>
         <AssociationConnector Association="DataStockCoreModel.FK__Matched__OrderSe__7AF13DF7" ManuallyRouted="false">
-          <ConnectorPoint PointX="9.75" PointY="29.028722330729167" />
-          <ConnectorPoint PointX="10.5" PointY="29.028722330729167" />
+          <ConnectorPoint PointX="9.75" PointY="29.243224970499675" />
+          <ConnectorPoint PointX="10.5" PointY="29.243224970499675" />
         </AssociationConnector>
         <AssociationConnector Association="DataStockCoreModel.FK__Order__AccountNo__762C88DA" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.124997500000001" PointY="38.625" />
-          <ConnectorPoint PointX="7.124997500000001" PointY="29.913307350260411" />
+          <ConnectorPoint PointX="7.1128821153846165" PointY="38.625" />
+          <ConnectorPoint PointX="7.1128821153846165" PointY="29.913307350260411" />
           <ConnectorPoint PointX="7.791666666666667" PointY="29.913307350260411" />
           <ConnectorPoint PointX="7.958333333333333" PointY="29.913307350260411" />
           <ConnectorPoint PointX="8.25" PointY="29.913307350260411" />
@@ -2817,25 +2947,43 @@
         <EntityTypeShape EntityType="DataStockCoreModel.CashTempDeduction" Width="1.5" PointX="8.25" PointY="39.625" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="DataStockCoreModel.StockTempDeduction" Width="1.5" PointX="8.25" PointY="33.875" Height="2.7494921875000102" />
         <AssociationConnector Association="DataStockCoreModel.FK__CashTempD__Accou__019E3B86" >
-          <ConnectorPoint PointX="7.5" PointY="40.807444661458334" />
-          <ConnectorPoint PointX="8.25" PointY="40.807444661458334" />
+          <ConnectorPoint PointX="7.5" PointY="40.999746093750005" />
+          <ConnectorPoint PointX="8.25" PointY="40.999746093750005" />
         </AssociationConnector>
         <AssociationConnector Association="DataStockCoreModel.FK__StockTemp__Stock__0EF836A4" >
           <ConnectorPoint PointX="3.75" PointY="32.172506510416667" />
-          <ConnectorPoint PointX="3.75" PointY="36.607605794270839" />
-          <ConnectorPoint PointX="4.854166666666667" PointY="36.607605794270839" />
-          <ConnectorPoint PointX="5.083333333333333" PointY="36.607605794270839" />
-          <ConnectorPoint PointX="7.0416641666666679" PointY="36.607605794270839" />
-          <ConnectorPoint PointX="7.208330833333334" PointY="36.607605794270839" />
-          <ConnectorPoint PointX="7.791666666666667" PointY="36.607605794270839" />
-          <ConnectorPoint PointX="8.1145833333333339" PointY="36.607605794270839" />
-          <ConnectorPoint PointX="8.25" PointY="36.607605794270839" />
+          <ConnectorPoint PointX="3.75" PointY="36.799907226562496" />
+          <ConnectorPoint PointX="4.697916666666667" PointY="36.799907226562496" />
+          <ConnectorPoint PointX="4.864583333333333" PointY="36.799907226562496" />
+          <ConnectorPoint PointX="4.916666666666667" PointY="36.799907226562496" />
+          <ConnectorPoint PointX="5.114583333333333" PointY="36.799907226562496" />
+          <ConnectorPoint PointX="7.0295487820512834" PointY="36.799907226562496" />
+          <ConnectorPoint PointX="7.1962154487179495" PointY="36.799907226562496" />
+          <ConnectorPoint PointX="7.791666666666667" PointY="36.799907226562496" />
+          <ConnectorPoint PointX="7.958333333333333" PointY="36.799907226562496" />
+          <ConnectorPoint PointX="8.25" PointY="36.799907226562496" />
         </AssociationConnector>
         <AssociationConnector Association="DataStockCoreModel.FK__StockTemp__Accou__0E04126B" >
-          <ConnectorPoint PointX="7.5" PointY="38.681537461538461" />
-          <ConnectorPoint PointX="8.03125" PointY="38.150287461538461" />
-          <ConnectorPoint PointX="8.03125" PointY="35.210050897135424" />
-          <ConnectorPoint PointX="8.25" PointY="35.210050897135424" />
+          <ConnectorPoint PointX="7.2943256730769246" PointY="38.625" />
+          <ConnectorPoint PointX="7.2943256730769246" PointY="36.935753639322904" />
+          <ConnectorPoint PointX="7.791666666666667" PointY="36.935753639322904" />
+          <ConnectorPoint PointX="7.958333333333333" PointY="36.935753639322904" />
+          <ConnectorPoint PointX="8.25" PointY="36.935753639322904" />
+        </AssociationConnector>
+        <AssociationConnector Association="DataStockCoreModel.FK__MainCustA__Membe__11D4A34F" >
+          <ConnectorPoint PointX="2.25" PointY="2.12474609375" />
+          <ConnectorPoint PointX="4.78125" PointY="2.12474609375" />
+          <ConnectorPoint PointX="4.78125" PointY="37.375" />
+        </AssociationConnector>
+        <AssociationConnector Association="DataStockCoreModel.FK__CashTempD__Order__12C8C788" >
+          <ConnectorPoint PointX="9.75" PointY="32.094447367387822" />
+          <ConnectorPoint PointX="10.125" PointY="32.469447367387822" />
+          <ConnectorPoint PointX="10.125" PointY="39.25" />
+          <ConnectorPoint PointX="9.7500000000000018" PointY="39.625" />
+        </AssociationConnector>
+        <AssociationConnector Association="DataStockCoreModel.FK__StockTemp__Order__13BCEBC1" >
+          <ConnectorPoint PointX="9" PointY="32.095602213541667" />
+          <ConnectorPoint PointX="9" PointY="33.875" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

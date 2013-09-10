@@ -18,9 +18,10 @@ namespace StockCore.Services
     {
 
         [WebMethod]
-        public string ReceiveOrder(string accountNo,string stockSymbol,long price,short volume,char side)
+        public short ReceiveOrder(long clientOrderID,string accountNo, string stockSymbol, long price, short volume, char side)
         {
-            return "Hello World";
+            Repositories.OrderRepository orderRep = new Repositories.OrderRepository();
+            return orderRep.Insert(clientOrderID, accountNo, stockSymbol, price, volume, side);
         }
     }
 }

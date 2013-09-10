@@ -47,8 +47,10 @@ namespace StockCore.Models
         public string CreatedUser { get; set; }
         public string UpdatedUser { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public string MemberStockCompanyID { get; set; }
     
         public virtual ICollection<SubCustAccount> SubCustAccounts { get; set; }
+        public virtual MemberStockCompany MemberStockCompany { get; set; }
     }
     
 }

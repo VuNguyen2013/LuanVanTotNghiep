@@ -12,6 +12,7 @@ namespace StockCore.InfoSender
     public partial class MainForm : Form
     {
         InfoSender.Entities.SendData sendData = null;
+        System.Threading.Thread matchedThread;
         public MainForm()
         {
             InitializeComponent();
@@ -72,13 +73,17 @@ namespace StockCore.InfoSender
                 btAction.Text = "Ngưng";
                 tmAction.Start();
                 sendData = new Entities.SendData(_listIP);
-                sendData.SendInfo();            
+                sendData.SendInfo();
+                StockCore.Repositories.OrderRepository orderRep = new StockCore.Repositories.OrderRepository();
+                matchedThread = new System.Threading.Thread(orderRep.DoMatchedOrder);
+                matchedThread.Start();
             
             }
             else
             {
                 btAction.Text = "Bắt đầu";
                 tmAction.Stop();
+                matchedThread.Abort();
                 pnStatus.BackColor = Color.Transparent;
             }
         }

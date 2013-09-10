@@ -14,6 +14,11 @@ namespace StockCore.Models
 {
     public partial class MemberStockCompany
     {
+        public MemberStockCompany()
+        {
+            this.MainCustAccounts = new HashSet<MainCustAccount>();
+        }
+    
         public string Id { get; set; }
         public string ShortNameVi { get; set; }
         public string ShortNameEn { get; set; }
@@ -22,6 +27,8 @@ namespace StockCore.Models
         public string Fax { get; set; }
         public string Website { get; set; }
         public bool IsPublished { get; set; }
+    
+        public virtual ICollection<MainCustAccount> MainCustAccounts { get; set; }
     }
     
 }
