@@ -24,8 +24,8 @@ namespace StockCore.Models
         public Nullable<long> OrderId { get; set; }
     
         public virtual CompanyInfo CompanyInfo { get; set; }
-        public virtual SubCustAccount SubCustAccount { get; set; }
         public virtual Order Order { get; set; }
+        public virtual SubCustAccount SubCustAccount { get; set; }
     }
     
 }

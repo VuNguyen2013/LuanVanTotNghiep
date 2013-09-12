@@ -16,9 +16,9 @@ namespace StockCore.Models
     {
         public SubCustAccount()
         {
+            this.CashTempDeductions = new HashSet<CashTempDeduction>();
             this.Orders = new HashSet<Order>();
             this.StockBalances = new HashSet<StockBalance>();
-            this.CashTempDeductions = new HashSet<CashTempDeduction>();
             this.StockTempDeductions = new HashSet<StockTempDeduction>();
         }
     
@@ -36,10 +36,10 @@ namespace StockCore.Models
         public long TotalBuy { get; set; }
         public long TotalSell { get; set; }
     
+        public virtual ICollection<CashTempDeduction> CashTempDeductions { get; set; }
         public virtual MainCustAccount MainCustAccount { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<StockBalance> StockBalances { get; set; }
-        public virtual ICollection<CashTempDeduction> CashTempDeductions { get; set; }
         public virtual ICollection<StockTempDeduction> StockTempDeductions { get; set; }
     }
     

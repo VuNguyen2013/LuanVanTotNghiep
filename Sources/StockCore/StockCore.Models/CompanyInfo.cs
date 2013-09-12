@@ -22,9 +22,9 @@ namespace StockCore.Models
             this.HoseStockInfoHists = new HashSet<HoseStockInfoHist>();
             this.Orders = new HashSet<Order>();
             this.StockBalances = new HashSet<StockBalance>();
+            this.StockTempDeductions = new HashSet<StockTempDeduction>();
             this.UpComStockInfoHists = new HashSet<UpComStockInfoHist>();
             this.UpComStockInfoes = new HashSet<UpComStockInfo>();
-            this.StockTempDeductions = new HashSet<StockTempDeduction>();
         }
     
         public string Code { get; set; }
@@ -37,16 +37,15 @@ namespace StockCore.Models
         public bool IsPublished { get; set; }
         public Nullable<int> MarketId { get; set; }
     
-        public virtual Market Market { get; set; }
         public virtual ICollection<HNXStockInfo> HNXStockInfoes { get; set; }
         public virtual ICollection<HNXStockInfoHist> HNXStockInfoHists { get; set; }
         public virtual ICollection<HoseStockInfo> HoseStockInfoes { get; set; }
         public virtual ICollection<HoseStockInfoHist> HoseStockInfoHists { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<StockBalance> StockBalances { get; set; }
+        public virtual ICollection<StockTempDeduction> StockTempDeductions { get; set; }
         public virtual ICollection<UpComStockInfoHist> UpComStockInfoHists { get; set; }
         public virtual ICollection<UpComStockInfo> UpComStockInfoes { get; set; }
-        public virtual ICollection<StockTempDeduction> StockTempDeductions { get; set; }
     }
     
 }

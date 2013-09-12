@@ -16,9 +16,9 @@ namespace StockCore.Models
     {
         public Order()
         {
+            this.CashTempDeductions = new HashSet<CashTempDeduction>();
             this.Matcheds = new HashSet<Matched>();
             this.Matcheds1 = new HashSet<Matched>();
-            this.CashTempDeductions = new HashSet<CashTempDeduction>();
             this.StockTempDeductions = new HashSet<StockTempDeduction>();
         }
     
@@ -33,11 +33,11 @@ namespace StockCore.Models
         public short Status { get; set; }
         public long ClientID { get; set; }
     
+        public virtual ICollection<CashTempDeduction> CashTempDeductions { get; set; }
         public virtual CompanyInfo CompanyInfo { get; set; }
         public virtual ICollection<Matched> Matcheds { get; set; }
         public virtual ICollection<Matched> Matcheds1 { get; set; }
         public virtual SubCustAccount SubCustAccount { get; set; }
-        public virtual ICollection<CashTempDeduction> CashTempDeductions { get; set; }
         public virtual ICollection<StockTempDeduction> StockTempDeductions { get; set; }
     }
     

@@ -10,7 +10,7 @@ namespace StockCore.Repositories
         private readonly StockCore.Models.DataStockCoreEntities _entities = new Models.DataStockCoreEntities();
         public short Insert(long clientOrderId,string accountNo, string stockSymbol, long price, short volume, char side)
         {
-            short marketId = (short)Common.Enums.MARKET_ID.HOSE;
+            short marketId = (short)StockCore.Common.Enums.MARKET_ID.HOSE;
             try
             {
                 //check price
@@ -20,11 +20,11 @@ namespace StockCore.Repositories
                 {
                     if (price < hoseStock.Floor)
                     {
-                        return (short)Common.Enums.PUT_ORDER_STATUS.PRICE_LESS_FLOOR;
+                        return (short)StockCore.Common.Enums.PUT_ORDER_STATUS.PRICE_LESS_FLOOR;
                     }
                     if (price > hoseStock.Ceiling)
                     {
-                        return (short)Common.Enums.PUT_ORDER_STATUS.PRICE_GREATER_CEIL;
+                        return (short)StockCore.Common.Enums.PUT_ORDER_STATUS.PRICE_GREATER_CEIL;
                     }
                 }
                 else
@@ -33,14 +33,14 @@ namespace StockCore.Repositories
                     var hnxStock = hnxRep.GetByStockSymbol(stockSymbol);
                     if(hnxStock!=null)
                     {
-                        marketId = (short)Common.Enums.MARKET_ID.HNX;
+                        marketId = (short)StockCore.Common.Enums.MARKET_ID.HNX;
                         if (price < hnxStock.Floor)
                         {
-                            return (short)Common.Enums.PUT_ORDER_STATUS.PRICE_LESS_FLOOR;
+                            return (short)StockCore.Common.Enums.PUT_ORDER_STATUS.PRICE_LESS_FLOOR;
                         }
                         if (price > hnxStock.Ceiling)
                         {
-                            return (short)Common.Enums.PUT_ORDER_STATUS.PRICE_GREATER_CEIL;
+                            return (short)StockCore.Common.Enums.PUT_ORDER_STATUS.PRICE_GREATER_CEIL;
                         }
                     }
                     else
@@ -49,14 +49,14 @@ namespace StockCore.Repositories
                         var upcomStock = upcomRep.GetByStockSymbol(stockSymbol);
                         if (upcomStock != null)
                         {
-                            marketId = (short)Common.Enums.MARKET_ID.UPCOM;
+                            marketId = (short)StockCore.Common.Enums.MARKET_ID.UPCOM;
                             if (price < upcomStock.Floor)
                             {
-                                return (short)Common.Enums.PUT_ORDER_STATUS.PRICE_LESS_FLOOR;
+                                return (short)StockCore.Common.Enums.PUT_ORDER_STATUS.PRICE_LESS_FLOOR;
                             }
                             if (price > upcomStock.Ceiling)
                             {
-                                return (short)Common.Enums.PUT_ORDER_STATUS.PRICE_GREATER_CEIL;
+                                return (short)StockCore.Common.Enums.PUT_ORDER_STATUS.PRICE_GREATER_CEIL;
                             }
                         }
                     }
@@ -64,22 +64,15 @@ namespace StockCore.Repositories
                 //check volume
                 if (!CheckVolume(marketId, volume))
                 {
-                    return (short)Common.Enums.PUT_ORDER_STATUS.INVAILID_VOL;
+                    return (short)StockCore.Common.Enums.PUT_ORDER_STATUS.INVAILID_VOL;
                 }
                 //get subcust account
                 var subCustAccRep = new Repositories.SubCustAccountRepository();
                 var subCustAccount = subCustAccRep.GetById(accountNo);
                 if(subCustAccount==null)
                 {
-                    return (short)Common.Enums.PUT_ORDER_STATUS.INVAILID_ACCOUNT;
-                }
-                //get stock balance
-                var stockRep = new Repositories.StockBalanceRespository();
-                var stockBalance = stockRep.GetByAccountNoAndSymbol(accountNo, stockSymbol);
-                if (stockBalance == null)
-                {
-                    return (short)Common.Enums.PUT_ORDER_STATUS.NOT_ENOUGH_STOCK;
-                }
+                    return (short)StockCore.Common.Enums.PUT_ORDER_STATUS.INVAILID_ACCOUNT;
+                }                
                 Repositories.CashDeductRepository cashDedRep = new CashDeductRepository();
                 Repositories.StockDeductRepository stockDedRep = new StockDeductRepository();
                 Models.CashTempDeduction orderDeduct = new Models.CashTempDeduction();
@@ -117,7 +110,14 @@ namespace StockCore.Repositories
 
                 }
                 else
-                {   
+                {
+                    //get stock balance
+                    var stockRep = new Repositories.StockBalanceRespository();
+                    var stockBalance = stockRep.GetByAccountNoAndSymbol(accountNo, stockSymbol);
+                    if (stockBalance == null)
+                    {
+                        return (short)Common.Enums.PUT_ORDER_STATUS.NOT_ENOUGH_STOCK;
+                    }
                     //check stock balance
                     if (stockBalance.Available < volume)
                     {
@@ -241,8 +241,22 @@ namespace StockCore.Repositories
 
                             //update cash deduction
                             var cashDeductRep = new Repositories.CashDeductRepository();
-                            //var cashDeduct = cashDeductRep.GetByOrderId();
+                            var cashDeductBuy = cashDeductRep.GetByOrderId(orderBuy.Id);
+                            cashDeductBuy.Status = (byte)Common.Enums.DEDUCTION_STATUS.PROCESSED;
+                            cashDeductRep.Update(cashDeductBuy);
+
+                            var cashDeductSell = cashDeductRep.GetByOrderId(orderSell.Id);
+                            cashDeductSell.Status = (byte)Common.Enums.DEDUCTION_STATUS.PROCESSED;
+                            cashDeductRep.Update(cashDeductSell);
                             //update stock deduction
+                            var stockDeductRep = new Repositories.StockDeductRepository();
+                            var stockDeductBuy = stockDeductRep.GetByOrderId(orderBuy.Id);
+                            stockDeductBuy.Status = (byte)Common.Enums.DEDUCTION_STATUS.PROCESSED;
+                            stockDeductRep.Update(stockDeductBuy);
+
+                            var stockDeductSell = stockDeductRep.GetByOrderId(orderSell.Id);
+                            stockDeductSell.Status = (byte)Common.Enums.DEDUCTION_STATUS.PROCESSED;
+                            stockDeductRep.Update(stockDeductSell);
 
                             //update stock info
                             var hoseStockRep = new HoseStockInfoRepository();
@@ -369,6 +383,20 @@ namespace StockCore.Repositories
                             }
                             if (orderBuy.Volume <= matchedVol)
                                 break;
+                            //send matched result to client
+                            SubCustAccountRepository subRep = new SubCustAccountRepository();
+                            SocketServer socketServer = new SocketServer();
+
+                            //send to buy account
+                            var accountBuy = subRep.GetById(orderBuy.AccountNo);
+                            string buyStr = accountBuy.MainCustAccount.MemberStockCompanyID.ToString() + "|" + orderBuy.ClientID + "|" + matchedVol + "|" + orderBuy.Status;
+                            socketServer.SendOrderResultData(buyStr);
+
+                            //send to sell acocunt
+                            var accountSell = subRep.GetById(orderSell.AccountNo);
+                            string sellStr = accountSell.MainCustAccount.MemberStockCompanyID.ToString() + "|" + orderSell.ClientID + "|" + matchedVol + "|" + orderSell.Status;
+                            socketServer.SendOrderResultData(sellStr);
+
                         }
                     }//end foreach 2
                 }//end foreach 1   

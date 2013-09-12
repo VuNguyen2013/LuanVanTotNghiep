@@ -19,6 +19,7 @@ namespace StockCore.Models
         public long MatchedPrice { get; set; }
         public short MatchedVol { get; set; }
         public System.DateTime DateMatched { get; set; }
+        public long Id { get; set; }
     
         public virtual Order Order { get; set; }
         public virtual Order Order1 { get; set; }

@@ -47,7 +47,22 @@ namespace StockCore.Common
         {
             PROCESSED=0,
             NEW=1,
-            CANCELLED=2
+            CANCELLED=2,
+            MATCHED=3
+        }
+        public enum ORDER_STATUS_CLIENT
+        {
+            NEW_ORDER = 1,
+            CONFIRMED_FIS = 2,
+            CONFIRMED_SET = 3,
+            ORDER_REJECTED = 4,
+            FULL_MATCHED = 5,
+            SEMI_MATCHED = 6,
+            NEW_CANCEL = 7,
+            WAITING_CANCEL = 8,
+            CANCELLED = 9,
+            CANCEL_REJECTED = 10,
+            OTHER,
         }
     }
 }

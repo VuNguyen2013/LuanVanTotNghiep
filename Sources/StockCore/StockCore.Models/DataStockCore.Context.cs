@@ -25,6 +25,7 @@ namespace StockCore.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<CashTempDeduction> CashTempDeductions { get; set; }
         public DbSet<CompanyInfo> CompanyInfoes { get; set; }
         public DbSet<HNXMarketInfo> HNXMarketInfoes { get; set; }
         public DbSet<HNXMarketInfoHist> HNXMarketInfoHists { get; set; }
@@ -40,12 +41,11 @@ namespace StockCore.Models
         public DbSet<MemberStockCompany> MemberStockCompanies { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<StockBalance> StockBalances { get; set; }
+        public DbSet<StockTempDeduction> StockTempDeductions { get; set; }
         public DbSet<SubCustAccount> SubCustAccounts { get; set; }
         public DbSet<UpComMarketInfo> UpComMarketInfoes { get; set; }
         public DbSet<UpComMarketInfoHist> UpComMarketInfoHists { get; set; }
         public DbSet<UpComStockInfo> UpComStockInfoes { get; set; }
         public DbSet<UpComStockInfoHist> UpComStockInfoHists { get; set; }
-        public DbSet<CashTempDeduction> CashTempDeductions { get; set; }
-        public DbSet<StockTempDeduction> StockTempDeductions { get; set; }
     }
 }

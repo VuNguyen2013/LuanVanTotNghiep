@@ -16,7 +16,6 @@ namespace StockCore.Models
     {
         public Market()
         {
-            this.CompanyInfoes = new HashSet<CompanyInfo>();
             this.HNXMarketInfoes = new HashSet<HNXMarketInfo>();
             this.HNXMarketInfoHists = new HashSet<HNXMarketInfoHist>();
             this.HoseMarketInfoes = new HashSet<HoseMarketInfo>();
@@ -28,7 +27,6 @@ namespace StockCore.Models
         public int Id { get; set; }
         public string Name { get; set; }
     
-        public virtual ICollection<CompanyInfo> CompanyInfoes { get; set; }
         public virtual ICollection<HNXMarketInfo> HNXMarketInfoes { get; set; }
         public virtual ICollection<HNXMarketInfoHist> HNXMarketInfoHists { get; set; }
         public virtual ICollection<HoseMarketInfo> HoseMarketInfoes { get; set; }

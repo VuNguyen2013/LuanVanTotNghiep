@@ -36,6 +36,7 @@
       <HintPath>..\StockCore.Models\bin\Debug\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
@@ -45,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CashDeductRepository.cs" />
+    <Compile Include="Common.cs" />
     <Compile Include="HNXMarketInfoRepository.cs" />
     <Compile Include="HNXStockInfoRepository.cs" />
     <Compile Include="HoseMarketInfoRepository.cs" />
@@ -52,6 +54,7 @@
     <Compile Include="MatchedRepository.cs" />
     <Compile Include="OrderRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SocketServer.cs" />
     <Compile Include="StockBalanceRespository.cs" />
     <Compile Include="StockDeductRepository.cs" />
     <Compile Include="SubCustAccountRepository.cs" />

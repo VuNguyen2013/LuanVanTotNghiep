@@ -73,7 +73,7 @@ namespace StockCore.InfoSender
                 btAction.Text = "Ngưng";
                 tmAction.Start();
                 sendData = new Entities.SendData(_listIP);
-                sendData.SendInfo();
+                sendData.SendInfo();                
                 StockCore.Repositories.OrderRepository orderRep = new StockCore.Repositories.OrderRepository();
                 matchedThread = new System.Threading.Thread(orderRep.DoMatchedOrder);
                 matchedThread.Start();
@@ -81,6 +81,8 @@ namespace StockCore.InfoSender
             }
             else
             {
+                sendData.threadSendMarketData.Abort();
+                sendData.threadSendStockInfoData.Abort();
                 btAction.Text = "Bắt đầu";
                 tmAction.Stop();
                 matchedThread.Abort();

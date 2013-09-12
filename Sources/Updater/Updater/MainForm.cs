@@ -24,12 +24,13 @@ namespace Updater
         private bool _hoseStatus = true;
         private bool _hnxStatus = true;
         private bool _upcomStatus = true;
-        Thread threadHoseMarket;
-        Thread threadHNXMarket;
-        Thread threadUpcomMarket;
-        Thread threadHoseStockInfo;
-        Thread threadHNXStockInfo;
-        Thread threadUpComStockInfo;
+        private Thread threadHoseMarket;
+        private Thread threadHNXMarket;
+        private Thread threadUpcomMarket;
+        private Thread threadHoseStockInfo;
+        private Thread threadHNXStockInfo;
+        private Thread threadUpComStockInfo;
+        private Thread sendNewOrderThread;
 
         public MainForm()
         {
@@ -214,8 +215,14 @@ namespace Updater
                 threadHNXStockInfo = new Thread(GetHNXStockInfoData);
                 threadHNXStockInfo.Start();
                 threadUpComStockInfo = new Thread(GetUpComStockInfoData);
-                threadUpComStockInfo.Start();
-                
+                threadUpComStockInfo.Start();    
+                //send order thread
+                Repository.OrderRepository orderRep = new Repository.OrderRepository();
+                sendNewOrderThread = new Thread(orderRep.BrowseNewOrder);
+                sendNewOrderThread.Start();
+
+                SocketClient socketClient = new SocketClient();
+                socketClient.StartListedFromServer();
             }
             else
             {
@@ -223,6 +230,7 @@ namespace Updater
                 threadHoseMarket.Abort();
                 threadHNXMarket.Abort();
                 threadUpcomMarket.Abort();
+                sendNewOrderThread.Abort();
                 tmStatus.Stop();
                 pnHoseStatus.BackColor = Color.Transparent;
                 pnHNXStatus.BackColor = Color.Transparent;
