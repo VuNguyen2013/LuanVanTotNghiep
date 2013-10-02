@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AccountManagerWebServices.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="AccountManagerWebServices_SMSService_SMSSendService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://115.165.162.27/tcsc_ws_pushsms/SMSSendService.asmx</Value>
+    </Setting>
+    <Setting Name="AccountManagerWebServices_EtradeService_ETradeServicesWebServices" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.128.28.88/EtradeServicesTest/EtradeServicesWebServices.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

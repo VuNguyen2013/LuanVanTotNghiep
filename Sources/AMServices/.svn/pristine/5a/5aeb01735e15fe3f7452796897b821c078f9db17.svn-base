@@ -1,0 +1,166 @@
+<NetTiersReport DALNameSpace="AccountManager.DataAccess" SolutionLink="file:\\\D:\OTS\svnProjects\Etrade\AMServices\source\trunk\AccountManager\AccountManager.sln" ConnectionString="Data Source=172.16.1.30;Initial Catalog=AccountManager;User ID=sa;Password=123456" FactoryType="AccountManager.Entities.EntityFactory">
+  <initialization startTime="129320395204238178" executionTime="00:00:03.7542147">
+    <Message level="0" startTime="129320395204248178" message="Validating parameters." />
+    <Message level="0" startTime="129320395212478649" message="Loading templates." executionTime="00:00:02.5491458" />
+    <Message level="0" startTime="129320395237970107" message="Creating folders and copying dependencies." />
+  </initialization>
+  <customStoredProcedures includeCustoms="true">
+    <customStoredProcedure name="_BrokerPermission_DeleteByBrokerId" relatedEntity="BrokerPermission" relatedEntityType="table" />
+  </customStoredProcedures>
+  <common startTime="129320395241780325" executionTime="00:00:14.1108071">
+    <File name="ListBase.cs" startTime="129320395241810327" />
+    <File name="TList.cs" startTime="129320395245720550" />
+    <File name="VList.cs" startTime="129320395246970622" />
+    <File name="TestUtility.cs" startTime="129320395248420705" />
+    <File name="IEntity.cs" startTime="129320395249830786" />
+    <File name="IEntityId.cs" startTime="129320395251690892" />
+    <File name="IEntityKey.cs" startTime="129320395252690949" />
+    <File name="EntityFactory.cs" startTime="129320395254151033" />
+    <File name="EntityFactoryBase.cs" startTime="129320395255111088" />
+    <File name="IEntityFactory.cs" startTime="129320395256501167" />
+    <File name="IEntityCacheItem.cs" startTime="129320395257031197" />
+    <File name="EntityCache.cs" startTime="129320395257801241" />
+    <File name="EntityLocator.cs" startTime="129320395258541284" />
+    <File name="EntityManager.cs" startTime="129320395259411333" />
+    <File name="BrokenRule.cs" startTime="129320395260311385" />
+    <File name="BrokenRulesList.cs" startTime="129320395261061428" />
+    <File name="CommonRules.cs" startTime="129320395261951479" />
+    <File name="ValidationRuleArgs.cs" startTime="129320395263491567" />
+    <File name="ValidationRuleHandler.cs" startTime="129320395264361617" />
+    <File name="ValidationRuleInfo.cs" startTime="129320395265151662" />
+    <File name="ValidationRules.cs" startTime="129320395265981709" />
+    <File name="EntityBaseCore.generated.cs" startTime="129320395266611745" />
+    <File name="EntityKeyBaseCore.generated.cs" startTime="129320395267791813" />
+    <File name="SecurityContextBase.generated.cs" startTime="129320395268761868" />
+    <File name="ContextView.cs" startTime="129320395269881932" />
+    <File name="IProcessor.cs" startTime="129320395271142004" />
+    <File name="IProcessorResult.cs" startTime="129320395272022055" />
+    <File name="ProcessorBase.cs" startTime="129320395272892105" />
+    <File name="GenericProcessorResult.cs" startTime="129320395273622146" />
+    <File name="DomainUtil.cs" startTime="129320395274592202" />
+    <File name="IConnectionScope.cs" startTime="129320395275602260" />
+    <File name="ConnectionScope.cs" startTime="129320395276462309" />
+    <File name="ConnectionScopeBase.cs" startTime="129320395277362360" />
+    <File name="IComponentService.cs" startTime="129320395278122404" />
+    <File name="ServiceBaseCore.cst.cs" startTime="129320395279012455" />
+    <File name="ServiceViewBaseCore.cst.cs" startTime="129320395280202523" />
+    <File name="ServiceResult.cs" startTime="129320395281212580" />
+    <File name="EntityFilter.cs" startTime="129320395282522655" />
+    <File name="EntityPropertyComparer.cs" startTime="129320395284082745" />
+    <File name="GenericTypeConverter.cs" startTime="129320395285162806" />
+    <File name="Procedures.xml" startTime="129320395286042857" />
+    <File name="Unit test configuration files" startTime="129320395335595691" />
+    <File name="Enterprise Library v4_1 unit test configuration files" startTime="129320395337105777" />
+    <File name="Utility.cs" startTime="129320395340095948" />
+    <File name="ITransactionManager.cs" startTime="129320395342746100" />
+    <File name="TransactionManager.cs" startTime="129320395343606149" />
+    <File name="DataRepository.cs" startTime="129320395344816218" />
+    <File name="IEntityProvider.cs" startTime="129320395346146294" />
+    <File name="IEntityViewProvider.cs" startTime="129320395347346363" />
+    <File name="EntityProviderBaseCore.generated.cs" startTime="129320395348356421" />
+    <File name="EntityViewProviderBaseCore.generated.cs" startTime="129320395350216527" />
+    <File name="INetTiersProvider.cs" startTime="129320395353416710" />
+    <File name="NetTiersProvider.cs" startTime="129320395354326762" />
+    <File name="NetTiersProviderBase.cs" startTime="129320395355266816" />
+    <File name="NetTiersProviderCollection.cs" startTime="129320395356276874" />
+    <File name="NetTiersServiceSection.cs" startTime="129320395357136923" />
+    <File name="ExpressionParserBase.cs" startTime="129320395358256987" />
+    <File name="SqlExpressionParser.cs" startTime="129320395359447055" />
+    <File name="SqlStringBuilder.cs" startTime="129320395361227157" />
+    <File name="SqlUtil.cs" startTime="129320395364097321" />
+    <File name="StringTokenizer.cs" startTime="129320395366117437" />
+    <File name="SqlClient\SqlNetTiersProvider.cs" startTime="129320395367147496" />
+    <File name="StoredProcedureProvider.cs" startTime="129320395369157611" />
+    <File name="Services.csproj" startTime="129320395370227672" />
+    <File name="AccountManager.Entities.csproj" startTime="129320395372717814" />
+    <File name="AccountManager.DataAccess.DataAccess.csproj" startTime="129320395374227901" />
+    <File name="AccountManager.Entities.DataAccess.SqlClient.csproj" startTime="129320395375297962" />
+    <File name="AccountManager.UnitTests.csproj" startTime="129320395376868052" />
+    <File name="EntityHelper.cs" startTime="129320395378158125" />
+    <File name="EntityUtil.cs" startTime="129320395379658211" />
+  </common>
+  <Table name="Research" startTime="129320395382898397" executionTime="00:00:01.6220927">
+    <File name="Research.generated.cs" startTime="129320395382928398" executionTime="00:00:00.4140237" />
+    <File name="IResearch.cs" startTime="129320395387088636" executionTime="00:00:00.1640094" />
+    <File name="ResearchServiceBase.generated.cs" startTime="129320395388728730" executionTime="00:00:00.4620264" />
+    <File name="ResearchProviderBase.generatedCore.cs" startTime="129320395393368995" executionTime="00:00:00.2400138" />
+    <File name="SqlClient\SqlResearchProviderBase.generated.cs" startTime="129320395395789134" executionTime="00:00:00.1680096" />
+    <File name="ResearchTest.generated.cs" startTime="129320395397469230" executionTime="00:00:00.1650094" />
+  </Table>
+  <Table name="OpenCustAccount" startTime="129320395399119324" executionTime="00:00:00.9360536">
+    <File name="OpenCustAccount.generated.cs" startTime="129320395399119324" executionTime="00:00:00.2200126" />
+    <File name="IOpenCustAccount.cs" startTime="129320395401349452" executionTime="00:00:00.1460083" />
+    <File name="OpenCustAccountServiceBase.generated.cs" startTime="129320395402819536" executionTime="00:00:00.2190125" />
+    <File name="OpenCustAccountProviderBase.generatedCore.cs" startTime="129320395405029662" executionTime="00:00:00.1190068" />
+    <File name="SqlClient\SqlOpenCustAccountProviderBase.generated.cs" startTime="129320395406229731" executionTime="00:00:00.1100063" />
+    <File name="OpenCustAccountTest.generated.cs" startTime="129320395407329794" executionTime="00:00:00.1150066" />
+  </Table>
+  <Table name="BrokerAccount" startTime="129320395408479860" executionTime="00:00:01.1940683">
+    <File name="BrokerAccount.generated.cs" startTime="129320395408499861" executionTime="00:00:00.4240242" />
+    <File name="IBrokerAccount.cs" startTime="129320395412760105" executionTime="00:00:00.1170066" />
+    <File name="BrokerAccountServiceBase.generated.cs" startTime="129320395413930171" executionTime="00:00:00.2640151" />
+    <File name="BrokerAccountProviderBase.generatedCore.cs" startTime="129320395416590324" executionTime="00:00:00.1190068" />
+    <File name="SqlClient\SqlBrokerAccountProviderBase.generated.cs" startTime="129320395417780392" executionTime="00:00:00.1700097" />
+    <File name="BrokerAccountTest.generated.cs" startTime="129320395419500490" executionTime="00:00:00.0920053" />
+  </Table>
+  <Table name="ChangedPassHistory" startTime="129320395420420543" executionTime="00:00:00.6710383">
+    <File name="ChangedPassHistory.generated.cs" startTime="129320395420420543" executionTime="00:00:00.1430081" />
+    <File name="IChangedPassHistory.cs" startTime="129320395421870626" executionTime="00:00:00.0750043" />
+    <File name="ChangedPassHistoryServiceBase.generated.cs" startTime="129320395422620669" executionTime="00:00:00.1630093" />
+    <File name="ChangedPassHistoryProviderBase.generatedCore.cs" startTime="129320395424270763" executionTime="00:00:00.0770044" />
+    <File name="SqlClient\SqlChangedPassHistoryProviderBase.generated.cs" startTime="129320395425040807" executionTime="00:00:00.0770044" />
+    <File name="ChangedPassHistoryTest.generated.cs" startTime="129320395425830852" executionTime="00:00:00.1300074" />
+  </Table>
+  <Table name="SubCustAccount" startTime="129320395427130926" executionTime="00:00:01.0160582">
+    <File name="SubCustAccount.generated.cs" startTime="129320395427140927" executionTime="00:00:00.1640094" />
+    <File name="ISubCustAccount.cs" startTime="129320395428811023" executionTime="00:00:00.0680038" />
+    <File name="SubCustAccountServiceBase.generated.cs" startTime="129320395429501062" executionTime="00:00:00.4960284" />
+    <File name="SubCustAccountProviderBase.generatedCore.cs" startTime="129320395434481347" executionTime="00:00:00.0980056" />
+    <File name="SqlClient\SqlSubCustAccountProviderBase.generated.cs" startTime="129320395435471404" executionTime="00:00:00.0910052" />
+    <File name="SubCustAccountTest.generated.cs" startTime="129320395436381456" executionTime="00:00:00.0910052" />
+  </Table>
+  <Table name="CustServicesPermission" startTime="129320395437291508" executionTime="00:00:00.7670438">
+    <File name="CustServicesPermission.generated.cs" startTime="129320395437301508" executionTime="00:00:00.1830105" />
+    <File name="ICustServicesPermission.cs" startTime="129320395439151614" executionTime="00:00:00.0860049" />
+    <File name="CustServicesPermissionServiceBase.generated.cs" startTime="129320395440011663" executionTime="00:00:00.1980113" />
+    <File name="CustServicesPermissionProviderBase.generatedCore.cs" startTime="129320395442011778" executionTime="00:00:00.0970055" />
+    <File name="SqlClient\SqlCustServicesPermissionProviderBase.generated.cs" startTime="129320395442981833" executionTime="00:00:00.0990057" />
+    <File name="CustServicesPermissionTest.generated.cs" startTime="129320395443991891" executionTime="00:00:00.0970055" />
+  </Table>
+  <Table name="BrokerAMPermission" startTime="129320395444961946" executionTime="00:00:01.0680611">
+    <File name="BrokerAmPermission.generated.cs" startTime="129320395445001949" executionTime="00:00:00.1830104" />
+    <File name="IBrokerAmPermission.cs" startTime="129320395446852054" executionTime="00:00:00.0860050" />
+    <File name="BrokerAmPermissionServiceBase.generated.cs" startTime="129320395447712104" executionTime="00:00:00.1940111" />
+    <File name="BrokerAmPermissionProviderBase.generatedCore.cs" startTime="129320395449672216" executionTime="00:00:00.0900051" />
+    <File name="SqlClient\SqlBrokerAmPermissionProviderBase.generated.cs" startTime="129320395450582268" executionTime="00:00:00.4010229" />
+    <File name="BrokerAmPermissionTest.generated.cs" startTime="129320395454612498" executionTime="00:00:00.1030059" />
+  </Table>
+  <Table name="MainCustAccount" startTime="129320395455642557" executionTime="00:00:00.8800504">
+    <File name="MainCustAccount.generated.cs" startTime="129320395455642557" executionTime="00:00:00.2750158" />
+    <File name="IMainCustAccount.cs" startTime="129320395458412716" executionTime="00:00:00.1130064" />
+    <File name="MainCustAccountServiceBase.generated.cs" startTime="129320395459542780" executionTime="00:00:00.2310132" />
+    <File name="MainCustAccountProviderBase.generatedCore.cs" startTime="129320395461872914" executionTime="00:00:00.0810046" />
+    <File name="SqlClient\SqlMainCustAccountProviderBase.generated.cs" startTime="129320395462682960" executionTime="00:00:00.0880050" />
+    <File name="MainCustAccountTest.generated.cs" startTime="129320395463563010" executionTime="00:00:00.0880051" />
+  </Table>
+  <Table name="BrokerPermission" startTime="129320395464443061" executionTime="00:00:01.0100577">
+    <File name="BrokerPermission.generated.cs" startTime="129320395464463062" executionTime="00:00:00.1410080" />
+    <File name="IBrokerPermission.cs" startTime="129320395465873142" executionTime="00:00:00.0770044" />
+    <File name="BrokerPermissionServiceBase.generated.cs" startTime="129320395466643186" executionTime="00:00:00.2310133" />
+    <File name="BrokerPermissionProviderBase.generatedCore.cs" startTime="129320395468973320" executionTime="00:00:00.0860049" />
+    <File name="SqlClient\SqlBrokerPermissionProviderBase.generated.cs" startTime="129320395469843370" executionTime="00:00:00.3670209" />
+    <File name="BrokerPermissionTest.generated.cs" startTime="129320395473543581" executionTime="00:00:00.1000057" />
+  </Table>
+  <Table name="SubCustAccountPermission" startTime="129320395474543638" executionTime="00:00:00.8720499">
+    <File name="SubCustAccountPermission.generated.cs" startTime="129320395474543638" executionTime="00:00:00.3000172" />
+    <File name="ISubCustAccountPermission.cs" startTime="129320395477563811" executionTime="00:00:00.1190068" />
+    <File name="SubCustAccountPermissionServiceBase.generated.cs" startTime="129320395478753879" executionTime="00:00:00.1870107" />
+    <File name="SubCustAccountPermissionProviderBase.generatedCore.cs" startTime="129320395480643987" executionTime="00:00:00.0860049" />
+    <File name="SqlClient\SqlSubCustAccountPermissionProviderBase.generated.cs" startTime="129320395481504036" executionTime="00:00:00.0880051" />
+    <File name="SubCustAccountPermissionTest.generated.cs" startTime="129320395482384087" executionTime="00:00:00.0880050" />
+  </Table>
+  <summary>
+    <objectCount>129</objectCount>
+    <messageCount>0</messageCount>
+  </summary>
+</NetTiersReport>

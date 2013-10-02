@@ -1,0 +1,1085 @@
+﻿
+#region Using directives
+
+using System;
+using System.Collections;
+using System.Collections.Specialized;
+
+
+using System.Web.Configuration;
+using System.Data;
+using System.Data.Common;
+using System.Configuration.Provider;
+
+using Microsoft.Practices.EnterpriseLibrary.Data;
+using Microsoft.Practices.EnterpriseLibrary.Data.Sql;
+
+using AccountManager.Entities;
+using AccountManager.DataAccess;
+using AccountManager.DataAccess.Bases;
+
+#endregion
+
+namespace AccountManager.DataAccess.SqlClient
+{
+	/// <summary>
+	/// This class is the Sql implementation of the NetTiersProvider.
+	/// </summary>
+	public sealed class SqlNetTiersProvider : AccountManager.DataAccess.Bases.NetTiersProvider
+	{
+		private static object syncRoot = new Object();
+		private string _applicationName;
+        private string _connectionString;
+        private bool _useStoredProcedure;
+        string _providerInvariantName;
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="SqlNetTiersProvider"/> class.
+		///</summary>
+		public SqlNetTiersProvider()
+		{	
+		}		
+		
+		/// <summary>
+        /// Initializes the provider.
+        /// </summary>
+        /// <param name="name">The friendly name of the provider.</param>
+        /// <param name="config">A collection of the name/value pairs representing the provider-specific attributes specified in the configuration for this provider.</param>
+        /// <exception cref="T:System.ArgumentNullException">The name of the provider is null.</exception>
+        /// <exception cref="T:System.InvalidOperationException">An attempt is made to call <see cref="M:System.Configuration.Provider.ProviderBase.Initialize(System.String,System.Collections.Specialized.NameValueCollection)"></see> on a provider after the provider has already been initialized.</exception>
+        /// <exception cref="T:System.ArgumentException">The name of the provider has a length of zero.</exception>
+		public override void Initialize(string name, NameValueCollection config)
+        {
+            // Verify that config isn't null
+            if (config == null)
+            {
+                throw new ArgumentNullException("config");
+            }
+
+            // Assign the provider a default name if it doesn't have one
+            if (String.IsNullOrEmpty(name))
+            {
+                name = "SqlNetTiersProvider";
+            }
+
+            // Add a default "description" attribute to config if the
+            // attribute doesn't exist or is empty
+            if (string.IsNullOrEmpty(config["description"]))
+            {
+                config.Remove("description");
+                config.Add("description", "NetTiers Sql provider");
+            }
+
+            // Call the base class's Initialize method
+            base.Initialize(name, config);
+
+            // Initialize _applicationName
+            _applicationName = config["applicationName"];
+
+            if (string.IsNullOrEmpty(_applicationName))
+            {
+                _applicationName = "/";
+            }
+            config.Remove("applicationName");
+
+
+            #region "Initialize UseStoredProcedure"
+            string storedProcedure  = config["useStoredProcedure"];
+           	if (string.IsNullOrEmpty(storedProcedure))
+            {
+                throw new ProviderException("Empty or missing useStoredProcedure");
+            }
+            this._useStoredProcedure = Convert.ToBoolean(config["useStoredProcedure"]);
+            config.Remove("useStoredProcedure");
+            #endregion
+
+			#region ConnectionString
+
+			// Initialize _connectionString
+			_connectionString = config["connectionString"];
+			config.Remove("connectionString");
+
+			string connect = config["connectionStringName"];
+			config.Remove("connectionStringName");
+
+			if ( String.IsNullOrEmpty(_connectionString) )
+			{
+				if ( String.IsNullOrEmpty(connect) )
+				{
+					throw new ProviderException("Empty or missing connectionStringName");
+				}
+
+				if ( DataRepository.ConnectionStrings[connect] == null )
+				{
+					throw new ProviderException("Missing connection string");
+				}
+
+				_connectionString = DataRepository.ConnectionStrings[connect].ConnectionString;
+			}
+
+            if ( String.IsNullOrEmpty(_connectionString) )
+            {
+                throw new ProviderException("Empty connection string");
+			}
+
+			#endregion
+            
+             #region "_providerInvariantName"
+
+            // initialize _providerInvariantName
+            this._providerInvariantName = config["providerInvariantName"];
+
+            if (String.IsNullOrEmpty(_providerInvariantName))
+            {
+                throw new ProviderException("Empty or missing providerInvariantName");
+            }
+            config.Remove("providerInvariantName");
+
+            #endregion
+
+        }
+		
+		/// <summary>
+		/// Creates a new <c cref="TransactionManager"/> instance from the current datasource.
+		/// </summary>
+		/// <returns></returns>
+		public override TransactionManager CreateTransaction()
+		{
+			return new TransactionManager(this._connectionString);
+		}
+		
+		/// <summary>
+		/// Gets a value indicating whether to use stored procedure or not.
+		/// </summary>
+		/// <value>
+		/// 	<c>true</c> if this repository use stored procedures; otherwise, <c>false</c>.
+		/// </value>
+		public bool UseStoredProcedure
+		{
+			get {return this._useStoredProcedure;}
+			set {this._useStoredProcedure = value;}
+		}
+		
+		 /// <summary>
+        /// Gets or sets the connection string.
+        /// </summary>
+        /// <value>The connection string.</value>
+		public string ConnectionString
+		{
+			get {return this._connectionString;}
+			set {this._connectionString = value;}
+		}
+		
+		/// <summary>
+	    /// Gets or sets the invariant provider name listed in the DbProviderFactories machine.config section.
+	    /// </summary>
+	    /// <value>The name of the provider invariant.</value>
+	    public string ProviderInvariantName
+	    {
+	        get { return this._providerInvariantName; }
+	        set { this._providerInvariantName = value; }
+	    }		
+		
+		///<summary>
+		/// Indicates if the current <c cref="NetTiersProvider"/> implementation supports Transacton.
+		///</summary>
+		public override bool IsTransactionSupported
+		{
+			get
+			{
+				return true;
+			}
+		}
+
+		
+		#region "BrokerAccountProvider"
+			
+		private SqlBrokerAccountProvider innerSqlBrokerAccountProvider;
+
+		///<summary>
+		/// This class is the Data Access Logic Component for the <see cref="BrokerAccount"/> business entity.
+		/// It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+		///</summary>
+		/// <value></value>
+		public override BrokerAccountProviderBase BrokerAccountProvider
+		{
+			get
+			{
+				if (innerSqlBrokerAccountProvider == null) 
+				{
+					lock (syncRoot) 
+					{
+						if (innerSqlBrokerAccountProvider == null)
+						{
+							this.innerSqlBrokerAccountProvider = new SqlBrokerAccountProvider(_connectionString, _useStoredProcedure, _providerInvariantName);
+						}
+					}
+				}
+				return innerSqlBrokerAccountProvider;
+			}
+		}
+		
+		/// <summary>
+		/// Gets the current <c cref="SqlBrokerAccountProvider"/>.
+		/// </summary>
+		/// <value></value>
+		public SqlBrokerAccountProvider SqlBrokerAccountProvider
+		{
+			get {return BrokerAccountProvider as SqlBrokerAccountProvider;}
+		}
+		
+		#endregion
+		
+		
+		#region "OpenCustAccountProvider"
+			
+		private SqlOpenCustAccountProvider innerSqlOpenCustAccountProvider;
+
+		///<summary>
+		/// This class is the Data Access Logic Component for the <see cref="OpenCustAccount"/> business entity.
+		/// It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+		///</summary>
+		/// <value></value>
+		public override OpenCustAccountProviderBase OpenCustAccountProvider
+		{
+			get
+			{
+				if (innerSqlOpenCustAccountProvider == null) 
+				{
+					lock (syncRoot) 
+					{
+						if (innerSqlOpenCustAccountProvider == null)
+						{
+							this.innerSqlOpenCustAccountProvider = new SqlOpenCustAccountProvider(_connectionString, _useStoredProcedure, _providerInvariantName);
+						}
+					}
+				}
+				return innerSqlOpenCustAccountProvider;
+			}
+		}
+		
+		/// <summary>
+		/// Gets the current <c cref="SqlOpenCustAccountProvider"/>.
+		/// </summary>
+		/// <value></value>
+		public SqlOpenCustAccountProvider SqlOpenCustAccountProvider
+		{
+			get {return OpenCustAccountProvider as SqlOpenCustAccountProvider;}
+		}
+		
+		#endregion
+		
+		
+		#region "ResearchProvider"
+			
+		private SqlResearchProvider innerSqlResearchProvider;
+
+		///<summary>
+		/// This class is the Data Access Logic Component for the <see cref="Research"/> business entity.
+		/// It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+		///</summary>
+		/// <value></value>
+		public override ResearchProviderBase ResearchProvider
+		{
+			get
+			{
+				if (innerSqlResearchProvider == null) 
+				{
+					lock (syncRoot) 
+					{
+						if (innerSqlResearchProvider == null)
+						{
+							this.innerSqlResearchProvider = new SqlResearchProvider(_connectionString, _useStoredProcedure, _providerInvariantName);
+						}
+					}
+				}
+				return innerSqlResearchProvider;
+			}
+		}
+		
+		/// <summary>
+		/// Gets the current <c cref="SqlResearchProvider"/>.
+		/// </summary>
+		/// <value></value>
+		public SqlResearchProvider SqlResearchProvider
+		{
+			get {return ResearchProvider as SqlResearchProvider;}
+		}
+		
+		#endregion
+		
+		
+		#region "SmsCountProvider"
+			
+		private SqlSmsCountProvider innerSqlSmsCountProvider;
+
+		///<summary>
+		/// This class is the Data Access Logic Component for the <see cref="SmsCount"/> business entity.
+		/// It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+		///</summary>
+		/// <value></value>
+		public override SmsCountProviderBase SmsCountProvider
+		{
+			get
+			{
+				if (innerSqlSmsCountProvider == null) 
+				{
+					lock (syncRoot) 
+					{
+						if (innerSqlSmsCountProvider == null)
+						{
+							this.innerSqlSmsCountProvider = new SqlSmsCountProvider(_connectionString, _useStoredProcedure, _providerInvariantName);
+						}
+					}
+				}
+				return innerSqlSmsCountProvider;
+			}
+		}
+		
+		/// <summary>
+		/// Gets the current <c cref="SqlSmsCountProvider"/>.
+		/// </summary>
+		/// <value></value>
+		public SqlSmsCountProvider SqlSmsCountProvider
+		{
+			get {return SmsCountProvider as SqlSmsCountProvider;}
+		}
+		
+		#endregion
+		
+		
+		#region "MainCustAccountProvider"
+			
+		private SqlMainCustAccountProvider innerSqlMainCustAccountProvider;
+
+		///<summary>
+		/// This class is the Data Access Logic Component for the <see cref="MainCustAccount"/> business entity.
+		/// It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+		///</summary>
+		/// <value></value>
+		public override MainCustAccountProviderBase MainCustAccountProvider
+		{
+			get
+			{
+				if (innerSqlMainCustAccountProvider == null) 
+				{
+					lock (syncRoot) 
+					{
+						if (innerSqlMainCustAccountProvider == null)
+						{
+							this.innerSqlMainCustAccountProvider = new SqlMainCustAccountProvider(_connectionString, _useStoredProcedure, _providerInvariantName);
+						}
+					}
+				}
+				return innerSqlMainCustAccountProvider;
+			}
+		}
+		
+		/// <summary>
+		/// Gets the current <c cref="SqlMainCustAccountProvider"/>.
+		/// </summary>
+		/// <value></value>
+		public SqlMainCustAccountProvider SqlMainCustAccountProvider
+		{
+			get {return MainCustAccountProvider as SqlMainCustAccountProvider;}
+		}
+		
+		#endregion
+		
+		
+		#region "SubCustAccountProvider"
+			
+		private SqlSubCustAccountProvider innerSqlSubCustAccountProvider;
+
+		///<summary>
+		/// This class is the Data Access Logic Component for the <see cref="SubCustAccount"/> business entity.
+		/// It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+		///</summary>
+		/// <value></value>
+		public override SubCustAccountProviderBase SubCustAccountProvider
+		{
+			get
+			{
+				if (innerSqlSubCustAccountProvider == null) 
+				{
+					lock (syncRoot) 
+					{
+						if (innerSqlSubCustAccountProvider == null)
+						{
+							this.innerSqlSubCustAccountProvider = new SqlSubCustAccountProvider(_connectionString, _useStoredProcedure, _providerInvariantName);
+						}
+					}
+				}
+				return innerSqlSubCustAccountProvider;
+			}
+		}
+		
+		/// <summary>
+		/// Gets the current <c cref="SqlSubCustAccountProvider"/>.
+		/// </summary>
+		/// <value></value>
+		public SqlSubCustAccountProvider SqlSubCustAccountProvider
+		{
+			get {return SubCustAccountProvider as SqlSubCustAccountProvider;}
+		}
+		
+		#endregion
+		
+		
+		#region "SubCustAccountPermissionProvider"
+			
+		private SqlSubCustAccountPermissionProvider innerSqlSubCustAccountPermissionProvider;
+
+		///<summary>
+		/// This class is the Data Access Logic Component for the <see cref="SubCustAccountPermission"/> business entity.
+		/// It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+		///</summary>
+		/// <value></value>
+		public override SubCustAccountPermissionProviderBase SubCustAccountPermissionProvider
+		{
+			get
+			{
+				if (innerSqlSubCustAccountPermissionProvider == null) 
+				{
+					lock (syncRoot) 
+					{
+						if (innerSqlSubCustAccountPermissionProvider == null)
+						{
+							this.innerSqlSubCustAccountPermissionProvider = new SqlSubCustAccountPermissionProvider(_connectionString, _useStoredProcedure, _providerInvariantName);
+						}
+					}
+				}
+				return innerSqlSubCustAccountPermissionProvider;
+			}
+		}
+		
+		/// <summary>
+		/// Gets the current <c cref="SqlSubCustAccountPermissionProvider"/>.
+		/// </summary>
+		/// <value></value>
+		public SqlSubCustAccountPermissionProvider SqlSubCustAccountPermissionProvider
+		{
+			get {return SubCustAccountPermissionProvider as SqlSubCustAccountPermissionProvider;}
+		}
+		
+		#endregion
+		
+		
+		#region "HolidaysProvider"
+			
+		private SqlHolidaysProvider innerSqlHolidaysProvider;
+
+		///<summary>
+		/// This class is the Data Access Logic Component for the <see cref="Holidays"/> business entity.
+		/// It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+		///</summary>
+		/// <value></value>
+		public override HolidaysProviderBase HolidaysProvider
+		{
+			get
+			{
+				if (innerSqlHolidaysProvider == null) 
+				{
+					lock (syncRoot) 
+					{
+						if (innerSqlHolidaysProvider == null)
+						{
+							this.innerSqlHolidaysProvider = new SqlHolidaysProvider(_connectionString, _useStoredProcedure, _providerInvariantName);
+						}
+					}
+				}
+				return innerSqlHolidaysProvider;
+			}
+		}
+		
+		/// <summary>
+		/// Gets the current <c cref="SqlHolidaysProvider"/>.
+		/// </summary>
+		/// <value></value>
+		public SqlHolidaysProvider SqlHolidaysProvider
+		{
+			get {return HolidaysProvider as SqlHolidaysProvider;}
+		}
+		
+		#endregion
+		
+		
+		#region "CustServicesPermissionProvider"
+			
+		private SqlCustServicesPermissionProvider innerSqlCustServicesPermissionProvider;
+
+		///<summary>
+		/// This class is the Data Access Logic Component for the <see cref="CustServicesPermission"/> business entity.
+		/// It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+		///</summary>
+		/// <value></value>
+		public override CustServicesPermissionProviderBase CustServicesPermissionProvider
+		{
+			get
+			{
+				if (innerSqlCustServicesPermissionProvider == null) 
+				{
+					lock (syncRoot) 
+					{
+						if (innerSqlCustServicesPermissionProvider == null)
+						{
+							this.innerSqlCustServicesPermissionProvider = new SqlCustServicesPermissionProvider(_connectionString, _useStoredProcedure, _providerInvariantName);
+						}
+					}
+				}
+				return innerSqlCustServicesPermissionProvider;
+			}
+		}
+		
+		/// <summary>
+		/// Gets the current <c cref="SqlCustServicesPermissionProvider"/>.
+		/// </summary>
+		/// <value></value>
+		public SqlCustServicesPermissionProvider SqlCustServicesPermissionProvider
+		{
+			get {return CustServicesPermissionProvider as SqlCustServicesPermissionProvider;}
+		}
+		
+		#endregion
+		
+		
+		#region "BrokerAmPermissionProvider"
+			
+		private SqlBrokerAmPermissionProvider innerSqlBrokerAmPermissionProvider;
+
+		///<summary>
+		/// This class is the Data Access Logic Component for the <see cref="BrokerAmPermission"/> business entity.
+		/// It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+		///</summary>
+		/// <value></value>
+		public override BrokerAmPermissionProviderBase BrokerAmPermissionProvider
+		{
+			get
+			{
+				if (innerSqlBrokerAmPermissionProvider == null) 
+				{
+					lock (syncRoot) 
+					{
+						if (innerSqlBrokerAmPermissionProvider == null)
+						{
+							this.innerSqlBrokerAmPermissionProvider = new SqlBrokerAmPermissionProvider(_connectionString, _useStoredProcedure, _providerInvariantName);
+						}
+					}
+				}
+				return innerSqlBrokerAmPermissionProvider;
+			}
+		}
+		
+		/// <summary>
+		/// Gets the current <c cref="SqlBrokerAmPermissionProvider"/>.
+		/// </summary>
+		/// <value></value>
+		public SqlBrokerAmPermissionProvider SqlBrokerAmPermissionProvider
+		{
+			get {return BrokerAmPermissionProvider as SqlBrokerAmPermissionProvider;}
+		}
+		
+		#endregion
+		
+		
+		#region "BrokerPermissionProvider"
+			
+		private SqlBrokerPermissionProvider innerSqlBrokerPermissionProvider;
+
+		///<summary>
+		/// This class is the Data Access Logic Component for the <see cref="BrokerPermission"/> business entity.
+		/// It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+		///</summary>
+		/// <value></value>
+		public override BrokerPermissionProviderBase BrokerPermissionProvider
+		{
+			get
+			{
+				if (innerSqlBrokerPermissionProvider == null) 
+				{
+					lock (syncRoot) 
+					{
+						if (innerSqlBrokerPermissionProvider == null)
+						{
+							this.innerSqlBrokerPermissionProvider = new SqlBrokerPermissionProvider(_connectionString, _useStoredProcedure, _providerInvariantName);
+						}
+					}
+				}
+				return innerSqlBrokerPermissionProvider;
+			}
+		}
+		
+		/// <summary>
+		/// Gets the current <c cref="SqlBrokerPermissionProvider"/>.
+		/// </summary>
+		/// <value></value>
+		public SqlBrokerPermissionProvider SqlBrokerPermissionProvider
+		{
+			get {return BrokerPermissionProvider as SqlBrokerPermissionProvider;}
+		}
+		
+		#endregion
+		
+		
+		#region "BuyRightProvider"
+			
+		private SqlBuyRightProvider innerSqlBuyRightProvider;
+
+		///<summary>
+		/// This class is the Data Access Logic Component for the <see cref="BuyRight"/> business entity.
+		/// It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+		///</summary>
+		/// <value></value>
+		public override BuyRightProviderBase BuyRightProvider
+		{
+			get
+			{
+				if (innerSqlBuyRightProvider == null) 
+				{
+					lock (syncRoot) 
+					{
+						if (innerSqlBuyRightProvider == null)
+						{
+							this.innerSqlBuyRightProvider = new SqlBuyRightProvider(_connectionString, _useStoredProcedure, _providerInvariantName);
+						}
+					}
+				}
+				return innerSqlBuyRightProvider;
+			}
+		}
+		
+		/// <summary>
+		/// Gets the current <c cref="SqlBuyRightProvider"/>.
+		/// </summary>
+		/// <value></value>
+		public SqlBuyRightProvider SqlBuyRightProvider
+		{
+			get {return BuyRightProvider as SqlBuyRightProvider;}
+		}
+		
+		#endregion
+		
+		
+		#region "ConfigurationsProvider"
+			
+		private SqlConfigurationsProvider innerSqlConfigurationsProvider;
+
+		///<summary>
+		/// This class is the Data Access Logic Component for the <see cref="Configurations"/> business entity.
+		/// It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+		///</summary>
+		/// <value></value>
+		public override ConfigurationsProviderBase ConfigurationsProvider
+		{
+			get
+			{
+				if (innerSqlConfigurationsProvider == null) 
+				{
+					lock (syncRoot) 
+					{
+						if (innerSqlConfigurationsProvider == null)
+						{
+							this.innerSqlConfigurationsProvider = new SqlConfigurationsProvider(_connectionString, _useStoredProcedure, _providerInvariantName);
+						}
+					}
+				}
+				return innerSqlConfigurationsProvider;
+			}
+		}
+		
+		/// <summary>
+		/// Gets the current <c cref="SqlConfigurationsProvider"/>.
+		/// </summary>
+		/// <value></value>
+		public SqlConfigurationsProvider SqlConfigurationsProvider
+		{
+			get {return ConfigurationsProvider as SqlConfigurationsProvider;}
+		}
+		
+		#endregion
+		
+		
+		#region "CustomerActionHistoryProvider"
+			
+		private SqlCustomerActionHistoryProvider innerSqlCustomerActionHistoryProvider;
+
+		///<summary>
+		/// This class is the Data Access Logic Component for the <see cref="CustomerActionHistory"/> business entity.
+		/// It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+		///</summary>
+		/// <value></value>
+		public override CustomerActionHistoryProviderBase CustomerActionHistoryProvider
+		{
+			get
+			{
+				if (innerSqlCustomerActionHistoryProvider == null) 
+				{
+					lock (syncRoot) 
+					{
+						if (innerSqlCustomerActionHistoryProvider == null)
+						{
+							this.innerSqlCustomerActionHistoryProvider = new SqlCustomerActionHistoryProvider(_connectionString, _useStoredProcedure, _providerInvariantName);
+						}
+					}
+				}
+				return innerSqlCustomerActionHistoryProvider;
+			}
+		}
+		
+		/// <summary>
+		/// Gets the current <c cref="SqlCustomerActionHistoryProvider"/>.
+		/// </summary>
+		/// <value></value>
+		public SqlCustomerActionHistoryProvider SqlCustomerActionHistoryProvider
+		{
+			get {return CustomerActionHistoryProvider as SqlCustomerActionHistoryProvider;}
+		}
+		
+		#endregion
+		
+		
+		#region "WorkingDaysProvider"
+			
+		private SqlWorkingDaysProvider innerSqlWorkingDaysProvider;
+
+		///<summary>
+		/// This class is the Data Access Logic Component for the <see cref="WorkingDays"/> business entity.
+		/// It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+		///</summary>
+		/// <value></value>
+		public override WorkingDaysProviderBase WorkingDaysProvider
+		{
+			get
+			{
+				if (innerSqlWorkingDaysProvider == null) 
+				{
+					lock (syncRoot) 
+					{
+						if (innerSqlWorkingDaysProvider == null)
+						{
+							this.innerSqlWorkingDaysProvider = new SqlWorkingDaysProvider(_connectionString, _useStoredProcedure, _providerInvariantName);
+						}
+					}
+				}
+				return innerSqlWorkingDaysProvider;
+			}
+		}
+		
+		/// <summary>
+		/// Gets the current <c cref="SqlWorkingDaysProvider"/>.
+		/// </summary>
+		/// <value></value>
+		public SqlWorkingDaysProvider SqlWorkingDaysProvider
+		{
+			get {return WorkingDaysProvider as SqlWorkingDaysProvider;}
+		}
+		
+		#endregion
+		
+		
+		
+		#region "General data access methods"
+
+		#region "ExecuteNonQuery"
+		/// <summary>
+		/// Executes the non query.
+		/// </summary>
+		/// <param name="storedProcedureName">Name of the stored procedure.</param>
+		/// <param name="parameterValues">The parameter values.</param>
+		/// <returns></returns>
+		public override int ExecuteNonQuery(string storedProcedureName, params object[] parameterValues)
+		{
+			SqlDatabase database = new SqlDatabase(this._connectionString);
+			return database.ExecuteNonQuery(storedProcedureName, parameterValues);	
+		}
+
+		/// <summary>
+		/// Executes the non query.
+		/// </summary>
+		/// <param name="transactionManager">The transaction manager.</param>
+		/// <param name="storedProcedureName">Name of the stored procedure.</param>
+		/// <param name="parameterValues">The parameter values.</param>
+		/// <returns></returns>
+		public override int ExecuteNonQuery(TransactionManager transactionManager, string storedProcedureName, params object[] parameterValues)
+		{
+			SqlDatabase database = new SqlDatabase(this._connectionString);
+			return database.ExecuteNonQuery(transactionManager.TransactionObject, storedProcedureName, parameterValues);	
+		}
+
+		/// <summary>
+		/// Executes the non query.
+		/// </summary>
+		/// <param name="commandWrapper">The command wrapper.</param>
+		public override void ExecuteNonQuery(DbCommand commandWrapper)
+		{
+			SqlDatabase database = new SqlDatabase(this._connectionString);
+			database.ExecuteNonQuery(commandWrapper);	
+			
+		}
+
+		/// <summary>
+		/// Executes the non query.
+		/// </summary>
+		/// <param name="transactionManager">The transaction manager.</param>
+		/// <param name="commandWrapper">The command wrapper.</param>
+		public override void ExecuteNonQuery(TransactionManager transactionManager, DbCommand commandWrapper)
+		{
+			SqlDatabase database = new SqlDatabase(this._connectionString);
+			database.ExecuteNonQuery(commandWrapper, transactionManager.TransactionObject);	
+		}
+
+
+		/// <summary>
+		/// Executes the non query.
+		/// </summary>
+		/// <param name="commandType">Type of the command.</param>
+		/// <param name="commandText">The command text.</param>
+		/// <returns></returns>
+		public override int ExecuteNonQuery(CommandType commandType, string commandText)
+		{
+			SqlDatabase database = new SqlDatabase(this._connectionString);
+			return database.ExecuteNonQuery(commandType, commandText);	
+		}
+		/// <summary>
+		/// Executes the non query.
+		/// </summary>
+		/// <param name="transactionManager">The transaction manager.</param>
+		/// <param name="commandType">Type of the command.</param>
+		/// <param name="commandText">The command text.</param>
+		/// <returns></returns>
+		public override int ExecuteNonQuery(TransactionManager transactionManager, CommandType commandType, string commandText)
+		{
+			Database database = transactionManager.Database;			
+			return database.ExecuteNonQuery(transactionManager.TransactionObject , commandType, commandText);				
+		}
+		#endregion
+
+		#region "ExecuteDataReader"
+		/// <summary>
+		/// Executes the reader.
+		/// </summary>
+		/// <param name="storedProcedureName">Name of the stored procedure.</param>
+		/// <param name="parameterValues">The parameter values.</param>
+		/// <returns></returns>
+		public override IDataReader ExecuteReader(string storedProcedureName, params object[] parameterValues)
+		{
+			SqlDatabase database = new SqlDatabase(this._connectionString);			
+			return database.ExecuteReader(storedProcedureName, parameterValues);	
+		}
+
+		/// <summary>
+		/// Executes the reader.
+		/// </summary>
+		/// <param name="transactionManager">The transaction manager.</param>
+		/// <param name="storedProcedureName">Name of the stored procedure.</param>
+		/// <param name="parameterValues">The parameter values.</param>
+		/// <returns></returns>
+		public override IDataReader ExecuteReader(TransactionManager transactionManager, string storedProcedureName, params object[] parameterValues)
+		{
+			Database database = transactionManager.Database;
+			return database.ExecuteReader(transactionManager.TransactionObject, storedProcedureName, parameterValues);	
+		}
+
+		/// <summary>
+		/// Executes the reader.
+		/// </summary>
+		/// <param name="commandWrapper">The command wrapper.</param>
+		/// <returns></returns>
+		public override IDataReader ExecuteReader(DbCommand commandWrapper)
+		{
+			SqlDatabase database = new SqlDatabase(this._connectionString);			
+			return database.ExecuteReader(commandWrapper);	
+		}
+
+		/// <summary>
+		/// Executes the reader.
+		/// </summary>
+		/// <param name="transactionManager">The transaction manager.</param>
+		/// <param name="commandWrapper">The command wrapper.</param>
+		/// <returns></returns>
+		public override IDataReader ExecuteReader(TransactionManager transactionManager, DbCommand commandWrapper)
+		{
+			Database database = transactionManager.Database;
+			return database.ExecuteReader(commandWrapper, transactionManager.TransactionObject);	
+		}
+
+
+		/// <summary>
+		/// Executes the reader.
+		/// </summary>
+		/// <param name="commandType">Type of the command.</param>
+		/// <param name="commandText">The command text.</param>
+		/// <returns></returns>
+		public override IDataReader ExecuteReader(CommandType commandType, string commandText)
+		{
+			SqlDatabase database = new SqlDatabase(this._connectionString);
+			return database.ExecuteReader(commandType, commandText);	
+		}
+		/// <summary>
+		/// Executes the reader.
+		/// </summary>
+		/// <param name="transactionManager">The transaction manager.</param>
+		/// <param name="commandType">Type of the command.</param>
+		/// <param name="commandText">The command text.</param>
+		/// <returns></returns>
+		public override IDataReader ExecuteReader(TransactionManager transactionManager, CommandType commandType, string commandText)
+		{
+			Database database = transactionManager.Database;			
+			return database.ExecuteReader(transactionManager.TransactionObject , commandType, commandText);				
+		}
+		#endregion
+
+		#region "ExecuteDataSet"
+		/// <summary>
+		/// Executes the data set.
+		/// </summary>
+		/// <param name="storedProcedureName">Name of the stored procedure.</param>
+		/// <param name="parameterValues">The parameter values.</param>
+		/// <returns></returns>
+		public override DataSet ExecuteDataSet(string storedProcedureName, params object[] parameterValues)
+		{
+			SqlDatabase database = new SqlDatabase(this._connectionString);			
+			return database.ExecuteDataSet(storedProcedureName, parameterValues);	
+		}
+
+		/// <summary>
+		/// Executes the data set.
+		/// </summary>
+		/// <param name="transactionManager">The transaction manager.</param>
+		/// <param name="storedProcedureName">Name of the stored procedure.</param>
+		/// <param name="parameterValues">The parameter values.</param>
+		/// <returns></returns>
+		public override DataSet ExecuteDataSet(TransactionManager transactionManager, string storedProcedureName, params object[] parameterValues)
+		{
+			Database database = transactionManager.Database;
+			return database.ExecuteDataSet(transactionManager.TransactionObject, storedProcedureName, parameterValues);	
+		}
+
+		/// <summary>
+		/// Executes the data set.
+		/// </summary>
+		/// <param name="commandWrapper">The command wrapper.</param>
+		/// <returns></returns>
+		public override DataSet ExecuteDataSet(DbCommand commandWrapper)
+		{
+			SqlDatabase database = new SqlDatabase(this._connectionString);			
+			return database.ExecuteDataSet(commandWrapper);	
+		}
+
+		/// <summary>
+		/// Executes the data set.
+		/// </summary>
+		/// <param name="transactionManager">The transaction manager.</param>
+		/// <param name="commandWrapper">The command wrapper.</param>
+		/// <returns></returns>
+		public override DataSet ExecuteDataSet(TransactionManager transactionManager, DbCommand commandWrapper)
+		{
+			Database database = transactionManager.Database;
+			return database.ExecuteDataSet(commandWrapper, transactionManager.TransactionObject);	
+		}
+
+
+		/// <summary>
+		/// Executes the data set.
+		/// </summary>
+		/// <param name="commandType">Type of the command.</param>
+		/// <param name="commandText">The command text.</param>
+		/// <returns></returns>
+		public override DataSet ExecuteDataSet(CommandType commandType, string commandText)
+		{
+			SqlDatabase database = new SqlDatabase(this._connectionString);
+			return database.ExecuteDataSet(commandType, commandText);	
+		}
+		/// <summary>
+		/// Executes the data set.
+		/// </summary>
+		/// <param name="transactionManager">The transaction manager.</param>
+		/// <param name="commandType">Type of the command.</param>
+		/// <param name="commandText">The command text.</param>
+		/// <returns></returns>
+		public override DataSet ExecuteDataSet(TransactionManager transactionManager, CommandType commandType, string commandText)
+		{
+			Database database = transactionManager.Database;			
+			return database.ExecuteDataSet(transactionManager.TransactionObject , commandType, commandText);				
+		}
+		#endregion
+
+		#region "ExecuteScalar"
+		/// <summary>
+		/// Executes the scalar.
+		/// </summary>
+		/// <param name="storedProcedureName">Name of the stored procedure.</param>
+		/// <param name="parameterValues">The parameter values.</param>
+		/// <returns></returns>
+		public override object ExecuteScalar(string storedProcedureName, params object[] parameterValues)
+		{
+			SqlDatabase database = new SqlDatabase(this._connectionString);			
+			return database.ExecuteScalar(storedProcedureName, parameterValues);	
+		}
+
+		/// <summary>
+		/// Executes the scalar.
+		/// </summary>
+		/// <param name="transactionManager">The transaction manager.</param>
+		/// <param name="storedProcedureName">Name of the stored procedure.</param>
+		/// <param name="parameterValues">The parameter values.</param>
+		/// <returns></returns>
+		public override object ExecuteScalar(TransactionManager transactionManager, string storedProcedureName, params object[] parameterValues)
+		{
+			Database database = transactionManager.Database;
+			return database.ExecuteScalar(transactionManager.TransactionObject, storedProcedureName, parameterValues);	
+		}
+
+		/// <summary>
+		/// Executes the scalar.
+		/// </summary>
+		/// <param name="commandWrapper">The command wrapper.</param>
+		/// <returns></returns>
+		public override object ExecuteScalar(DbCommand commandWrapper)
+		{
+			SqlDatabase database = new SqlDatabase(this._connectionString);			
+			return database.ExecuteScalar(commandWrapper);	
+		}
+
+		/// <summary>
+		/// Executes the scalar.
+		/// </summary>
+		/// <param name="transactionManager">The transaction manager.</param>
+		/// <param name="commandWrapper">The command wrapper.</param>
+		/// <returns></returns>
+		public override object ExecuteScalar(TransactionManager transactionManager, DbCommand commandWrapper)
+		{
+			Database database = transactionManager.Database;
+			return database.ExecuteScalar(commandWrapper, transactionManager.TransactionObject);	
+		}
+
+		/// <summary>
+		/// Executes the scalar.
+		/// </summary>
+		/// <param name="commandType">Type of the command.</param>
+		/// <param name="commandText">The command text.</param>
+		/// <returns></returns>
+		public override object ExecuteScalar(CommandType commandType, string commandText)
+		{
+			SqlDatabase database = new SqlDatabase(this._connectionString);
+			return database.ExecuteScalar(commandType, commandText);	
+		}
+		/// <summary>
+		/// Executes the scalar.
+		/// </summary>
+		/// <param name="transactionManager">The transaction manager.</param>
+		/// <param name="commandType">Type of the command.</param>
+		/// <param name="commandText">The command text.</param>
+		/// <returns></returns>
+		public override object ExecuteScalar(TransactionManager transactionManager, CommandType commandType, string commandText)
+		{
+			Database database = transactionManager.Database;			
+			return database.ExecuteScalar(transactionManager.TransactionObject , commandType, commandText);				
+		}
+		#endregion
+
+		#endregion
+
+
+	}
+}

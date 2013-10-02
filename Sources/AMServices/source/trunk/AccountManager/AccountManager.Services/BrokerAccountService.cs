@@ -1,0 +1,517 @@
+﻿	
+
+#region Using Directives
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using AccountManager.DataAccess.Bases;
+using AccountManager.Entities;
+using AccountManager.DataAccess;
+using ETradeCommon;
+using ETradeCommon.Enums;
+
+#endregion
+
+namespace AccountManager.Services
+{		
+	/// <summary>
+	/// An component type implementation of the 'BrokerAccount' table.
+	/// </summary>
+	/// <remarks>
+	/// All custom implementations should be done here.
+	/// </remarks>
+	[CLSCompliant(true)]
+	public partial class BrokerAccountService : AccountManager.Services.BrokerAccountServiceBase
+	{
+        private const string LAYER_EXCEPTION_POLICY = "ServiceLayerExceptionPolicy";
+		private static readonly bool noTranByDefault = false;
+
+		#region Constructors
+		/// <summary>
+		/// Initializes a new instance of the BrokerAccountService class.
+		/// </summary>
+		public BrokerAccountService() : base()
+		{
+		}
+		#endregion Constructors
+
+        #region Methods
+        ///<summary>
+        /// Save a new broker.
+        ///</summary>
+        ///<param name="entity">Broker information</param>
+        /// <param name="permissionList">The permission list of broker</param>
+        /// <returns>
+        /// <para>Result of saving broker.</para>
+        /// <para>RET_CODE=EXISTED_DATA: Broker already exists.</para>
+        /// <para>RET_CODE=SUCCESS: Created sucessfully.</para>
+        /// <para>RET_CODE=FAIL: Failed to create broker.</para>
+        /// </returns>
+        ///<exception cref="EntityNotValidException"></exception>
+        [DataObjectMethod(DataObjectMethodType.Insert)]
+        public int SaveBroker(BrokerAccount entity, List<int> permissionList)
+        {
+            #region Security and validation check
+
+            // throws security exception if not authorized
+            SecurityContext.IsAuthorized("Insert");
+
+            if (!entity.IsValid)
+                throw new EntityNotValidException(entity, "Insert", entity.Error);
+
+            #endregion Security and validation check
+
+            #region Initialisation
+
+            bool result = false;
+            TransactionManager transactionManager = null;
+            NetTiersProvider dataProvider;
+
+            #endregion Initialisation
+
+            try
+            {
+                bool isBorrowedTransaction = ConnectionScope.Current.HasTransaction;
+                transactionManager = ConnectionScope.ValidateOrCreateTransaction(noTranByDefault);
+                dataProvider = ConnectionScope.Current.DataProvider;
+
+                var existedBroker = dataProvider.BrokerAccountProvider.GetByBrokerId(entity.BrokerId);
+                if (existedBroker != null)
+                {
+                    // Data is existing
+                    return (int) CommonEnums.RET_CODE.EXISTED_DATA;
+                }
+                result = dataProvider.BrokerAccountProvider.Insert(transactionManager, entity);
+                if (result)
+                {
+                    InsertNewPermission(dataProvider, entity.BrokerId, permissionList);
+                }
+                if (!isBorrowedTransaction && transactionManager != null && transactionManager.IsOpen)
+                    transactionManager.Commit();
+            }
+            catch (Exception exc)
+            {
+                #region Handle transaction rollback and exception
+
+                if (transactionManager != null && transactionManager.IsOpen)
+                    transactionManager.Rollback();
+
+                //Handle exception based on policy
+                if (DomainUtil.HandleException(exc, LAYER_EXCEPTION_POLICY))
+                    throw;
+
+                #endregion Handle transaction rollback and exception
+            }
+
+            if (!result)
+            {
+                return (int) CommonEnums.RET_CODE.FAIL;
+            }
+            return (int)CommonEnums.RET_CODE.SUCCESS;
+        }
+
+	    /// <summary>
+	    /// Update broker information.
+	    /// </summary>
+	    /// <param name="brokerId">Id of broker</param>
+	    /// <param name="name">Name of broker</param>
+	    /// <param name="password">Password for broker to login</param>
+	    /// <param name="accountType">Broker type: Admin or broker</param>
+	    /// <param name="actived">True if broker is actived; otherwise, false.</param>
+	    /// <param name="mobilePhone">Mobile phone of broker</param>
+	    /// <param name="email">Email of broker</param>
+	    /// <param name="updatedUserId">Id of using broker</param>
+	    /// <param name="permissionList">The permission list of broker</param>
+	    /// <returns>
+	    /// <para>Result of updating broker.</para>
+	    /// <para>RET_CODE=NO_EXISTED_DATA: Data is not existing.</para>
+	    /// <para>RET_CODE=SUCCESS: Updated sucessfully.</para>
+	    /// <para>RET_CODE=FAIL: Failed to update broker.</para>
+	    /// </returns>
+	    [DataObjectMethod(DataObjectMethodType.Update)]
+        public int UpdateBroker(string brokerId, string name, string password, short accountType,
+            bool actived, string mobilePhone, string email, string updatedUserId, 
+            List<int> permissionList)
+        {
+            #region Security and validation check
+            // throws security exception if not authorized
+            SecurityContext.IsAuthorized("Update");
+
+            
+            #endregion Security and validation check
+
+            #region Initialisation
+            bool result = false;
+            TransactionManager transactionManager = null;
+            NetTiersProvider dataProvider;
+            #endregion Initialisation
+
+            try
+            {
+                bool isBorrowedTransaction = ConnectionScope.Current.HasTransaction;
+                transactionManager = ConnectionScope.ValidateOrCreateTransaction(noTranByDefault);
+                dataProvider = ConnectionScope.Current.DataProvider;
+
+                var brokerAccount = dataProvider.BrokerAccountProvider.GetByBrokerId(brokerId);
+                if (brokerAccount == null)
+                {
+                    return (int) CommonEnums.RET_CODE.NO_EXISTED_DATA;
+                }
+                brokerAccount.Name = name;
+                if (!string.IsNullOrEmpty(password))
+                {
+                    brokerAccount.Password = PasswordHandlerMd5.Encrypt(password);
+                }
+                brokerAccount.AccountType = accountType;
+                brokerAccount.Actived = actived;
+                brokerAccount.MobilePhone = mobilePhone;
+                brokerAccount.EmailAddr = email;
+                brokerAccount.UpdatedDate = DateTime.Now;
+                brokerAccount.UpdatedUser = updatedUserId;
+                // Validate information
+                if (!brokerAccount.IsValid)
+                    throw new EntityNotValidException(brokerAccount, "Update", brokerAccount.Error);
+
+                result = dataProvider.BrokerAccountProvider.Update(transactionManager, brokerAccount);
+                if(result)
+                {
+                    var oldPermissionList = dataProvider.BrokerPermissionProvider.GetByBrokerId(brokerId);
+                    int count = oldPermissionList.Count;
+                    for (int i = 0; i < count; i++)
+                    {// Delete all
+                        oldPermissionList.RemoveEntity(oldPermissionList[0]);
+                    }
+
+                    foreach (var permission in permissionList)
+                    {
+                        var brokerPermission = new BrokerPermission()
+                                                    {
+                                                        BrokerId = brokerAccount.BrokerId,
+                                                        PermissionId = permission
+                                                    };
+                        oldPermissionList.Add(brokerPermission);
+                    }
+                    dataProvider.BrokerPermissionProvider.Save(oldPermissionList);
+                }
+                if (!isBorrowedTransaction && transactionManager != null && transactionManager.IsOpen)
+                    transactionManager.Commit();
+            }
+            catch (Exception exc)
+            {
+                #region Handle transaction rollback and exception
+                if (transactionManager != null && transactionManager.IsOpen)
+                    transactionManager.Rollback();
+
+                //Handle exception based on policy
+                if (DomainUtil.HandleException(exc, LAYER_EXCEPTION_POLICY))
+                    throw;
+                #endregion Handle transaction rollback and exception
+            }
+
+	        if (!result)
+	        {
+	            return (int) CommonEnums.RET_CODE.FAIL;
+	        }
+	        return (int) CommonEnums.RET_CODE.SUCCESS;
+        }
+
+	    /// <summary>
+	    /// Delete broker, change broker status to inactived.
+	    /// </summary>
+        /// <param name="brokerId">Id of broker</param>
+        /// <param name="actived">true if actived; otherwise, false.</param>
+        /// <param name="updatedUserId">Id of using broker</param>
+        /// <returns>
+        /// <para>Result of activating or deactivating a broker account.</para>
+        /// <para>RET_CODE=NO_EXISTED_DATA: Data is not existing.</para>
+        /// <para>RET_CODE=SUCCESS: Activate or deactivate sucessfully.</para>
+        /// <para>RET_CODE=FAIL: Failed to Activate or deactivate broker.</para>
+        /// </returns>
+	    [DataObjectMethod(DataObjectMethodType.Update)]
+        public int ActivateBroker(string brokerId, bool actived, string updatedUserId)
+        {
+            #region Security and validation check
+            // throws security exception if not authorized
+            SecurityContext.IsAuthorized("Update");
+
+
+            #endregion Security and validation check
+
+            #region Initialisation
+            bool result = false;
+            TransactionManager transactionManager = null;
+            NetTiersProvider dataProvider;
+            #endregion Initialisation
+
+            try
+            {
+                bool isBorrowedTransaction = ConnectionScope.Current.HasTransaction;
+                transactionManager = ConnectionScope.ValidateOrCreateTransaction(noTranByDefault);
+                dataProvider = ConnectionScope.Current.DataProvider;
+                // Set actived = false instead of delete physically
+                var brokerAccount = dataProvider.BrokerAccountProvider.GetByBrokerId(brokerId);
+                if (brokerAccount != null)
+                {
+                    brokerAccount.Actived = actived;
+                    brokerAccount.UpdatedDate = DateTime.Now;
+                    brokerAccount.UpdatedUser = updatedUserId;
+                    // Validate information
+                    if (!brokerAccount.IsValid)
+                        throw new EntityNotValidException(brokerAccount, "Update", brokerAccount.Error);
+
+                    result = dataProvider.BrokerAccountProvider.Update(transactionManager, brokerAccount);
+                }
+                else
+                {
+                    return (int) CommonEnums.RET_CODE.NO_EXISTED_DATA;
+                }
+                
+                if (!isBorrowedTransaction && transactionManager != null && transactionManager.IsOpen)
+                    transactionManager.Commit();
+            }
+            catch (Exception exc)
+            {
+                #region Handle transaction rollback and exception
+                if (transactionManager != null && transactionManager.IsOpen)
+                    transactionManager.Rollback();
+
+                //Handle exception based on policy
+                if (DomainUtil.HandleException(exc, LAYER_EXCEPTION_POLICY))
+                    throw;
+                #endregion Handle transaction rollback and exception
+            }
+	        if (!result)
+	        {
+                return (int)CommonEnums.RET_CODE.FAIL;
+	        }
+            return (int)CommonEnums.RET_CODE.SUCCESS;
+        }
+
+	    /// <summary>
+	    /// 
+	    /// </summary>
+	    /// <param name="brokerId"></param>
+	    /// <param name="oldPassword"></param>
+        /// <param name="newPassword"></param>
+	    /// <param name="updatedUserId"></param>
+	    /// <returns></returns>
+	    [DataObjectMethod(DataObjectMethodType.Update)]
+        public int ChangeBrokerPassword(string brokerId, string oldPassword, string newPassword, string updatedUserId)
+        {
+            #region Security and validation check
+            // throws security exception if not authorized
+            SecurityContext.IsAuthorized("Update");
+
+
+            #endregion Security and validation check
+
+            #region Initialisation
+
+	        TransactionManager transactionManager = null;
+            NetTiersProvider dataProvider;
+            #endregion Initialisation
+
+            try
+            {
+                bool isBorrowedTransaction = ConnectionScope.Current.HasTransaction;
+                transactionManager = ConnectionScope.ValidateOrCreateTransaction(true);
+                dataProvider = ConnectionScope.Current.DataProvider;
+
+                //TODO: Validate password format (empty, min length, max length, format)
+
+                var brokerAccount = dataProvider.BrokerAccountProvider.GetByBrokerId(brokerId);
+                if (brokerAccount != null)
+                {
+                    if (brokerAccount.Password == PasswordHandlerMd5.Encrypt(oldPassword))
+                    {
+                        brokerAccount.Password = PasswordHandlerMd5.Encrypt(newPassword);
+                        brokerAccount.UpdatedDate = DateTime.Now;
+                        brokerAccount.UpdatedUser = updatedUserId;
+                        bool result = dataProvider.BrokerAccountProvider.Update(transactionManager, brokerAccount);
+                        if (!result)
+                        {
+                            return (int)CommonEnums.RET_CODE.FAIL;
+                        }
+                        
+                    }
+                    else
+                    {
+                        return (int)CommonEnums.RET_CODE.INCORRECT_PASSWORD;
+                    }
+                }
+                else
+                {
+                    return (int) CommonEnums.RET_CODE.ERROR_ACCOUNT;
+                }
+                
+                if (!isBorrowedTransaction && transactionManager != null && transactionManager.IsOpen)
+                    transactionManager.Commit();
+            }
+            catch (Exception exc)
+            {
+                #region Handle transaction rollback and exception
+                if (transactionManager != null && transactionManager.IsOpen)
+                    transactionManager.Rollback();
+
+                //Handle exception based on policy
+                if (DomainUtil.HandleException(exc, LAYER_EXCEPTION_POLICY))
+                    throw;
+                #endregion Handle transaction rollback and exception
+            }
+            return (int)CommonEnums.RET_CODE.SUCCESS;
+        }
+
+        /// <summary>
+        /// Get a complete collection of <see cref="BrokerAccount" /> entities.
+        /// </summary>
+        /// <returns></returns>
+        public PagingObject<List<BrokerAccount>> GetList(string brokerId, string name, short accountType,
+            int actived, string mobilePhone, string email, int pageIndex, int pageSize)
+        {
+            // Create dynamic query
+            var whereClause = new StringBuilder();
+            if (!string.IsNullOrEmpty(brokerId))
+            {
+                whereClause.AppendFormat("AND BrokerID LIKE {0} ", "'%" + brokerId + "%' ");
+            }
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                whereClause.AppendFormat("AND Name LIKE {0} ", "'%" + name + "%'");
+            }
+
+            if (accountType > 0)
+            {
+                whereClause.AppendFormat("AND AccountType = {0} ", accountType);
+            }
+
+            if (actived == (int)CommonEnums.SEARCH_BOOL.FALSE)
+            {
+                whereClause.AppendFormat("AND Actived = 0 ");
+            }
+            else if (actived == (int)CommonEnums.SEARCH_BOOL.TRUE)
+            {
+                whereClause.AppendFormat("AND Actived = 1 ");
+            }
+
+            if (!string.IsNullOrEmpty(email))
+            {
+                whereClause.AppendFormat("AND EmailAddr LIKE {0 } ", "'%" + email + "%'");
+            }
+
+            if (!string.IsNullOrEmpty(mobilePhone))
+            {
+                whereClause.AppendFormat("AND MobilePhone LIKE {0} ", "'%" + mobilePhone + "%'");
+            }
+            string finalWhereClause = whereClause.ToString();
+            if (!string.IsNullOrEmpty(finalWhereClause))
+            {
+                finalWhereClause = finalWhereClause.Substring(4);
+            }
+
+            int totalRecord;
+            pageIndex = pageIndex - 1;
+            var list = GetPaged(finalWhereClause, "", pageIndex, pageSize, out totalRecord);
+            var listBrokers = list.ToList();
+            var returnObject = new PagingObject<List<BrokerAccount>> {Data = listBrokers, Count = totalRecord};
+            return returnObject;
+        }
+
+	    /// <summary>
+	    /// Insert new permission list.
+	    /// </summary>
+	    /// <param name="dataProvider"></param>
+	    /// <param name="brokerId"></param>
+	    /// <param name="permissionList"></param>
+	    private static void InsertNewPermission(NetTiersProvider dataProvider, string brokerId, List<int> permissionList)
+        {
+            if ((permissionList != null) && (permissionList.Count > 0))
+            {
+                dataProvider.BrokerPermissionProvider.DeleteByBrokerId(brokerId);
+                var newPermissionList = new TList<BrokerPermission>();
+                foreach (var permissionId in permissionList)
+                {
+                    var brokerPermission = new BrokerPermission
+                                               {
+                                                   BrokerId = brokerId,
+                                                   PermissionId = permissionId
+                                               };
+                    newPermissionList.Add(brokerPermission);
+                }
+                dataProvider.BrokerPermissionProvider.Save(newPermissionList);
+            }
+        }
+
+        /// <summary>
+        ///  method that Gets rows in a <see cref="TList{BrokerAccount}" /> from the datasource based on the primary key PK_BrokerAccount index.
+        /// </summary>
+        /// <param name="brokerId"></param>
+        /// <returns>Returns an instance of the <see cref="BrokerAccount"/> class.</returns>
+        [DataObjectMethod(DataObjectMethodType.Select)]
+        public BrokerAccount GetBroker(string brokerId)
+        {
+            #region Security check
+            // throws security exception if not authorized
+            SecurityContext.IsAuthorized("GetBroker");
+            #endregion Security check
+
+            #region Initialisation
+            BrokerAccount entity = null;
+            TransactionManager transactionManager = null;
+            NetTiersProvider dataProvider = null;
+            #endregion Initialisation
+
+            try
+            {
+                transactionManager = ConnectionScope.ValidateOrCreateTransaction(noTranByDefault);
+                dataProvider = ConnectionScope.Current.DataProvider;
+
+                entity = dataProvider.BrokerAccountProvider.GetByBrokerId(transactionManager, brokerId) as BrokerAccount;
+                if (entity != null)
+                {
+                    var listPermission = dataProvider.BrokerPermissionProvider.GetByBrokerId(brokerId);
+                    entity.BrokerPermissionCollection = listPermission;
+                }
+            }
+            catch (Exception exc)
+            {
+                #region Handle transaction rollback and exception
+                if (transactionManager != null && transactionManager.IsOpen)
+                    transactionManager.Rollback();
+
+                //Handle exception based on policy
+                if (DomainUtil.HandleException(exc, LAYER_EXCEPTION_POLICY))
+                    throw;
+                #endregion Handle transaction rollback and exception
+            }
+
+            return entity;
+        }
+
+        ///<summary>
+        ///</summary>
+        ///<param name="brokerIdList">List of broker id</param>
+        ///<returns></returns>
+        public IList<BrokerAccount> GetList(List<string> brokerIdList)
+        {
+            string idString = "";
+            string where = "";
+            foreach (var brokerId in brokerIdList)
+            {
+                idString = idString + string.Format("'{0}',", brokerId);
+            }
+            if (!string.IsNullOrEmpty(idString))
+            {
+                where = "BrokerId IN (" + idString.Substring(0, idString.Length - 1) + ")";
+            }
+            int count;
+            var list = GetPaged(where, string.Empty, 0, int.MaxValue, out count);
+            return list;
+        }
+	    #endregion
+
+    }//End Class
+
+} // end namespace

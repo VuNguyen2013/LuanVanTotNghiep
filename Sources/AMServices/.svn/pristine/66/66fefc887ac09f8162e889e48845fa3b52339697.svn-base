@@ -1,0 +1,16 @@
+﻿using System.Collections.Generic;
+using ETradeFinance.Entities;
+
+namespace AccountManagerGeneralService
+{
+    interface IGeneralService
+    {
+        List<CashAdvanceHistory> GetListCashAdvanceHistory(string subAccountId, string fromDate, string toDate,
+                                                           string contractNo, string sellDueDateFrom,
+                                                           string sellDueDateTo, int status, int tradeType,
+                                                           string brokerId, int pageIndex, int pageSize, out int count);
+
+        List<CashAdvance> GetListCashAdvance(string subAccountId, string contractNo, int status,
+                                             int tradeType, int pageIndex, int pageSize, out int count);
+    }
+}

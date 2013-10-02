@@ -23,7 +23,7 @@ namespace StockCore.Repositories
                 var streamWriter = new StreamWriter(stream);
                 streamWriter.AutoFlush = true;
 
-                streamWriter.WriteLine(result);
+                streamWriter.Write(result);
 
                 stream.Close();
                 socket.Close();

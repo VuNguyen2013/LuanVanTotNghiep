@@ -1,0 +1,116 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using AccountManager.Services;
+using ETradeFinance.Entities;
+using ETradeFinance.Services;
+
+namespace AccountManagerGeneralService
+{
+    public class GeneralService : IGeneralService
+    {
+        ///<summary>
+        /// Get list of Cash advance history
+        ///</summary>
+        ///<param name="subAccountId">Sub account id</param>
+        ///<param name="fromDate">Advance date from, format DD/MM/YYYY</param>
+        ///<param name="toDate">Advance date to, format DD/MM/YYYY</param>
+        ///<param name="contractNo">Contract no</param>
+        ///<param name="sellDueDateTo">Sell Due date from, format DD/MM/YYYY</param>
+        ///<param name="sellDueDateFrom">Sell Due date from, format DD/MM/YYYY</param>
+        ///<param name="status">Status</param>
+        ///<param name="tradeType">Trade type</param>
+        ///<param name="brokerId">Broker Id</param>
+        ///<param name="pageIndex">Page index</param>
+        ///<param name="pageSize">Page size</param>
+        ///<param name="count">Total records</param>
+        ///<returns>
+        /// <para>Return list of CashAdvance object that contains CashAdvance information.</para>
+        /// </returns>
+        public List<CashAdvanceHistory> GetListCashAdvanceHistory(string subAccountId, string fromDate, string toDate, 
+            string contractNo, string sellDueDateFrom, string sellDueDateTo, int status, int tradeType, 
+            string brokerId, int pageIndex, int pageSize, out int count)
+        {
+            // Get cash advance history list
+            var cashAdvanceHistoryService = new CashAdvanceHistoryService();
+            var cashAdvanceHistoryList = cashAdvanceHistoryService.GetListCashAdvanceHistory(subAccountId, fromDate, toDate,
+                                                                                 contractNo, sellDueDateFrom,
+                                                                                 sellDueDateTo, status, tradeType,
+                                                                                 brokerId, pageIndex, pageSize,
+                                                                                 out count);
+            // Get broker name list
+            var brokerIdList = (from cashAdvanceHistory in cashAdvanceHistoryList
+                                where !string.IsNullOrEmpty(cashAdvanceHistory.BrokerId)
+                                select cashAdvanceHistory.BrokerId).ToList();
+
+            var brokerAccountService = new BrokerAccountService();
+            var brokerList = brokerAccountService.GetList(brokerIdList);
+            var brokerDictionary = new Dictionary<string, string>();
+            foreach (var brokerAccount in brokerList)
+            {
+                if (!brokerDictionary.ContainsKey(brokerAccount.BrokerId))
+                {
+                    brokerDictionary.Add(brokerAccount.BrokerId, brokerAccount.Name);
+                }
+            }
+            // Update broker name to cash advance history
+            foreach (var cashAdvanceHistory in cashAdvanceHistoryList)
+            {
+                string brokerName;
+                if (brokerDictionary.TryGetValue(cashAdvanceHistory.BrokerId, out brokerName))
+                {
+                    cashAdvanceHistory.BrokerName = brokerName;
+                }
+            }
+            return cashAdvanceHistoryList;
+        }
+
+        ///<summary>
+        /// Get list of Cash advances
+        ///</summary>
+        ///<param name="subAccountId">Sub account id</param>
+        ///<param name="contractNo">Contract no</param>
+        ///<param name="status">Status</param>
+        ///<param name="tradeType">Trade type</param>
+        ///<param name="pageIndex">Page index</param>
+        ///<param name="pageSize">Page size</param>
+        ///<param name="count">Total of records</param>
+        ///<returns>
+        /// <para>Return list of CashAdvance object that contains CashAdvance information.</para>
+        /// </returns>
+        public List<CashAdvance> GetListCashAdvance(string subAccountId, string contractNo, int status, 
+            int tradeType, int pageIndex, int pageSize, out int count)
+        {
+            var cashAdvanceService = new CashAdvanceService();
+            var cashAdvanceList = cashAdvanceService.GetListCashAdvance(subAccountId, contractNo, status, tradeType,
+                                                                        pageIndex, pageSize, out count);
+            // Get broker name list
+            var brokerIdList = (from cashAdvance in cashAdvanceList
+                                where !string.IsNullOrEmpty(cashAdvance.BrokerId)
+                                select cashAdvance.BrokerId).ToList();
+
+            var brokerAccountService = new BrokerAccountService();
+            var brokerList = brokerAccountService.GetList(brokerIdList);
+            var brokerDictionary = new Dictionary<string, string>();
+            foreach (var brokerAccount in brokerList)
+            {
+                if (!brokerDictionary.ContainsKey(brokerAccount.BrokerId))
+                {
+                    brokerDictionary.Add(brokerAccount.BrokerId, brokerAccount.Name);
+                }
+            }
+            // Update broker name to cash advance history
+            foreach (var cashAdvance in cashAdvanceList)
+            {
+                if (!string.IsNullOrEmpty(cashAdvance.BrokerId))
+                {
+                    string brokerName;
+                    if (brokerDictionary.TryGetValue(cashAdvance.BrokerId, out brokerName))
+                    {
+                        cashAdvance.BrokerName = brokerName;
+                    }
+                }
+            }
+            return cashAdvanceList;
+        }
+    }
+}

@@ -1,0 +1,196 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FEDD73A5-0ED7-4484-AB95-7CBC42D5C156}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AccountManagerWebServices</RootNamespace>
+    <AssemblyName>AccountManagerWebServices</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\AccountManagerWebServices.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Extensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AccountManagerServices.asmx" />
+    <Content Include="Sample.aspx" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccountManagerServices.asmx.cs">
+      <DependentUpon>AccountManagerServices.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\SMSSender.cs" />
+    <Compile Include="Utils\Constants.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sample.aspx.cs">
+      <DependentUpon>Sample.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Sample.aspx.designer.cs">
+      <DependentUpon>Sample.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\Tokens.cs" />
+    <Compile Include="Web References\SMSService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\EtradeCommon\source\trunk\Entities\AccountManager.Entities\AccountManager.Entities.csproj">
+      <Project>{20E43088-4618-4F4A-B8AD-FC31B50D94CD}</Project>
+      <Name>AccountManager.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\EtradeCommon\source\trunk\Entities\ETradeCore.Entities\ETradeCore.Entities.csproj">
+      <Project>{82039C8A-FFFE-4CBD-BCDC-83385F8BDA8B}</Project>
+      <Name>ETradeCore.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\EtradeCommon\source\trunk\Entities\ETradeFinance.Entities\ETradeFinance.Entities.csproj">
+      <Project>{4918BD3B-037F-4227-9831-787E0C84443D}</Project>
+      <Name>ETradeFinance.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\EtradeCommon\source\trunk\ETradeCommon\ETradeCommon\ETradeCommon.csproj">
+      <Project>{A578FFC5-379C-4219-8BB8-DA543D470770}</Project>
+      <Name>ETradeCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\EtradeService\source\trunk\ETradeServices\ETradeFinance.DataAccess\ETradeFinance.DataAccess.csproj">
+      <Project>{B8594D6B-559D-42FB-BD5B-D39B8D495637}</Project>
+      <Name>ETradeFinance.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\EtradeService\source\trunk\ETradeServices\ETradeFinance.Services\ETradeFinance.Services.csproj">
+      <Project>{26498C00-A5CD-4DE8-803D-2B9D282C52DF}</Project>
+      <Name>ETradeFinance.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AccountManager.DataAccess.SqlClient\AccountManager.DataAccess.SqlClient.csproj">
+      <Project>{8996A7B4-57D3-440B-A545-A701844B8C4A}</Project>
+      <Name>AccountManager.DataAccess.SqlClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AccountManager.DataAccess\AccountManager.DataAccess.csproj">
+      <Project>{041C1BBE-0BFB-4D45-8125-9AB0BBC09A92}</Project>
+      <Name>AccountManager.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AccountManager.Services\AccountManager.Services.csproj">
+      <Project>{794327CE-DC0A-4381-89EE-4C00AFB08D5A}</Project>
+      <Name>AccountManager.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AccountManagerGeneralService\AccountManagerGeneralService.csproj">
+      <Project>{7076E082-ECAB-4F81-A1B4-893E5C797BB4}</Project>
+      <Name>AccountManagerGeneralService</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="entlib.config" />
+    <Content Include="Global.asax" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://115.165.162.27/tcsc_ws_pushsms/SMSSendService.asmx%3fWSDL">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\SMSService\</RelPath>
+      <UpdateFromURL>http://115.165.162.27/tcsc_ws_pushsms/SMSSendService.asmx%3fWSDL</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>AccountManagerWebServices_SMSService_SMSSendService</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="entlibTest.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\SMSService\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\SMSService\SMSSendService.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>3577</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

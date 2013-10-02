@@ -1,0 +1,75 @@
+﻿	
+
+#region Using Directives
+using System;
+using System.ComponentModel;
+using System.Collections;
+using System.Xml.Serialization;
+using System.Data;
+
+using AccountManager.Entities;
+using AccountManager.Entities.Validation;
+
+using AccountManager.DataAccess;
+using Microsoft.Practices.EnterpriseLibrary.Logging;
+
+#endregion
+
+namespace AccountManager.Services
+{		
+	/// <summary>
+	/// An component type implementation of the 'CustomerActionHistory' table.
+	/// </summary>
+	/// <remarks>
+	/// All custom implementations should be done here.
+	/// </remarks>
+	[CLSCompliant(true)]
+	public partial class CustomerActionHistoryService : AccountManager.Services.CustomerActionHistoryServiceBase
+	{
+		#region Constructors
+		/// <summary>
+		/// Initializes a new instance of the CustomerActionHistoryService class.
+		/// </summary>
+		public CustomerActionHistoryService() : base()
+		{
+		}
+		#endregion Constructors
+
+        ///<summary>
+        ///</summary>
+        ///<param name="brokerId"></param>
+        ///<param name="actionTime"></param>
+        ///<param name="mainCustAccountId"></param>
+        ///<param name="subCustAccountId"></param>
+        ///<param name="actionType"></param>
+        ///<param name="reason"></param>
+        ///<returns></returns>
+        public bool InsertCustomerActionHistory(string brokerId, DateTime actionTime,
+                                                string mainCustAccountId, string subCustAccountId, int actionType,
+                                                int reason)
+        {
+            var customerActionHistory = new CustomerActionHistory
+                                            {
+                                                ActionTime = actionTime,
+                                                MainCustAccountId = mainCustAccountId,
+                                                ActionType = actionType
+                                            };
+            if (!string.IsNullOrEmpty(brokerId))
+            {
+                customerActionHistory.BrokerId = brokerId;
+            }
+            if (!string.IsNullOrEmpty(subCustAccountId))
+            {
+                customerActionHistory.SubCustAccountId = subCustAccountId;
+            }
+            if (reason >= 0)
+            {
+                customerActionHistory.Reason = reason;
+            }
+            var result = Insert(customerActionHistory);
+            return result;
+        }
+		
+	}//End Class
+
+} // end namespace

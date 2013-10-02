@@ -1,0 +1,80 @@
+﻿using System;
+using System.Configuration;
+using System.Web;
+using AccountManagerWebServices.Utils;
+
+namespace AccountManagerWebServices
+{
+    ///<summary>
+    /// Global class
+    ///</summary>
+    public class Global : HttpApplication
+    {
+        private static readonly bool MultipleLogin = bool.Parse(ConfigurationManager.AppSettings["MultipleLogin"]);
+        protected void Application_Start(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Session_Start(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Application_AuthenticateRequest(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Session_End(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Application_End(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Process before every requests
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void Application_PreRequestHandlerExecute(object sender, EventArgs e)
+        {
+            if (HttpContext.Current.Session != null)
+            {
+                var loginBrokerId = (string)Session[Constants.BROKER];
+                if (loginBrokerId != null)
+                {
+                    var previousSessionId = (string)HttpContext.Current.Cache[loginBrokerId];
+                    if (string.IsNullOrEmpty(previousSessionId))
+                    {
+                        //Kicked out by admin or timeout.
+                        Session.Remove(Constants.BROKER);
+                    }
+                    // Check if allow multiple login or not.
+                    if (!MultipleLogin)
+                    {
+                        if (previousSessionId != Session.SessionID)
+                        {
+                            // Multiple login
+                            Session.Remove(Constants.BROKER);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,691 @@
+﻿<html>
+  <head>
+    <link href="http://nettiers.com/common/styles.css" rel="stylesheet" type="text/css" />
+    <style>
+				      span.executionTime {font-style: italic; color: #55AEED;}
+	            </style>
+  </head>
+  <body>
+    <table width="100%" border="0" cellspacing="2" cellpadding="2">
+      <tr>
+        <td width="700">
+          <a href="http://code.google.com/p/nettiers/downloads/" target="_blank">
+            <img border="0" src="http://nettiers.com/img/netTiersLogo2.0_small.gif" alt=".netTiers 2.2" />
+          </a>
+          <hr />
+          <div>
+            <a href="http://nettiers.com/">Website</a>
+                                |    
+                             <a href="http://community.codesmithtools.com/forums/default.aspx?GroupID=11/">Forums</a>
+                                |    
+                             <a href="http://code.google.com/p/nettiers/">Google Code</a>
+                                |    
+                             <a href="http://code.google.com/p/nettiers/downloads/">Downloads</a></div>
+          <hr />
+          <h2>Generation Report</h2>
+          <div style="width:70%">
+            <span class="content">.netTiers is a set of open source code generation templates that
+                            simplify the tasks of creating customized Application Framework for your Microsoft.Net
+                            applications in just a few minutes. 
+                            <br /><br />
+                            This report shows you a list of all of your selected .net class that were generated.  This report
+                            also shows gives a quick start configuration instructions so that you can get started using .netTiers.
+                            If you need further documentation, please check out the documentation section of this report.
+                         </span>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <table width="100%" border="0" cellspacing="2" cellpadding="2">
+      <tr>
+        <td>
+          <h2>Sections</h2>
+          <ol>
+            <li>
+              <a href="#summary">Summary</a>
+            </li>
+            <li>
+              <a href="#Configuration">Configuration</a>
+            </li>
+            <li>
+              <a href="#documentation">Documentation</a>
+            </li>
+            <li>
+              <a href="#details">Details - Generated Classes</a>
+            </li>
+          </ol>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top" width="100%">
+          <div id="Summary" style="display:inline">
+            <a name="summary" />
+            <h3>Generation Summary <a href="#top" class="calloutlink">Top</a></h3>
+            <span class="docSubHeader">Generated Solution Found: </span>
+            <br />
+            <span class="content">
+              <ul>
+                <li>file:\\\D:\OTS\svnProjects\Etrade\AMServices\source\trunk\AccountManager\AccountManager.sln</li>
+              </ul>
+            </span>
+            <table>
+              <tr>
+                <td width="200">Total Object Created</td>
+                <td>129</td>
+              </tr>
+              <tr>
+                <td width="200">Total Errors / Warnings</td>
+                <td>0</td>
+              </tr>
+            </table>
+          </div>
+          <div id="Configuration" style="display:inline">
+            <a name="Configuration" />
+            <h3>.netTiers Quick Configuration <a href="#top" class="calloutlink">Top</a></h3>
+            <p> Below are the steps to to configure the .netTiers components.</p>
+            <p>To Configure your application to use .netTiers, add the following sections to your App / Web config files.
+			
+			 You can find more information on how to set this up at<br /><a href="http://docs.nettiers.com">.netTiers 2 Install and Configuration Document @ http://docs.netTiers.com</a></p>
+            <p>1. Add a new section to the configSections</p>
+            <pre>
+  &lt;section name="AccountManager.DataAccess"
+		type="AccountManager.DataAccess.Bases.NetTiersServiceSection, AccountManager.DataAccess"
+		allowDefinition="MachineToApplication"
+		restartOnExternalChanges="true" /&gt;
+</pre>
+            <p>2.  Add an item to the ConnectionStrings Section</p>
+            <pre>
+&lt;connectionStrings&gt;
+  &lt;add name="netTiersConnectionString" connectionString="Data Source=172.16.1.30;Initial Catalog=AccountManager;User ID=sa;Password=123456" /&gt;
+&lt;/connectionStrings&gt;
+</pre>
+            <p>3.  Add the netTierService configuration section to your configuration file. Comment / Uncomment which provider you plan on using / not using</p>
+            <pre>
+&lt;AccountManager.DataAccess defaultProvider="SqlNetTiersProvider"&gt;
+  &lt;providers&gt;
+    
+    &lt;add 
+	name="SqlNetTiersProvider" 
+	type="AccountManager.DataAccess.SqlClient.SqlNetTiersProvider, AccountManager.DataAccess.SqlClient"
+	connectionStringName="netTiersConnectionString"
+	providerInvariantName="System.Data.SqlClient" 
+	entityFactoryType="AccountManager.Entities.EntityFactory"
+	useEntityFactory="true"
+	enableEntityTracking="false"
+	enableMethodAuthorization="false"
+	useStoredProcedure="false"
+  /&gt;
+    
+  &lt;/providers&gt;
+&lt;/AccountManager.DataAccess&gt;
+ </pre>
+          </div>
+          <div id="Documentation" style="display:inline">
+            <a name="documentation" />
+            <h3>Documentation <a href="#top" class="calloutlink">Top</a></h3>
+            <a href="http://wiki.nettiers.com">.netTiers 2.0 Getting Started</a>
+            <br />
+            <br />
+            <b>Sample API Usage</b>
+            <br />
+            <table style="border: 1px dashed rgb(255, 153, 0); background-color: rgb(255, 255, 223);" bgcolor="#ffffdf">
+              <tbody>
+                <tr>
+                  <td>
+                    <pre>
+                      <font color="black" face="Courier New" size="2">
+AccountService accountsService = <font color="blue">new</font> AccountsService();<font color="green">
+//GetAll()</font>
+TList&lt;Accounts&gt; accountList = accountsService.GetAll();
+
+<font color="green">//GetPagedl()</font>
+TList&lt;Accounts&gt; accountList = 
+accountsService.GetPaged("IsActive = 1 AND AccountName LIKE 'smi%'");
+
+<font color="green">//GetByFk()</font>
+TList&lt;Accounts&gt; accountList = accountsService.GetByCustomerId(25);
+
+<font color="green">//GetIX()</font>
+TList&lt;Accounts&gt; accountList = accountsService.GetByAccountCreatedDate(<font color="blue">new</font> DateTime("1/1/2006"));<br /><br /><font color="green">
+//Get()</font>
+entity.Entitykey;
+Accounts account = accountsService.Get(entity.EntityKey);
+
+<font color="green">//Insert()</font>
+Account accountEntity = <font color="blue">new</font> Account();
+accountEntity.AccountName = "MyAccountName";
+accountEntity.CreatedDate = DateTime.Now;
+
+accountsService.Insert(accountEntity);
+accountEntity.AccountId <font color="green">// is now populated</font><font color="green">
+//Delete()</font>
+bool result = accountsService.Delete(accountEntity);
+
+<font color="green">//Delete()</font>
+bool result = accountsService.Delete(23);
+
+<font color="green">//Update()</font>
+accountEntity.AccountName = "MyAccountName 2";
+accountsService.Update(accountEntity);
+        
+<font color="green">//GetByManyToManyl()</font>
+TList&lt;Customers&gt; accountList = accountsService.GetCustomers_From_AccountsReceivable();
+					            
+<font color="green">//GetCustomProcedureName()</font>
+TList&lt;Accounts&gt; accountList = accountsService.GetByAccountMaturationDate();
+    
+<font color="green">//DeepLoadByIdl() using PK</font>
+Account account = accountsService.DeepLoadByAccountId(id, <font color="blue">false</font>, DeepLoadType.IncludeChildren, typeof(Customers), typeof(TList&lt;ChartOfAccounts&gt;));<br /><br /><font color="green">//DeepLoadByIdl() using FK</font>
+TList&lt;Account&gt; account = accountsService.DeepLoadByCustomerId(id, <font color="blue">false</font>, DeepLoadType.IncludeChildren, typeof(Customers), typeof(TList&lt;ChartOfAccounts&gt;));<br /><br /><font color="green">//already instatiated objects</font><font color="green">//DeepLoad</font>
+accountsService.DeepLoad(myAccountEntity, <font color="blue">false</font>, DeepLoadType.IncludeChildren, typeof(Customers), typeof(TList&lt;ChartOfAccounts&gt;));<br /><br /><font color="green">
+Response.Write(accountsService.CustomerIdSource.LastName); <font color="green">// is now filled</font>
+Response.Write(accountsService.ChartOfAccountsCollection.Count); <font color="green">// is now filled</font>
+
+//DeepSave</font>
+accountsService.DeepSave(myAccountEntity, <font color="blue">false</font>, DeepSaveType.IncludeChildren, typeof(Customers), typeof(TList&lt;ChartOfAccounts&gt;));<br /><br /></font>
+                    </pre>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br />
+          </div>
+          <div id="ReportDetails" style="display:inline">
+            <a name="details" />
+            <h3>Report Details <a href="#top" class="calloutlink">Top</a></h3>
+            <ul>
+              <li>
+                <h3>Initialization</h3>
+                <ul>
+                  <li>
+                    <span class="message0">Validating parameters.</span>
+                    <ul />
+                  </li>
+                  <li>
+                    <span class="message0">Loading templates.</span>
+                    <ul />[00:00:02.5491458]<br /></li>
+                  <li>
+                    <span class="message0">Creating folders and copying dependencies.</span>
+                    <ul />
+                  </li>
+                </ul>
+			Execution time: <span class="executionTime">00:00:03.7542147</span><p /></li>
+              <li>
+                <h3>Common files</h3>
+                <ul>
+                  <li>
+                    <span class="file">ListBase.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">TList.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">VList.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">TestUtility.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">IEntity.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">IEntityId.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">IEntityKey.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">EntityFactory.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">EntityFactoryBase.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">IEntityFactory.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">IEntityCacheItem.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">EntityCache.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">EntityLocator.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">EntityManager.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">BrokenRule.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">BrokenRulesList.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">CommonRules.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">ValidationRuleArgs.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">ValidationRuleHandler.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">ValidationRuleInfo.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">ValidationRules.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">EntityBaseCore.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">EntityKeyBaseCore.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">SecurityContextBase.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">ContextView.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">IProcessor.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">IProcessorResult.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">ProcessorBase.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">GenericProcessorResult.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">DomainUtil.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">IConnectionScope.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">ConnectionScope.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">ConnectionScopeBase.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">IComponentService.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">ServiceBaseCore.cst.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">ServiceViewBaseCore.cst.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">ServiceResult.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">EntityFilter.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">EntityPropertyComparer.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">GenericTypeConverter.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">Procedures.xml</span>
+                  </li>
+                  <li>
+                    <span class="file">Unit test configuration files</span>
+                  </li>
+                  <li>
+                    <span class="file">Enterprise Library v4_1 unit test configuration files</span>
+                  </li>
+                  <li>
+                    <span class="file">Utility.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">ITransactionManager.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">TransactionManager.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">DataRepository.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">IEntityProvider.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">IEntityViewProvider.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">EntityProviderBaseCore.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">EntityViewProviderBaseCore.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">INetTiersProvider.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">NetTiersProvider.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">NetTiersProviderBase.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">NetTiersProviderCollection.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">NetTiersServiceSection.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">ExpressionParserBase.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">SqlExpressionParser.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">SqlStringBuilder.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">SqlUtil.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">StringTokenizer.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">SqlClient\SqlNetTiersProvider.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">StoredProcedureProvider.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">Services.csproj</span>
+                  </li>
+                  <li>
+                    <span class="file">AccountManager.Entities.csproj</span>
+                  </li>
+                  <li>
+                    <span class="file">AccountManager.DataAccess.DataAccess.csproj</span>
+                  </li>
+                  <li>
+                    <span class="file">AccountManager.Entities.DataAccess.SqlClient.csproj</span>
+                  </li>
+                  <li>
+                    <span class="file">AccountManager.UnitTests.csproj</span>
+                  </li>
+                  <li>
+                    <span class="file">EntityHelper.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">EntityUtil.cs</span>
+                  </li>
+                </ul>
+			Execution time: <span class="executionTime">00:00:14.1108071</span><p /></li>
+              <li>
+                <h3>Research</h3>
+                <ul>
+                  <li>
+                    <span class="file">Research.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">IResearch.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">ResearchServiceBase.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">ResearchProviderBase.generatedCore.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">SqlClient\SqlResearchProviderBase.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">ResearchTest.generated.cs</span>
+                  </li>
+                </ul>
+			Execution time: <span class="executionTime">00:00:01.6220927</span><p /></li>
+              <li>
+                <h3>OpenCustAccount</h3>
+                <ul>
+                  <li>
+                    <span class="file">OpenCustAccount.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">IOpenCustAccount.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">OpenCustAccountServiceBase.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">OpenCustAccountProviderBase.generatedCore.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">SqlClient\SqlOpenCustAccountProviderBase.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">OpenCustAccountTest.generated.cs</span>
+                  </li>
+                </ul>
+			Execution time: <span class="executionTime">00:00:00.9360536</span><p /></li>
+              <li>
+                <h3>BrokerAccount</h3>
+                <ul>
+                  <li>
+                    <span class="file">BrokerAccount.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">IBrokerAccount.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">BrokerAccountServiceBase.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">BrokerAccountProviderBase.generatedCore.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">SqlClient\SqlBrokerAccountProviderBase.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">BrokerAccountTest.generated.cs</span>
+                  </li>
+                </ul>
+			Execution time: <span class="executionTime">00:00:01.1940683</span><p /></li>
+              <li>
+                <h3>ChangedPassHistory</h3>
+                <ul>
+                  <li>
+                    <span class="file">ChangedPassHistory.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">IChangedPassHistory.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">ChangedPassHistoryServiceBase.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">ChangedPassHistoryProviderBase.generatedCore.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">SqlClient\SqlChangedPassHistoryProviderBase.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">ChangedPassHistoryTest.generated.cs</span>
+                  </li>
+                </ul>
+			Execution time: <span class="executionTime">00:00:00.6710383</span><p /></li>
+              <li>
+                <h3>SubCustAccount</h3>
+                <ul>
+                  <li>
+                    <span class="file">SubCustAccount.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">ISubCustAccount.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">SubCustAccountServiceBase.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">SubCustAccountProviderBase.generatedCore.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">SqlClient\SqlSubCustAccountProviderBase.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">SubCustAccountTest.generated.cs</span>
+                  </li>
+                </ul>
+			Execution time: <span class="executionTime">00:00:01.0160582</span><p /></li>
+              <li>
+                <h3>CustServicesPermission</h3>
+                <ul>
+                  <li>
+                    <span class="file">CustServicesPermission.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">ICustServicesPermission.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">CustServicesPermissionServiceBase.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">CustServicesPermissionProviderBase.generatedCore.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">SqlClient\SqlCustServicesPermissionProviderBase.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">CustServicesPermissionTest.generated.cs</span>
+                  </li>
+                </ul>
+			Execution time: <span class="executionTime">00:00:00.7670438</span><p /></li>
+              <li>
+                <h3>BrokerAMPermission</h3>
+                <ul>
+                  <li>
+                    <span class="file">BrokerAmPermission.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">IBrokerAmPermission.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">BrokerAmPermissionServiceBase.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">BrokerAmPermissionProviderBase.generatedCore.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">SqlClient\SqlBrokerAmPermissionProviderBase.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">BrokerAmPermissionTest.generated.cs</span>
+                  </li>
+                </ul>
+			Execution time: <span class="executionTime">00:00:01.0680611</span><p /></li>
+              <li>
+                <h3>MainCustAccount</h3>
+                <ul>
+                  <li>
+                    <span class="file">MainCustAccount.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">IMainCustAccount.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">MainCustAccountServiceBase.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">MainCustAccountProviderBase.generatedCore.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">SqlClient\SqlMainCustAccountProviderBase.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">MainCustAccountTest.generated.cs</span>
+                  </li>
+                </ul>
+			Execution time: <span class="executionTime">00:00:00.8800504</span><p /></li>
+              <li>
+                <h3>BrokerPermission</h3>
+                <ul>
+                  <li>
+                    <span class="file">BrokerPermission.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">IBrokerPermission.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">BrokerPermissionServiceBase.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">BrokerPermissionProviderBase.generatedCore.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">SqlClient\SqlBrokerPermissionProviderBase.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">BrokerPermissionTest.generated.cs</span>
+                  </li>
+                </ul>
+			Execution time: <span class="executionTime">00:00:01.0100577</span><p /></li>
+              <li>
+                <h3>SubCustAccountPermission</h3>
+                <ul>
+                  <li>
+                    <span class="file">SubCustAccountPermission.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">ISubCustAccountPermission.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">SubCustAccountPermissionServiceBase.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">SubCustAccountPermissionProviderBase.generatedCore.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">SqlClient\SqlSubCustAccountPermissionProviderBase.generated.cs</span>
+                  </li>
+                  <li>
+                    <span class="file">SubCustAccountPermissionTest.generated.cs</span>
+                  </li>
+                </ul>
+			Execution time: <span class="executionTime">00:00:00.8720499</span><p /></li>
+              <li>
+                <h3>
+            Custom Stored Procedures
+         </h3>
+                <ul>
+                  <li>
+                    <span class="file">_BrokerPermission_DeleteByBrokerId (applies to table: BrokerPermission)
+         </span>
+                  </li>
+                  <br />
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <hr noshade="noshade" />
+    <table width="100%" border="0" cellspacing="2" cellpadding="2">
+      <tr>
+        <td />
+        <td />
+      </tr>
+    </table>
+    <div align="center">
+			.netTiers Open Source Group, 2008
+		</div>
+    <div align="center">
+      <a href="http://code.google.com/p/nettiers/">
+        <img src="http://code.google.com/hosting/images/code_sm.png" border="0" alt="Google Code Logo" />
+      </a>
+    </div>
+  </body>
+</html>

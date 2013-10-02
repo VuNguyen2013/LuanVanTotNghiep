@@ -34,12 +34,13 @@ namespace StockCore.InfoSender
         }
         private void LoadData()
         {
-            var listIPInfo = StockCore.InfoSender.Repositories.IpInfoRepository.GetAll();
+            var memberRep = new Repositories.MemberStockCompanyRepository();
+            var listIPInfo = memberRep.GetAll();
             var listboxItem = new List<ListBoxItem>();
             foreach (var itemm in listIPInfo)
             {
-                _listIP.Add(itemm.IP);
-                listboxItem.Add(new ListBoxItem() { Value = itemm.IP,Name=itemm.IP+" - "+itemm.CompanyName});
+                _listIP.Add(itemm.ServerIp);
+                listboxItem.Add(new ListBoxItem() { Value = itemm.ServerIp,Name=itemm.ServerIp+" - "+itemm.ShortNameVi});
             }
             lbIP.DataSource = listboxItem;
             lbIP.ValueMember = "Value";

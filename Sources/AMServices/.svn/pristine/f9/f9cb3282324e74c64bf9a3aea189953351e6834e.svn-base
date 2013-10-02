@@ -1,0 +1,392 @@
+﻿	
+
+#region Using Directives
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using AccountManager.DataAccess.Bases;
+using AccountManager.Entities;
+using AccountManager.DataAccess;
+using ETradeCommon.Enums;
+
+#endregion
+
+namespace AccountManager.Services
+{		
+	/// <summary>
+	/// An component type implementation of the 'SubCustAccount' table.
+	/// </summary>
+	/// <remarks>
+	/// All custom implementations should be done here.
+	/// </remarks>
+	[CLSCompliant(true)]
+	public partial class SubCustAccountService : AccountManager.Services.SubCustAccountServiceBase
+	{
+		#region Constructors
+		/// <summary>
+		/// Initializes a new instance of the SubCustAccountService class.
+		/// </summary>
+		public SubCustAccountService() : base()
+		{
+		}
+		#endregion Constructors
+
+        private static readonly string layerExceptionPolicy = "ServiceLayerExceptionPolicy";
+        private static readonly bool noTranByDefault = false;
+
+        #region Methods
+        ///<summary>
+	    /// Save a new sub customer
+	    ///</summary>
+	    ///<param name="entity">Information of sub customer account</param>
+	    ///<param name="permissionList">Permission list of sub customer account</param>
+        /// <returns>
+        /// <para>Result of creating new sub customer account.</para>
+        /// <para>RET_CODE=EXISTED_DATA: Information already exists.</para>
+        /// <para>RET_CODE=FAIL: Failed to create sub customer account information.</para>
+        /// <para>RET_CODE=SUCCESS: Create sub customer successfully.</para>
+        /// </returns>
+	    ///<exception cref="EntityNotValidException"></exception>
+	    [DataObjectMethod(DataObjectMethodType.Insert)]
+        public int SaveSubCustAccount(SubCustAccount entity, List<int> permissionList)
+        {
+            #region Security and validation check
+            // throws security exception if not authorized
+            SecurityContext.IsAuthorized("Save");
+
+            if (!entity.IsValid)
+                throw new EntityNotValidException(entity, "Save", entity.Error);
+            #endregion Security and validation check
+
+            #region Initialisation
+
+            TransactionManager transactionManager = null;
+            NetTiersProvider dataProvider;
+            #endregion Initialisation
+
+            try
+            {
+                bool isBorrowedTransaction = ConnectionScope.Current.HasTransaction;
+                transactionManager = ConnectionScope.ValidateOrCreateTransaction(noTranByDefault);
+                dataProvider = ConnectionScope.Current.DataProvider;
+                //Check existing
+                var tmpSubCustAccount =
+                    dataProvider.SubCustAccountProvider.GetBySubCustAccountId(entity.SubCustAccountId);
+                if (tmpSubCustAccount != null)
+                {
+                    return (int) CommonEnums.RET_CODE.EXISTED_DATA;
+                }
+
+                bool result = dataProvider.SubCustAccountProvider.Insert(transactionManager, entity);
+                if (result)
+                {
+                    InsertNewPermission(dataProvider, entity.SubCustAccountId, permissionList);
+                    var customerActionHistoryService = new CustomerActionHistoryService();
+                    customerActionHistoryService.InsertCustomerActionHistory(entity.CreatedUser, DateTime.Now,
+                                                                         entity.MainCustAccountId, entity.SubCustAccountId,
+                                                                         (int)CommonEnums.ACTION_TYPE.CREATE,
+                                                                         -1);
+                }
+                else
+                {
+                    return (int) CommonEnums.RET_CODE.FAIL;
+                }
+                if (!isBorrowedTransaction && transactionManager != null && transactionManager.IsOpen)
+                    transactionManager.Commit();
+            }
+            catch (Exception exc)
+            {
+                #region Handle transaction rollback and exception
+                if (transactionManager != null && transactionManager.IsOpen)
+                    transactionManager.Rollback();
+
+                //Handle exception based on policy
+                if (DomainUtil.HandleException(exc, layerExceptionPolicy))
+                    throw;
+                #endregion Handle transaction rollback and exception
+            }
+
+            return (int)CommonEnums.RET_CODE.SUCCESS;
+        }
+
+        /// <summary>
+        /// Update a new sub customer
+        /// </summary>
+        /// <param name="newSubCustAccount">Information of sub customer account</param>
+        /// <param name="permissionList">List of sub customer permission</param>
+        /// <returns>
+        /// <para>Result of updating sub customer account information.</para>
+        /// <para>RET_CODE=NO_EXISTED_DATA: There is no data.</para>
+        /// <para>RET_CODE=FAIL: Failed to update sub customer account information.</para>
+        /// <para>RET_CODE=SUCCESS: Update sub customer successfully.</para>
+        /// </returns>
+        [DataObjectMethod(DataObjectMethodType.Update)]
+        public int UpdateSubCustAccount(SubCustAccount newSubCustAccount, List<int> permissionList)
+        {
+            bool result = false;
+            #region Security and validation check
+            // throws security exception if not authorized
+            SecurityContext.IsAuthorized("Update");
+
+            
+            #endregion Security and validation check
+
+            #region Initialisation
+
+            TransactionManager transactionManager = null;
+            NetTiersProvider dataProvider;
+            #endregion Initialisation
+
+            try
+            {
+                bool isBorrowedTransaction = ConnectionScope.Current.HasTransaction;
+                transactionManager = ConnectionScope.ValidateOrCreateTransaction(noTranByDefault);
+                dataProvider = ConnectionScope.Current.DataProvider;
+                var subCustAccount =
+                    dataProvider.SubCustAccountProvider.GetBySubCustAccountId(newSubCustAccount.SubCustAccountId);
+                if (subCustAccount == null)
+                {
+                    return (int) CommonEnums.RET_CODE.NO_EXISTED_DATA;
+                }
+                // Get action type and reason to insert into history table
+                int actionType = (int)CommonEnums.ACTION_TYPE.BROKER_CHANGE_INFORMATION;
+                int reason = -1;
+                if (subCustAccount.Actived != newSubCustAccount.Actived)
+                {
+                    if (newSubCustAccount.Actived == true)
+                    {
+                        actionType = (int)CommonEnums.ACTION_TYPE.BROKER_ACTIVATE_ACCOUNT;
+                    }
+                    else
+                    {
+                        actionType = (int)CommonEnums.ACTION_TYPE.BROKER_LOCK_ACCOUNT;
+                        reason = (int)CommonEnums.LOCK_ACCOUNT_REASON.BY_BROKER;
+                    }
+                }
+                // update account information
+                subCustAccount.Name = newSubCustAccount.Name;
+                subCustAccount.Actived = newSubCustAccount.Actived;
+                subCustAccount.LockAccountReason = newSubCustAccount.LockAccountReason;
+                subCustAccount.MainCustAccountId = newSubCustAccount.MainCustAccountId;
+                subCustAccount.UpdatedDate = DateTime.Now;
+                subCustAccount.UpdatedUser = newSubCustAccount.UpdatedUser;
+
+                if (!subCustAccount.IsValid)
+                    throw new EntityNotValidException(subCustAccount, "UpdateSubCustAccount", subCustAccount.Error);
+
+                result = dataProvider.SubCustAccountProvider.Update(transactionManager, subCustAccount);
+                if (result)
+                {
+                    // Update permission
+                    var listSubAccountPermission =
+                            dataProvider.SubCustAccountPermissionProvider.GetBySubCustAccountId(subCustAccount.SubCustAccountId);
+                    int count = listSubAccountPermission.Count;
+                    for (int i = 0; i < count; i++)
+                    {
+                        listSubAccountPermission.RemoveEntity(listSubAccountPermission[0]);
+                    }
+
+                    foreach (var permissionId in permissionList)
+                    {
+                        var subCustAccPermission = new SubCustAccountPermission
+                        {
+                            SubCustAccountId = subCustAccount.SubCustAccountId,
+                            CustServicesPermissionId = permissionId
+                        };
+                        listSubAccountPermission.Add(subCustAccPermission);
+                    }
+                    dataProvider.SubCustAccountPermissionProvider.Save(listSubAccountPermission);
+
+                    // Update history
+                    var customerActionHistoryService = new CustomerActionHistoryService();
+                    customerActionHistoryService.InsertCustomerActionHistory(subCustAccount.UpdatedUser, DateTime.Now,
+                                                                             subCustAccount.MainCustAccountId,
+                                                                             subCustAccount.SubCustAccountId, actionType,
+                                                                             reason);
+                }
+                if (!isBorrowedTransaction && transactionManager != null && transactionManager.IsOpen)
+                    transactionManager.Commit();
+            }
+            catch (Exception exc)
+            {
+                #region Handle transaction rollback and exception
+                if (transactionManager != null && transactionManager.IsOpen)
+                    transactionManager.Rollback();
+
+                //Handle exception based on policy
+                if (DomainUtil.HandleException(exc, layerExceptionPolicy))
+                    throw;
+                #endregion Handle transaction rollback and exception
+            }
+
+            if (!result)
+            {
+                return (int) CommonEnums.RET_CODE.FAIL;
+            }
+            return (int) CommonEnums.RET_CODE.SUCCESS;
+        }
+
+	    /// <summary>
+	    /// Activate or deactivate a sub customer account to allow to use this sub customer account.
+	    /// </summary>
+	    /// <param name="subCustAccId">Id of sub customer account</param>
+	    /// <param name="actived">true if sub customer account is actived; otherwise, false</param>
+	    ///<param name="lockReason">Lock reason</param>
+	    ///<param name="updatedUserId">Id of updating user</param>
+	    ///<returns>
+	    /// <para>Result of the activating action.</para>
+	    /// <para>RET_CODE=NO_EXISTED_DATA: There is no data.</para>
+	    /// <para>RET_CODE=FAIL: Failed to activate sub customer account information.</para>
+	    /// <para>RET_CODE=SUCCESS: Activate sub customer successfully.</para>
+	    /// </returns>
+	    ///<exception cref="EntityNotValidException"></exception>
+	    [DataObjectMethod(DataObjectMethodType.Update)]
+        public int ActivateSubCustAccount(string subCustAccId, bool actived, short lockReason, string updatedUserId)
+        {
+            #region Security and validation check
+            // throws security exception if not authorized
+            SecurityContext.IsAuthorized("Save");
+
+            #endregion Security and validation check
+
+            #region Initialisation
+
+            bool result = false;
+            TransactionManager transactionManager = null;
+            NetTiersProvider dataProvider;
+            #endregion Initialisation
+
+            try
+            {
+                bool isBorrowedTransaction = ConnectionScope.Current.HasTransaction;
+                transactionManager = ConnectionScope.ValidateOrCreateTransaction(noTranByDefault);
+                dataProvider = ConnectionScope.Current.DataProvider;
+
+                var subCustAccount = dataProvider.SubCustAccountProvider.GetBySubCustAccountId(subCustAccId);
+                if (subCustAccount != null)
+                {
+                    subCustAccount.Actived = actived;
+                    subCustAccount.LockAccountReason = (short) lockReason;
+                    subCustAccount.UpdatedUser = updatedUserId;
+                    subCustAccount.UpdatedDate = DateTime.Now;
+                    result = dataProvider.SubCustAccountProvider.Update(transactionManager, subCustAccount);
+                    if (actived)
+                    {
+                        var customerActionHistoryService = new CustomerActionHistoryService();
+                        customerActionHistoryService.InsertCustomerActionHistory(updatedUserId, DateTime.Now, subCustAccount.MainCustAccountId,
+                                                                             subCustAccId,
+                                                                             (int)CommonEnums.ACTION_TYPE.BROKER_ACTIVATE_ACCOUNT,
+                                                                             -1);
+                    }
+                    else
+                    {
+                        var customerActionHistoryService = new CustomerActionHistoryService();
+                        customerActionHistoryService.InsertCustomerActionHistory(updatedUserId, DateTime.Now, subCustAccount.MainCustAccountId,
+                                                                             subCustAccId,
+                                                                             (int)CommonEnums.ACTION_TYPE.BROKER_LOCK_ACCOUNT,
+                                                                             lockReason);
+                    }
+                    
+                }
+                else
+                {
+                    return (int) CommonEnums.RET_CODE.NO_EXISTED_DATA;
+                }
+                if (!isBorrowedTransaction && transactionManager != null && transactionManager.IsOpen)
+                    transactionManager.Commit();
+            }
+            catch (Exception exc)
+            {
+                #region Handle transaction rollback and exception
+                if (transactionManager != null && transactionManager.IsOpen)
+                    transactionManager.Rollback();
+
+                //Handle exception based on policy
+                if (DomainUtil.HandleException(exc, layerExceptionPolicy))
+                    throw;
+                #endregion Handle transaction rollback and exception
+            }
+
+            if (!result)
+            {
+                return (int) CommonEnums.RET_CODE.FAIL;
+            }
+            return (int) CommonEnums.RET_CODE.SUCCESS;
+        }
+		
+        /// <summary>
+        /// Insert new permissions for sub customer account.
+        /// </summary>
+        /// <param name="dataProvider"></param>
+        /// <param name="subCustAccountId"></param>
+        /// <param name="permissionList"></param>
+        private static void InsertNewPermission(NetTiersProvider dataProvider, string subCustAccountId, ICollection<int> permissionList)
+        {
+            if ((permissionList != null) && (permissionList.Count > 0))
+            {
+                var listPermission = new TList<SubCustAccountPermission>();
+                foreach (var permissionId in permissionList)
+                {
+                    var subCustAccPermission = new SubCustAccountPermission
+                    {
+                        SubCustAccountId = subCustAccountId,
+                        CustServicesPermissionId = permissionId
+                    };
+                    listPermission.Add(subCustAccPermission);
+                }
+
+                dataProvider.SubCustAccountPermissionProvider.BulkInsert(listPermission);
+            }
+        }
+
+        /// <summary>
+        ///  method that get information of <see cref="TList{SubCustAccount}" /> from the datasource based on subCustAccountId.
+        /// </summary>
+        /// <param name="subCustAccountId"></param>
+        /// <returns>Returns an instance of the <see cref="SubCustAccount"/> class.</returns>
+        [DataObjectMethod(DataObjectMethodType.Select)]
+        public virtual SubCustAccount GetSubCustAccount(System.String subCustAccountId)
+        {
+            #region Security check
+            // throws security exception if not authorized
+            SecurityContext.IsAuthorized("GetSubCustAccount");
+            #endregion Security check
+
+            #region Initialisation
+            SubCustAccount subCustAccount = null;
+            TransactionManager transactionManager = null;
+            NetTiersProvider dataProvider = null;
+            #endregion Initialisation
+
+            try
+            {
+                transactionManager = ConnectionScope.ValidateOrCreateTransaction(noTranByDefault);
+                dataProvider = ConnectionScope.Current.DataProvider;
+
+                subCustAccount = dataProvider.SubCustAccountProvider.GetBySubCustAccountId(transactionManager, subCustAccountId) as SubCustAccount;
+                if (subCustAccount != null)
+                {
+                    // Get sub account permission
+                    var subAccPermList = dataProvider.SubCustAccountPermissionProvider.GetBySubCustAccountId(
+                            subCustAccount.SubCustAccountId);
+                    subCustAccount.SubCustAccountPermissionCollection = subAccPermList;
+                }
+            }
+            catch (Exception exc)
+            {
+                #region Handle transaction rollback and exception
+                if (transactionManager != null && transactionManager.IsOpen)
+                    transactionManager.Rollback();
+
+                //Handle exception based on policy
+                if (DomainUtil.HandleException(exc, layerExceptionPolicy))
+                    throw;
+                #endregion Handle transaction rollback and exception
+            }
+
+            return subCustAccount;
+        }
+        #endregion
+    }//End Class
+
+} // end namespace

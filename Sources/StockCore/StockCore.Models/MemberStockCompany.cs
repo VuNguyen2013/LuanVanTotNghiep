@@ -27,6 +27,7 @@ namespace StockCore.Models
         public string Fax { get; set; }
         public string Website { get; set; }
         public bool IsPublished { get; set; }
+        public string ServerIp { get; set; }
     
         public virtual ICollection<MainCustAccount> MainCustAccounts { get; set; }
     }

@@ -1,0 +1,760 @@
+﻿#region Using directives
+
+using System;
+using System.Data;
+using System.Data.Common;
+using System.Collections;
+using System.Collections.Generic;
+
+using AccountManager.Entities;
+using AccountManager.DataAccess;
+
+#endregion
+
+namespace AccountManager.DataAccess.Bases
+{	
+	///<summary>
+	/// This class is the base class for any <see cref="MainCustAccountProviderBase"/> implementation.
+	/// It exposes CRUD methods as well as selecting on index, foreign keys and custom stored procedures.
+	///</summary>
+	public abstract partial class MainCustAccountProviderBaseCore : EntityProviderBase<AccountManager.Entities.MainCustAccount, AccountManager.Entities.MainCustAccountKey>
+	{		
+		#region Get from Many To Many Relationship Functions
+		#endregion	
+		
+		#region Delete Methods
+
+		/// <summary>
+		/// 	Deletes a row from the DataSource.
+		/// </summary>
+		/// <param name="transactionManager">A <see cref="TransactionManager"/> object.</param>
+		/// <param name="key">The unique identifier of the row to delete.</param>
+		/// <returns>Returns true if operation suceeded.</returns>
+		public override bool Delete(TransactionManager transactionManager, AccountManager.Entities.MainCustAccountKey key)
+		{
+			return Delete(transactionManager, key.MainCustAccountId);
+		}
+		
+		/// <summary>
+		/// 	Deletes a row from the DataSource.
+		/// </summary>
+		/// <param name="_mainCustAccountId">. Primary Key.</param>
+		/// <remarks>Deletes based on primary key(s).</remarks>
+		/// <returns>Returns true if operation suceeded.</returns>
+		public bool Delete(System.String _mainCustAccountId)
+		{
+			return Delete(null, _mainCustAccountId);
+		}
+		
+		/// <summary>
+		/// 	Deletes a row from the DataSource.
+		/// </summary>
+		/// <param name="transactionManager"><see cref="TransactionManager"/> object</param>
+		/// <param name="_mainCustAccountId">. Primary Key.</param>
+		/// <remarks>Deletes based on primary key(s).</remarks>
+		/// <returns>Returns true if operation suceeded.</returns>
+		public abstract bool Delete(TransactionManager transactionManager, System.String _mainCustAccountId);		
+		
+		#endregion Delete Methods
+		
+		#region Get By Foreign Key Functions
+	
+		/// <summary>
+		/// 	Gets rows from the datasource based on the FK_MainCustAccount_BrokerAccount key.
+		///		FK_MainCustAccount_BrokerAccount Description: 
+		/// </summary>
+		/// <param name="_brokerId"></param>
+		/// <returns>Returns a typed collection of AccountManager.Entities.MainCustAccount objects.</returns>
+		public TList<MainCustAccount> GetByBrokerId(System.String _brokerId)
+		{
+			int count = -1;
+			return GetByBrokerId(_brokerId, 0,int.MaxValue, out count);
+		}
+		
+		/// <summary>
+		/// 	Gets rows from the datasource based on the FK_MainCustAccount_BrokerAccount key.
+		///		FK_MainCustAccount_BrokerAccount Description: 
+		/// </summary>
+		/// <param name="transactionManager"><see cref="TransactionManager"/> object</param>
+		/// <param name="_brokerId"></param>
+		/// <returns>Returns a typed collection of AccountManager.Entities.MainCustAccount objects.</returns>
+		/// <remarks></remarks>
+		public TList<MainCustAccount> GetByBrokerId(TransactionManager transactionManager, System.String _brokerId)
+		{
+			int count = -1;
+			return GetByBrokerId(transactionManager, _brokerId, 0, int.MaxValue, out count);
+		}
+		
+			/// <summary>
+		/// 	Gets rows from the datasource based on the FK_MainCustAccount_BrokerAccount key.
+		///		FK_MainCustAccount_BrokerAccount Description: 
+		/// </summary>
+		/// <param name="transactionManager"><see cref="TransactionManager"/> object</param>
+		/// <param name="_brokerId"></param>
+		/// <param name="start">Row number at which to start reading, the first row is 0.</param>
+		///  <param name="pageLength">Number of rows to return.</param>
+		/// <remarks></remarks>
+		/// <returns>Returns a typed collection of AccountManager.Entities.MainCustAccount objects.</returns>
+		public TList<MainCustAccount> GetByBrokerId(TransactionManager transactionManager, System.String _brokerId, int start, int pageLength)
+		{
+			int count = -1;
+			return GetByBrokerId(transactionManager, _brokerId, start, pageLength, out count);
+		}
+		
+		/// <summary>
+		/// 	Gets rows from the datasource based on the FK_MainCustAccount_BrokerAccount key.
+		///		fkMainCustAccountBrokerAccount Description: 
+		/// </summary>
+		/// <param name="start">Row number at which to start reading, the first row is 0.</param>
+		/// <param name="pageLength">Number of rows to return.</param>
+		/// <param name="_brokerId"></param>
+		/// <remarks></remarks>
+		/// <returns>Returns a typed collection of AccountManager.Entities.MainCustAccount objects.</returns>
+		public TList<MainCustAccount> GetByBrokerId(System.String _brokerId, int start, int pageLength)
+		{
+			int count =  -1;
+			return GetByBrokerId(null, _brokerId, start, pageLength,out count);	
+		}
+		
+		/// <summary>
+		/// 	Gets rows from the datasource based on the FK_MainCustAccount_BrokerAccount key.
+		///		fkMainCustAccountBrokerAccount Description: 
+		/// </summary>
+		/// <param name="start">Row number at which to start reading, the first row is 0.</param>
+		/// <param name="pageLength">Number of rows to return.</param>
+		/// <param name="_brokerId"></param>
+		/// <param name="count">out parameter to get total records for query</param>
+		/// <remarks></remarks>
+		/// <returns>Returns a typed collection of AccountManager.Entities.MainCustAccount objects.</returns>
+		public TList<MainCustAccount> GetByBrokerId(System.String _brokerId, int start, int pageLength,out int count)
+		{
+			return GetByBrokerId(null, _brokerId, start, pageLength, out count);	
+		}
+						
+		/// <summary>
+		/// 	Gets rows from the datasource based on the FK_MainCustAccount_BrokerAccount key.
+		///		FK_MainCustAccount_BrokerAccount Description: 
+		/// </summary>
+		/// <param name="transactionManager"><see cref="TransactionManager"/> object</param>
+		/// <param name="_brokerId"></param>
+		/// <param name="start">Row number at which to start reading, the first row is 0.</param>
+		/// <param name="pageLength">Number of rows to return.</param>
+		/// <param name="count">The total number of records.</param>
+		/// <returns>Returns a typed collection of AccountManager.Entities.MainCustAccount objects.</returns>
+		public abstract TList<MainCustAccount> GetByBrokerId(TransactionManager transactionManager, System.String _brokerId, int start, int pageLength, out int count);
+		
+		#endregion
+
+		#region Get By Index Functions
+		
+		/// <summary>
+		/// 	Gets a row from the DataSource based on its primary key.
+		/// </summary>
+		/// <param name="transactionManager">A <see cref="TransactionManager"/> object.</param>
+		/// <param name="key">The unique identifier of the row to retrieve.</param>
+		/// <param name="start">Row number at which to start reading, the first row is 0.</param>
+		/// <param name="pageLength">Number of rows to return.</param>
+		/// <returns>Returns an instance of the Entity class.</returns>
+		public override AccountManager.Entities.MainCustAccount Get(TransactionManager transactionManager, AccountManager.Entities.MainCustAccountKey key, int start, int pageLength)
+		{
+			return GetByMainCustAccountId(transactionManager, key.MainCustAccountId, start, pageLength);
+		}
+		
+		/// <summary>
+		/// 	Gets rows from the datasource based on the primary key PK_MainCustAccount index.
+		/// </summary>
+		/// <param name="_mainCustAccountId"></param>
+		/// <returns>Returns an instance of the <see cref="AccountManager.Entities.MainCustAccount"/> class.</returns>
+		public AccountManager.Entities.MainCustAccount GetByMainCustAccountId(System.String _mainCustAccountId)
+		{
+			int count = -1;
+			return GetByMainCustAccountId(null,_mainCustAccountId, 0, int.MaxValue, out count);
+		}
+		
+		/// <summary>
+		/// 	Gets rows from the datasource based on the PK_MainCustAccount index.
+		/// </summary>
+		/// <param name="_mainCustAccountId"></param>
+		/// <param name="start">Row number at which to start reading, the first row is 0.</param>
+		/// <param name="pageLength">Number of rows to return.</param>
+		/// <remarks></remarks>
+		/// <returns>Returns an instance of the <see cref="AccountManager.Entities.MainCustAccount"/> class.</returns>
+		public AccountManager.Entities.MainCustAccount GetByMainCustAccountId(System.String _mainCustAccountId, int start, int pageLength)
+		{
+			int count = -1;
+			return GetByMainCustAccountId(null, _mainCustAccountId, start, pageLength, out count);
+		}
+		
+		/// <summary>
+		/// 	Gets rows from the datasource based on the PK_MainCustAccount index.
+		/// </summary>
+		/// <param name="transactionManager"><see cref="TransactionManager"/> object</param>
+		/// <param name="_mainCustAccountId"></param>
+		/// <remarks></remarks>
+		/// <returns>Returns an instance of the <see cref="AccountManager.Entities.MainCustAccount"/> class.</returns>
+		public AccountManager.Entities.MainCustAccount GetByMainCustAccountId(TransactionManager transactionManager, System.String _mainCustAccountId)
+		{
+			int count = -1;
+			return GetByMainCustAccountId(transactionManager, _mainCustAccountId, 0, int.MaxValue, out count);
+		}
+		
+		/// <summary>
+		/// 	Gets rows from the datasource based on the PK_MainCustAccount index.
+		/// </summary>
+		/// <param name="transactionManager"><see cref="TransactionManager"/> object</param>
+		/// <param name="_mainCustAccountId"></param>
+		/// <param name="start">Row number at which to start reading, the first row is 0.</param>
+		/// <param name="pageLength">Number of rows to return.</param>
+		/// <remarks></remarks>
+		/// <returns>Returns an instance of the <see cref="AccountManager.Entities.MainCustAccount"/> class.</returns>
+		public AccountManager.Entities.MainCustAccount GetByMainCustAccountId(TransactionManager transactionManager, System.String _mainCustAccountId, int start, int pageLength)
+		{
+			int count = -1;
+			return GetByMainCustAccountId(transactionManager, _mainCustAccountId, start, pageLength, out count);
+		}
+		
+		/// <summary>
+		/// 	Gets rows from the datasource based on the PK_MainCustAccount index.
+		/// </summary>
+		/// <param name="_mainCustAccountId"></param>
+		/// <param name="start">Row number at which to start reading, the first row is 0.</param>
+		/// <param name="pageLength">Number of rows to return.</param>
+		/// <param name="count">out parameter to get total records for query</param>
+		/// <remarks></remarks>
+		/// <returns>Returns an instance of the <see cref="AccountManager.Entities.MainCustAccount"/> class.</returns>
+		public AccountManager.Entities.MainCustAccount GetByMainCustAccountId(System.String _mainCustAccountId, int start, int pageLength, out int count)
+		{
+			return GetByMainCustAccountId(null, _mainCustAccountId, start, pageLength, out count);
+		}
+		
+				
+		/// <summary>
+		/// 	Gets rows from the datasource based on the PK_MainCustAccount index.
+		/// </summary>
+		/// <param name="transactionManager"><see cref="TransactionManager"/> object</param>
+		/// <param name="_mainCustAccountId"></param>
+		/// <param name="start">Row number at which to start reading, the first row is 0.</param>
+		/// <param name="pageLength">Number of rows to return.</param>
+		/// <param name="count">The total number of records.</param>
+		/// <returns>Returns an instance of the <see cref="AccountManager.Entities.MainCustAccount"/> class.</returns>
+		public abstract AccountManager.Entities.MainCustAccount GetByMainCustAccountId(TransactionManager transactionManager, System.String _mainCustAccountId, int start, int pageLength, out int count);
+						
+		#endregion "Get By Index Functions"
+	
+		#region Custom Methods
+		
+		
+		#endregion
+
+		#region Helper Functions	
+		
+		/// <summary>
+		/// Fill a TList&lt;MainCustAccount&gt; From a DataReader.
+		/// </summary>
+		/// <param name="reader">Datareader</param>
+		/// <param name="rows">The collection to fill</param>
+		/// <param name="start">Row number at which to start reading, the first row is 0.</param>
+		/// <param name="pageLength">number of rows.</param>
+		/// <returns>a <see cref="TList&lt;MainCustAccount&gt;"/></returns>
+		public static TList<MainCustAccount> Fill(IDataReader reader, TList<MainCustAccount> rows, int start, int pageLength)
+		{
+			NetTiersProvider currentProvider = DataRepository.Provider;
+            bool useEntityFactory = currentProvider.UseEntityFactory;
+            bool enableEntityTracking = currentProvider.EnableEntityTracking;
+            LoadPolicy currentLoadPolicy = currentProvider.CurrentLoadPolicy;
+			Type entityCreationFactoryType = currentProvider.EntityCreationalFactoryType;
+			
+			// advance to the starting row
+			for (int i = 0; i < start; i++)
+			{
+				if (!reader.Read())
+				return rows; // not enough rows, just return
+			}
+			for (int i = 0; i < pageLength; i++)
+			{
+				if (!reader.Read())
+					break; // we are done
+					
+				string key = null;
+				
+				AccountManager.Entities.MainCustAccount c = null;
+				if (useEntityFactory)
+				{
+					key = new System.Text.StringBuilder("MainCustAccount")
+					.Append("|").Append((System.String)reader[((int)MainCustAccountColumn.MainCustAccountId - 1)]).ToString();
+					c = EntityManager.LocateOrCreate<MainCustAccount>(
+					key.ToString(), // EntityTrackingKey
+					"MainCustAccount",  //Creational Type
+					entityCreationFactoryType,  //Factory used to create entity
+					enableEntityTracking); // Track this entity?
+				}
+				else
+				{
+					c = new AccountManager.Entities.MainCustAccount();
+				}
+				
+				if (!enableEntityTracking ||
+					c.EntityState == EntityState.Added ||
+					(enableEntityTracking &&
+					
+						(
+							(currentLoadPolicy == LoadPolicy.PreserveChanges && c.EntityState == EntityState.Unchanged) ||
+							(currentLoadPolicy == LoadPolicy.DiscardChanges && c.EntityState != EntityState.Unchanged)
+						)
+					))
+				{
+					c.SuppressEntityEvents = true;
+					c.MainCustAccountId = (System.String)reader[((int)MainCustAccountColumn.MainCustAccountId - 1)];
+					c.OriginalMainCustAccountId = c.MainCustAccountId;
+					c.FullName = (reader.IsDBNull(((int)MainCustAccountColumn.FullName - 1)))?null:(System.String)reader[((int)MainCustAccountColumn.FullName - 1)];
+					c.Email = (reader.IsDBNull(((int)MainCustAccountColumn.Email - 1)))?null:(System.String)reader[((int)MainCustAccountColumn.Email - 1)];
+					c.Phone = (reader.IsDBNull(((int)MainCustAccountColumn.Phone - 1)))?null:(System.String)reader[((int)MainCustAccountColumn.Phone - 1)];
+					c.Actived = (System.Boolean)reader[((int)MainCustAccountColumn.Actived - 1)];
+					c.Password = (reader.IsDBNull(((int)MainCustAccountColumn.Password - 1)))?null:(System.String)reader[((int)MainCustAccountColumn.Password - 1)];
+					c.Pin = (reader.IsDBNull(((int)MainCustAccountColumn.Pin - 1)))?null:(System.String)reader[((int)MainCustAccountColumn.Pin - 1)];
+					c.PassLockReason = (reader.IsDBNull(((int)MainCustAccountColumn.PassLockReason - 1)))?null:(System.Int32?)reader[((int)MainCustAccountColumn.PassLockReason - 1)];
+					c.PinLockReason = (reader.IsDBNull(((int)MainCustAccountColumn.PinLockReason - 1)))?null:(System.Int32?)reader[((int)MainCustAccountColumn.PinLockReason - 1)];
+					c.LockReason = (reader.IsDBNull(((int)MainCustAccountColumn.LockReason - 1)))?null:(System.Int32?)reader[((int)MainCustAccountColumn.LockReason - 1)];
+					c.TokenId = (reader.IsDBNull(((int)MainCustAccountColumn.TokenId - 1)))?null:(System.String)reader[((int)MainCustAccountColumn.TokenId - 1)];
+					c.TokenName = (reader.IsDBNull(((int)MainCustAccountColumn.TokenName - 1)))?null:(System.String)reader[((int)MainCustAccountColumn.TokenName - 1)];
+					c.TokenActived = (reader.IsDBNull(((int)MainCustAccountColumn.TokenActived - 1)))?null:(System.String)reader[((int)MainCustAccountColumn.TokenActived - 1)];
+					c.BrokerId = (reader.IsDBNull(((int)MainCustAccountColumn.BrokerId - 1)))?null:(System.String)reader[((int)MainCustAccountColumn.BrokerId - 1)];
+					c.PassIsNew = (reader.IsDBNull(((int)MainCustAccountColumn.PassIsNew - 1)))?null:(System.Boolean?)reader[((int)MainCustAccountColumn.PassIsNew - 1)];
+					c.PinIsNew = (reader.IsDBNull(((int)MainCustAccountColumn.PinIsNew - 1)))?null:(System.Boolean?)reader[((int)MainCustAccountColumn.PinIsNew - 1)];
+					c.PassExpDate = (reader.IsDBNull(((int)MainCustAccountColumn.PassExpDate - 1)))?null:(System.DateTime?)reader[((int)MainCustAccountColumn.PassExpDate - 1)];
+					c.PinExpDate = (reader.IsDBNull(((int)MainCustAccountColumn.PinExpDate - 1)))?null:(System.DateTime?)reader[((int)MainCustAccountColumn.PinExpDate - 1)];
+					c.CustomerType = (System.Int32)reader[((int)MainCustAccountColumn.CustomerType - 1)];
+					c.AuthType = (System.Int16)reader[((int)MainCustAccountColumn.AuthType - 1)];
+					c.PinType = (System.Int16)reader[((int)MainCustAccountColumn.PinType - 1)];
+					c.FailedLoginCount = (reader.IsDBNull(((int)MainCustAccountColumn.FailedLoginCount - 1)))?null:(System.Int32?)reader[((int)MainCustAccountColumn.FailedLoginCount - 1)];
+					c.FailedLoginTime = (reader.IsDBNull(((int)MainCustAccountColumn.FailedLoginTime - 1)))?null:(System.DateTime?)reader[((int)MainCustAccountColumn.FailedLoginTime - 1)];
+					c.CreatedDate = (System.DateTime)reader[((int)MainCustAccountColumn.CreatedDate - 1)];
+					c.CreatedUser = (System.String)reader[((int)MainCustAccountColumn.CreatedUser - 1)];
+					c.UpdatedUser = (reader.IsDBNull(((int)MainCustAccountColumn.UpdatedUser - 1)))?null:(System.String)reader[((int)MainCustAccountColumn.UpdatedUser - 1)];
+					c.UpdatedDate = (reader.IsDBNull(((int)MainCustAccountColumn.UpdatedDate - 1)))?null:(System.DateTime?)reader[((int)MainCustAccountColumn.UpdatedDate - 1)];
+					c.EntityTrackingKey = key;
+					c.AcceptChanges();
+					c.SuppressEntityEvents = false;
+				}
+				rows.Add(c);
+			}
+		return rows;
+		}		
+		/// <summary>
+		/// Refreshes the <see cref="AccountManager.Entities.MainCustAccount"/> object from the <see cref="IDataReader"/>.
+		/// </summary>
+		/// <param name="reader">The <see cref="IDataReader"/> to read from.</param>
+		/// <param name="entity">The <see cref="AccountManager.Entities.MainCustAccount"/> object to refresh.</param>
+		public static void RefreshEntity(IDataReader reader, AccountManager.Entities.MainCustAccount entity)
+		{
+			if (!reader.Read()) return;
+			
+			entity.MainCustAccountId = (System.String)reader[((int)MainCustAccountColumn.MainCustAccountId - 1)];
+			entity.OriginalMainCustAccountId = (System.String)reader["MainCustAccountID"];
+			entity.FullName = (reader.IsDBNull(((int)MainCustAccountColumn.FullName - 1)))?null:(System.String)reader[((int)MainCustAccountColumn.FullName - 1)];
+			entity.Email = (reader.IsDBNull(((int)MainCustAccountColumn.Email - 1)))?null:(System.String)reader[((int)MainCustAccountColumn.Email - 1)];
+			entity.Phone = (reader.IsDBNull(((int)MainCustAccountColumn.Phone - 1)))?null:(System.String)reader[((int)MainCustAccountColumn.Phone - 1)];
+			entity.Actived = (System.Boolean)reader[((int)MainCustAccountColumn.Actived - 1)];
+			entity.Password = (reader.IsDBNull(((int)MainCustAccountColumn.Password - 1)))?null:(System.String)reader[((int)MainCustAccountColumn.Password - 1)];
+			entity.Pin = (reader.IsDBNull(((int)MainCustAccountColumn.Pin - 1)))?null:(System.String)reader[((int)MainCustAccountColumn.Pin - 1)];
+			entity.PassLockReason = (reader.IsDBNull(((int)MainCustAccountColumn.PassLockReason - 1)))?null:(System.Int32?)reader[((int)MainCustAccountColumn.PassLockReason - 1)];
+			entity.PinLockReason = (reader.IsDBNull(((int)MainCustAccountColumn.PinLockReason - 1)))?null:(System.Int32?)reader[((int)MainCustAccountColumn.PinLockReason - 1)];
+			entity.LockReason = (reader.IsDBNull(((int)MainCustAccountColumn.LockReason - 1)))?null:(System.Int32?)reader[((int)MainCustAccountColumn.LockReason - 1)];
+			entity.TokenId = (reader.IsDBNull(((int)MainCustAccountColumn.TokenId - 1)))?null:(System.String)reader[((int)MainCustAccountColumn.TokenId - 1)];
+			entity.TokenName = (reader.IsDBNull(((int)MainCustAccountColumn.TokenName - 1)))?null:(System.String)reader[((int)MainCustAccountColumn.TokenName - 1)];
+			entity.TokenActived = (reader.IsDBNull(((int)MainCustAccountColumn.TokenActived - 1)))?null:(System.String)reader[((int)MainCustAccountColumn.TokenActived - 1)];
+			entity.BrokerId = (reader.IsDBNull(((int)MainCustAccountColumn.BrokerId - 1)))?null:(System.String)reader[((int)MainCustAccountColumn.BrokerId - 1)];
+			entity.PassIsNew = (reader.IsDBNull(((int)MainCustAccountColumn.PassIsNew - 1)))?null:(System.Boolean?)reader[((int)MainCustAccountColumn.PassIsNew - 1)];
+			entity.PinIsNew = (reader.IsDBNull(((int)MainCustAccountColumn.PinIsNew - 1)))?null:(System.Boolean?)reader[((int)MainCustAccountColumn.PinIsNew - 1)];
+			entity.PassExpDate = (reader.IsDBNull(((int)MainCustAccountColumn.PassExpDate - 1)))?null:(System.DateTime?)reader[((int)MainCustAccountColumn.PassExpDate - 1)];
+			entity.PinExpDate = (reader.IsDBNull(((int)MainCustAccountColumn.PinExpDate - 1)))?null:(System.DateTime?)reader[((int)MainCustAccountColumn.PinExpDate - 1)];
+			entity.CustomerType = (System.Int32)reader[((int)MainCustAccountColumn.CustomerType - 1)];
+			entity.AuthType = (System.Int16)reader[((int)MainCustAccountColumn.AuthType - 1)];
+			entity.PinType = (System.Int16)reader[((int)MainCustAccountColumn.PinType - 1)];
+			entity.FailedLoginCount = (reader.IsDBNull(((int)MainCustAccountColumn.FailedLoginCount - 1)))?null:(System.Int32?)reader[((int)MainCustAccountColumn.FailedLoginCount - 1)];
+			entity.FailedLoginTime = (reader.IsDBNull(((int)MainCustAccountColumn.FailedLoginTime - 1)))?null:(System.DateTime?)reader[((int)MainCustAccountColumn.FailedLoginTime - 1)];
+			entity.CreatedDate = (System.DateTime)reader[((int)MainCustAccountColumn.CreatedDate - 1)];
+			entity.CreatedUser = (System.String)reader[((int)MainCustAccountColumn.CreatedUser - 1)];
+			entity.UpdatedUser = (reader.IsDBNull(((int)MainCustAccountColumn.UpdatedUser - 1)))?null:(System.String)reader[((int)MainCustAccountColumn.UpdatedUser - 1)];
+			entity.UpdatedDate = (reader.IsDBNull(((int)MainCustAccountColumn.UpdatedDate - 1)))?null:(System.DateTime?)reader[((int)MainCustAccountColumn.UpdatedDate - 1)];
+			entity.AcceptChanges();
+		}
+		
+		/// <summary>
+		/// Refreshes the <see cref="AccountManager.Entities.MainCustAccount"/> object from the <see cref="DataSet"/>.
+		/// </summary>
+		/// <param name="dataSet">The <see cref="DataSet"/> to read from.</param>
+		/// <param name="entity">The <see cref="AccountManager.Entities.MainCustAccount"/> object.</param>
+		public static void RefreshEntity(DataSet dataSet, AccountManager.Entities.MainCustAccount entity)
+		{
+			DataRow dataRow = dataSet.Tables[0].Rows[0];
+			
+			entity.MainCustAccountId = (System.String)dataRow["MainCustAccountID"];
+			entity.OriginalMainCustAccountId = (System.String)dataRow["MainCustAccountID"];
+			entity.FullName = Convert.IsDBNull(dataRow["FullName"]) ? null : (System.String)dataRow["FullName"];
+			entity.Email = Convert.IsDBNull(dataRow["Email"]) ? null : (System.String)dataRow["Email"];
+			entity.Phone = Convert.IsDBNull(dataRow["Phone"]) ? null : (System.String)dataRow["Phone"];
+			entity.Actived = (System.Boolean)dataRow["Actived"];
+			entity.Password = Convert.IsDBNull(dataRow["Password"]) ? null : (System.String)dataRow["Password"];
+			entity.Pin = Convert.IsDBNull(dataRow["PIN"]) ? null : (System.String)dataRow["PIN"];
+			entity.PassLockReason = Convert.IsDBNull(dataRow["PassLockReason"]) ? null : (System.Int32?)dataRow["PassLockReason"];
+			entity.PinLockReason = Convert.IsDBNull(dataRow["PINLockReason"]) ? null : (System.Int32?)dataRow["PINLockReason"];
+			entity.LockReason = Convert.IsDBNull(dataRow["LockReason"]) ? null : (System.Int32?)dataRow["LockReason"];
+			entity.TokenId = Convert.IsDBNull(dataRow["TokenID"]) ? null : (System.String)dataRow["TokenID"];
+			entity.TokenName = Convert.IsDBNull(dataRow["TokenName"]) ? null : (System.String)dataRow["TokenName"];
+			entity.TokenActived = Convert.IsDBNull(dataRow["TokenActived"]) ? null : (System.String)dataRow["TokenActived"];
+			entity.BrokerId = Convert.IsDBNull(dataRow["BrokerID"]) ? null : (System.String)dataRow["BrokerID"];
+			entity.PassIsNew = Convert.IsDBNull(dataRow["PassIsNew"]) ? null : (System.Boolean?)dataRow["PassIsNew"];
+			entity.PinIsNew = Convert.IsDBNull(dataRow["PINIsNew"]) ? null : (System.Boolean?)dataRow["PINIsNew"];
+			entity.PassExpDate = Convert.IsDBNull(dataRow["PassExpDate"]) ? null : (System.DateTime?)dataRow["PassExpDate"];
+			entity.PinExpDate = Convert.IsDBNull(dataRow["PINExpDate"]) ? null : (System.DateTime?)dataRow["PINExpDate"];
+			entity.CustomerType = (System.Int32)dataRow["CustomerType"];
+			entity.AuthType = (System.Int16)dataRow["AuthType"];
+			entity.PinType = (System.Int16)dataRow["PinType"];
+			entity.FailedLoginCount = Convert.IsDBNull(dataRow["FailedLoginCount"]) ? null : (System.Int32?)dataRow["FailedLoginCount"];
+			entity.FailedLoginTime = Convert.IsDBNull(dataRow["FailedLoginTime"]) ? null : (System.DateTime?)dataRow["FailedLoginTime"];
+			entity.CreatedDate = (System.DateTime)dataRow["CreatedDate"];
+			entity.CreatedUser = (System.String)dataRow["CreatedUser"];
+			entity.UpdatedUser = Convert.IsDBNull(dataRow["UpdatedUser"]) ? null : (System.String)dataRow["UpdatedUser"];
+			entity.UpdatedDate = Convert.IsDBNull(dataRow["UpdatedDate"]) ? null : (System.DateTime?)dataRow["UpdatedDate"];
+			entity.AcceptChanges();
+		}
+		#endregion 
+		
+		#region DeepLoad Methods
+		/// <summary>
+		/// Deep Loads the <see cref="IEntity"/> object with criteria based of the child 
+		/// property collections only N Levels Deep based on the <see cref="DeepLoadType"/>.
+		/// </summary>
+		/// <remarks>
+		/// Use this method with caution as it is possible to DeepLoad with Recursion and traverse an entire object graph.
+		/// </remarks>
+		/// <param name="transactionManager"><see cref="TransactionManager"/> object</param>
+		/// <param name="entity">The <see cref="AccountManager.Entities.MainCustAccount"/> object to load.</param>
+		/// <param name="deep">Boolean. A flag that indicates whether to recursively save all Property Collection that are descendants of this instance. If True, saves the complete object graph below this object. If False, saves this object only. </param>
+		/// <param name="deepLoadType">DeepLoadType Enumeration to Include/Exclude object property collections from Load.</param>
+		/// <param name="childTypes">AccountManager.Entities.MainCustAccount Property Collection Type Array To Include or Exclude from Load</param>
+		/// <param name="innerList">A collection of child types for easy access.</param>
+	    /// <exception cref="ArgumentNullException">entity or childTypes is null.</exception>
+	    /// <exception cref="ArgumentException">deepLoadType has invalid value.</exception>
+		public override void DeepLoad(TransactionManager transactionManager, AccountManager.Entities.MainCustAccount entity, bool deep, DeepLoadType deepLoadType, System.Type[] childTypes, DeepSession innerList)
+		{
+			if(entity == null)
+				return;
+
+			#region BrokerIdSource	
+			if (CanDeepLoad(entity, "BrokerAccount|BrokerIdSource", deepLoadType, innerList) 
+				&& entity.BrokerIdSource == null)
+			{
+				object[] pkItems = new object[1];
+				pkItems[0] = (entity.BrokerId ?? string.Empty);
+				BrokerAccount tmpEntity = EntityManager.LocateEntity<BrokerAccount>(EntityLocator.ConstructKeyFromPkItems(typeof(BrokerAccount), pkItems), DataRepository.Provider.EnableEntityTracking);
+				if (tmpEntity != null)
+					entity.BrokerIdSource = tmpEntity;
+				else
+					entity.BrokerIdSource = DataRepository.BrokerAccountProvider.GetByBrokerId(transactionManager, (entity.BrokerId ?? string.Empty));		
+				
+				#if NETTIERS_DEBUG
+				System.Diagnostics.Debug.WriteLine("- property 'BrokerIdSource' loaded. key " + entity.EntityTrackingKey);
+				#endif 
+				
+				if (deep && entity.BrokerIdSource != null)
+				{
+					innerList.SkipChildren = true;
+					DataRepository.BrokerAccountProvider.DeepLoad(transactionManager, entity.BrokerIdSource, deep, deepLoadType, childTypes, innerList);
+					innerList.SkipChildren = false;
+				}
+					
+			}
+			#endregion BrokerIdSource
+			
+			//used to hold DeepLoad method delegates and fire after all the local children have been loaded.
+			Dictionary<string, KeyValuePair<Delegate, object>> deepHandles = new Dictionary<string, KeyValuePair<Delegate, object>>();
+			// Deep load child collections  - Call GetByMainCustAccountId methods when available
+			
+			#region SubCustAccountCollection
+			//Relationship Type One : Many
+			if (CanDeepLoad(entity, "List<SubCustAccount>|SubCustAccountCollection", deepLoadType, innerList)) 
+			{
+				#if NETTIERS_DEBUG
+				System.Diagnostics.Debug.WriteLine("- property 'SubCustAccountCollection' loaded. key " + entity.EntityTrackingKey);
+				#endif 
+
+				entity.SubCustAccountCollection = DataRepository.SubCustAccountProvider.GetByMainCustAccountId(transactionManager, entity.MainCustAccountId);
+
+				if (deep && entity.SubCustAccountCollection.Count > 0)
+				{
+					deepHandles.Add("SubCustAccountCollection",
+						new KeyValuePair<Delegate, object>((DeepLoadHandle<SubCustAccount>) DataRepository.SubCustAccountProvider.DeepLoad,
+						new object[] { transactionManager, entity.SubCustAccountCollection, deep, deepLoadType, childTypes, innerList }
+					));
+				}
+			}		
+			#endregion 
+			
+			
+			#region CustomerActionHistoryCollection
+			//Relationship Type One : Many
+			if (CanDeepLoad(entity, "List<CustomerActionHistory>|CustomerActionHistoryCollection", deepLoadType, innerList)) 
+			{
+				#if NETTIERS_DEBUG
+				System.Diagnostics.Debug.WriteLine("- property 'CustomerActionHistoryCollection' loaded. key " + entity.EntityTrackingKey);
+				#endif 
+
+				entity.CustomerActionHistoryCollection = DataRepository.CustomerActionHistoryProvider.GetByMainCustAccountId(transactionManager, entity.MainCustAccountId);
+
+				if (deep && entity.CustomerActionHistoryCollection.Count > 0)
+				{
+					deepHandles.Add("CustomerActionHistoryCollection",
+						new KeyValuePair<Delegate, object>((DeepLoadHandle<CustomerActionHistory>) DataRepository.CustomerActionHistoryProvider.DeepLoad,
+						new object[] { transactionManager, entity.CustomerActionHistoryCollection, deep, deepLoadType, childTypes, innerList }
+					));
+				}
+			}		
+			#endregion 
+			
+			
+			//Fire all DeepLoad Items
+			foreach(KeyValuePair<Delegate, object> pair in deepHandles.Values)
+		    {
+                pair.Key.DynamicInvoke((object[])pair.Value);
+		    }
+			deepHandles = null;
+		}
+		
+		#endregion 
+		
+		#region DeepSave Methods
+
+		/// <summary>
+		/// Deep Save the entire object graph of the AccountManager.Entities.MainCustAccount object with criteria based of the child 
+		/// Type property array and DeepSaveType.
+		/// </summary>
+		/// <param name="transactionManager">The transaction manager.</param>
+		/// <param name="entity">AccountManager.Entities.MainCustAccount instance</param>
+		/// <param name="deepSaveType">DeepSaveType Enumeration to Include/Exclude object property collections from Save.</param>
+		/// <param name="childTypes">AccountManager.Entities.MainCustAccount Property Collection Type Array To Include or Exclude from Save</param>
+		/// <param name="innerList">A Hashtable of child types for easy access.</param>
+		public override bool DeepSave(TransactionManager transactionManager, AccountManager.Entities.MainCustAccount entity, DeepSaveType deepSaveType, System.Type[] childTypes, DeepSession innerList)
+		{	
+			if (entity == null)
+				return false;
+							
+			#region Composite Parent Properties
+			//Save Source Composite Properties, however, don't call deep save on them.  
+			//So they only get saved a single level deep.
+			
+			#region BrokerIdSource
+			if (CanDeepSave(entity, "BrokerAccount|BrokerIdSource", deepSaveType, innerList) 
+				&& entity.BrokerIdSource != null)
+			{
+				DataRepository.BrokerAccountProvider.Save(transactionManager, entity.BrokerIdSource);
+				entity.BrokerId = entity.BrokerIdSource.BrokerId;
+			}
+			#endregion 
+			#endregion Composite Parent Properties
+
+			// Save Root Entity through Provider
+			if (!entity.IsDeleted)
+				this.Save(transactionManager, entity);
+			
+			//used to hold DeepSave method delegates and fire after all the local children have been saved.
+			Dictionary<string, KeyValuePair<Delegate, object>> deepHandles = new Dictionary<string, KeyValuePair<Delegate, object>>();
+	
+			#region List<SubCustAccount>
+				if (CanDeepSave(entity.SubCustAccountCollection, "List<SubCustAccount>|SubCustAccountCollection", deepSaveType, innerList)) 
+				{	
+					// update each child parent id with the real parent id (mostly used on insert)
+					foreach(SubCustAccount child in entity.SubCustAccountCollection)
+					{
+						if(child.MainCustAccountIdSource != null)
+						{
+							child.MainCustAccountId = child.MainCustAccountIdSource.MainCustAccountId;
+						}
+						else
+						{
+							child.MainCustAccountId = entity.MainCustAccountId;
+						}
+
+					}
+
+					if (entity.SubCustAccountCollection.Count > 0 || entity.SubCustAccountCollection.DeletedItems.Count > 0)
+					{
+						//DataRepository.SubCustAccountProvider.Save(transactionManager, entity.SubCustAccountCollection);
+						
+						deepHandles.Add("SubCustAccountCollection",
+						new KeyValuePair<Delegate, object>((DeepSaveHandle< SubCustAccount >) DataRepository.SubCustAccountProvider.DeepSave,
+							new object[] { transactionManager, entity.SubCustAccountCollection, deepSaveType, childTypes, innerList }
+						));
+					}
+				} 
+			#endregion 
+				
+	
+			#region List<CustomerActionHistory>
+				if (CanDeepSave(entity.CustomerActionHistoryCollection, "List<CustomerActionHistory>|CustomerActionHistoryCollection", deepSaveType, innerList)) 
+				{	
+					// update each child parent id with the real parent id (mostly used on insert)
+					foreach(CustomerActionHistory child in entity.CustomerActionHistoryCollection)
+					{
+						if(child.MainCustAccountIdSource != null)
+						{
+							child.MainCustAccountId = child.MainCustAccountIdSource.MainCustAccountId;
+						}
+						else
+						{
+							child.MainCustAccountId = entity.MainCustAccountId;
+						}
+
+					}
+
+					if (entity.CustomerActionHistoryCollection.Count > 0 || entity.CustomerActionHistoryCollection.DeletedItems.Count > 0)
+					{
+						//DataRepository.CustomerActionHistoryProvider.Save(transactionManager, entity.CustomerActionHistoryCollection);
+						
+						deepHandles.Add("CustomerActionHistoryCollection",
+						new KeyValuePair<Delegate, object>((DeepSaveHandle< CustomerActionHistory >) DataRepository.CustomerActionHistoryProvider.DeepSave,
+							new object[] { transactionManager, entity.CustomerActionHistoryCollection, deepSaveType, childTypes, innerList }
+						));
+					}
+				} 
+			#endregion 
+				
+			//Fire all DeepSave Items
+			foreach(KeyValuePair<Delegate, object> pair in deepHandles.Values)
+		    {
+                pair.Key.DynamicInvoke((object[])pair.Value);
+		    }
+			
+			// Save Root Entity through Provider, if not already saved in delete mode
+			if (entity.IsDeleted)
+				this.Save(transactionManager, entity);
+				
+
+			deepHandles = null;
+						
+			return true;
+		}
+		#endregion
+	} // end class
+	
+	#region MainCustAccountChildEntityTypes
+	
+	///<summary>
+	/// Enumeration used to expose the different child entity types 
+	/// for child properties in <c>AccountManager.Entities.MainCustAccount</c>
+	///</summary>
+	public enum MainCustAccountChildEntityTypes
+	{
+		
+		///<summary>
+		/// Composite Property for <c>BrokerAccount</c> at BrokerIdSource
+		///</summary>
+		[ChildEntityType(typeof(BrokerAccount))]
+		BrokerAccount,
+	
+		///<summary>
+		/// Collection of <c>MainCustAccount</c> as OneToMany for SubCustAccountCollection
+		///</summary>
+		[ChildEntityType(typeof(TList<SubCustAccount>))]
+		SubCustAccountCollection,
+
+		///<summary>
+		/// Collection of <c>MainCustAccount</c> as OneToMany for CustomerActionHistoryCollection
+		///</summary>
+		[ChildEntityType(typeof(TList<CustomerActionHistory>))]
+		CustomerActionHistoryCollection,
+	}
+	
+	#endregion MainCustAccountChildEntityTypes
+	
+	#region MainCustAccountFilterBuilder
+	
+	/// <summary>
+	/// A strongly-typed instance of the <see cref="SqlFilterBuilder&lt;MainCustAccountColumn&gt;"/> class
+	/// that is used exclusively with a <see cref="MainCustAccount"/> object.
+	/// </summary>
+	[CLSCompliant(true)]
+	public class MainCustAccountFilterBuilder : SqlFilterBuilder<MainCustAccountColumn>
+	{
+		#region Constructors
+
+		/// <summary>
+		/// Initializes a new instance of the MainCustAccountFilterBuilder class.
+		/// </summary>
+		public MainCustAccountFilterBuilder() : base() { }
+
+		/// <summary>
+		/// Initializes a new instance of the MainCustAccountFilterBuilder class.
+		/// </summary>
+		/// <param name="ignoreCase">Specifies whether to create case-insensitive statements.</param>
+		public MainCustAccountFilterBuilder(bool ignoreCase) : base(ignoreCase) { }
+
+		/// <summary>
+		/// Initializes a new instance of the MainCustAccountFilterBuilder class.
+		/// </summary>
+		/// <param name="ignoreCase">Specifies whether to create case-insensitive statements.</param>
+		/// <param name="useAnd">Specifies whether to combine statements using AND or OR.</param>
+		public MainCustAccountFilterBuilder(bool ignoreCase, bool useAnd) : base(ignoreCase, useAnd) { }
+
+		#endregion Constructors
+	}
+
+	#endregion MainCustAccountFilterBuilder
+	
+	#region MainCustAccountParameterBuilder
+	
+	/// <summary>
+	/// A strongly-typed instance of the <see cref="ParameterizedSqlFilterBuilder&lt;MainCustAccountColumn&gt;"/> class
+	/// that is used exclusively with a <see cref="MainCustAccount"/> object.
+	/// </summary>
+	[CLSCompliant(true)]
+	public class MainCustAccountParameterBuilder : ParameterizedSqlFilterBuilder<MainCustAccountColumn>
+	{
+		#region Constructors
+
+		/// <summary>
+		/// Initializes a new instance of the MainCustAccountParameterBuilder class.
+		/// </summary>
+		public MainCustAccountParameterBuilder() : base() { }
+
+		/// <summary>
+		/// Initializes a new instance of the MainCustAccountParameterBuilder class.
+		/// </summary>
+		/// <param name="ignoreCase">Specifies whether to create case-insensitive statements.</param>
+		public MainCustAccountParameterBuilder(bool ignoreCase) : base(ignoreCase) { }
+
+		/// <summary>
+		/// Initializes a new instance of the MainCustAccountParameterBuilder class.
+		/// </summary>
+		/// <param name="ignoreCase">Specifies whether to create case-insensitive statements.</param>
+		/// <param name="useAnd">Specifies whether to combine statements using AND or OR.</param>
+		public MainCustAccountParameterBuilder(bool ignoreCase, bool useAnd) : base(ignoreCase, useAnd) { }
+
+		#endregion Constructors
+	}
+
+	#endregion MainCustAccountParameterBuilder
+	
+	#region MainCustAccountSortBuilder
+    
+    /// <summary>
+    /// A strongly-typed instance of the <see cref="SqlSortBuilder&lt;MainCustAccountColumn&gt;"/> class
+	/// that is used exclusively with a <see cref="MainCustAccount"/> object.
+    /// </summary>
+    [CLSCompliant(true)]
+    public class MainCustAccountSortBuilder : SqlSortBuilder<MainCustAccountColumn>
+    {
+		#region Constructors
+
+		/// <summary>
+		/// Initializes a new instance of the MainCustAccountSqlSortBuilder class.
+		/// </summary>
+		public MainCustAccountSortBuilder() : base() { }
+
+		#endregion Constructors
+
+    }    
+    #endregion MainCustAccountSortBuilder
+	
+} // end namespace

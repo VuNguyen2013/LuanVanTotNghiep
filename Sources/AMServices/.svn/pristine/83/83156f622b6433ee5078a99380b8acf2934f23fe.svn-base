@@ -1,0 +1,273 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
+using AccountManager.Services;
+using AccountManagerWebServices.SMSService;
+using ETrade;
+using ETradeCommon;
+using ETradeCommon.Enums;
+
+namespace AccountManagerWebServices.Utils
+{
+    ///<summary>
+    /// Util to send sms
+    ///</summary>
+    public class SMSSender
+    {
+        private static readonly string ServicesID = ConfigurationManager.AppSettings["SMSServicesID"];
+        private static readonly string UserName = ConfigurationManager.AppSettings["SMSServicesUserName"];
+        private static readonly string Password = ConfigurationManager.AppSettings["SMSServicesPassword"];
+        private static readonly SMSSendService ServicesCaller = new SMSSendService();
+        private const string WEB_SERVICE_POLICY = "WebServiceExceptionPolicy";
+        private static readonly SmsCountService SMSCountService = new SmsCountService();
+
+        ///<summary>
+        /// Connect to the webservices provided by the CMC.
+        /// Send the SMS message to the SMS GW.
+        /// And get the return code.
+        /// RequestID: blank if it it MT message.
+        ///</summary>
+        ///<param name="fullMessage"></param>
+        ///<returns></returns>
+        public static List<string> BreakDownMessage(string fullMessage)
+        {
+            const string DELIMITER = " ";
+            string token;
+
+            // Processing for case when length of Message > 160 characters.
+            var messages = new List<string>();
+            var Token = new Tokens(fullMessage, DELIMITER);
+            string message = "";
+
+            while ((token = Token.nextElement()) != null)
+            {
+
+                if (message.Length + token.Length < Constants.SMS_MESSAGE_LENGTH)
+                {
+                    if (message == "")
+                    {
+                        message = token;
+                    }
+                    else
+                    {
+                        message += (DELIMITER + token);
+                    }
+
+                }
+                else//full message
+                {
+                    messages.Add(message);
+                    message = token;
+                }
+            }
+
+
+            if (message != "")
+            {
+                messages.Add(message);
+            }
+
+            return messages;
+
+        }
+
+        /// <summary>
+        /// Break messesage incase it is Unicoded
+        /// </summary>
+        /// <param name="fullMessage"></param>
+        /// <returns></returns>
+        public static List<string> BreakDownUnicodeMessage(string fullMessage)
+        {
+            const string DELIMITER = " ";
+            string token;
+
+            // Processing for case when length of Message > 160 characters.
+            var messages = new List<string>();
+            var Token = new Tokens(fullMessage, DELIMITER);
+            string message = "";
+
+            while ((token = Token.nextElement()) != null)
+            {
+
+                if (message.Length + token.Length < Constants.SMS_UNICODE_MESSAGE_LENGTH)
+                {
+                    if (message == "")
+                    {
+                        message = token;
+                    }
+                    else
+                    {
+                        message += (DELIMITER + token);
+                    }
+
+                }
+                else//full message
+                {
+                    messages.Add(message);
+                    message = token;
+                }
+            }
+
+
+            if (message != "")
+            {
+                messages.Add(message);
+            }
+
+            return messages;
+
+        }
+
+        private static  CommonEnums.RET_CODE SendMessage(String phone, string message, String requestID)
+        {
+            int ret = ServicesCaller.SendSms(phone, message, 0, requestID, ServicesID, UserName, Password);
+
+            switch (ret)
+            {
+                case 1:
+                    return CommonEnums.RET_CODE.SUCCESS;
+                case 0:
+                    return CommonEnums.RET_CODE.ERROR_ACCOUNT;
+                case -1:
+                    return CommonEnums.RET_CODE.SYSTEM_ERROR;
+                default:
+                    return CommonEnums.RET_CODE.SYSTEM_ERROR;
+            }
+        }
+
+        /// <summary>
+        /// Send message with isUnicode param
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <param name="message"></param>
+        /// <param name="requestID"></param>
+        /// <param name="isUnicode"></param>
+        /// <returns></returns>
+        private static CommonEnums.RET_CODE SendMessage(String phone, string message, String requestID, int isUnicode)
+        {
+            int ret = ServicesCaller.SendSms(phone, message, isUnicode, requestID, ServicesID, UserName, Password);
+
+            switch (ret)
+            {
+                case 1:
+                    return CommonEnums.RET_CODE.SUCCESS;
+                case 0:
+                    return CommonEnums.RET_CODE.ERROR_ACCOUNT;
+                case -1:
+                    return CommonEnums.RET_CODE.SYSTEM_ERROR;
+                default:
+                    return CommonEnums.RET_CODE.SYSTEM_ERROR;
+            }
+        }
+
+        ///<summary>
+        /// Send non unicode message
+        ///</summary>
+        ///<param name="phone"></param>
+        ///<param name="message"></param>
+        ///<param name="requestID">Blank if this is auto send message; otherwise 1</param>
+        ///<returns></returns>
+        public static CommonEnums.RET_CODE SendSMS(String phone, string message, String requestID)
+        {
+            try
+            {
+                List<string> messages = BreakDownMessage(message);
+
+                if (messages.Count <= 0)
+                {
+                    return CommonEnums.RET_CODE.NO_EXISTED_DATA;
+                }
+                int count = 0;
+                foreach (string item in messages)
+                {
+                    LogHandler.Log("[SendSMS]: Phone " + phone + " Message " + item, "SMSSender.SendSMS",
+                                   TraceEventType.Information);
+                    CommonEnums.RET_CODE ret = SendMessage(phone, item, requestID);
+
+                    if (ret != CommonEnums.RET_CODE.SUCCESS)
+                    {
+                        LogHandler.Log("[SendSMS] Error: Return Code: " + ret + " Phone " + phone + " Message " + item, 
+                                   "SMSSender.SendSMS", TraceEventType.Error);
+                    }
+                    count++;
+                }
+
+                if (count > 0)
+                {
+                    // Save message total to database
+                    SMSCountService.UpdateCount(count);
+                }
+
+                return CommonEnums.RET_CODE.SUCCESS;
+            }
+
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, WEB_SERVICE_POLICY);
+                return CommonEnums.RET_CODE.SYSTEM_ERROR;
+            }
+        }
+
+        /// <summary>
+        /// Send Unicode SMS
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <param name="message"></param>
+        /// <param name="requestID"></param>
+        /// <param name="isUnicode">
+        /// 1: Unicode
+        /// 0: Not unicode
+        /// </param>
+        /// <returns></returns>
+        public static CommonEnums.RET_CODE SendSMS(String phone, string message, String requestID, int isUnicode)
+        {
+            try
+            {
+                List<string> messages;
+                if (isUnicode == Constants.ISUNICODE)
+                {
+                    messages = BreakDownUnicodeMessage(message);
+                }
+                else
+                {
+                    messages = BreakDownMessage(message);
+                }
+
+                if (messages.Count <= 0)
+                {
+                    return CommonEnums.RET_CODE.NO_EXISTED_DATA;
+                }
+                int count = 0;
+                foreach (string item in messages)
+                {
+                    LogHandler.Log("[SendSMS]: Phone " + phone + " Message " + item, "SMSSender.SendSMS",
+                                   TraceEventType.Information);
+
+                    CommonEnums.RET_CODE ret = SendMessage(phone, item, requestID, isUnicode);
+
+                    if (ret != CommonEnums.RET_CODE.SUCCESS)
+                    {
+                        LogHandler.Log("[SendSMS] Error: Return Code: " + ret + " Phone " + phone + " Message " + item,
+                                   "SMSSender.SendSMS", TraceEventType.Error);
+                    }
+                    count++;
+                }
+
+                if (count > 0)
+                {
+                    // Save message total to database
+                    SMSCountService.UpdateCount(count);
+                }
+
+                return CommonEnums.RET_CODE.SUCCESS;
+            }
+
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, WEB_SERVICE_POLICY);
+                return CommonEnums.RET_CODE.SYSTEM_ERROR;
+            }
+        }
+    }
+}

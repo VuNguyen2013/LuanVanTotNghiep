@@ -376,13 +376,6 @@ namespace StockCore.Repositories
                                     upcomStockRep.Update(upcomStock);
                                 }
                             }
-
-                            if (orderSell.Volume <= matchedVol)
-                            {
-                                listOrderSell.Remove(orderSell);
-                            }
-                            if (orderBuy.Volume <= matchedVol)
-                                break;
                             //send matched result to client
                             SubCustAccountRepository subRep = new SubCustAccountRepository();
                             SocketServer socketServer = new SocketServer();
@@ -396,6 +389,12 @@ namespace StockCore.Repositories
                             var accountSell = subRep.GetById(orderSell.AccountNo);
                             string sellStr = accountSell.MainCustAccount.MemberStockCompanyID.ToString() + "|" + orderSell.ClientID + "|" + matchedVol + "|" + orderSell.Status;
                             socketServer.SendOrderResultData(sellStr);
+                            if (orderSell.Volume <= matchedVol)
+                            {
+                                listOrderSell.Remove(orderSell);
+                            }
+                            if (orderBuy.Volume <= matchedVol)
+                                break;                           
 
                         }
                     }//end foreach 2
