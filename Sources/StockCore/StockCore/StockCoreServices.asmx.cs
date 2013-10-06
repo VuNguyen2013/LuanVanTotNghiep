@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using StockCore;
 
 namespace StockCore.Services
 {
@@ -18,10 +19,27 @@ namespace StockCore.Services
     {
 
         [WebMethod]
-        public short ReceiveOrder(long clientOrderID,string accountNo, string stockSymbol, long price, short volume, char side)
+        public short ReceiveOrder(long clientOrderID, string accountNo, string stockSymbol, long price, short volume, char side)
         {
             Repositories.OrderRepository orderRep = new Repositories.OrderRepository();
             return orderRep.Insert(clientOrderID, accountNo, stockSymbol, price, volume, side);
         }
+        [WebMethod]
+        public Common.CashBalanceData GetCashBalance(string accountNo)
+        {
+            Common.CashBalanceData result = null;
+            Repositories.SubCustAccountRepository subAccRep = new Repositories.SubCustAccountRepository();
+            var subAcc = subAccRep.GetById(accountNo);
+            if (subAcc != null)
+            {
+                result = new Common.CashBalanceData();
+                result.WithDraw = subAcc.WithDraw;
+                result.BuyCredit = subAcc.BuyCredit;
+                result.TotalBuy = subAcc.TotalBuy;
+                result.TotalSell = subAcc.TotalSell;
+            }
+            return result;
+        }
     }
+    
 }

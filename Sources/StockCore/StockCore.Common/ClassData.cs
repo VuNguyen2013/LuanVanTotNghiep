@@ -139,4 +139,11 @@ namespace StockCore.Common
         public long SELL_FOREIGN_QTTY { get; set; }
         public long BUY_FOREIGN_QTTY { get; set; }
     }
+    public class CashBalanceData       
+    {
+        public long WithDraw { get; set; }
+        public long BuyCredit { get; set; }
+        public long TotalBuy { get; set; }
+        public long TotalSell{get;set;}
+    }
 }
