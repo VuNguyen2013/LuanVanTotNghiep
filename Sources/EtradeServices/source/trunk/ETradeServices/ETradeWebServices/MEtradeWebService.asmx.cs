@@ -11,7 +11,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web.Configuration;
 using System.Xml.Linq;
-using ETradeGWServices;
 using ETradeHistory.Entities;
 using ETradeHistory.Services;
 using ETradeOrders.Services;

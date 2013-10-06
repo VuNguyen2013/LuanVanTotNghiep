@@ -3,10 +3,13 @@
   <Profiles />
   <Settings>
     <Setting Name="ETradeWebServices_RTServices_Service" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://192.168.99.21:8088/Service.asmx</Value>
+      <Value Profile="(Default)">http://localhost:16786/Service.asmx</Value>
     </Setting>
     <Setting Name="ETradeWebServices_AMServices_AccountManagerServices" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://192.168.99.21:8098/AccountManagerServices.asmx</Value>
+      <Value Profile="(Default)">http://127.0.0.1:8098/AccountManagerServices.asmx</Value>
+    </Setting>
+    <Setting Name="ETradeWebServices_StockCoreServices_StockCoreServices" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://localhost:2694/StockCoreServices.asmx</Value>
     </Setting>
   </Settings>
 </SettingsFile>

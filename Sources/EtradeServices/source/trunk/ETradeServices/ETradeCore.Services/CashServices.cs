@@ -8,6 +8,8 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 
+using ETradeCommon.StockCoreServices;
+
 namespace ETradeCore.Services
 {
     using ETradeCommon.Enums;
@@ -29,35 +31,16 @@ namespace ETradeCore.Services
         /// <param name="accountType">Type of the account.</param>
         /// <param name="isConditionOrder">if set to <c>true</c> [is condition order].</param>
         /// <returns></returns>
-        public CashAvailable GetAvailableCash(string accountNo, int accountType,bool isConditionOrder)
+        public CashAvailable GetAvailableCash(string accountNo, int accountType,bool isConditionOrder)//o day
         {
             CashAvailable cashAvailable=new CashAvailable();
-            if (accountType == (int)CommonEnums.ACCOUNT_TYPE.NORMAL)
-            {
-                cashAvailable = _db2Provider.GetCashAvailable4NormalAccount(accountNo);                               
-            }
+            var coreServices = new ETradeCommon.StockCoreServices.StockCoreServices();
 
-            if (accountType == (int)CommonEnums.ACCOUNT_TYPE.MARGIN)
-            {                
-                cashAvailable=_db2Provider.GetCashAvailable4MarginAccount(accountNo);                                     
-            }
-
-            if (isConditionOrder)
-            {
-                CashDueInfo cashDueInfo = _db2Provider.GetCashDue(accountNo);
-
-                if (cashAvailable == null)
-                {
-                    return null;
-                }
-
-                if (cashDueInfo != null)
-                {
-                    cashAvailable.WTR_T1 = cashDueInfo.AMT_T1;
-                    cashAvailable.WTR_T2 = cashDueInfo.AMT_T2;
-                    cashAvailable.WTR_T3 = cashDueInfo.AMT_T3;
-                }
-            }
+            var temp = coreServices.GetCashBalance(accountNo);
+            //cashAvailable.w = temp.WithDraw;
+            //cashAvailable.TotalSell = temp.TotalSell;
+            //cashAvailable.TotalBuy = temp.TotalBuy;
+            cashAvailable.BuyCredit = temp.BuyCredit;
 
             //Not support other accountType
             return cashAvailable;
@@ -129,11 +112,17 @@ namespace ETradeCore.Services
         /// <returns></returns>
         public CashBalance GetCashBalance(string accountNo, int accountType)//o day
         {
+            var coreServices = new ETradeCommon.StockCoreServices.StockCoreServices();
             var cashBalance = new CashBalance();
-
-            if (accountType == (int)CommonEnums.ACCOUNT_TYPE.NORMAL)
+            var temp=coreServices.GetCashBalance(accountNo);
+            cashBalance.WithDraw = temp.WithDraw;
+            cashBalance.TotalSell=temp.TotalSell;
+            cashBalance.TotalBuy=temp.TotalBuy;
+            cashBalance.BuyCredit=temp.BuyCredit;
+            /*
+            if (acocountType == (int)CommonEnums.ACCOUNT_TYPE.NORMAL)
             {
-                cashBalance = _db2Provider.GetCashBalance4NormalAccount(accountNo);
+                cashBalance = coreServices.GetCashBalance4NormalAccount(accountNo);
                 if(cashBalance!=null)
                 {
                     FeeService feeService = new FeeService();
@@ -166,7 +155,7 @@ namespace ETradeCore.Services
 
             if (accountType == (int)CommonEnums.ACCOUNT_TYPE.MARGIN)
                 cashBalance.WithDraw = cashBalance.WithDraw < 0 ? 0 : cashBalance.WithDraw;
-
+            */
             return cashBalance;
         }
         

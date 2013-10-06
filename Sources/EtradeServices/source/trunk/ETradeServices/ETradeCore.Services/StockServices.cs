@@ -79,9 +79,12 @@ namespace ETradeCore.Services
         /// <returns>Dictionary of PortfolioInfo object.</returns>
         public Dictionary<string, PortfolioInfo> GetPortfolioInfo(string accountNo, int accountType)
         {
+            
             // Get portfolio information for symbols that can sell
-            Dictionary<string, PortfolioInfo> returnVal;
-
+            Dictionary<string, PortfolioInfo> returnVal=new Dictionary<string, PortfolioInfo>();
+            var stockCoreServices=new StockCoreServices.StockCoreServices();
+            stockCoreServices.gets
+            /*
             returnVal = this.GetPortfolio4Account(accountNo, accountType);
 
             if (returnVal == null)
@@ -92,7 +95,7 @@ namespace ETradeCore.Services
                     TraceEventType.Information);
                 return null;
             }
-
+            */
             return returnVal;
         }
 

@@ -72,9 +72,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MEtradeWebService.asmx" />
+    <None Include="Web References\StockCoreServices\CashBalanceData.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\StockCoreServices\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\StockCoreServices\StockCoreServices.disco" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Web References\StockCoreServices\StockCoreServices.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_GlobalResources\Resource.Designer.cs">
@@ -98,10 +107,6 @@
     <Compile Include="Entities\MMarketStatusAndInfo.cs" />
     <Compile Include="Entities\MNews.cs" />
     <Compile Include="Entities\MStockBalanceData.cs" />
-    <Compile Include="ETradeServicesWebServices.asmx.cs">
-      <DependentUpon>ETradeServicesWebServices.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -125,6 +130,11 @@
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
     <Compile Include="Web References\RTServices\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\StockCoreServices\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
@@ -175,10 +185,6 @@
       <Project>{26498C00-A5CD-4DE8-803D-2B9D282C52DF}</Project>
       <Name>ETradeFinance.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ETradeGWServices\ETradeGWServices.csproj">
-      <Project>{92F8D436-4374-447E-9267-E0F4990BACFA}</Project>
-      <Name>ETradeGWServices</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ETradeHistory.DataAccess.SqlClient\ETradeHistory.DataAccess.SqlClient.csproj">
       <Project>{8996A7B4-57D3-440B-A545-A701844B8C4A}</Project>
       <Name>ETradeHistory.DataAccess.SqlClient</Name>
@@ -206,7 +212,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="entlib.config" />
-    <Content Include="ETradeServicesWebServices.asmx" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
     <None Include="Web References\RTServices\Service.disco" />
@@ -255,6 +260,17 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>ETradeWebServices_RTServices_Service</CachedSettingsPropName>
     </WebReferenceUrl>
+    <WebReferenceUrl Include="http://localhost:2694/StockCoreServices.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\StockCoreServices\</RelPath>
+      <UpdateFromURL>http://localhost:2694/StockCoreServices.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>ETradeWebServices_StockCoreServices_StockCoreServices</CachedSettingsPropName>
+    </WebReferenceUrl>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\Resource.resx">
@@ -278,6 +294,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -298,7 +317,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>37582</DevelopmentServerPort>
+          <DevelopmentServerPort>15007</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

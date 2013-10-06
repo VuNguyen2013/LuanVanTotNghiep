@@ -46,7 +46,7 @@ namespace ETradeWebServices.Services
         /// <summary>
         /// eTradeGW: related orders
         /// </summary>
-        private readonly ETradeGWServices.ETradeGW _eTradeGW = new ETradeGWServices.ETradeGW();
+        //private readonly ETradeGWServices.ETradeGW _eTradeGW = new ETradeGWServices.ETradeGW();
 
         private readonly ExecOrderService _execOrderService = new ExecOrderService();
 
@@ -118,7 +118,7 @@ namespace ETradeWebServices.Services
         /// <returns>ResultObject&lt;Boolean&gt; to show recovery result.</returns>
         public ResultObject<Boolean> Recovery(int beginSeq, int endSeq)
         {
-            Boolean ret = _eTradeGW.Recovery(beginSeq, endSeq);
+            Boolean ret = true;// _eTradeGW.Recovery(beginSeq, endSeq);
 
             return new ResultObject<Boolean>
             {
@@ -136,7 +136,7 @@ namespace ETradeWebServices.Services
         /// <returns>ResultObject&lt;Boolean&gt;</returns>
         public ResultObject<Boolean> Connect(string ipAddress, string port)
         {
-            Boolean ret = _eTradeGW.Connect(ipAddress, port);
+            Boolean ret = true;// _eTradeGW.Connect(ipAddress, port);
 
             return new ResultObject<Boolean>
             {
@@ -161,7 +161,7 @@ namespace ETradeWebServices.Services
                     RetCode = CommonEnums.RET_CODE.SUCCESS
                 };
             }
-            Boolean ret = _eTradeGW.Disconnect();
+            Boolean ret = true;// _eTradeGW.Disconnect();
 
             return new ResultObject<Boolean>
             {
@@ -190,7 +190,7 @@ namespace ETradeWebServices.Services
                     RetCode = CommonEnums.RET_CODE.SUCCESS
                 };
             }
-            Boolean ret = _eTradeGW.IsConnected();
+            Boolean ret = true;// _eTradeGW.IsConnected();
 
             return new ResultObject<Boolean>
             {
@@ -713,12 +713,12 @@ namespace ETradeWebServices.Services
 
                 var orderSession = MarketServices.GetOrderSession(market);
                 int orderID;
-                ExecOrder execOrder;
-                CommonEnums.RET_CODE ret = _eTradeGW.PutOrder(market, orderSession, accountNo, secSymbol, side, volume,
+                var execOrder=new ExecOrder();
+                CommonEnums.RET_CODE ret = PutOrder(market, orderSession, accountNo, secSymbol, side, volume,
                                                               price, conPrice, avgPrice, null, out orderID,
-                                                              out execOrder, orderSource,condition);
+                                                              out execOrder, orderSource, condition);
 
-                resultObject.Result = orderID;
+                resultObject.Result = execOrder.OrderId;
                 resultObject.RetCode = ret;
                 resultObject.ErrorMessage = ret.ToString();
 
@@ -763,7 +763,7 @@ namespace ETradeWebServices.Services
                 var orderSession = MarketServices.GetOrderSession(market);
                 int orderID;
                 ExecOrder execOrder;
-                CommonEnums.RET_CODE ret = _eTradeGW.PutOrder(market, orderSession, accountNo, secSymbol, side, volume,
+                CommonEnums.RET_CODE ret = PutOrder(market, orderSession, accountNo, secSymbol, side, volume,
                                                               price, conPrice, avgPrice, null, out orderID,
                                                               out execOrder, orderSource,condition);
 
@@ -788,7 +788,64 @@ namespace ETradeWebServices.Services
                 };
             }
         }
+        public CommonEnums.RET_CODE PutOrder(int market, CommonEnums.ORDER_SESSION orderSession, string accountId, string secSymbol,
+            char side, int volume, decimal price, char conPrice, decimal avgPrice, long? conditionOrderId, out int orderID, out ExecOrder outExecOrder, char orderSource, char condition)
+        {
+            var execOrder = new ExecOrder();
+            orderID = 0;
 
+            try
+            {
+                execOrder.ExecutedVol = 0;
+                execOrder.NumOfMatch = 0;
+                execOrder.CancelledVolume = 0;
+
+                execOrder.Market = market.ToString();
+                execOrder.MarketStatus = ((char)orderSession).ToString();
+                execOrder.MessageType = Constants.DATA_NEW_ORDER;
+                execOrder.SubCustAccountId = accountId;
+                execOrder.SecSymbol = secSymbol;
+                execOrder.Side = side.ToString();
+                execOrder.Volume = volume;
+                execOrder.Price = price;
+                execOrder.ConPrice = conPrice.ToString();
+                execOrder.TradeTime = DateTime.Now;
+                execOrder.ExecTransType = (int)CommonEnums.TRANS_TYPE.TRANS_NEW;
+                execOrder.OrderStatus = (int)CommonEnums.ORDER_STATUS.NEW_ORDER;
+                execOrder.OrdRejReason = (int)CommonEnums.REJECT_REASON.NOTHING;
+                execOrder.IsNewOrder = true;
+                execOrder.ConditionOrderId = conditionOrderId;
+
+                execOrder.AvgPrice = avgPrice;
+                execOrder.Condition = condition.ToString();
+
+
+                execOrder = _execOrderService.Save(execOrder); // first, save to generate the OrderId.
+
+                //string refOrderId = EtradeGWCommonUtils.GetRefOrderID(execOrder.OrderId, AppConfig.ServiceName);
+                string refOrderId = "1";
+                //char orderSource = (char) EtradeGWCommonUtils.GetOrderSource(refOrderId);
+
+                execOrder.OrderSource = orderSource.ToString();
+                execOrder.RefOrderId = refOrderId;
+                _execOrderService.Update(execOrder);
+                orderID = execOrder.OrderId;
+                outExecOrder = execOrder;
+                return CommonEnums.RET_CODE.SUCCESS;
+            }
+
+            catch (Exception ex)
+            {
+                LogHandler.Log("put order error:" + execOrder.SubCustAccountId + " " + execOrder.Side + " " +
+                        execOrder.SecSymbol + " " + execOrder.Price, "PutOrder", TraceEventType.Error);
+               
+
+                orderID = 0;
+                ExceptionHandler.HandleException(ex, Constants.EXCEPTION_POLICY);
+                outExecOrder = null;
+                return CommonEnums.RET_CODE.SYSTEM_ERROR;
+            }
+        }
         /// <summary>
         /// Update the order.
         /// </summary>
@@ -892,7 +949,7 @@ namespace ETradeWebServices.Services
                     return resultObject;
                 }
 
-                CommonEnums.RET_CODE ret = _eTradeGW.UpdateOrder(execOrder, newPrice);
+                CommonEnums.RET_CODE ret = UpdateOrder(execOrder, newPrice);
                 resultObject.RetCode = ret;
                 if (ret == CommonEnums.RET_CODE.FAIL)
                 {
@@ -909,7 +966,49 @@ namespace ETradeWebServices.Services
                 return resultObject;
             }
         }
+        public CommonEnums.RET_CODE UpdateOrder(ExecOrder execOrder, decimal newPrice)
+        {
+            try
+            {
+                execOrder.MessageType = Constants.DATA_CHANGE_ORDER;
+                execOrder.ChangedOrderStatus = (short)CommonEnums.CHANGED_ORDER_STATUS.PROCESSING;
 
+                //use for test without LinkOPS connection.
+                if (!AppConfig.CheckGWConnection)
+                {
+                    execOrder.Price = newPrice;
+                    execOrder.NewPrice = newPrice;
+                    execOrder.ChangedOrderStatus = (short)CommonEnums.CHANGED_ORDER_STATUS.ACCEPTED;
+                    bool result = _execOrderService.Update(execOrder);
+                    if (!result)
+                    {
+                        return CommonEnums.RET_CODE.FAIL;
+                    }
+                    return CommonEnums.RET_CODE.SUCCESS;
+                }
+                if (execOrder.FisOrderId != null)
+                {
+                    //Update database
+                    execOrder.NewPrice = newPrice;
+                    bool result = _execOrderService.Update(execOrder);
+                    if (!result)
+                    {
+                        return CommonEnums.RET_CODE.FAIL;
+                    }
+                    LogHandler.Log("GW has sent the new order:" + execOrder.OrderId, "PutOrder", TraceEventType.Information);
+                    return CommonEnums.RET_CODE.SUCCESS;
+                }
+                return CommonEnums.RET_CODE.NOT_ALLOW;
+            }
+
+            catch (Exception ex)
+            {
+                LogHandler.Log("Change order error:" + execOrder.OrderId + " " + newPrice, "PutOrder", TraceEventType.Error);
+
+                ExceptionHandler.HandleException(ex, Constants.EXCEPTION_POLICY);
+                return CommonEnums.RET_CODE.SYSTEM_ERROR;
+            }
+        }
         ///<summary>
         ///</summary>
         public void StartPutConditionOrderThread()
@@ -1223,7 +1322,7 @@ namespace ETradeWebServices.Services
                             int orderID;
 
                             ExecOrder execOrder;
-                            CommonEnums.RET_CODE ret = _eTradeGW.PutOrder(market, orderSession, subCustAccountId,
+                            CommonEnums.RET_CODE ret = PutOrder(market, orderSession, subCustAccountId,
                                                                           secSymbol, side,
                                                                           volume, price, conPrice, avgPrice,
                                                                           conditionOrderId, out orderID, out execOrder,
@@ -1996,7 +2095,7 @@ namespace ETradeWebServices.Services
                     };
                 }
 
-                CommonEnums.RET_CODE retCode = _eTradeGW.CancelOrder(orderId);
+                CommonEnums.RET_CODE retCode = CancelOrderHandler(orderId);
 
                 return new ResultObject<int>
                 {
@@ -2019,7 +2118,61 @@ namespace ETradeWebServices.Services
                 };
             }
         }
+        public CommonEnums.RET_CODE CancelOrderHandler(int orderID)
+        {
+            ExecOrder orderInfo = null;
 
+            try
+            {
+
+                orderInfo = _execOrderService.GetByOrderId(orderID);
+                if (orderInfo == null)
+                {
+                    return CommonEnums.RET_CODE.NO_EXISTED_DATA;
+                }
+                //This is a new order that has not confirmed from FIS/SET yet
+                if (orderInfo.OrderStatus == (short)CommonEnums.ORDER_STATUS.NEW_ORDER || !AppConfig.CheckGWConnection)
+                {
+                    orderInfo.MessageType = Constants.DATA_EXEC_REPORT;
+                    orderInfo.ExecutedVol = 0;
+                    orderInfo.ExecutedPrice = 0;
+                    orderInfo.CancelledVolume = orderInfo.Volume;
+                    orderInfo.CancelledTime = DateTime.Now;
+                    orderInfo.OrderStatus = (short)CommonEnums.ORDER_STATUS.CANCELLED;
+                    orderInfo.IsNewOrder = true;
+
+                    _execOrderService.Update(orderInfo);
+
+                    LogHandler.Log("Cancelled the order:" + orderID, "CancelOrder", TraceEventType.Information);
+                    
+
+                    return CommonEnums.RET_CODE.SUCCESS;
+                }
+
+               
+                orderInfo.MessageType = Constants.DATA_CANCEL_ORDER;
+                orderInfo.ExecTransType = (int)CommonEnums.TRANS_TYPE.TRANS_CANCEL;
+                orderInfo.OrderStatus = (short)CommonEnums.ORDER_STATUS.NEW_CANCEL;
+
+                _execOrderService.Update(orderInfo);
+
+                LogHandler.Log("cancel order:" + orderID, "CancelOrder", TraceEventType.Information);
+              
+
+                return CommonEnums.RET_CODE.SUCCESS;
+            }
+
+            catch (Exception ex)
+            {
+                LogHandler.Log("cancel order error:" + orderID, "CancelOrder", TraceEventType.Error);
+               
+
+                ExceptionHandler.HandleException(ex, Constants.EXCEPTION_POLICY);
+
+                return CommonEnums.RET_CODE.SYSTEM_ERROR;
+
+            }
+        }
         /// <summary>
         /// Gets the newest order status.
         /// </summary>
@@ -2754,7 +2907,7 @@ namespace ETradeWebServices.Services
         /// <returns>Trading state.</returns>
         public char GetTradingState(int marketId)
         {
-            if (AppConfig.CheckGWConnection && !_eTradeGW.IsConnected())
+            if (AppConfig.CheckGWConnection)
             {
                 /*LogHandler.Log("Chua ket noi LinkOPS!" + AppConfig.CheckGWConnection + " " + _eTradeGW.IsConnected(),
                                "GetTradingState()", TraceEventType.Error);*/
@@ -2772,7 +2925,7 @@ namespace ETradeWebServices.Services
         /// <returns>ResultObject of char</returns>
         public char[] GetAllTradingState()
         {
-            if (AppConfig.CheckGWConnection && !_eTradeGW.IsConnected())
+            if (AppConfig.CheckGWConnection)
             {
                 return new[]
                            {
@@ -2864,7 +3017,7 @@ namespace ETradeWebServices.Services
         /// <returns>char[]</returns>
         public char[] GetAllOrderSession()
         {
-            if (AppConfig.CheckGWConnection && !_eTradeGW.IsConnected())
+            if (AppConfig.CheckGWConnection)
             {
                 return new[]
                            {

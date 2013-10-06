@@ -1248,6 +1248,25 @@ namespace ETradeCommon.Enums
             FOK = 'F',
             ODD = 'O'
         }
+        public enum TRANS_TYPE
+        {
+            /// <summary>
+            /// Value = 0
+            /// </summary>
+            TRANS_NEW,
+            /// <summary>
+            /// Value = 1
+            /// </summary>
+            TRANS_CANCEL,
+            /// <summary>
+            /// Value = 2
+            /// </summary>
+            TRANS_CHANGE_ACC,
+            /// <summary>
+            /// Value = 3
+            /// </summary>
+            TRANS_CANCEL_WITHOUT_APPRO
+        }
        
     }
 }

@@ -70,6 +70,15 @@ namespace ETradeCommon
 
         public const string SUM_PORTFOLIO_TOTAL = "SUM_T";
 
+        public const string DATA_NEW_ORDER = "7a";
+        public const string DATA_NEW_CANCEL_ACK = "7b";
+        public const string DATA_EXEC_REPORT = "7e";
+        public const string DATA_CANCEL_ORDER = "7c";
+        public const string DATA_NEW_ORDER_FROM_BROKER = "6a";
+        public const string DATA_CHANGE_ORDER = "7d";
+        public const string DATA_CHANGE_ORDER_FROM_BROKER = "6d";
+        public const string DATA_CANCEL_DEAL = "3D";
+
         public const string PORTFOLIO_SQL =
             "SELECT ACCOUNTNO, SECSYMBOL, SECTYPE, STARTVOLUME, STARTAMOUNT, STARTPRICE, TRUSTEEID, " + 
             "ACTUALVOLUME, STARTCLOSE, AVGCLOSE, VOLUMECLOSE, AMOUNTCLOSE, PCCASHDEDUCT, MULTIPLIER, " + 

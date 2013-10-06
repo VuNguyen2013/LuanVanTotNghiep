@@ -24,7 +24,6 @@ namespace ETradeWebServices
     using AccountManager.Entities;
 
     using ETradeCommon;
-    using ETradeGWServices;
 
     using ETradeOrders.Services;
 
@@ -46,9 +45,9 @@ namespace ETradeWebServices
                 // Start OrderUpdate to check message from LinkOPS
                 LogHandler.Log("Start OrderUpdater", "Global.Application_Start", TraceEventType.Information);
                 var execOrderService = new ExecOrderService();
-                var orderUpdater = OrderUpdater.Instance;
-                orderUpdater.InitLinkOPS();
-                orderUpdater.StartFISUpdater();
+                //var orderUpdater = OrderUpdater.Instance;
+                //orderUpdater.InitLinkOPS();
+                //orderUpdater.StartFISUpdater();
 
                 // Start market status thread
                 var etradeServices = new ETradeServices();
@@ -248,8 +247,8 @@ namespace ETradeWebServices
             // Stop market status thread
             MarketServices.StopSessionThread();
             //Stop OrderUpdater
-            var orderUpdater = OrderUpdater.Instance;
-            orderUpdater.StopFISUpdater();
+            //var orderUpdater = OrderUpdater.Instance;
+            //orderUpdater.StopFISUpdater();
             LogHandler.Log("Stop OrderUpdater", "Global.Application_End", TraceEventType.Information);
         }
 
