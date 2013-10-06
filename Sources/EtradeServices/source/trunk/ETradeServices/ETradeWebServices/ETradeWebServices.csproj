@@ -45,6 +45,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -205,6 +208,7 @@
     <Content Include="entlib.config" />
     <Content Include="ETradeServicesWebServices.asmx" />
     <Content Include="Global.asax" />
+    <Content Include="packages.config" />
     <None Include="Web References\RTServices\Service.disco" />
     <None Include="Web References\AMServices\AccountManagerServices.disco" />
   </ItemGroup>

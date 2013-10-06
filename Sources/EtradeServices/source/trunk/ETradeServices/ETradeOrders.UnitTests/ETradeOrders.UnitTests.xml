@@ -4,292 +4,207 @@
         <name>ETradeOrders.UnitTests</name>
     </assembly>
     <members>
-        <member name="T:ETradeOrders.UnitTests.ConditionOrderDetailTest">
+        <member name="T:ETradeOrders.UnitTests.QuickOrderTest">
             <summary>
-            Provides tests for the and <see cref="T:ETradeOrders.Entities.ConditionOrderDetail"/> objects (entity, collection and repository).
-            </summary>
-            <summary>
-            Provides tests for the and <see cref="T:ETradeOrders.Entities.ConditionOrderDetail"/> objects (entity, collection and repository).
+            Provides tests for the and <see cref="T:ETradeOrders.Entities.QuickOrder"/> objects (entity, collection and repository).
             </summary>
             <remarks>
             This file is generated once and will never be overwritten.
             </remarks>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Init_Generated">
             <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.CleanUp_Generated">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
+            Provides tests for the and <see cref="T:ETradeOrders.Entities.QuickOrder"/> objects (entity, collection and repository).
             </summary>
         </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_01_Insert_Generated">
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.#ctor">
             <summary>
-            Inserts a mock ConditionOrderDetail entity into the database.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_02_SelectAll_Generated">
-            <summary>
-            Selects all ConditionOrderDetail objects of the database.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_03_DeepLoad_Generated">
-            <summary>
-            Deep load all ConditionOrderDetail children.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_04_Update_Generated">
-            <summary>
-            Updates a mock ConditionOrderDetail entity into the database.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_05_Delete_Generated">
-            <summary>
-            Delete the mock ConditionOrderDetail entity into the database.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_06_SerializeEntity_Generated">
-            <summary>
-            Serialize the mock ConditionOrderDetail entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_07_DeserializeEntity_Generated">
-            <summary>
-            Deserialize the mock ConditionOrderDetail entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_08_SerializeCollection_Generated">
-            <summary>
-            Serialize a ConditionOrderDetail collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_09_DeserializeCollection_Generated">
-            <summary>
-            Deserialize a ConditionOrderDetail collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_10_FK_Generated">
-            <summary>
-            Check the foreign key dal methods.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_11_IX_Generated">
-            <summary>
-            Check the indexes dal methods.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_20_TestEntityHelper_Generated">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_30_TestFindByQuery_Generated">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.CreateMockInstance_Generated(ETradeOrders.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed ConditionOrderDetail Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.UpdateMockInstance_Generated(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.ConditionOrderDetail)">
-            <summary>
-              Update the Typed ConditionOrderDetail Entity with modified mock values.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.#ctor">
-            <summary>
-            Creates a new <see cref="T:ETradeOrders.UnitTests.ConditionOrderDetailTest"/> instance.
+            Creates a new <see cref="T:ETradeOrders.UnitTests.QuickOrderTest"/> instance.
             </summary>	
         </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Init">
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Init">
             <summary>
             This method is used to construct the test environment prior to running the tests.
             </summary>        
         </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Dispose">
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Dispose">
             <summary>
             This method is used to restore the environment after the tests are completed.
             </summary>
         </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_01_Insert">
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_01_Insert">
             <summary>
-            Inserts a mock ConditionOrderDetail entity into the database.
+            Inserts a mock QuickOrder entity into the database.
             </summary>
         </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_02_SelectAll">
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_02_SelectAll">
             <summary>
-            Selects a sample of  ConditionOrderDetail objects of the database.
+            Selects a sample of  QuickOrder objects of the database.
             </summary>
         </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_03_DeepLoad">
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_03_DeepLoad">
             <summary>
-            Deep load all ConditionOrderDetail children.
+            Deep load all QuickOrder children.
             </summary>
         </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_04_Update">
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_04_Update">
             <summary>
-            Updates a mock ConditionOrderDetail entity into the database.
+            Updates a mock QuickOrder entity into the database.
             </summary>
         </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_05_Delete">
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_05_Delete">
             <summary>
-            Delete the mock ConditionOrderDetail entity into the database.
+            Delete the mock QuickOrder entity into the database.
             </summary>
         </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_06_SerializeEntity">
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_06_SerializeEntity">
             <summary>
-            Serialize the mock ConditionOrderDetail entity into a temporary file.
+            Serialize the mock QuickOrder entity into a temporary file.
             </summary>
         </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_07_DeserializeEntity">
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_07_DeserializeEntity">
             <summary>
-            Deserialize the mock ConditionOrderDetail entity from a temporary file.
+            Deserialize the mock QuickOrder entity from a temporary file.
             </summary>
         </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_08_SerializeCollection">
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_08_SerializeCollection">
             <summary>
-            Serialize a ConditionOrderDetail collection into a temporary file.
+            Serialize a QuickOrder collection into a temporary file.
             </summary>
         </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_09_DeserializeCollection">
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_09_DeserializeCollection">
             <summary>
-            Deserialize a ConditionOrderDetail collection from a temporary file.
+            Deserialize a QuickOrder collection from a temporary file.
             </summary>
         </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_10_FK">
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_10_FK">
             <summary>
             Check the foreign key dal methods.
             </summary>
         </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_11_IX">
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_11_IX">
             <summary>
             Check the indexes dal methods.
             </summary>
         </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_20_TestEntityHelper">
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_20_TestEntityHelper">
             <summary>
             Test methods exposed by the EntityHelper class.
             </summary>
         </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_30_TestFindByQuery">
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_30_TestFindByQuery">
             <summary>
             Test Find using the Query class
             </summary>
         </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.CreateMockInstance(ETradeOrders.DataAccess.TransactionManager)">
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.CreateMockInstance(ETradeOrders.DataAccess.TransactionManager)">
             <summary>
-              Returns a Typed ConditionOrderDetail Entity with mock values.
+              Returns a Typed QuickOrder Entity with mock values.
             </summary>
         </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.UpdateMockInstance(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.ConditionOrderDetail)">
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.UpdateMockInstance(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.QuickOrder)">
             <summary>
-              Update the Typed ConditionOrderDetail Entity with modified mock values.
+              Update the Typed QuickOrder Entity with modified mock values.
             </summary>
         </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.SetSpecialTestData(ETradeOrders.Entities.ConditionOrderDetail)">
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.SetSpecialTestData(ETradeOrders.Entities.QuickOrder)">
             <summary>
             Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
             </summary>
             <param name="mock">Object to be modified</param>
         </member>
-        <member name="T:ETradeOrders.UnitTests.ConditionOrderTest">
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Init_Generated">
             <summary>
-            Provides tests for the and <see cref="T:ETradeOrders.Entities.ConditionOrder"/> objects (entity, collection and repository).
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.CleanUp_Generated">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
             </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_01_Insert_Generated">
+            <summary>
+            Inserts a mock QuickOrder entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_02_SelectAll_Generated">
+            <summary>
+            Selects all QuickOrder objects of the database.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_03_DeepLoad_Generated">
+            <summary>
+            Deep load all QuickOrder children.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_04_Update_Generated">
+            <summary>
+            Updates a mock QuickOrder entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_05_Delete_Generated">
+            <summary>
+            Delete the mock QuickOrder entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_06_SerializeEntity_Generated">
+            <summary>
+            Serialize the mock QuickOrder entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_07_DeserializeEntity_Generated">
+            <summary>
+            Deserialize the mock QuickOrder entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_08_SerializeCollection_Generated">
+            <summary>
+            Serialize a QuickOrder collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_09_DeserializeCollection_Generated">
+            <summary>
+            Deserialize a QuickOrder collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_10_FK_Generated">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_11_IX_Generated">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_20_TestEntityHelper_Generated">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_30_TestFindByQuery_Generated">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.CreateMockInstance_Generated(ETradeOrders.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed QuickOrder Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.UpdateMockInstance_Generated(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.QuickOrder)">
+            <summary>
+              Update the Typed QuickOrder Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="T:ETradeOrders.UnitTests.ConditionOrderTest">
             <summary>
             Provides tests for the and <see cref="T:ETradeOrders.Entities.ConditionOrder"/> objects (entity, collection and repository).
             </summary>
             <remarks>
             This file is generated once and will never be overwritten.
             </remarks>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Init_Generated">
             <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.CleanUp_Generated">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_01_Insert_Generated">
-            <summary>
-            Inserts a mock ConditionOrder entity into the database.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_02_SelectAll_Generated">
-            <summary>
-            Selects all ConditionOrder objects of the database.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_03_DeepLoad_Generated">
-            <summary>
-            Deep load all ConditionOrder children.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_04_Update_Generated">
-            <summary>
-            Updates a mock ConditionOrder entity into the database.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_05_Delete_Generated">
-            <summary>
-            Delete the mock ConditionOrder entity into the database.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_06_SerializeEntity_Generated">
-            <summary>
-            Serialize the mock ConditionOrder entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_07_DeserializeEntity_Generated">
-            <summary>
-            Deserialize the mock ConditionOrder entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_08_SerializeCollection_Generated">
-            <summary>
-            Serialize a ConditionOrder collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_09_DeserializeCollection_Generated">
-            <summary>
-            Deserialize a ConditionOrder collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_10_FK_Generated">
-            <summary>
-            Check the foreign key dal methods.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_11_IX_Generated">
-            <summary>
-            Check the indexes dal methods.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_20_TestEntityHelper_Generated">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_30_TestFindByQuery_Generated">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.CreateMockInstance_Generated(ETradeOrders.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed ConditionOrder Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.UpdateMockInstance_Generated(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.ConditionOrder)">
-            <summary>
-              Update the Typed ConditionOrder Entity with modified mock values.
+            Provides tests for the and <see cref="T:ETradeOrders.Entities.ConditionOrder"/> objects (entity, collection and repository).
             </summary>
         </member>
         <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.#ctor">
@@ -388,15 +303,185 @@
             </summary>
             <param name="mock">Object to be modified</param>
         </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Init_Generated">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.CleanUp_Generated">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_01_Insert_Generated">
+            <summary>
+            Inserts a mock ConditionOrder entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_02_SelectAll_Generated">
+            <summary>
+            Selects all ConditionOrder objects of the database.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_03_DeepLoad_Generated">
+            <summary>
+            Deep load all ConditionOrder children.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_04_Update_Generated">
+            <summary>
+            Updates a mock ConditionOrder entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_05_Delete_Generated">
+            <summary>
+            Delete the mock ConditionOrder entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_06_SerializeEntity_Generated">
+            <summary>
+            Serialize the mock ConditionOrder entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_07_DeserializeEntity_Generated">
+            <summary>
+            Deserialize the mock ConditionOrder entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_08_SerializeCollection_Generated">
+            <summary>
+            Serialize a ConditionOrder collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_09_DeserializeCollection_Generated">
+            <summary>
+            Deserialize a ConditionOrder collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_10_FK_Generated">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_11_IX_Generated">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_20_TestEntityHelper_Generated">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.Step_30_TestFindByQuery_Generated">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.CreateMockInstance_Generated(ETradeOrders.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed ConditionOrder Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderTest.UpdateMockInstance_Generated(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.ConditionOrder)">
+            <summary>
+              Update the Typed ConditionOrder Entity with modified mock values.
+            </summary>
+        </member>
         <member name="T:ETradeOrders.UnitTests.ExecOrderTest">
+            <summary>
+            Provides tests for the and <see cref="T:ETradeOrders.Entities.ExecOrder"/> objects (entity, collection and repository).
+            </summary>
             <summary>
             Provides tests for the and <see cref="T:ETradeOrders.Entities.ExecOrder"/> objects (entity, collection and repository).
             </summary>
             <remarks>
             This file is generated once and will never be overwritten.
             </remarks>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Init_Generated">
             <summary>
-            Provides tests for the and <see cref="T:ETradeOrders.Entities.ExecOrder"/> objects (entity, collection and repository).
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.CleanUp_Generated">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_01_Insert_Generated">
+            <summary>
+            Inserts a mock ExecOrder entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_02_SelectAll_Generated">
+            <summary>
+            Selects all ExecOrder objects of the database.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_03_DeepLoad_Generated">
+            <summary>
+            Deep load all ExecOrder children.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_04_Update_Generated">
+            <summary>
+            Updates a mock ExecOrder entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_05_Delete_Generated">
+            <summary>
+            Delete the mock ExecOrder entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_06_SerializeEntity_Generated">
+            <summary>
+            Serialize the mock ExecOrder entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_07_DeserializeEntity_Generated">
+            <summary>
+            Deserialize the mock ExecOrder entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_08_SerializeCollection_Generated">
+            <summary>
+            Serialize a ExecOrder collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_09_DeserializeCollection_Generated">
+            <summary>
+            Deserialize a ExecOrder collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_10_FK_Generated">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_11_IX_Generated">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_20_TestEntityHelper_Generated">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_30_TestFindByQuery_Generated">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.CreateMockInstance_Generated(ETradeOrders.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed ExecOrder Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.UpdateMockInstance_Generated(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.ExecOrder)">
+            <summary>
+              Update the Typed ExecOrder Entity with modified mock values.
             </summary>
         </member>
         <member name="M:ETradeOrders.UnitTests.ExecOrderTest.#ctor">
@@ -490,283 +575,6 @@
             </summary>
         </member>
         <member name="M:ETradeOrders.UnitTests.ExecOrderTest.SetSpecialTestData(ETradeOrders.Entities.ExecOrder)">
-            <summary>
-            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
-            </summary>
-            <param name="mock">Object to be modified</param>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Init_Generated">
-            <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.CleanUp_Generated">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_01_Insert_Generated">
-            <summary>
-            Inserts a mock ExecOrder entity into the database.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_02_SelectAll_Generated">
-            <summary>
-            Selects all ExecOrder objects of the database.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_03_DeepLoad_Generated">
-            <summary>
-            Deep load all ExecOrder children.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_04_Update_Generated">
-            <summary>
-            Updates a mock ExecOrder entity into the database.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_05_Delete_Generated">
-            <summary>
-            Delete the mock ExecOrder entity into the database.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_06_SerializeEntity_Generated">
-            <summary>
-            Serialize the mock ExecOrder entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_07_DeserializeEntity_Generated">
-            <summary>
-            Deserialize the mock ExecOrder entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_08_SerializeCollection_Generated">
-            <summary>
-            Serialize a ExecOrder collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_09_DeserializeCollection_Generated">
-            <summary>
-            Deserialize a ExecOrder collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_10_FK_Generated">
-            <summary>
-            Check the foreign key dal methods.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_11_IX_Generated">
-            <summary>
-            Check the indexes dal methods.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_20_TestEntityHelper_Generated">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.Step_30_TestFindByQuery_Generated">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.CreateMockInstance_Generated(ETradeOrders.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed ExecOrder Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.ExecOrderTest.UpdateMockInstance_Generated(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.ExecOrder)">
-            <summary>
-              Update the Typed ExecOrder Entity with modified mock values.
-            </summary>
-        </member>
-        <member name="T:ETradeOrders.UnitTests.QuickOrderTest">
-            <summary>
-            Provides tests for the and <see cref="T:ETradeOrders.Entities.QuickOrder"/> objects (entity, collection and repository).
-            </summary>
-            <summary>
-            Provides tests for the and <see cref="T:ETradeOrders.Entities.QuickOrder"/> objects (entity, collection and repository).
-            </summary>
-            <remarks>
-            This file is generated once and will never be overwritten.
-            </remarks>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Init_Generated">
-            <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.CleanUp_Generated">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_01_Insert_Generated">
-            <summary>
-            Inserts a mock QuickOrder entity into the database.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_02_SelectAll_Generated">
-            <summary>
-            Selects all QuickOrder objects of the database.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_03_DeepLoad_Generated">
-            <summary>
-            Deep load all QuickOrder children.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_04_Update_Generated">
-            <summary>
-            Updates a mock QuickOrder entity into the database.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_05_Delete_Generated">
-            <summary>
-            Delete the mock QuickOrder entity into the database.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_06_SerializeEntity_Generated">
-            <summary>
-            Serialize the mock QuickOrder entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_07_DeserializeEntity_Generated">
-            <summary>
-            Deserialize the mock QuickOrder entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_08_SerializeCollection_Generated">
-            <summary>
-            Serialize a QuickOrder collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_09_DeserializeCollection_Generated">
-            <summary>
-            Deserialize a QuickOrder collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_10_FK_Generated">
-            <summary>
-            Check the foreign key dal methods.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_11_IX_Generated">
-            <summary>
-            Check the indexes dal methods.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_20_TestEntityHelper_Generated">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_30_TestFindByQuery_Generated">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.CreateMockInstance_Generated(ETradeOrders.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed QuickOrder Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.UpdateMockInstance_Generated(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.QuickOrder)">
-            <summary>
-              Update the Typed QuickOrder Entity with modified mock values.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.#ctor">
-            <summary>
-            Creates a new <see cref="T:ETradeOrders.UnitTests.QuickOrderTest"/> instance.
-            </summary>	
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Init">
-            <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Dispose">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_01_Insert">
-            <summary>
-            Inserts a mock QuickOrder entity into the database.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_02_SelectAll">
-            <summary>
-            Selects a sample of  QuickOrder objects of the database.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_03_DeepLoad">
-            <summary>
-            Deep load all QuickOrder children.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_04_Update">
-            <summary>
-            Updates a mock QuickOrder entity into the database.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_05_Delete">
-            <summary>
-            Delete the mock QuickOrder entity into the database.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_06_SerializeEntity">
-            <summary>
-            Serialize the mock QuickOrder entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_07_DeserializeEntity">
-            <summary>
-            Deserialize the mock QuickOrder entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_08_SerializeCollection">
-            <summary>
-            Serialize a QuickOrder collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_09_DeserializeCollection">
-            <summary>
-            Deserialize a QuickOrder collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_10_FK">
-            <summary>
-            Check the foreign key dal methods.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_11_IX">
-            <summary>
-            Check the indexes dal methods.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_20_TestEntityHelper">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.Step_30_TestFindByQuery">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.CreateMockInstance(ETradeOrders.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed QuickOrder Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.UpdateMockInstance(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.QuickOrder)">
-            <summary>
-              Update the Typed QuickOrder Entity with modified mock values.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.UnitTests.QuickOrderTest.SetSpecialTestData(ETradeOrders.Entities.QuickOrder)">
             <summary>
             Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
             </summary>
@@ -876,6 +684,198 @@
         <member name="P:ETradeOrders.UnitTests.TestUtility.Instance">
             <summary>
             Get the instance of the TestUtility class
+            </summary>
+        </member>
+        <member name="T:ETradeOrders.UnitTests.ConditionOrderDetailTest">
+            <summary>
+            Provides tests for the and <see cref="T:ETradeOrders.Entities.ConditionOrderDetail"/> objects (entity, collection and repository).
+            </summary>
+            <remarks>
+            This file is generated once and will never be overwritten.
+            </remarks>
+            <summary>
+            Provides tests for the and <see cref="T:ETradeOrders.Entities.ConditionOrderDetail"/> objects (entity, collection and repository).
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeOrders.UnitTests.ConditionOrderDetailTest"/> instance.
+            </summary>	
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Init">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Dispose">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_01_Insert">
+            <summary>
+            Inserts a mock ConditionOrderDetail entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_02_SelectAll">
+            <summary>
+            Selects a sample of  ConditionOrderDetail objects of the database.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_03_DeepLoad">
+            <summary>
+            Deep load all ConditionOrderDetail children.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_04_Update">
+            <summary>
+            Updates a mock ConditionOrderDetail entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_05_Delete">
+            <summary>
+            Delete the mock ConditionOrderDetail entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_06_SerializeEntity">
+            <summary>
+            Serialize the mock ConditionOrderDetail entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_07_DeserializeEntity">
+            <summary>
+            Deserialize the mock ConditionOrderDetail entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_08_SerializeCollection">
+            <summary>
+            Serialize a ConditionOrderDetail collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_09_DeserializeCollection">
+            <summary>
+            Deserialize a ConditionOrderDetail collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_10_FK">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_11_IX">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_20_TestEntityHelper">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_30_TestFindByQuery">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.CreateMockInstance(ETradeOrders.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed ConditionOrderDetail Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.UpdateMockInstance(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.ConditionOrderDetail)">
+            <summary>
+              Update the Typed ConditionOrderDetail Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.SetSpecialTestData(ETradeOrders.Entities.ConditionOrderDetail)">
+            <summary>
+            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
+            </summary>
+            <param name="mock">Object to be modified</param>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Init_Generated">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.CleanUp_Generated">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_01_Insert_Generated">
+            <summary>
+            Inserts a mock ConditionOrderDetail entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_02_SelectAll_Generated">
+            <summary>
+            Selects all ConditionOrderDetail objects of the database.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_03_DeepLoad_Generated">
+            <summary>
+            Deep load all ConditionOrderDetail children.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_04_Update_Generated">
+            <summary>
+            Updates a mock ConditionOrderDetail entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_05_Delete_Generated">
+            <summary>
+            Delete the mock ConditionOrderDetail entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_06_SerializeEntity_Generated">
+            <summary>
+            Serialize the mock ConditionOrderDetail entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_07_DeserializeEntity_Generated">
+            <summary>
+            Deserialize the mock ConditionOrderDetail entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_08_SerializeCollection_Generated">
+            <summary>
+            Serialize a ConditionOrderDetail collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_09_DeserializeCollection_Generated">
+            <summary>
+            Deserialize a ConditionOrderDetail collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_10_FK_Generated">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_11_IX_Generated">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_20_TestEntityHelper_Generated">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.Step_30_TestFindByQuery_Generated">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.CreateMockInstance_Generated(ETradeOrders.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed ConditionOrderDetail Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.UnitTests.ConditionOrderDetailTest.UpdateMockInstance_Generated(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.ConditionOrderDetail)">
+            <summary>
+              Update the Typed ConditionOrderDetail Entity with modified mock values.
             </summary>
         </member>
     </members>

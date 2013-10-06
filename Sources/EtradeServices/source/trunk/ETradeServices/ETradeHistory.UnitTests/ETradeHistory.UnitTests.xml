@@ -4,6 +4,198 @@
         <name>ETradeHistory.UnitTests</name>
     </assembly>
     <members>
+        <member name="T:ETradeHistory.UnitTests.TradedHistoryTest">
+            <summary>
+            Provides tests for the and <see cref="T:ETradeHistory.Entities.TradedHistory"/> objects (entity, collection and repository).
+            </summary>
+            <remarks>
+            This file is generated once and will never be overwritten.
+            </remarks>
+            <summary>
+            Provides tests for the and <see cref="T:ETradeHistory.Entities.TradedHistory"/> objects (entity, collection and repository).
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeHistory.UnitTests.TradedHistoryTest"/> instance.
+            </summary>	
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Init">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Dispose">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_01_Insert">
+            <summary>
+            Inserts a mock TradedHistory entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_02_SelectAll">
+            <summary>
+            Selects a sample of  TradedHistory objects of the database.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_03_DeepLoad">
+            <summary>
+            Deep load all TradedHistory children.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_04_Update">
+            <summary>
+            Updates a mock TradedHistory entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_05_Delete">
+            <summary>
+            Delete the mock TradedHistory entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_06_SerializeEntity">
+            <summary>
+            Serialize the mock TradedHistory entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_07_DeserializeEntity">
+            <summary>
+            Deserialize the mock TradedHistory entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_08_SerializeCollection">
+            <summary>
+            Serialize a TradedHistory collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_09_DeserializeCollection">
+            <summary>
+            Deserialize a TradedHistory collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_10_FK">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_11_IX">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_20_TestEntityHelper">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_30_TestFindByQuery">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.CreateMockInstance(ETradeHistory.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed TradedHistory Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.UpdateMockInstance(ETradeHistory.DataAccess.TransactionManager,ETradeHistory.Entities.TradedHistory)">
+            <summary>
+              Update the Typed TradedHistory Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.SetSpecialTestData(ETradeHistory.Entities.TradedHistory)">
+            <summary>
+            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
+            </summary>
+            <param name="mock">Object to be modified</param>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Init_Generated">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.CleanUp_Generated">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_01_Insert_Generated">
+            <summary>
+            Inserts a mock TradedHistory entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_02_SelectAll_Generated">
+            <summary>
+            Selects all TradedHistory objects of the database.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_03_DeepLoad_Generated">
+            <summary>
+            Deep load all TradedHistory children.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_04_Update_Generated">
+            <summary>
+            Updates a mock TradedHistory entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_05_Delete_Generated">
+            <summary>
+            Delete the mock TradedHistory entity into the database.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_06_SerializeEntity_Generated">
+            <summary>
+            Serialize the mock TradedHistory entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_07_DeserializeEntity_Generated">
+            <summary>
+            Deserialize the mock TradedHistory entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_08_SerializeCollection_Generated">
+            <summary>
+            Serialize a TradedHistory collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_09_DeserializeCollection_Generated">
+            <summary>
+            Deserialize a TradedHistory collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_10_FK_Generated">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_11_IX_Generated">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_20_TestEntityHelper_Generated">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_30_TestFindByQuery_Generated">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.CreateMockInstance_Generated(ETradeHistory.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed TradedHistory Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.UpdateMockInstance_Generated(ETradeHistory.DataAccess.TransactionManager,ETradeHistory.Entities.TradedHistory)">
+            <summary>
+              Update the Typed TradedHistory Entity with modified mock values.
+            </summary>
+        </member>
         <member name="T:ETradeHistory.UnitTests.PnLhistoryTest">
             <summary>
             Provides tests for the and <see cref="T:ETradeHistory.Entities.PnLhistory"/> objects (entity, collection and repository).
@@ -195,198 +387,6 @@
             <summary>
               Update the Typed PnLhistory Entity with modified mock values.
             </summary>
-        </member>
-        <member name="T:ETradeHistory.UnitTests.TradedHistoryTest">
-            <summary>
-            Provides tests for the and <see cref="T:ETradeHistory.Entities.TradedHistory"/> objects (entity, collection and repository).
-            </summary>
-            <summary>
-            Provides tests for the and <see cref="T:ETradeHistory.Entities.TradedHistory"/> objects (entity, collection and repository).
-            </summary>
-            <remarks>
-            This file is generated once and will never be overwritten.
-            </remarks>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Init_Generated">
-            <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.CleanUp_Generated">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_01_Insert_Generated">
-            <summary>
-            Inserts a mock TradedHistory entity into the database.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_02_SelectAll_Generated">
-            <summary>
-            Selects all TradedHistory objects of the database.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_03_DeepLoad_Generated">
-            <summary>
-            Deep load all TradedHistory children.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_04_Update_Generated">
-            <summary>
-            Updates a mock TradedHistory entity into the database.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_05_Delete_Generated">
-            <summary>
-            Delete the mock TradedHistory entity into the database.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_06_SerializeEntity_Generated">
-            <summary>
-            Serialize the mock TradedHistory entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_07_DeserializeEntity_Generated">
-            <summary>
-            Deserialize the mock TradedHistory entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_08_SerializeCollection_Generated">
-            <summary>
-            Serialize a TradedHistory collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_09_DeserializeCollection_Generated">
-            <summary>
-            Deserialize a TradedHistory collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_10_FK_Generated">
-            <summary>
-            Check the foreign key dal methods.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_11_IX_Generated">
-            <summary>
-            Check the indexes dal methods.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_20_TestEntityHelper_Generated">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_30_TestFindByQuery_Generated">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.CreateMockInstance_Generated(ETradeHistory.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed TradedHistory Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.UpdateMockInstance_Generated(ETradeHistory.DataAccess.TransactionManager,ETradeHistory.Entities.TradedHistory)">
-            <summary>
-              Update the Typed TradedHistory Entity with modified mock values.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.#ctor">
-            <summary>
-            Creates a new <see cref="T:ETradeHistory.UnitTests.TradedHistoryTest"/> instance.
-            </summary>	
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Init">
-            <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Dispose">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_01_Insert">
-            <summary>
-            Inserts a mock TradedHistory entity into the database.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_02_SelectAll">
-            <summary>
-            Selects a sample of  TradedHistory objects of the database.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_03_DeepLoad">
-            <summary>
-            Deep load all TradedHistory children.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_04_Update">
-            <summary>
-            Updates a mock TradedHistory entity into the database.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_05_Delete">
-            <summary>
-            Delete the mock TradedHistory entity into the database.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_06_SerializeEntity">
-            <summary>
-            Serialize the mock TradedHistory entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_07_DeserializeEntity">
-            <summary>
-            Deserialize the mock TradedHistory entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_08_SerializeCollection">
-            <summary>
-            Serialize a TradedHistory collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_09_DeserializeCollection">
-            <summary>
-            Deserialize a TradedHistory collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_10_FK">
-            <summary>
-            Check the foreign key dal methods.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_11_IX">
-            <summary>
-            Check the indexes dal methods.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_20_TestEntityHelper">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.Step_30_TestFindByQuery">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.CreateMockInstance(ETradeHistory.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed TradedHistory Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.UpdateMockInstance(ETradeHistory.DataAccess.TransactionManager,ETradeHistory.Entities.TradedHistory)">
-            <summary>
-              Update the Typed TradedHistory Entity with modified mock values.
-            </summary>
-        </member>
-        <member name="M:ETradeHistory.UnitTests.TradedHistoryTest.SetSpecialTestData(ETradeHistory.Entities.TradedHistory)">
-            <summary>
-            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
-            </summary>
-            <param name="mock">Object to be modified</param>
         </member>
         <member name="T:ETradeHistory.UnitTests.TestUtility">
             <summary>

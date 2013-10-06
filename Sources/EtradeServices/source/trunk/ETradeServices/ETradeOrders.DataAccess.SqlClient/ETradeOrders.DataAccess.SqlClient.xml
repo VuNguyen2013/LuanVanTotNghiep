@@ -4,30 +4,30 @@
         <name>ETradeOrders.DataAccess.SqlClient</name>
     </assembly>
     <members>
-        <member name="T:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase">
+        <member name="T:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase">
             <summary>
-             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeOrders.Entities.ConditionOrderDetail"/> entity.
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeOrders.Entities.ConditionOrder"/> entity.
             </summary>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.#ctor">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.#ctor">
             <summary>
-            Creates a new <see cref="T:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase"/> instance.
+            Creates a new <see cref="T:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase"/> instance.
             </summary>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.#ctor(System.String,System.Boolean,System.String)">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.#ctor(System.String,System.Boolean,System.String)">
             <summary>
-            Creates a new <see cref="T:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase"/> instance.
+            Creates a new <see cref="T:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase"/> instance.
             Uses connection string to connect to datasource.
             </summary>
             <param name="connectionString">The connection string to the database.</param>
             <param name="useStoredProcedure">A boolean value that indicates if we should use stored procedures or embedded queries.</param>
             <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.Delete(ETradeOrders.DataAccess.TransactionManager,System.Int64)">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.Delete(ETradeOrders.DataAccess.TransactionManager,System.Int64)">
             <summary>
             	Deletes a row from the DataSource.
             </summary>
-            <param name="_detailId">Auto increase key. Primary Key.</param>	
+            <param name="_conditionOrderId">ConditionOrderID identifies ConditionOrder. Primary Key.</param>	
             <param name="transactionManager"><see cref="T:ETradeOrders.DataAccess.TransactionManager"/> object</param>
             <remarks>Deletes based on primary key(s).</remarks>
             <returns>Returns true if operation suceeded.</returns>
@@ -35,7 +35,7 @@
             <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
             <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.Find(ETradeOrders.DataAccess.TransactionManager,System.String,System.Int32,System.Int32,System.Int32@)">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.Find(ETradeOrders.DataAccess.TransactionManager,System.String,System.Int32,System.Int32,System.Int32@)">
             <summary>
             	Returns rows meeting the whereClause condition from the DataSource.
             </summary>
@@ -45,9 +45,9 @@
             <param name="pageLength">Number of rows to return.</param>
             <param name="count">out. The number of rows that match this query.</param>
             <remarks>Operators must be capitalized (OR, AND).</remarks>
-            <returns>Returns a typed collection of ETradeOrders.Entities.ConditionOrderDetail objects.</returns>
+            <returns>Returns a typed collection of ETradeOrders.Entities.ConditionOrder objects.</returns>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.Find(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.DataAccess.IFilterParameterCollection,System.String,System.Int32,System.Int32,System.Int32@)">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.Find(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.DataAccess.IFilterParameterCollection,System.String,System.Int32,System.Int32,System.Int32@)">
             <summary>
             	Returns rows from the DataSource that meet the parameter conditions.
             </summary>
@@ -57,9 +57,9 @@
             <param name="start">Row number at which to start reading.</param>
             <param name="pageLength">Number of rows to return.</param>
             <param name="count">out. The number of rows that match this query.</param>
-            <returns>Returns a typed collection of ETradeOrders.Entities.ConditionOrderDetail objects.</returns>
+            <returns>Returns a typed collection of ETradeOrders.Entities.ConditionOrder objects.</returns>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.GetAll(ETradeOrders.DataAccess.TransactionManager,System.Int32,System.Int32,System.Int32@)">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.GetAll(ETradeOrders.DataAccess.TransactionManager,System.Int32,System.Int32,System.Int32@)">
             <summary>
             	Gets All rows from the DataSource.
             </summary>
@@ -68,12 +68,12 @@
             <param name="pageLength">Number of rows to return.</param>
             <param name="count">out. The number of rows that match this query.</param>
             <remarks></remarks>
-            <returns>Returns a typed collection of ETradeOrders.Entities.ConditionOrderDetail objects.</returns>
+            <returns>Returns a typed collection of ETradeOrders.Entities.ConditionOrder objects.</returns>
             <exception cref="T:System.Exception">The command could not be executed.</exception>
             <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
             <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.GetPaged(ETradeOrders.DataAccess.TransactionManager,System.String,System.String,System.Int32,System.Int32,System.Int32@)">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.GetPaged(ETradeOrders.DataAccess.TransactionManager,System.String,System.String,System.Int32,System.Int32,System.Int32@)">
             <summary>
             Gets a page of rows from the DataSource.
             </summary>
@@ -84,58 +84,42 @@
             <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
             <param name="transactionManager"><see cref="T:ETradeOrders.DataAccess.TransactionManager"/> object</param>
             <remarks></remarks>
-            <returns>Returns a typed collection of ETradeOrders.Entities.ConditionOrderDetail objects.</returns>
+            <returns>Returns a typed collection of ETradeOrders.Entities.ConditionOrder objects.</returns>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.GetByConditionOrderId(ETradeOrders.DataAccess.TransactionManager,System.Int64,System.Int32,System.Int32,System.Int32@)">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.GetByConditionOrderId(ETradeOrders.DataAccess.TransactionManager,System.Int64,System.Int32,System.Int32,System.Int32@)">
             <summary>
-            	Gets rows from the datasource based on the FK_ConditionOrderDetail_ConditionOrder key.
-            	FK_ConditionOrderDetail_ConditionOrder Description: 
-            </summary>
-            <param name="start">Row number at which to start reading.</param>
-            <param name="pageLength">Number of rows to return.</param>
-            <param name="transactionManager"><see cref="T:ETradeOrders.DataAccess.TransactionManager"/> object</param>
-            <param name="_conditionOrderId">Foreign key to ConditionOrder table</param>
-            <param name="count">out parameter to get total records for query</param>
-            <remarks></remarks>
-            <returns>Returns a typed collection of ETradeOrders.Entities.ConditionOrderDetail objects.</returns>
-            <exception cref="T:System.Exception">The command could not be executed.</exception>
-            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
-            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
-        </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.GetByDetailId(ETradeOrders.DataAccess.TransactionManager,System.Int64,System.Int32,System.Int32,System.Int32@)">
-            <summary>
-            	Gets rows from the datasource based on the PK_CONDITIONORDERDETAIL index.
+            	Gets rows from the datasource based on the PK_ConditionOrder index.
             </summary>
             <param name="transactionManager"><see cref="T:ETradeOrders.DataAccess.TransactionManager"/> object</param>
-            <param name="_detailId">Auto increase key</param>
+            <param name="_conditionOrderId">ConditionOrderID identifies ConditionOrder</param>
             <param name="start">Row number at which to start reading.</param>
             <param name="pageLength">Number of rows to return.</param>
             <param name="count">out parameter to get total records for query.</param>
-            <returns>Returns an instance of the <see cref="T:ETradeOrders.Entities.ConditionOrderDetail"/> class.</returns>
+            <returns>Returns an instance of the <see cref="T:ETradeOrders.Entities.ConditionOrder"/> class.</returns>
             <remarks></remarks>
             <exception cref="T:System.Exception">The command could not be executed.</exception>
             <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
             <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.BulkInsert(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.TList{ETradeOrders.Entities.ConditionOrderDetail})">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.BulkInsert(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.TList{ETradeOrders.Entities.ConditionOrder})">
             <summary>
             Lets you efficiently bulk insert many entities to the database.
             </summary>
             <param name="transactionManager">The transaction manager.</param>
             <param name="entities">The entities.</param>
             <remarks>
-            	After inserting into the datasource, the ETradeOrders.Entities.ConditionOrderDetail object will be updated
+            	After inserting into the datasource, the ETradeOrders.Entities.ConditionOrder object will be updated
             	to refelect any changes made by the datasource. (ie: identity or computed columns)
             </remarks>	
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.Insert(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.ConditionOrderDetail)">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.Insert(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.ConditionOrder)">
             <summary>
-            	Inserts a ETradeOrders.Entities.ConditionOrderDetail object into the datasource using a transaction.
+            	Inserts a ETradeOrders.Entities.ConditionOrder object into the datasource using a transaction.
             </summary>
             <param name="transactionManager"><see cref="T:ETradeOrders.DataAccess.TransactionManager"/> object</param>
-            <param name="entity">ETradeOrders.Entities.ConditionOrderDetail object to insert.</param>
+            <param name="entity">ETradeOrders.Entities.ConditionOrder object to insert.</param>
             <remarks>
-            	After inserting into the datasource, the ETradeOrders.Entities.ConditionOrderDetail object will be updated
+            	After inserting into the datasource, the ETradeOrders.Entities.ConditionOrder object will be updated
             	to refelect any changes made by the datasource. (ie: identity or computed columns)
             </remarks>	
             <returns>Returns true if operation is successful.</returns>
@@ -143,14 +127,14 @@
             <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
             <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.Update(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.ConditionOrderDetail)">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.Update(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.ConditionOrder)">
             <summary>
             	Update an existing row in the datasource.
             </summary>
             <param name="transactionManager"><see cref="T:ETradeOrders.DataAccess.TransactionManager"/> object</param>
-            <param name="entity">ETradeOrders.Entities.ConditionOrderDetail object to update.</param>
+            <param name="entity">ETradeOrders.Entities.ConditionOrder object to update.</param>
             <remarks>
-            	After updating the datasource, the ETradeOrders.Entities.ConditionOrderDetail object will be updated
+            	After updating the datasource, the ETradeOrders.Entities.ConditionOrder object will be updated
             	to refelect any changes made by the datasource. (ie: identity or computed columns)
             </remarks>
             <returns>Returns true if operation is successful.</returns>
@@ -158,19 +142,40 @@
             <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
             <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
         </member>
-        <member name="P:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.ConnectionString">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.GetListTodayOrders(ETradeOrders.DataAccess.TransactionManager,System.Int32,System.Int32,System.String)">
+            <summary>
+            This method wraps the '_ConditionOrder_GetListTodayOrders' stored procedure. 
+            </summary>	
+            <param name="market"> A <c>System.String</c> instance.</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="transactionManager"><see cref="T:ETradeOrders.DataAccess.TransactionManager"/> object.</param>
+            <remark>This method is generated from a stored procedure.</remark>
+            <returns>A <see cref="T:ETradeOrders.Entities.TList`1"/> instance.</returns>
+        </member>
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.UpdateExpiredData(ETradeOrders.DataAccess.TransactionManager,System.Int32,System.Int32,System.Nullable{System.Int32})">
+            <summary>
+            This method wraps the '_ConditionOrder_UpdateExpiredData' stored procedure. 
+            </summary>	
+            <param name="condition"> A <c>System.Int32?</c> instance.</param>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="transactionManager"><see cref="T:ETradeOrders.DataAccess.TransactionManager"/> object.</param>
+            <remark>This method is generated from a stored procedure.</remark>
+        </member>
+        <member name="P:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.ConnectionString">
             <summary>
             Gets or sets the connection string.
             </summary>
             <value>The connection string.</value>
         </member>
-        <member name="P:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.UseStoredProcedure">
+        <member name="P:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.UseStoredProcedure">
             <summary>
             Gets or sets a value indicating whether to use stored procedures.
             </summary>
             <value><c>true</c> if we choose to use use stored procedures; otherwise, <c>false</c>.</value>
         </member>
-        <member name="P:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.ProviderInvariantName">
+        <member name="P:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.ProviderInvariantName">
             <summary>
             Gets or sets the invariant provider name listed in the DbProviderFactories machine.config section.
             </summary>
@@ -383,19 +388,172 @@
             </summary>
             <value>The name of the provider invariant.</value>
         </member>
-        <member name="T:ETradeOrders.DataAccess.SqlClient.SqlExecOrderProvider">
+        <member name="T:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider">
             <summary>
-             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeOrders.Entities.ExecOrder"/> entity.
+            Summary description for Procedures.
             </summary>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlExecOrderProvider.#ctor(System.String,System.Boolean,System.String)">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider.#ctor">
             <summary>
-            Creates a new <see cref="T:ETradeOrders.DataAccess.SqlClient.SqlExecOrderProvider"/> instance.
-            Uses connection string to connect to datasource.
+            Creates a new <see cref="T:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider"/> instance.
             </summary>
-            <param name="connectionString">The connection string to the database.</param>
-            <param name="useStoredProcedure">A boolean value that indicates if we use the stored procedures or embedded queries.</param>
-            <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
+        </member>
+        <member name="M:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider.Serialize(System.String)">
+            <summary>
+            Serializes the specified filename.
+            </summary>
+            <param name="filename">Filename.</param>
+        </member>
+        <member name="M:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider.Deserialize">
+            <summary>
+            Deserializes this instance.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider.GetProcedureBodyFromEmbeddedResource(System.String)">
+            <summary>
+            Get the query text from the embedded xml file.
+            </summary>
+            <param name="name">The name of the query.</param>
+            <returns>the text of the query</returns>
+        </member>
+        <member name="M:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider.GetCommandWrapper(Microsoft.Practices.EnterpriseLibrary.Data.Database,System.String,System.Boolean)">
+            <summary>
+            Get the command wrapper, either from the stored procedures or from the embedded queries.
+            </summary>
+            <param name="database">The database instance.</param>
+            <param name="commandName">the name of the sp.</param>
+            <param name="useStoredProcedure">Indicates if we want stored procedure.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider.GetCommandWrapper(Microsoft.Practices.EnterpriseLibrary.Data.Database,System.String,System.Type,ETradeOrders.DataAccess.SqlFilterParameterCollection,System.String,System.Int32,System.Int32)">
+            <summary>
+            Gets the command wrapper for a dynamically generated query and
+            optionally includes server-side paging.
+            </summary>
+            <param name="database"></param>
+            <param name="commandName"></param>
+            <param name="columnEnum"></param>
+            <param name="parameters"></param>
+            <param name="orderBy"></param>
+            <param name="start"></param>
+            <param name="pageLength"></param>
+            <returns></returns>
+        </member>
+        <member name="P:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider.Current">
+            <summary>
+            Gets the current <see cref="T:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider"/> singleton instance.
+            </summary>
+            <value><see cref="T:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider"/></value>
+        </member>
+        <member name="P:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider.Procedures">
+            <summary>
+            Gets or sets the procedures.
+            </summary>
+            <value>An <see cref="T:System.Collections.ArrayList"/> of <see cref="T:ETradeOrders.DataAccess.SqlClient.Procedure"/> objects.</value>
+        </member>
+        <member name="P:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider.Item(System.String)">
+            <summary>
+            Gets or sets the <see cref="T:ETradeOrders.DataAccess.SqlClient.Procedure"/> instance with the specified name.
+            </summary>
+        </member>
+        <member name="P:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider.Item(System.Int32)">
+            <summary>
+            Gets or sets the <see cref="T:ETradeOrders.DataAccess.SqlClient.Procedure"/> instance at the specified index.
+            </summary>
+        </member>
+        <member name="T:ETradeOrders.DataAccess.SqlClient.Procedure">
+            <summary>
+            Represents a sql query.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.DataAccess.SqlClient.Procedure.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeOrders.DataAccess.SqlClient.Procedure"/> instance.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.DataAccess.SqlClient.Procedure.Parameter(System.String)">
+            <summary>
+            Get the parameter from the specified name of the param.
+            </summary>
+            <param name="paramName">Name of the param.</param>
+            <returns></returns>
+        </member>
+        <member name="P:ETradeOrders.DataAccess.SqlClient.Procedure.Parameters">
+            <summary>
+            Gets or sets the parameters.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeOrders.DataAccess.SqlClient.Procedure.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeOrders.DataAccess.SqlClient.Procedure.Owner">
+            <summary>
+            Gets or sets the owner.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeOrders.DataAccess.SqlClient.Procedure.Comment">
+            <summary>
+            Gets or sets the comment.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeOrders.DataAccess.SqlClient.Procedure.Body">
+            <summary>
+            Gets or sets the body.
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:ETradeOrders.DataAccess.SqlClient.Parameter">
+            <summary>
+            Respresents a query parameter.
+            </summary>
+        </member>
+        <member name="M:ETradeOrders.DataAccess.SqlClient.Parameter.#ctor">
+            <summary>
+            Creates a new <see cref="T:ETradeOrders.DataAccess.SqlClient.Parameter"/> instance.
+            </summary>
+        </member>
+        <member name="P:ETradeOrders.DataAccess.SqlClient.Parameter.Name">
+            <summary>
+            Gets or sets the Name.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeOrders.DataAccess.SqlClient.Parameter.SqlType">
+            <summary>
+            Gets or sets the SqlType.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeOrders.DataAccess.SqlClient.Parameter.Direction">
+            <summary>
+            Gets or sets the Direction.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeOrders.DataAccess.SqlClient.Parameter.Size">
+            <summary>
+            Gets or sets the size.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeOrders.DataAccess.SqlClient.Parameter.Precision">
+            <summary>
+            Gets or sets the precision.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:ETradeOrders.DataAccess.SqlClient.Parameter.Scale">
+            <summary>
+            Gets or sets the scale.
+            </summary>
+            <value></value>
         </member>
         <member name="T:ETradeOrders.DataAccess.SqlClient.SqlQuickOrderProvider">
             <summary>
@@ -567,30 +725,30 @@
             <param name="useStoredProcedure">A boolean value that indicates if we use the stored procedures or embedded queries.</param>
             <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
         </member>
-        <member name="T:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase">
+        <member name="T:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase">
             <summary>
-             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeOrders.Entities.ConditionOrder"/> entity.
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeOrders.Entities.ConditionOrderDetail"/> entity.
             </summary>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.#ctor">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.#ctor">
             <summary>
-            Creates a new <see cref="T:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase"/> instance.
+            Creates a new <see cref="T:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase"/> instance.
             </summary>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.#ctor(System.String,System.Boolean,System.String)">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.#ctor(System.String,System.Boolean,System.String)">
             <summary>
-            Creates a new <see cref="T:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase"/> instance.
+            Creates a new <see cref="T:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase"/> instance.
             Uses connection string to connect to datasource.
             </summary>
             <param name="connectionString">The connection string to the database.</param>
             <param name="useStoredProcedure">A boolean value that indicates if we should use stored procedures or embedded queries.</param>
             <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.Delete(ETradeOrders.DataAccess.TransactionManager,System.Int64)">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.Delete(ETradeOrders.DataAccess.TransactionManager,System.Int64)">
             <summary>
             	Deletes a row from the DataSource.
             </summary>
-            <param name="_conditionOrderId">ConditionOrderID identifies ConditionOrder. Primary Key.</param>	
+            <param name="_detailId">Auto increase key. Primary Key.</param>	
             <param name="transactionManager"><see cref="T:ETradeOrders.DataAccess.TransactionManager"/> object</param>
             <remarks>Deletes based on primary key(s).</remarks>
             <returns>Returns true if operation suceeded.</returns>
@@ -598,7 +756,7 @@
             <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
             <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.Find(ETradeOrders.DataAccess.TransactionManager,System.String,System.Int32,System.Int32,System.Int32@)">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.Find(ETradeOrders.DataAccess.TransactionManager,System.String,System.Int32,System.Int32,System.Int32@)">
             <summary>
             	Returns rows meeting the whereClause condition from the DataSource.
             </summary>
@@ -608,9 +766,9 @@
             <param name="pageLength">Number of rows to return.</param>
             <param name="count">out. The number of rows that match this query.</param>
             <remarks>Operators must be capitalized (OR, AND).</remarks>
-            <returns>Returns a typed collection of ETradeOrders.Entities.ConditionOrder objects.</returns>
+            <returns>Returns a typed collection of ETradeOrders.Entities.ConditionOrderDetail objects.</returns>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.Find(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.DataAccess.IFilterParameterCollection,System.String,System.Int32,System.Int32,System.Int32@)">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.Find(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.DataAccess.IFilterParameterCollection,System.String,System.Int32,System.Int32,System.Int32@)">
             <summary>
             	Returns rows from the DataSource that meet the parameter conditions.
             </summary>
@@ -620,9 +778,9 @@
             <param name="start">Row number at which to start reading.</param>
             <param name="pageLength">Number of rows to return.</param>
             <param name="count">out. The number of rows that match this query.</param>
-            <returns>Returns a typed collection of ETradeOrders.Entities.ConditionOrder objects.</returns>
+            <returns>Returns a typed collection of ETradeOrders.Entities.ConditionOrderDetail objects.</returns>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.GetAll(ETradeOrders.DataAccess.TransactionManager,System.Int32,System.Int32,System.Int32@)">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.GetAll(ETradeOrders.DataAccess.TransactionManager,System.Int32,System.Int32,System.Int32@)">
             <summary>
             	Gets All rows from the DataSource.
             </summary>
@@ -631,12 +789,12 @@
             <param name="pageLength">Number of rows to return.</param>
             <param name="count">out. The number of rows that match this query.</param>
             <remarks></remarks>
-            <returns>Returns a typed collection of ETradeOrders.Entities.ConditionOrder objects.</returns>
+            <returns>Returns a typed collection of ETradeOrders.Entities.ConditionOrderDetail objects.</returns>
             <exception cref="T:System.Exception">The command could not be executed.</exception>
             <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
             <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.GetPaged(ETradeOrders.DataAccess.TransactionManager,System.String,System.String,System.Int32,System.Int32,System.Int32@)">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.GetPaged(ETradeOrders.DataAccess.TransactionManager,System.String,System.String,System.Int32,System.Int32,System.Int32@)">
             <summary>
             Gets a page of rows from the DataSource.
             </summary>
@@ -647,42 +805,58 @@
             <param name="orderBy">Specifies the sort criteria for the rows in the DataSource (Name ASC; BirthDay DESC, Name ASC);</param>
             <param name="transactionManager"><see cref="T:ETradeOrders.DataAccess.TransactionManager"/> object</param>
             <remarks></remarks>
-            <returns>Returns a typed collection of ETradeOrders.Entities.ConditionOrder objects.</returns>
+            <returns>Returns a typed collection of ETradeOrders.Entities.ConditionOrderDetail objects.</returns>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.GetByConditionOrderId(ETradeOrders.DataAccess.TransactionManager,System.Int64,System.Int32,System.Int32,System.Int32@)">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.GetByConditionOrderId(ETradeOrders.DataAccess.TransactionManager,System.Int64,System.Int32,System.Int32,System.Int32@)">
             <summary>
-            	Gets rows from the datasource based on the PK_ConditionOrder index.
+            	Gets rows from the datasource based on the FK_ConditionOrderDetail_ConditionOrder key.
+            	FK_ConditionOrderDetail_ConditionOrder Description: 
+            </summary>
+            <param name="start">Row number at which to start reading.</param>
+            <param name="pageLength">Number of rows to return.</param>
+            <param name="transactionManager"><see cref="T:ETradeOrders.DataAccess.TransactionManager"/> object</param>
+            <param name="_conditionOrderId">Foreign key to ConditionOrder table</param>
+            <param name="count">out parameter to get total records for query</param>
+            <remarks></remarks>
+            <returns>Returns a typed collection of ETradeOrders.Entities.ConditionOrderDetail objects.</returns>
+            <exception cref="T:System.Exception">The command could not be executed.</exception>
+            <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
+            <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
+        </member>
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.GetByDetailId(ETradeOrders.DataAccess.TransactionManager,System.Int64,System.Int32,System.Int32,System.Int32@)">
+            <summary>
+            	Gets rows from the datasource based on the PK_CONDITIONORDERDETAIL index.
             </summary>
             <param name="transactionManager"><see cref="T:ETradeOrders.DataAccess.TransactionManager"/> object</param>
-            <param name="_conditionOrderId">ConditionOrderID identifies ConditionOrder</param>
+            <param name="_detailId">Auto increase key</param>
             <param name="start">Row number at which to start reading.</param>
             <param name="pageLength">Number of rows to return.</param>
             <param name="count">out parameter to get total records for query.</param>
-            <returns>Returns an instance of the <see cref="T:ETradeOrders.Entities.ConditionOrder"/> class.</returns>
+            <returns>Returns an instance of the <see cref="T:ETradeOrders.Entities.ConditionOrderDetail"/> class.</returns>
             <remarks></remarks>
             <exception cref="T:System.Exception">The command could not be executed.</exception>
             <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
             <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.BulkInsert(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.TList{ETradeOrders.Entities.ConditionOrder})">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.BulkInsert(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.TList{ETradeOrders.Entities.ConditionOrderDetail})">
             <summary>
             Lets you efficiently bulk insert many entities to the database.
             </summary>
             <param name="transactionManager">The transaction manager.</param>
             <param name="entities">The entities.</param>
             <remarks>
-            	After inserting into the datasource, the ETradeOrders.Entities.ConditionOrder object will be updated
+            	After inserting into the datasource, the ETradeOrders.Entities.ConditionOrderDetail object will be updated
             	to refelect any changes made by the datasource. (ie: identity or computed columns)
             </remarks>	
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.Insert(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.ConditionOrder)">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.Insert(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.ConditionOrderDetail)">
             <summary>
-            	Inserts a ETradeOrders.Entities.ConditionOrder object into the datasource using a transaction.
+            	Inserts a ETradeOrders.Entities.ConditionOrderDetail object into the datasource using a transaction.
             </summary>
             <param name="transactionManager"><see cref="T:ETradeOrders.DataAccess.TransactionManager"/> object</param>
-            <param name="entity">ETradeOrders.Entities.ConditionOrder object to insert.</param>
+            <param name="entity">ETradeOrders.Entities.ConditionOrderDetail object to insert.</param>
             <remarks>
-            	After inserting into the datasource, the ETradeOrders.Entities.ConditionOrder object will be updated
+            	After inserting into the datasource, the ETradeOrders.Entities.ConditionOrderDetail object will be updated
             	to refelect any changes made by the datasource. (ie: identity or computed columns)
             </remarks>	
             <returns>Returns true if operation is successful.</returns>
@@ -690,14 +864,14 @@
             <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
             <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.Update(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.ConditionOrder)">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.Update(ETradeOrders.DataAccess.TransactionManager,ETradeOrders.Entities.ConditionOrderDetail)">
             <summary>
             	Update an existing row in the datasource.
             </summary>
             <param name="transactionManager"><see cref="T:ETradeOrders.DataAccess.TransactionManager"/> object</param>
-            <param name="entity">ETradeOrders.Entities.ConditionOrder object to update.</param>
+            <param name="entity">ETradeOrders.Entities.ConditionOrderDetail object to update.</param>
             <remarks>
-            	After updating the datasource, the ETradeOrders.Entities.ConditionOrder object will be updated
+            	After updating the datasource, the ETradeOrders.Entities.ConditionOrderDetail object will be updated
             	to refelect any changes made by the datasource. (ie: identity or computed columns)
             </remarks>
             <returns>Returns true if operation is successful.</returns>
@@ -705,40 +879,19 @@
             <exception cref="T:System.Data.DataException">The <paramref name="transactionManager"/> is not open.</exception>
             <exception cref="T:System.Data.Common.DbException">The command could not be executed.</exception>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.GetListTodayOrders(ETradeOrders.DataAccess.TransactionManager,System.Int32,System.Int32,System.String)">
-            <summary>
-            This method wraps the '_ConditionOrder_GetListTodayOrders' stored procedure. 
-            </summary>	
-            <param name="market"> A <c>System.String</c> instance.</param>
-            <param name="start">Row number at which to start reading.</param>
-            <param name="pageLength">Number of rows to return.</param>
-            <param name="transactionManager"><see cref="T:ETradeOrders.DataAccess.TransactionManager"/> object.</param>
-            <remark>This method is generated from a stored procedure.</remark>
-            <returns>A <see cref="T:ETradeOrders.Entities.TList`1"/> instance.</returns>
-        </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.UpdateExpiredData(ETradeOrders.DataAccess.TransactionManager,System.Int32,System.Int32,System.Nullable{System.Int32})">
-            <summary>
-            This method wraps the '_ConditionOrder_UpdateExpiredData' stored procedure. 
-            </summary>	
-            <param name="condition"> A <c>System.Int32?</c> instance.</param>
-            <param name="start">Row number at which to start reading.</param>
-            <param name="pageLength">Number of rows to return.</param>
-            <param name="transactionManager"><see cref="T:ETradeOrders.DataAccess.TransactionManager"/> object.</param>
-            <remark>This method is generated from a stored procedure.</remark>
-        </member>
-        <member name="P:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.ConnectionString">
+        <member name="P:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.ConnectionString">
             <summary>
             Gets or sets the connection string.
             </summary>
             <value>The connection string.</value>
         </member>
-        <member name="P:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.UseStoredProcedure">
+        <member name="P:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.UseStoredProcedure">
             <summary>
             Gets or sets a value indicating whether to use stored procedures.
             </summary>
             <value><c>true</c> if we choose to use use stored procedures; otherwise, <c>false</c>.</value>
         </member>
-        <member name="P:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProviderBase.ProviderInvariantName">
+        <member name="P:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderDetailProviderBase.ProviderInvariantName">
             <summary>
             Gets or sets the invariant provider name listed in the DbProviderFactories machine.config section.
             </summary>
@@ -1041,14 +1194,14 @@
             </summary>
             <value></value>
         </member>
-        <member name="T:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProvider">
+        <member name="T:ETradeOrders.DataAccess.SqlClient.SqlExecOrderProvider">
             <summary>
-             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeOrders.Entities.ConditionOrder"/> entity.
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeOrders.Entities.ExecOrder"/> entity.
             </summary>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProvider.#ctor(System.String,System.Boolean,System.String)">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlExecOrderProvider.#ctor(System.String,System.Boolean,System.String)">
             <summary>
-            Creates a new <see cref="T:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProvider"/> instance.
+            Creates a new <see cref="T:ETradeOrders.DataAccess.SqlClient.SqlExecOrderProvider"/> instance.
             Uses connection string to connect to datasource.
             </summary>
             <param name="connectionString">The connection string to the database.</param>
@@ -1069,172 +1222,19 @@
             <param name="useStoredProcedure">A boolean value that indicates if we use the stored procedures or embedded queries.</param>
             <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
         </member>
-        <member name="T:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider">
+        <member name="T:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProvider">
             <summary>
-            Summary description for Procedures.
+             This class is the SqlClient Data Access Logic Component implementation for the <see cref="T:ETradeOrders.Entities.ConditionOrder"/> entity.
             </summary>
         </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider.#ctor">
+        <member name="M:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProvider.#ctor(System.String,System.Boolean,System.String)">
             <summary>
-            Creates a new <see cref="T:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider"/> instance.
+            Creates a new <see cref="T:ETradeOrders.DataAccess.SqlClient.SqlConditionOrderProvider"/> instance.
+            Uses connection string to connect to datasource.
             </summary>
-        </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider.Serialize(System.String)">
-            <summary>
-            Serializes the specified filename.
-            </summary>
-            <param name="filename">Filename.</param>
-        </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider.Deserialize">
-            <summary>
-            Deserializes this instance.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider.GetProcedureBodyFromEmbeddedResource(System.String)">
-            <summary>
-            Get the query text from the embedded xml file.
-            </summary>
-            <param name="name">The name of the query.</param>
-            <returns>the text of the query</returns>
-        </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider.GetCommandWrapper(Microsoft.Practices.EnterpriseLibrary.Data.Database,System.String,System.Boolean)">
-            <summary>
-            Get the command wrapper, either from the stored procedures or from the embedded queries.
-            </summary>
-            <param name="database">The database instance.</param>
-            <param name="commandName">the name of the sp.</param>
-            <param name="useStoredProcedure">Indicates if we want stored procedure.</param>
-            <returns></returns>
-        </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider.GetCommandWrapper(Microsoft.Practices.EnterpriseLibrary.Data.Database,System.String,System.Type,ETradeOrders.DataAccess.SqlFilterParameterCollection,System.String,System.Int32,System.Int32)">
-            <summary>
-            Gets the command wrapper for a dynamically generated query and
-            optionally includes server-side paging.
-            </summary>
-            <param name="database"></param>
-            <param name="commandName"></param>
-            <param name="columnEnum"></param>
-            <param name="parameters"></param>
-            <param name="orderBy"></param>
-            <param name="start"></param>
-            <param name="pageLength"></param>
-            <returns></returns>
-        </member>
-        <member name="P:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider.Current">
-            <summary>
-            Gets the current <see cref="T:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider"/> singleton instance.
-            </summary>
-            <value><see cref="T:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider"/></value>
-        </member>
-        <member name="P:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider.Procedures">
-            <summary>
-            Gets or sets the procedures.
-            </summary>
-            <value>An <see cref="T:System.Collections.ArrayList"/> of <see cref="T:ETradeOrders.DataAccess.SqlClient.Procedure"/> objects.</value>
-        </member>
-        <member name="P:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider.Item(System.String)">
-            <summary>
-            Gets or sets the <see cref="T:ETradeOrders.DataAccess.SqlClient.Procedure"/> instance with the specified name.
-            </summary>
-        </member>
-        <member name="P:ETradeOrders.DataAccess.SqlClient.StoredProcedureProvider.Item(System.Int32)">
-            <summary>
-            Gets or sets the <see cref="T:ETradeOrders.DataAccess.SqlClient.Procedure"/> instance at the specified index.
-            </summary>
-        </member>
-        <member name="T:ETradeOrders.DataAccess.SqlClient.Procedure">
-            <summary>
-            Represents a sql query.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.Procedure.#ctor">
-            <summary>
-            Creates a new <see cref="T:ETradeOrders.DataAccess.SqlClient.Procedure"/> instance.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.Procedure.Parameter(System.String)">
-            <summary>
-            Get the parameter from the specified name of the param.
-            </summary>
-            <param name="paramName">Name of the param.</param>
-            <returns></returns>
-        </member>
-        <member name="P:ETradeOrders.DataAccess.SqlClient.Procedure.Parameters">
-            <summary>
-            Gets or sets the parameters.
-            </summary>
-            <value></value>
-        </member>
-        <member name="P:ETradeOrders.DataAccess.SqlClient.Procedure.Name">
-            <summary>
-            Gets or sets the name.
-            </summary>
-            <value></value>
-        </member>
-        <member name="P:ETradeOrders.DataAccess.SqlClient.Procedure.Owner">
-            <summary>
-            Gets or sets the owner.
-            </summary>
-            <value></value>
-        </member>
-        <member name="P:ETradeOrders.DataAccess.SqlClient.Procedure.Comment">
-            <summary>
-            Gets or sets the comment.
-            </summary>
-            <value></value>
-        </member>
-        <member name="P:ETradeOrders.DataAccess.SqlClient.Procedure.Body">
-            <summary>
-            Gets or sets the body.
-            </summary>
-            <value></value>
-        </member>
-        <member name="T:ETradeOrders.DataAccess.SqlClient.Parameter">
-            <summary>
-            Respresents a query parameter.
-            </summary>
-        </member>
-        <member name="M:ETradeOrders.DataAccess.SqlClient.Parameter.#ctor">
-            <summary>
-            Creates a new <see cref="T:ETradeOrders.DataAccess.SqlClient.Parameter"/> instance.
-            </summary>
-        </member>
-        <member name="P:ETradeOrders.DataAccess.SqlClient.Parameter.Name">
-            <summary>
-            Gets or sets the Name.
-            </summary>
-            <value></value>
-        </member>
-        <member name="P:ETradeOrders.DataAccess.SqlClient.Parameter.SqlType">
-            <summary>
-            Gets or sets the SqlType.
-            </summary>
-            <value></value>
-        </member>
-        <member name="P:ETradeOrders.DataAccess.SqlClient.Parameter.Direction">
-            <summary>
-            Gets or sets the Direction.
-            </summary>
-            <value></value>
-        </member>
-        <member name="P:ETradeOrders.DataAccess.SqlClient.Parameter.Size">
-            <summary>
-            Gets or sets the size.
-            </summary>
-            <value></value>
-        </member>
-        <member name="P:ETradeOrders.DataAccess.SqlClient.Parameter.Precision">
-            <summary>
-            Gets or sets the precision.
-            </summary>
-            <value></value>
-        </member>
-        <member name="P:ETradeOrders.DataAccess.SqlClient.Parameter.Scale">
-            <summary>
-            Gets or sets the scale.
-            </summary>
-            <value></value>
+            <param name="connectionString">The connection string to the database.</param>
+            <param name="useStoredProcedure">A boolean value that indicates if we use the stored procedures or embedded queries.</param>
+            <param name="providerInvariantName">Name of the invariant provider use by the DbProviderFactory.</param>
         </member>
     </members>
 </doc>

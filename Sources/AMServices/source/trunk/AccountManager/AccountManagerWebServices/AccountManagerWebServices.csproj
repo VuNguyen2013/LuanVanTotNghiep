@@ -65,7 +65,9 @@
   <ItemGroup>
     <Content Include="AccountManagerServices.asmx" />
     <Content Include="Sample.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountManagerServices.asmx.cs">

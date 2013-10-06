@@ -4,6 +4,340 @@
         <name>AccountManager.UnitTests</name>
     </assembly>
     <members>
+        <member name="T:AccountManager.UnitTests.SubCustAccountPermissionTest">
+            <summary>
+            Provides tests for the and <see cref="T:AccountManager.Entities.SubCustAccountPermission"/> objects (entity, collection and repository).
+            </summary>
+            <summary>
+            Provides tests for the and <see cref="T:AccountManager.Entities.SubCustAccountPermission"/> objects (entity, collection and repository).
+            </summary>
+            <remarks>
+            This file is generated once and will never be overwritten.
+            </remarks>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Init_Generated">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.CleanUp_Generated">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_02_SelectAll_Generated">
+            <summary>
+            Selects all SubCustAccountPermission objects of the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_03_DeepLoad_Generated">
+            <summary>
+            Deep load all SubCustAccountPermission children.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_06_SerializeEntity_Generated">
+            <summary>
+            Serialize the mock SubCustAccountPermission entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_07_DeserializeEntity_Generated">
+            <summary>
+            Deserialize the mock SubCustAccountPermission entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_08_SerializeCollection_Generated">
+            <summary>
+            Serialize a SubCustAccountPermission collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_09_DeserializeCollection_Generated">
+            <summary>
+            Deserialize a SubCustAccountPermission collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_20_TestEntityHelper_Generated">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_30_TestFindByQuery_Generated">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.CreateMockInstance_Generated(AccountManager.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed SubCustAccountPermission Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.UpdateMockInstance_Generated(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.SubCustAccountPermission)">
+            <summary>
+              Update the Typed SubCustAccountPermission Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.#ctor">
+            <summary>
+            Creates a new <see cref="T:AccountManager.UnitTests.SubCustAccountPermissionTest"/> instance.
+            </summary>	
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Init">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Dispose">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_02_SelectAll">
+            <summary>
+            Selects a sample of  SubCustAccountPermission objects of the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_03_DeepLoad">
+            <summary>
+            Deep load all SubCustAccountPermission children.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_06_SerializeEntity">
+            <summary>
+            Serialize the mock SubCustAccountPermission entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_07_DeserializeEntity">
+            <summary>
+            Deserialize the mock SubCustAccountPermission entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_08_SerializeCollection">
+            <summary>
+            Serialize a SubCustAccountPermission collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_09_DeserializeCollection">
+            <summary>
+            Deserialize a SubCustAccountPermission collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_20_TestEntityHelper">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_30_TestFindByQuery">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.CreateMockInstance(AccountManager.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed SubCustAccountPermission Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.UpdateMockInstance(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.SubCustAccountPermission)">
+            <summary>
+              Update the Typed SubCustAccountPermission Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.SetSpecialTestData(AccountManager.Entities.SubCustAccountPermission)">
+            <summary>
+            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
+            </summary>
+            <param name="mock">Object to be modified</param>
+        </member>
+        <member name="T:AccountManager.UnitTests.ConfigurationsTest">
+            <summary>
+            Provides tests for the and <see cref="T:AccountManager.Entities.Configurations"/> objects (entity, collection and repository).
+            </summary>
+            <summary>
+            Provides tests for the and <see cref="T:AccountManager.Entities.Configurations"/> objects (entity, collection and repository).
+            </summary>
+            <remarks>
+            This file is generated once and will never be overwritten.
+            </remarks>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Init_Generated">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.CleanUp_Generated">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_01_Insert_Generated">
+            <summary>
+            Inserts a mock Configurations entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_02_SelectAll_Generated">
+            <summary>
+            Selects all Configurations objects of the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_03_DeepLoad_Generated">
+            <summary>
+            Deep load all Configurations children.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_04_Update_Generated">
+            <summary>
+            Updates a mock Configurations entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_05_Delete_Generated">
+            <summary>
+            Delete the mock Configurations entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_06_SerializeEntity_Generated">
+            <summary>
+            Serialize the mock Configurations entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_07_DeserializeEntity_Generated">
+            <summary>
+            Deserialize the mock Configurations entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_08_SerializeCollection_Generated">
+            <summary>
+            Serialize a Configurations collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_09_DeserializeCollection_Generated">
+            <summary>
+            Deserialize a Configurations collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_10_FK_Generated">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_11_IX_Generated">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_20_TestEntityHelper_Generated">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_30_TestFindByQuery_Generated">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.CreateMockInstance_Generated(AccountManager.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed Configurations Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.UpdateMockInstance_Generated(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.Configurations)">
+            <summary>
+              Update the Typed Configurations Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.#ctor">
+            <summary>
+            Creates a new <see cref="T:AccountManager.UnitTests.ConfigurationsTest"/> instance.
+            </summary>	
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Init">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Dispose">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_01_Insert">
+            <summary>
+            Inserts a mock Configurations entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_02_SelectAll">
+            <summary>
+            Selects a sample of  Configurations objects of the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_03_DeepLoad">
+            <summary>
+            Deep load all Configurations children.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_04_Update">
+            <summary>
+            Updates a mock Configurations entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_05_Delete">
+            <summary>
+            Delete the mock Configurations entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_06_SerializeEntity">
+            <summary>
+            Serialize the mock Configurations entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_07_DeserializeEntity">
+            <summary>
+            Deserialize the mock Configurations entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_08_SerializeCollection">
+            <summary>
+            Serialize a Configurations collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_09_DeserializeCollection">
+            <summary>
+            Deserialize a Configurations collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_10_FK">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_11_IX">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_20_TestEntityHelper">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_30_TestFindByQuery">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.CreateMockInstance(AccountManager.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed Configurations Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.UpdateMockInstance(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.Configurations)">
+            <summary>
+              Update the Typed Configurations Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ConfigurationsTest.SetSpecialTestData(AccountManager.Entities.Configurations)">
+            <summary>
+            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
+            </summary>
+            <param name="mock">Object to be modified</param>
+        </member>
         <member name="T:AccountManager.UnitTests.MainCustAccountTest">
             <summary>
             Provides tests for the and <see cref="T:AccountManager.Entities.MainCustAccount"/> objects (entity, collection and repository).
@@ -196,434 +530,15 @@
               Update the Typed MainCustAccount Entity with modified mock values.
             </summary>
         </member>
-        <member name="T:AccountManager.UnitTests.OpenCustAccountTest">
-            <summary>
-            Provides tests for the and <see cref="T:AccountManager.Entities.OpenCustAccount"/> objects (entity, collection and repository).
-            </summary>
-            <summary>
-            Provides tests for the and <see cref="T:AccountManager.Entities.OpenCustAccount"/> objects (entity, collection and repository).
-            </summary>
-            <remarks>
-            This file is generated once and will never be overwritten.
-            </remarks>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Init_Generated">
-            <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.CleanUp_Generated">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_01_Insert_Generated">
-            <summary>
-            Inserts a mock OpenCustAccount entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_02_SelectAll_Generated">
-            <summary>
-            Selects all OpenCustAccount objects of the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_03_DeepLoad_Generated">
-            <summary>
-            Deep load all OpenCustAccount children.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_04_Update_Generated">
-            <summary>
-            Updates a mock OpenCustAccount entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_05_Delete_Generated">
-            <summary>
-            Delete the mock OpenCustAccount entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_06_SerializeEntity_Generated">
-            <summary>
-            Serialize the mock OpenCustAccount entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_07_DeserializeEntity_Generated">
-            <summary>
-            Deserialize the mock OpenCustAccount entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_08_SerializeCollection_Generated">
-            <summary>
-            Serialize a OpenCustAccount collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_09_DeserializeCollection_Generated">
-            <summary>
-            Deserialize a OpenCustAccount collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_10_FK_Generated">
-            <summary>
-            Check the foreign key dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_11_IX_Generated">
-            <summary>
-            Check the indexes dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_20_TestEntityHelper_Generated">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_30_TestFindByQuery_Generated">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.CreateMockInstance_Generated(AccountManager.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed OpenCustAccount Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.UpdateMockInstance_Generated(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.OpenCustAccount)">
-            <summary>
-              Update the Typed OpenCustAccount Entity with modified mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.#ctor">
-            <summary>
-            Creates a new <see cref="T:AccountManager.UnitTests.OpenCustAccountTest"/> instance.
-            </summary>	
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Init">
-            <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Dispose">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_01_Insert">
-            <summary>
-            Inserts a mock OpenCustAccount entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_02_SelectAll">
-            <summary>
-            Selects a sample of  OpenCustAccount objects of the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_03_DeepLoad">
-            <summary>
-            Deep load all OpenCustAccount children.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_04_Update">
-            <summary>
-            Updates a mock OpenCustAccount entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_05_Delete">
-            <summary>
-            Delete the mock OpenCustAccount entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_06_SerializeEntity">
-            <summary>
-            Serialize the mock OpenCustAccount entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_07_DeserializeEntity">
-            <summary>
-            Deserialize the mock OpenCustAccount entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_08_SerializeCollection">
-            <summary>
-            Serialize a OpenCustAccount collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_09_DeserializeCollection">
-            <summary>
-            Deserialize a OpenCustAccount collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_10_FK">
-            <summary>
-            Check the foreign key dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_11_IX">
-            <summary>
-            Check the indexes dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_20_TestEntityHelper">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_30_TestFindByQuery">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.CreateMockInstance(AccountManager.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed OpenCustAccount Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.UpdateMockInstance(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.OpenCustAccount)">
-            <summary>
-              Update the Typed OpenCustAccount Entity with modified mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.SetSpecialTestData(AccountManager.Entities.OpenCustAccount)">
-            <summary>
-            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
-            </summary>
-            <param name="mock">Object to be modified</param>
-        </member>
-        <member name="T:AccountManager.UnitTests.BrokerPermissionTest">
-            <summary>
-            Provides tests for the and <see cref="T:AccountManager.Entities.BrokerPermission"/> objects (entity, collection and repository).
-            </summary>
-            <summary>
-            Provides tests for the and <see cref="T:AccountManager.Entities.BrokerPermission"/> objects (entity, collection and repository).
-            </summary>
-            <remarks>
-            This file is generated once and will never be overwritten.
-            </remarks>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Init_Generated">
-            <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.CleanUp_Generated">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_02_SelectAll_Generated">
-            <summary>
-            Selects all BrokerPermission objects of the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_03_DeepLoad_Generated">
-            <summary>
-            Deep load all BrokerPermission children.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_06_SerializeEntity_Generated">
-            <summary>
-            Serialize the mock BrokerPermission entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_07_DeserializeEntity_Generated">
-            <summary>
-            Deserialize the mock BrokerPermission entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_08_SerializeCollection_Generated">
-            <summary>
-            Serialize a BrokerPermission collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_09_DeserializeCollection_Generated">
-            <summary>
-            Deserialize a BrokerPermission collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_20_TestEntityHelper_Generated">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_30_TestFindByQuery_Generated">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.CreateMockInstance_Generated(AccountManager.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed BrokerPermission Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.UpdateMockInstance_Generated(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.BrokerPermission)">
-            <summary>
-              Update the Typed BrokerPermission Entity with modified mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.#ctor">
-            <summary>
-            Creates a new <see cref="T:AccountManager.UnitTests.BrokerPermissionTest"/> instance.
-            </summary>	
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Init">
-            <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Dispose">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_02_SelectAll">
-            <summary>
-            Selects a sample of  BrokerPermission objects of the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_03_DeepLoad">
-            <summary>
-            Deep load all BrokerPermission children.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_06_SerializeEntity">
-            <summary>
-            Serialize the mock BrokerPermission entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_07_DeserializeEntity">
-            <summary>
-            Deserialize the mock BrokerPermission entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_08_SerializeCollection">
-            <summary>
-            Serialize a BrokerPermission collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_09_DeserializeCollection">
-            <summary>
-            Deserialize a BrokerPermission collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_20_TestEntityHelper">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_30_TestFindByQuery">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.CreateMockInstance(AccountManager.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed BrokerPermission Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.UpdateMockInstance(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.BrokerPermission)">
-            <summary>
-              Update the Typed BrokerPermission Entity with modified mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.SetSpecialTestData(AccountManager.Entities.BrokerPermission)">
-            <summary>
-            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
-            </summary>
-            <param name="mock">Object to be modified</param>
-        </member>
         <member name="T:AccountManager.UnitTests.CustServicesPermissionTest">
             <summary>
             Provides tests for the and <see cref="T:AccountManager.Entities.CustServicesPermission"/> objects (entity, collection and repository).
             </summary>
-            <summary>
-            Provides tests for the and <see cref="T:AccountManager.Entities.CustServicesPermission"/> objects (entity, collection and repository).
-            </summary>
             <remarks>
             This file is generated once and will never be overwritten.
             </remarks>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Init_Generated">
             <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.CleanUp_Generated">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_01_Insert_Generated">
-            <summary>
-            Inserts a mock CustServicesPermission entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_02_SelectAll_Generated">
-            <summary>
-            Selects all CustServicesPermission objects of the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_03_DeepLoad_Generated">
-            <summary>
-            Deep load all CustServicesPermission children.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_04_Update_Generated">
-            <summary>
-            Updates a mock CustServicesPermission entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_05_Delete_Generated">
-            <summary>
-            Delete the mock CustServicesPermission entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_06_SerializeEntity_Generated">
-            <summary>
-            Serialize the mock CustServicesPermission entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_07_DeserializeEntity_Generated">
-            <summary>
-            Deserialize the mock CustServicesPermission entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_08_SerializeCollection_Generated">
-            <summary>
-            Serialize a CustServicesPermission collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_09_DeserializeCollection_Generated">
-            <summary>
-            Deserialize a CustServicesPermission collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_10_FK_Generated">
-            <summary>
-            Check the foreign key dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_11_IX_Generated">
-            <summary>
-            Check the indexes dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_20_TestEntityHelper_Generated">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_30_TestFindByQuery_Generated">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.CreateMockInstance_Generated(AccountManager.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed CustServicesPermission Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.UpdateMockInstance_Generated(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.CustServicesPermission)">
-            <summary>
-              Update the Typed CustServicesPermission Entity with modified mock values.
+            Provides tests for the and <see cref="T:AccountManager.Entities.CustServicesPermission"/> objects (entity, collection and repository).
             </summary>
         </member>
         <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.#ctor">
@@ -722,100 +637,100 @@
             </summary>
             <param name="mock">Object to be modified</param>
         </member>
-        <member name="T:AccountManager.UnitTests.LanguageTest">
+        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Init_Generated">
             <summary>
-            Provides tests for the and <see cref="T:AccountManager.Entities.Language"/> objects (entity, collection and repository).
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.CleanUp_Generated">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
             </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_01_Insert_Generated">
+            <summary>
+            Inserts a mock CustServicesPermission entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_02_SelectAll_Generated">
+            <summary>
+            Selects all CustServicesPermission objects of the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_03_DeepLoad_Generated">
+            <summary>
+            Deep load all CustServicesPermission children.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_04_Update_Generated">
+            <summary>
+            Updates a mock CustServicesPermission entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_05_Delete_Generated">
+            <summary>
+            Delete the mock CustServicesPermission entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_06_SerializeEntity_Generated">
+            <summary>
+            Serialize the mock CustServicesPermission entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_07_DeserializeEntity_Generated">
+            <summary>
+            Deserialize the mock CustServicesPermission entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_08_SerializeCollection_Generated">
+            <summary>
+            Serialize a CustServicesPermission collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_09_DeserializeCollection_Generated">
+            <summary>
+            Deserialize a CustServicesPermission collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_10_FK_Generated">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_11_IX_Generated">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_20_TestEntityHelper_Generated">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.Step_30_TestFindByQuery_Generated">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.CreateMockInstance_Generated(AccountManager.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed CustServicesPermission Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustServicesPermissionTest.UpdateMockInstance_Generated(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.CustServicesPermission)">
+            <summary>
+              Update the Typed CustServicesPermission Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="T:AccountManager.UnitTests.LanguageTest">
             <summary>
             Provides tests for the and <see cref="T:AccountManager.Entities.Language"/> objects (entity, collection and repository).
             </summary>
             <remarks>
             This file is generated once and will never be overwritten.
             </remarks>
-        </member>
-        <member name="M:AccountManager.UnitTests.LanguageTest.Init_Generated">
             <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:AccountManager.UnitTests.LanguageTest.CleanUp_Generated">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.LanguageTest.Step_01_Insert_Generated">
-            <summary>
-            Inserts a mock Language entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.LanguageTest.Step_02_SelectAll_Generated">
-            <summary>
-            Selects all Language objects of the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.LanguageTest.Step_03_DeepLoad_Generated">
-            <summary>
-            Deep load all Language children.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.LanguageTest.Step_04_Update_Generated">
-            <summary>
-            Updates a mock Language entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.LanguageTest.Step_05_Delete_Generated">
-            <summary>
-            Delete the mock Language entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.LanguageTest.Step_06_SerializeEntity_Generated">
-            <summary>
-            Serialize the mock Language entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.LanguageTest.Step_07_DeserializeEntity_Generated">
-            <summary>
-            Deserialize the mock Language entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.LanguageTest.Step_08_SerializeCollection_Generated">
-            <summary>
-            Serialize a Language collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.LanguageTest.Step_09_DeserializeCollection_Generated">
-            <summary>
-            Deserialize a Language collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.LanguageTest.Step_10_FK_Generated">
-            <summary>
-            Check the foreign key dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.LanguageTest.Step_11_IX_Generated">
-            <summary>
-            Check the indexes dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.LanguageTest.Step_20_TestEntityHelper_Generated">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.LanguageTest.Step_30_TestFindByQuery_Generated">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.LanguageTest.CreateMockInstance_Generated(AccountManager.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed Language Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.LanguageTest.UpdateMockInstance_Generated(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.Language)">
-            <summary>
-              Update the Typed Language Entity with modified mock values.
+            Provides tests for the and <see cref="T:AccountManager.Entities.Language"/> objects (entity, collection and repository).
             </summary>
         </member>
         <member name="M:AccountManager.UnitTests.LanguageTest.#ctor">
@@ -909,6 +824,283 @@
             </summary>
         </member>
         <member name="M:AccountManager.UnitTests.LanguageTest.SetSpecialTestData(AccountManager.Entities.Language)">
+            <summary>
+            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
+            </summary>
+            <param name="mock">Object to be modified</param>
+        </member>
+        <member name="M:AccountManager.UnitTests.LanguageTest.Init_Generated">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:AccountManager.UnitTests.LanguageTest.CleanUp_Generated">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.LanguageTest.Step_01_Insert_Generated">
+            <summary>
+            Inserts a mock Language entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.LanguageTest.Step_02_SelectAll_Generated">
+            <summary>
+            Selects all Language objects of the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.LanguageTest.Step_03_DeepLoad_Generated">
+            <summary>
+            Deep load all Language children.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.LanguageTest.Step_04_Update_Generated">
+            <summary>
+            Updates a mock Language entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.LanguageTest.Step_05_Delete_Generated">
+            <summary>
+            Delete the mock Language entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.LanguageTest.Step_06_SerializeEntity_Generated">
+            <summary>
+            Serialize the mock Language entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.LanguageTest.Step_07_DeserializeEntity_Generated">
+            <summary>
+            Deserialize the mock Language entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.LanguageTest.Step_08_SerializeCollection_Generated">
+            <summary>
+            Serialize a Language collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.LanguageTest.Step_09_DeserializeCollection_Generated">
+            <summary>
+            Deserialize a Language collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.LanguageTest.Step_10_FK_Generated">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.LanguageTest.Step_11_IX_Generated">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.LanguageTest.Step_20_TestEntityHelper_Generated">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.LanguageTest.Step_30_TestFindByQuery_Generated">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.LanguageTest.CreateMockInstance_Generated(AccountManager.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed Language Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.LanguageTest.UpdateMockInstance_Generated(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.Language)">
+            <summary>
+              Update the Typed Language Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="T:AccountManager.UnitTests.SubCustAccountTest">
+            <summary>
+            Provides tests for the and <see cref="T:AccountManager.Entities.SubCustAccount"/> objects (entity, collection and repository).
+            </summary>
+            <summary>
+            Provides tests for the and <see cref="T:AccountManager.Entities.SubCustAccount"/> objects (entity, collection and repository).
+            </summary>
+            <remarks>
+            This file is generated once and will never be overwritten.
+            </remarks>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Init_Generated">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.CleanUp_Generated">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_01_Insert_Generated">
+            <summary>
+            Inserts a mock SubCustAccount entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_02_SelectAll_Generated">
+            <summary>
+            Selects all SubCustAccount objects of the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_03_DeepLoad_Generated">
+            <summary>
+            Deep load all SubCustAccount children.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_04_Update_Generated">
+            <summary>
+            Updates a mock SubCustAccount entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_05_Delete_Generated">
+            <summary>
+            Delete the mock SubCustAccount entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_06_SerializeEntity_Generated">
+            <summary>
+            Serialize the mock SubCustAccount entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_07_DeserializeEntity_Generated">
+            <summary>
+            Deserialize the mock SubCustAccount entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_08_SerializeCollection_Generated">
+            <summary>
+            Serialize a SubCustAccount collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_09_DeserializeCollection_Generated">
+            <summary>
+            Deserialize a SubCustAccount collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_10_FK_Generated">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_11_IX_Generated">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_20_TestEntityHelper_Generated">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_30_TestFindByQuery_Generated">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.CreateMockInstance_Generated(AccountManager.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed SubCustAccount Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.UpdateMockInstance_Generated(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.SubCustAccount)">
+            <summary>
+              Update the Typed SubCustAccount Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.#ctor">
+            <summary>
+            Creates a new <see cref="T:AccountManager.UnitTests.SubCustAccountTest"/> instance.
+            </summary>	
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Init">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Dispose">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_01_Insert">
+            <summary>
+            Inserts a mock SubCustAccount entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_02_SelectAll">
+            <summary>
+            Selects a sample of  SubCustAccount objects of the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_03_DeepLoad">
+            <summary>
+            Deep load all SubCustAccount children.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_04_Update">
+            <summary>
+            Updates a mock SubCustAccount entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_05_Delete">
+            <summary>
+            Delete the mock SubCustAccount entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_06_SerializeEntity">
+            <summary>
+            Serialize the mock SubCustAccount entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_07_DeserializeEntity">
+            <summary>
+            Deserialize the mock SubCustAccount entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_08_SerializeCollection">
+            <summary>
+            Serialize a SubCustAccount collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_09_DeserializeCollection">
+            <summary>
+            Deserialize a SubCustAccount collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_10_FK">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_11_IX">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_20_TestEntityHelper">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_30_TestFindByQuery">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.CreateMockInstance(AccountManager.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed SubCustAccount Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.UpdateMockInstance(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.SubCustAccount)">
+            <summary>
+              Update the Typed SubCustAccount Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.SubCustAccountTest.SetSpecialTestData(AccountManager.Entities.SubCustAccount)">
             <summary>
             Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
             </summary>
@@ -1106,6 +1298,148 @@
             </summary>
             <param name="mock">Object to be modified</param>
         </member>
+        <member name="T:AccountManager.UnitTests.BrokerPermissionTest">
+            <summary>
+            Provides tests for the and <see cref="T:AccountManager.Entities.BrokerPermission"/> objects (entity, collection and repository).
+            </summary>
+            <remarks>
+            This file is generated once and will never be overwritten.
+            </remarks>
+            <summary>
+            Provides tests for the and <see cref="T:AccountManager.Entities.BrokerPermission"/> objects (entity, collection and repository).
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.#ctor">
+            <summary>
+            Creates a new <see cref="T:AccountManager.UnitTests.BrokerPermissionTest"/> instance.
+            </summary>	
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Init">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Dispose">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_02_SelectAll">
+            <summary>
+            Selects a sample of  BrokerPermission objects of the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_03_DeepLoad">
+            <summary>
+            Deep load all BrokerPermission children.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_06_SerializeEntity">
+            <summary>
+            Serialize the mock BrokerPermission entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_07_DeserializeEntity">
+            <summary>
+            Deserialize the mock BrokerPermission entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_08_SerializeCollection">
+            <summary>
+            Serialize a BrokerPermission collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_09_DeserializeCollection">
+            <summary>
+            Deserialize a BrokerPermission collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_20_TestEntityHelper">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_30_TestFindByQuery">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.CreateMockInstance(AccountManager.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed BrokerPermission Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.UpdateMockInstance(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.BrokerPermission)">
+            <summary>
+              Update the Typed BrokerPermission Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.SetSpecialTestData(AccountManager.Entities.BrokerPermission)">
+            <summary>
+            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
+            </summary>
+            <param name="mock">Object to be modified</param>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Init_Generated">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.CleanUp_Generated">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_02_SelectAll_Generated">
+            <summary>
+            Selects all BrokerPermission objects of the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_03_DeepLoad_Generated">
+            <summary>
+            Deep load all BrokerPermission children.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_06_SerializeEntity_Generated">
+            <summary>
+            Serialize the mock BrokerPermission entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_07_DeserializeEntity_Generated">
+            <summary>
+            Deserialize the mock BrokerPermission entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_08_SerializeCollection_Generated">
+            <summary>
+            Serialize a BrokerPermission collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_09_DeserializeCollection_Generated">
+            <summary>
+            Deserialize a BrokerPermission collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_20_TestEntityHelper_Generated">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.Step_30_TestFindByQuery_Generated">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.CreateMockInstance_Generated(AccountManager.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed BrokerPermission Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BrokerPermissionTest.UpdateMockInstance_Generated(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.BrokerPermission)">
+            <summary>
+              Update the Typed BrokerPermission Entity with modified mock values.
+            </summary>
+        </member>
         <member name="T:AccountManager.UnitTests.WorkingDaysTest">
             <summary>
             Provides tests for the and <see cref="T:AccountManager.Entities.WorkingDays"/> objects (entity, collection and repository).
@@ -1293,1022 +1627,6 @@
             </summary>
         </member>
         <member name="M:AccountManager.UnitTests.WorkingDaysTest.SetSpecialTestData(AccountManager.Entities.WorkingDays)">
-            <summary>
-            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
-            </summary>
-            <param name="mock">Object to be modified</param>
-        </member>
-        <member name="T:AccountManager.UnitTests.SubCustAccountPermissionTest">
-            <summary>
-            Provides tests for the and <see cref="T:AccountManager.Entities.SubCustAccountPermission"/> objects (entity, collection and repository).
-            </summary>
-            <remarks>
-            This file is generated once and will never be overwritten.
-            </remarks>
-            <summary>
-            Provides tests for the and <see cref="T:AccountManager.Entities.SubCustAccountPermission"/> objects (entity, collection and repository).
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.#ctor">
-            <summary>
-            Creates a new <see cref="T:AccountManager.UnitTests.SubCustAccountPermissionTest"/> instance.
-            </summary>	
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Init">
-            <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Dispose">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_02_SelectAll">
-            <summary>
-            Selects a sample of  SubCustAccountPermission objects of the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_03_DeepLoad">
-            <summary>
-            Deep load all SubCustAccountPermission children.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_06_SerializeEntity">
-            <summary>
-            Serialize the mock SubCustAccountPermission entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_07_DeserializeEntity">
-            <summary>
-            Deserialize the mock SubCustAccountPermission entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_08_SerializeCollection">
-            <summary>
-            Serialize a SubCustAccountPermission collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_09_DeserializeCollection">
-            <summary>
-            Deserialize a SubCustAccountPermission collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_20_TestEntityHelper">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_30_TestFindByQuery">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.CreateMockInstance(AccountManager.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed SubCustAccountPermission Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.UpdateMockInstance(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.SubCustAccountPermission)">
-            <summary>
-              Update the Typed SubCustAccountPermission Entity with modified mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.SetSpecialTestData(AccountManager.Entities.SubCustAccountPermission)">
-            <summary>
-            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
-            </summary>
-            <param name="mock">Object to be modified</param>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Init_Generated">
-            <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.CleanUp_Generated">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_02_SelectAll_Generated">
-            <summary>
-            Selects all SubCustAccountPermission objects of the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_03_DeepLoad_Generated">
-            <summary>
-            Deep load all SubCustAccountPermission children.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_06_SerializeEntity_Generated">
-            <summary>
-            Serialize the mock SubCustAccountPermission entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_07_DeserializeEntity_Generated">
-            <summary>
-            Deserialize the mock SubCustAccountPermission entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_08_SerializeCollection_Generated">
-            <summary>
-            Serialize a SubCustAccountPermission collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_09_DeserializeCollection_Generated">
-            <summary>
-            Deserialize a SubCustAccountPermission collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_20_TestEntityHelper_Generated">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.Step_30_TestFindByQuery_Generated">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.CreateMockInstance_Generated(AccountManager.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed SubCustAccountPermission Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountPermissionTest.UpdateMockInstance_Generated(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.SubCustAccountPermission)">
-            <summary>
-              Update the Typed SubCustAccountPermission Entity with modified mock values.
-            </summary>
-        </member>
-        <member name="T:AccountManager.UnitTests.BrokerAccountTest">
-            <summary>
-            Provides tests for the and <see cref="T:AccountManager.Entities.BrokerAccount"/> objects (entity, collection and repository).
-            </summary>
-            <summary>
-            Provides tests for the and <see cref="T:AccountManager.Entities.BrokerAccount"/> objects (entity, collection and repository).
-            </summary>
-            <remarks>
-            This file is generated once and will never be overwritten.
-            </remarks>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Init_Generated">
-            <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.CleanUp_Generated">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_01_Insert_Generated">
-            <summary>
-            Inserts a mock BrokerAccount entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_02_SelectAll_Generated">
-            <summary>
-            Selects all BrokerAccount objects of the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_03_DeepLoad_Generated">
-            <summary>
-            Deep load all BrokerAccount children.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_04_Update_Generated">
-            <summary>
-            Updates a mock BrokerAccount entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_05_Delete_Generated">
-            <summary>
-            Delete the mock BrokerAccount entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_06_SerializeEntity_Generated">
-            <summary>
-            Serialize the mock BrokerAccount entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_07_DeserializeEntity_Generated">
-            <summary>
-            Deserialize the mock BrokerAccount entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_08_SerializeCollection_Generated">
-            <summary>
-            Serialize a BrokerAccount collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_09_DeserializeCollection_Generated">
-            <summary>
-            Deserialize a BrokerAccount collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_10_FK_Generated">
-            <summary>
-            Check the foreign key dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_11_IX_Generated">
-            <summary>
-            Check the indexes dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_20_TestEntityHelper_Generated">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_30_TestFindByQuery_Generated">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.CreateMockInstance_Generated(AccountManager.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed BrokerAccount Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.UpdateMockInstance_Generated(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.BrokerAccount)">
-            <summary>
-              Update the Typed BrokerAccount Entity with modified mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.#ctor">
-            <summary>
-            Creates a new <see cref="T:AccountManager.UnitTests.BrokerAccountTest"/> instance.
-            </summary>	
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Init">
-            <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Dispose">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_01_Insert">
-            <summary>
-            Inserts a mock BrokerAccount entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_02_SelectAll">
-            <summary>
-            Selects a sample of  BrokerAccount objects of the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_03_DeepLoad">
-            <summary>
-            Deep load all BrokerAccount children.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_04_Update">
-            <summary>
-            Updates a mock BrokerAccount entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_05_Delete">
-            <summary>
-            Delete the mock BrokerAccount entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_06_SerializeEntity">
-            <summary>
-            Serialize the mock BrokerAccount entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_07_DeserializeEntity">
-            <summary>
-            Deserialize the mock BrokerAccount entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_08_SerializeCollection">
-            <summary>
-            Serialize a BrokerAccount collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_09_DeserializeCollection">
-            <summary>
-            Deserialize a BrokerAccount collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_10_FK">
-            <summary>
-            Check the foreign key dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_11_IX">
-            <summary>
-            Check the indexes dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_20_TestEntityHelper">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_30_TestFindByQuery">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.CreateMockInstance(AccountManager.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed BrokerAccount Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.UpdateMockInstance(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.BrokerAccount)">
-            <summary>
-              Update the Typed BrokerAccount Entity with modified mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.BrokerAccountTest.SetSpecialTestData(AccountManager.Entities.BrokerAccount)">
-            <summary>
-            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
-            </summary>
-            <param name="mock">Object to be modified</param>
-        </member>
-        <member name="T:AccountManager.UnitTests.CustomerActionHistoryTest">
-            <summary>
-            Provides tests for the and <see cref="T:AccountManager.Entities.CustomerActionHistory"/> objects (entity, collection and repository).
-            </summary>
-            <summary>
-            Provides tests for the and <see cref="T:AccountManager.Entities.CustomerActionHistory"/> objects (entity, collection and repository).
-            </summary>
-            <remarks>
-            This file is generated once and will never be overwritten.
-            </remarks>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Init_Generated">
-            <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.CleanUp_Generated">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_01_Insert_Generated">
-            <summary>
-            Inserts a mock CustomerActionHistory entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_02_SelectAll_Generated">
-            <summary>
-            Selects all CustomerActionHistory objects of the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_03_DeepLoad_Generated">
-            <summary>
-            Deep load all CustomerActionHistory children.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_04_Update_Generated">
-            <summary>
-            Updates a mock CustomerActionHistory entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_05_Delete_Generated">
-            <summary>
-            Delete the mock CustomerActionHistory entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_06_SerializeEntity_Generated">
-            <summary>
-            Serialize the mock CustomerActionHistory entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_07_DeserializeEntity_Generated">
-            <summary>
-            Deserialize the mock CustomerActionHistory entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_08_SerializeCollection_Generated">
-            <summary>
-            Serialize a CustomerActionHistory collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_09_DeserializeCollection_Generated">
-            <summary>
-            Deserialize a CustomerActionHistory collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_10_FK_Generated">
-            <summary>
-            Check the foreign key dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_11_IX_Generated">
-            <summary>
-            Check the indexes dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_20_TestEntityHelper_Generated">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_30_TestFindByQuery_Generated">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.CreateMockInstance_Generated(AccountManager.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed CustomerActionHistory Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.UpdateMockInstance_Generated(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.CustomerActionHistory)">
-            <summary>
-              Update the Typed CustomerActionHistory Entity with modified mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.#ctor">
-            <summary>
-            Creates a new <see cref="T:AccountManager.UnitTests.CustomerActionHistoryTest"/> instance.
-            </summary>	
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Init">
-            <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Dispose">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_01_Insert">
-            <summary>
-            Inserts a mock CustomerActionHistory entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_02_SelectAll">
-            <summary>
-            Selects a sample of  CustomerActionHistory objects of the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_03_DeepLoad">
-            <summary>
-            Deep load all CustomerActionHistory children.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_04_Update">
-            <summary>
-            Updates a mock CustomerActionHistory entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_05_Delete">
-            <summary>
-            Delete the mock CustomerActionHistory entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_06_SerializeEntity">
-            <summary>
-            Serialize the mock CustomerActionHistory entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_07_DeserializeEntity">
-            <summary>
-            Deserialize the mock CustomerActionHistory entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_08_SerializeCollection">
-            <summary>
-            Serialize a CustomerActionHistory collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_09_DeserializeCollection">
-            <summary>
-            Deserialize a CustomerActionHistory collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_10_FK">
-            <summary>
-            Check the foreign key dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_11_IX">
-            <summary>
-            Check the indexes dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_20_TestEntityHelper">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_30_TestFindByQuery">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.CreateMockInstance(AccountManager.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed CustomerActionHistory Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.UpdateMockInstance(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.CustomerActionHistory)">
-            <summary>
-              Update the Typed CustomerActionHistory Entity with modified mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.SetSpecialTestData(AccountManager.Entities.CustomerActionHistory)">
-            <summary>
-            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
-            </summary>
-            <param name="mock">Object to be modified</param>
-        </member>
-        <member name="T:AccountManager.UnitTests.TestUtility">
-            <summary>
-             Singleton class for Helper functions for UnitTesting
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.TestUtility.#ctor">
-            <summary>
-            Private constructor for Singleton
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.TestUtility.RandomNumber">
-            <summary>
-            Generates a random number between 0 and int.MaxValue.
-            </summary>
-            <returns>Random Number</returns>
-        </member>
-        <member name="M:AccountManager.UnitTests.TestUtility.RandomNumber(System.Int32,System.Int32)">
-            <summary>
-            Generates a random number between the given bounds.
-            </summary>
-            <param name="min">lowest bound</param>
-            <param name="max">highest bound</param>
-            <returns>Random Number</returns>
-        </member>
-        <member name="M:AccountManager.UnitTests.TestUtility.RandomString(System.Int32,System.Boolean)">
-            <summary>
-            Generates a random string with the given length
-            </summary>
-            <param name="size">Size of the string</param>
-            <param name="lowerCase">If true, generate lowercase string</param>
-            <returns>Random string</returns>
-            <remarks>Mahesh Chand  - http://www.c-sharpcorner.com/Code/2004/Oct/RandomNumber.asp</remarks>
-        </member>
-        <member name="M:AccountManager.UnitTests.TestUtility.RandomDate">
-            <summary>
-            Returns a random date between the default min and max dates
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:AccountManager.UnitTests.TestUtility.RandomDate(System.DateTime,System.DateTime)">
-            <summary>
-            Returns a random date between the dates you pass in
-            </summary>
-            <param name="minDate">Min date to return</param>
-            <param name="maxDate">Max date to return</param>
-            <returns></returns>
-        </member>
-        <member name="M:AccountManager.UnitTests.TestUtility.RandomDateTime">
-            <summary>
-            Returns a random date and time between the default datess
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:AccountManager.UnitTests.TestUtility.RandomDateTime(System.DateTime,System.DateTime)">
-            <summary>
-            Get a random DateTime with a random Time
-            </summary>
-            <param name="minDate">Min datetime to return</param>
-            <param name="maxDate">Max datetime to return</param>
-            <returns></returns>
-        </member>
-        <member name="M:AccountManager.UnitTests.TestUtility.RandomBoolean">
-            <summary>
-            Returns a random boolean value
-            </summary>
-            <returns>Random Boolean</returns>
-        </member>
-        <member name="M:AccountManager.UnitTests.TestUtility.RandomChar">
-            <summary>
-            Returns a random character
-            </summary>
-            <returns>Random Character</returns>
-        </member>
-        <member name="M:AccountManager.UnitTests.TestUtility.RandomByte">
-            <summary>
-            Return a random byte between 0 and byte.MaxValue;
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:AccountManager.UnitTests.TestUtility.RandomByte(System.Byte,System.Byte)">
-            <summary>
-            Return a random byte between the values specified
-            </summary>
-            <param name="min">Min value</param>
-            <param name="max">Max value</param>
-            <returns>Random Byte</returns>
-        </member>
-        <member name="M:AccountManager.UnitTests.TestUtility.RandomShort">
-            <summary>
-            Return a random short between 0 and byte.MaxValue;
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:AccountManager.UnitTests.TestUtility.RandomShort(System.Int16,System.Int16)">
-            <summary>
-            Return a random short between the values specified
-            </summary>
-            <param name="min">Min value</param>
-            <param name="max">Max value</param>
-            <returns>Random short</returns>
-        </member>
-        <member name="P:AccountManager.UnitTests.TestUtility.Instance">
-            <summary>
-            Get the instance of the TestUtility class
-            </summary>
-        </member>
-        <member name="T:AccountManager.UnitTests.SubCustAccountTest">
-            <summary>
-            Provides tests for the and <see cref="T:AccountManager.Entities.SubCustAccount"/> objects (entity, collection and repository).
-            </summary>
-            <remarks>
-            This file is generated once and will never be overwritten.
-            </remarks>
-            <summary>
-            Provides tests for the and <see cref="T:AccountManager.Entities.SubCustAccount"/> objects (entity, collection and repository).
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.#ctor">
-            <summary>
-            Creates a new <see cref="T:AccountManager.UnitTests.SubCustAccountTest"/> instance.
-            </summary>	
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Init">
-            <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Dispose">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_01_Insert">
-            <summary>
-            Inserts a mock SubCustAccount entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_02_SelectAll">
-            <summary>
-            Selects a sample of  SubCustAccount objects of the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_03_DeepLoad">
-            <summary>
-            Deep load all SubCustAccount children.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_04_Update">
-            <summary>
-            Updates a mock SubCustAccount entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_05_Delete">
-            <summary>
-            Delete the mock SubCustAccount entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_06_SerializeEntity">
-            <summary>
-            Serialize the mock SubCustAccount entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_07_DeserializeEntity">
-            <summary>
-            Deserialize the mock SubCustAccount entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_08_SerializeCollection">
-            <summary>
-            Serialize a SubCustAccount collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_09_DeserializeCollection">
-            <summary>
-            Deserialize a SubCustAccount collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_10_FK">
-            <summary>
-            Check the foreign key dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_11_IX">
-            <summary>
-            Check the indexes dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_20_TestEntityHelper">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_30_TestFindByQuery">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.CreateMockInstance(AccountManager.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed SubCustAccount Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.UpdateMockInstance(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.SubCustAccount)">
-            <summary>
-              Update the Typed SubCustAccount Entity with modified mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.SetSpecialTestData(AccountManager.Entities.SubCustAccount)">
-            <summary>
-            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
-            </summary>
-            <param name="mock">Object to be modified</param>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Init_Generated">
-            <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.CleanUp_Generated">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_01_Insert_Generated">
-            <summary>
-            Inserts a mock SubCustAccount entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_02_SelectAll_Generated">
-            <summary>
-            Selects all SubCustAccount objects of the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_03_DeepLoad_Generated">
-            <summary>
-            Deep load all SubCustAccount children.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_04_Update_Generated">
-            <summary>
-            Updates a mock SubCustAccount entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_05_Delete_Generated">
-            <summary>
-            Delete the mock SubCustAccount entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_06_SerializeEntity_Generated">
-            <summary>
-            Serialize the mock SubCustAccount entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_07_DeserializeEntity_Generated">
-            <summary>
-            Deserialize the mock SubCustAccount entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_08_SerializeCollection_Generated">
-            <summary>
-            Serialize a SubCustAccount collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_09_DeserializeCollection_Generated">
-            <summary>
-            Deserialize a SubCustAccount collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_10_FK_Generated">
-            <summary>
-            Check the foreign key dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_11_IX_Generated">
-            <summary>
-            Check the indexes dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_20_TestEntityHelper_Generated">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.Step_30_TestFindByQuery_Generated">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.CreateMockInstance_Generated(AccountManager.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed SubCustAccount Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.SubCustAccountTest.UpdateMockInstance_Generated(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.SubCustAccount)">
-            <summary>
-              Update the Typed SubCustAccount Entity with modified mock values.
-            </summary>
-        </member>
-        <member name="T:AccountManager.UnitTests.ConfigurationsTest">
-            <summary>
-            Provides tests for the and <see cref="T:AccountManager.Entities.Configurations"/> objects (entity, collection and repository).
-            </summary>
-            <summary>
-            Provides tests for the and <see cref="T:AccountManager.Entities.Configurations"/> objects (entity, collection and repository).
-            </summary>
-            <remarks>
-            This file is generated once and will never be overwritten.
-            </remarks>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Init_Generated">
-            <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.CleanUp_Generated">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_01_Insert_Generated">
-            <summary>
-            Inserts a mock Configurations entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_02_SelectAll_Generated">
-            <summary>
-            Selects all Configurations objects of the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_03_DeepLoad_Generated">
-            <summary>
-            Deep load all Configurations children.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_04_Update_Generated">
-            <summary>
-            Updates a mock Configurations entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_05_Delete_Generated">
-            <summary>
-            Delete the mock Configurations entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_06_SerializeEntity_Generated">
-            <summary>
-            Serialize the mock Configurations entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_07_DeserializeEntity_Generated">
-            <summary>
-            Deserialize the mock Configurations entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_08_SerializeCollection_Generated">
-            <summary>
-            Serialize a Configurations collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_09_DeserializeCollection_Generated">
-            <summary>
-            Deserialize a Configurations collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_10_FK_Generated">
-            <summary>
-            Check the foreign key dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_11_IX_Generated">
-            <summary>
-            Check the indexes dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_20_TestEntityHelper_Generated">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_30_TestFindByQuery_Generated">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.CreateMockInstance_Generated(AccountManager.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed Configurations Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.UpdateMockInstance_Generated(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.Configurations)">
-            <summary>
-              Update the Typed Configurations Entity with modified mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.#ctor">
-            <summary>
-            Creates a new <see cref="T:AccountManager.UnitTests.ConfigurationsTest"/> instance.
-            </summary>	
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Init">
-            <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Dispose">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_01_Insert">
-            <summary>
-            Inserts a mock Configurations entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_02_SelectAll">
-            <summary>
-            Selects a sample of  Configurations objects of the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_03_DeepLoad">
-            <summary>
-            Deep load all Configurations children.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_04_Update">
-            <summary>
-            Updates a mock Configurations entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_05_Delete">
-            <summary>
-            Delete the mock Configurations entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_06_SerializeEntity">
-            <summary>
-            Serialize the mock Configurations entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_07_DeserializeEntity">
-            <summary>
-            Deserialize the mock Configurations entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_08_SerializeCollection">
-            <summary>
-            Serialize a Configurations collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_09_DeserializeCollection">
-            <summary>
-            Deserialize a Configurations collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_10_FK">
-            <summary>
-            Check the foreign key dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_11_IX">
-            <summary>
-            Check the indexes dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_20_TestEntityHelper">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.Step_30_TestFindByQuery">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.CreateMockInstance(AccountManager.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed Configurations Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.UpdateMockInstance(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.Configurations)">
-            <summary>
-              Update the Typed Configurations Entity with modified mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ConfigurationsTest.SetSpecialTestData(AccountManager.Entities.Configurations)">
             <summary>
             Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
             </summary>
@@ -2506,6 +1824,880 @@
               Update the Typed SmsCount Entity with modified mock values.
             </summary>
         </member>
+        <member name="T:AccountManager.UnitTests.CustomerActionHistoryTest">
+            <summary>
+            Provides tests for the and <see cref="T:AccountManager.Entities.CustomerActionHistory"/> objects (entity, collection and repository).
+            </summary>
+            <remarks>
+            This file is generated once and will never be overwritten.
+            </remarks>
+            <summary>
+            Provides tests for the and <see cref="T:AccountManager.Entities.CustomerActionHistory"/> objects (entity, collection and repository).
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.#ctor">
+            <summary>
+            Creates a new <see cref="T:AccountManager.UnitTests.CustomerActionHistoryTest"/> instance.
+            </summary>	
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Init">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Dispose">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_01_Insert">
+            <summary>
+            Inserts a mock CustomerActionHistory entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_02_SelectAll">
+            <summary>
+            Selects a sample of  CustomerActionHistory objects of the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_03_DeepLoad">
+            <summary>
+            Deep load all CustomerActionHistory children.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_04_Update">
+            <summary>
+            Updates a mock CustomerActionHistory entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_05_Delete">
+            <summary>
+            Delete the mock CustomerActionHistory entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_06_SerializeEntity">
+            <summary>
+            Serialize the mock CustomerActionHistory entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_07_DeserializeEntity">
+            <summary>
+            Deserialize the mock CustomerActionHistory entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_08_SerializeCollection">
+            <summary>
+            Serialize a CustomerActionHistory collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_09_DeserializeCollection">
+            <summary>
+            Deserialize a CustomerActionHistory collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_10_FK">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_11_IX">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_20_TestEntityHelper">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_30_TestFindByQuery">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.CreateMockInstance(AccountManager.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed CustomerActionHistory Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.UpdateMockInstance(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.CustomerActionHistory)">
+            <summary>
+              Update the Typed CustomerActionHistory Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.SetSpecialTestData(AccountManager.Entities.CustomerActionHistory)">
+            <summary>
+            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
+            </summary>
+            <param name="mock">Object to be modified</param>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Init_Generated">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.CleanUp_Generated">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_01_Insert_Generated">
+            <summary>
+            Inserts a mock CustomerActionHistory entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_02_SelectAll_Generated">
+            <summary>
+            Selects all CustomerActionHistory objects of the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_03_DeepLoad_Generated">
+            <summary>
+            Deep load all CustomerActionHistory children.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_04_Update_Generated">
+            <summary>
+            Updates a mock CustomerActionHistory entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_05_Delete_Generated">
+            <summary>
+            Delete the mock CustomerActionHistory entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_06_SerializeEntity_Generated">
+            <summary>
+            Serialize the mock CustomerActionHistory entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_07_DeserializeEntity_Generated">
+            <summary>
+            Deserialize the mock CustomerActionHistory entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_08_SerializeCollection_Generated">
+            <summary>
+            Serialize a CustomerActionHistory collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_09_DeserializeCollection_Generated">
+            <summary>
+            Deserialize a CustomerActionHistory collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_10_FK_Generated">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_11_IX_Generated">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_20_TestEntityHelper_Generated">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.Step_30_TestFindByQuery_Generated">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.CreateMockInstance_Generated(AccountManager.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed CustomerActionHistory Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.CustomerActionHistoryTest.UpdateMockInstance_Generated(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.CustomerActionHistory)">
+            <summary>
+              Update the Typed CustomerActionHistory Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="T:AccountManager.UnitTests.OpenCustAccountTest">
+            <summary>
+            Provides tests for the and <see cref="T:AccountManager.Entities.OpenCustAccount"/> objects (entity, collection and repository).
+            </summary>
+            <summary>
+            Provides tests for the and <see cref="T:AccountManager.Entities.OpenCustAccount"/> objects (entity, collection and repository).
+            </summary>
+            <remarks>
+            This file is generated once and will never be overwritten.
+            </remarks>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Init_Generated">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.CleanUp_Generated">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_01_Insert_Generated">
+            <summary>
+            Inserts a mock OpenCustAccount entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_02_SelectAll_Generated">
+            <summary>
+            Selects all OpenCustAccount objects of the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_03_DeepLoad_Generated">
+            <summary>
+            Deep load all OpenCustAccount children.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_04_Update_Generated">
+            <summary>
+            Updates a mock OpenCustAccount entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_05_Delete_Generated">
+            <summary>
+            Delete the mock OpenCustAccount entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_06_SerializeEntity_Generated">
+            <summary>
+            Serialize the mock OpenCustAccount entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_07_DeserializeEntity_Generated">
+            <summary>
+            Deserialize the mock OpenCustAccount entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_08_SerializeCollection_Generated">
+            <summary>
+            Serialize a OpenCustAccount collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_09_DeserializeCollection_Generated">
+            <summary>
+            Deserialize a OpenCustAccount collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_10_FK_Generated">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_11_IX_Generated">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_20_TestEntityHelper_Generated">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_30_TestFindByQuery_Generated">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.CreateMockInstance_Generated(AccountManager.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed OpenCustAccount Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.UpdateMockInstance_Generated(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.OpenCustAccount)">
+            <summary>
+              Update the Typed OpenCustAccount Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.#ctor">
+            <summary>
+            Creates a new <see cref="T:AccountManager.UnitTests.OpenCustAccountTest"/> instance.
+            </summary>	
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Init">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Dispose">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_01_Insert">
+            <summary>
+            Inserts a mock OpenCustAccount entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_02_SelectAll">
+            <summary>
+            Selects a sample of  OpenCustAccount objects of the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_03_DeepLoad">
+            <summary>
+            Deep load all OpenCustAccount children.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_04_Update">
+            <summary>
+            Updates a mock OpenCustAccount entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_05_Delete">
+            <summary>
+            Delete the mock OpenCustAccount entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_06_SerializeEntity">
+            <summary>
+            Serialize the mock OpenCustAccount entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_07_DeserializeEntity">
+            <summary>
+            Deserialize the mock OpenCustAccount entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_08_SerializeCollection">
+            <summary>
+            Serialize a OpenCustAccount collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_09_DeserializeCollection">
+            <summary>
+            Deserialize a OpenCustAccount collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_10_FK">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_11_IX">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_20_TestEntityHelper">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.Step_30_TestFindByQuery">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.CreateMockInstance(AccountManager.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed OpenCustAccount Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.UpdateMockInstance(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.OpenCustAccount)">
+            <summary>
+              Update the Typed OpenCustAccount Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.OpenCustAccountTest.SetSpecialTestData(AccountManager.Entities.OpenCustAccount)">
+            <summary>
+            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
+            </summary>
+            <param name="mock">Object to be modified</param>
+        </member>
+        <member name="T:AccountManager.UnitTests.ResearchTest">
+            <summary>
+            Provides tests for the and <see cref="T:AccountManager.Entities.Research"/> objects (entity, collection and repository).
+            </summary>
+            <remarks>
+            This file is generated once and will never be overwritten.
+            </remarks>
+            <summary>
+            Provides tests for the and <see cref="T:AccountManager.Entities.Research"/> objects (entity, collection and repository).
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.#ctor">
+            <summary>
+            Creates a new <see cref="T:AccountManager.UnitTests.ResearchTest"/> instance.
+            </summary>	
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Init">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Dispose">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_01_Insert">
+            <summary>
+            Inserts a mock Research entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_02_SelectAll">
+            <summary>
+            Selects a sample of  Research objects of the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_03_DeepLoad">
+            <summary>
+            Deep load all Research children.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_04_Update">
+            <summary>
+            Updates a mock Research entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_05_Delete">
+            <summary>
+            Delete the mock Research entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_06_SerializeEntity">
+            <summary>
+            Serialize the mock Research entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_07_DeserializeEntity">
+            <summary>
+            Deserialize the mock Research entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_08_SerializeCollection">
+            <summary>
+            Serialize a Research collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_09_DeserializeCollection">
+            <summary>
+            Deserialize a Research collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_10_FK">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_11_IX">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_20_TestEntityHelper">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_30_TestFindByQuery">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.CreateMockInstance(AccountManager.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed Research Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.UpdateMockInstance(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.Research)">
+            <summary>
+              Update the Typed Research Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.SetSpecialTestData(AccountManager.Entities.Research)">
+            <summary>
+            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
+            </summary>
+            <param name="mock">Object to be modified</param>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Init_Generated">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.CleanUp_Generated">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_01_Insert_Generated">
+            <summary>
+            Inserts a mock Research entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_02_SelectAll_Generated">
+            <summary>
+            Selects all Research objects of the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_03_DeepLoad_Generated">
+            <summary>
+            Deep load all Research children.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_04_Update_Generated">
+            <summary>
+            Updates a mock Research entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_05_Delete_Generated">
+            <summary>
+            Delete the mock Research entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_06_SerializeEntity_Generated">
+            <summary>
+            Serialize the mock Research entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_07_DeserializeEntity_Generated">
+            <summary>
+            Deserialize the mock Research entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_08_SerializeCollection_Generated">
+            <summary>
+            Serialize a Research collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_09_DeserializeCollection_Generated">
+            <summary>
+            Deserialize a Research collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_10_FK_Generated">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_11_IX_Generated">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_20_TestEntityHelper_Generated">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.Step_30_TestFindByQuery_Generated">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.CreateMockInstance_Generated(AccountManager.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed Research Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.ResearchTest.UpdateMockInstance_Generated(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.Research)">
+            <summary>
+              Update the Typed Research Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="T:AccountManager.UnitTests.BuyRightTest">
+            <summary>
+            Provides tests for the and <see cref="T:AccountManager.Entities.BuyRight"/> objects (entity, collection and repository).
+            </summary>
+            <remarks>
+            This file is generated once and will never be overwritten.
+            </remarks>
+            <summary>
+            Provides tests for the and <see cref="T:AccountManager.Entities.BuyRight"/> objects (entity, collection and repository).
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.#ctor">
+            <summary>
+            Creates a new <see cref="T:AccountManager.UnitTests.BuyRightTest"/> instance.
+            </summary>	
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Init">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Dispose">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_01_Insert">
+            <summary>
+            Inserts a mock BuyRight entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_02_SelectAll">
+            <summary>
+            Selects a sample of  BuyRight objects of the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_03_DeepLoad">
+            <summary>
+            Deep load all BuyRight children.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_04_Update">
+            <summary>
+            Updates a mock BuyRight entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_05_Delete">
+            <summary>
+            Delete the mock BuyRight entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_06_SerializeEntity">
+            <summary>
+            Serialize the mock BuyRight entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_07_DeserializeEntity">
+            <summary>
+            Deserialize the mock BuyRight entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_08_SerializeCollection">
+            <summary>
+            Serialize a BuyRight collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_09_DeserializeCollection">
+            <summary>
+            Deserialize a BuyRight collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_10_FK">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_11_IX">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_20_TestEntityHelper">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_30_TestFindByQuery">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.CreateMockInstance(AccountManager.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed BuyRight Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.UpdateMockInstance(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.BuyRight)">
+            <summary>
+              Update the Typed BuyRight Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.SetSpecialTestData(AccountManager.Entities.BuyRight)">
+            <summary>
+            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
+            </summary>
+            <param name="mock">Object to be modified</param>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Init_Generated">
+            <summary>
+            This method is used to construct the test environment prior to running the tests.
+            </summary>        
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.CleanUp_Generated">
+            <summary>
+            This method is used to restore the environment after the tests are completed.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_01_Insert_Generated">
+            <summary>
+            Inserts a mock BuyRight entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_02_SelectAll_Generated">
+            <summary>
+            Selects all BuyRight objects of the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_03_DeepLoad_Generated">
+            <summary>
+            Deep load all BuyRight children.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_04_Update_Generated">
+            <summary>
+            Updates a mock BuyRight entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_05_Delete_Generated">
+            <summary>
+            Delete the mock BuyRight entity into the database.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_06_SerializeEntity_Generated">
+            <summary>
+            Serialize the mock BuyRight entity into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_07_DeserializeEntity_Generated">
+            <summary>
+            Deserialize the mock BuyRight entity from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_08_SerializeCollection_Generated">
+            <summary>
+            Serialize a BuyRight collection into a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_09_DeserializeCollection_Generated">
+            <summary>
+            Deserialize a BuyRight collection from a temporary file.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_10_FK_Generated">
+            <summary>
+            Check the foreign key dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_11_IX_Generated">
+            <summary>
+            Check the indexes dal methods.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_20_TestEntityHelper_Generated">
+            <summary>
+            Test methods exposed by the EntityHelper class.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_30_TestFindByQuery_Generated">
+            <summary>
+            Test Find using the Query class
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.CreateMockInstance_Generated(AccountManager.DataAccess.TransactionManager)">
+            <summary>
+              Returns a Typed BuyRight Entity with mock values.
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.BuyRightTest.UpdateMockInstance_Generated(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.BuyRight)">
+            <summary>
+              Update the Typed BuyRight Entity with modified mock values.
+            </summary>
+        </member>
+        <member name="T:AccountManager.UnitTests.TestUtility">
+            <summary>
+             Singleton class for Helper functions for UnitTesting
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.TestUtility.#ctor">
+            <summary>
+            Private constructor for Singleton
+            </summary>
+        </member>
+        <member name="M:AccountManager.UnitTests.TestUtility.RandomNumber">
+            <summary>
+            Generates a random number between 0 and int.MaxValue.
+            </summary>
+            <returns>Random Number</returns>
+        </member>
+        <member name="M:AccountManager.UnitTests.TestUtility.RandomNumber(System.Int32,System.Int32)">
+            <summary>
+            Generates a random number between the given bounds.
+            </summary>
+            <param name="min">lowest bound</param>
+            <param name="max">highest bound</param>
+            <returns>Random Number</returns>
+        </member>
+        <member name="M:AccountManager.UnitTests.TestUtility.RandomString(System.Int32,System.Boolean)">
+            <summary>
+            Generates a random string with the given length
+            </summary>
+            <param name="size">Size of the string</param>
+            <param name="lowerCase">If true, generate lowercase string</param>
+            <returns>Random string</returns>
+            <remarks>Mahesh Chand  - http://www.c-sharpcorner.com/Code/2004/Oct/RandomNumber.asp</remarks>
+        </member>
+        <member name="M:AccountManager.UnitTests.TestUtility.RandomDate">
+            <summary>
+            Returns a random date between the default min and max dates
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AccountManager.UnitTests.TestUtility.RandomDate(System.DateTime,System.DateTime)">
+            <summary>
+            Returns a random date between the dates you pass in
+            </summary>
+            <param name="minDate">Min date to return</param>
+            <param name="maxDate">Max date to return</param>
+            <returns></returns>
+        </member>
+        <member name="M:AccountManager.UnitTests.TestUtility.RandomDateTime">
+            <summary>
+            Returns a random date and time between the default datess
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AccountManager.UnitTests.TestUtility.RandomDateTime(System.DateTime,System.DateTime)">
+            <summary>
+            Get a random DateTime with a random Time
+            </summary>
+            <param name="minDate">Min datetime to return</param>
+            <param name="maxDate">Max datetime to return</param>
+            <returns></returns>
+        </member>
+        <member name="M:AccountManager.UnitTests.TestUtility.RandomBoolean">
+            <summary>
+            Returns a random boolean value
+            </summary>
+            <returns>Random Boolean</returns>
+        </member>
+        <member name="M:AccountManager.UnitTests.TestUtility.RandomChar">
+            <summary>
+            Returns a random character
+            </summary>
+            <returns>Random Character</returns>
+        </member>
+        <member name="M:AccountManager.UnitTests.TestUtility.RandomByte">
+            <summary>
+            Return a random byte between 0 and byte.MaxValue;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AccountManager.UnitTests.TestUtility.RandomByte(System.Byte,System.Byte)">
+            <summary>
+            Return a random byte between the values specified
+            </summary>
+            <param name="min">Min value</param>
+            <param name="max">Max value</param>
+            <returns>Random Byte</returns>
+        </member>
+        <member name="M:AccountManager.UnitTests.TestUtility.RandomShort">
+            <summary>
+            Return a random short between 0 and byte.MaxValue;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AccountManager.UnitTests.TestUtility.RandomShort(System.Int16,System.Int16)">
+            <summary>
+            Return a random short between the values specified
+            </summary>
+            <param name="min">Min value</param>
+            <param name="max">Max value</param>
+            <returns>Random short</returns>
+        </member>
+        <member name="P:AccountManager.UnitTests.TestUtility.Instance">
+            <summary>
+            Get the instance of the TestUtility class
+            </summary>
+        </member>
         <member name="T:AccountManager.UnitTests.BrokerAmPermissionTest">
             <summary>
             Provides tests for the and <see cref="T:AccountManager.Entities.BrokerAmPermission"/> objects (entity, collection and repository).
@@ -2698,385 +2890,193 @@
               Update the Typed BrokerAmPermission Entity with modified mock values.
             </summary>
         </member>
-        <member name="T:AccountManager.UnitTests.ResearchTest">
+        <member name="T:AccountManager.UnitTests.BrokerAccountTest">
             <summary>
-            Provides tests for the and <see cref="T:AccountManager.Entities.Research"/> objects (entity, collection and repository).
+            Provides tests for the and <see cref="T:AccountManager.Entities.BrokerAccount"/> objects (entity, collection and repository).
             </summary>
             <summary>
-            Provides tests for the and <see cref="T:AccountManager.Entities.Research"/> objects (entity, collection and repository).
-            </summary>
-            <remarks>
-            This file is generated once and will never be overwritten.
-            </remarks>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Init_Generated">
-            <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.CleanUp_Generated">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_01_Insert_Generated">
-            <summary>
-            Inserts a mock Research entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_02_SelectAll_Generated">
-            <summary>
-            Selects all Research objects of the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_03_DeepLoad_Generated">
-            <summary>
-            Deep load all Research children.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_04_Update_Generated">
-            <summary>
-            Updates a mock Research entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_05_Delete_Generated">
-            <summary>
-            Delete the mock Research entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_06_SerializeEntity_Generated">
-            <summary>
-            Serialize the mock Research entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_07_DeserializeEntity_Generated">
-            <summary>
-            Deserialize the mock Research entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_08_SerializeCollection_Generated">
-            <summary>
-            Serialize a Research collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_09_DeserializeCollection_Generated">
-            <summary>
-            Deserialize a Research collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_10_FK_Generated">
-            <summary>
-            Check the foreign key dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_11_IX_Generated">
-            <summary>
-            Check the indexes dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_20_TestEntityHelper_Generated">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_30_TestFindByQuery_Generated">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.CreateMockInstance_Generated(AccountManager.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed Research Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.UpdateMockInstance_Generated(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.Research)">
-            <summary>
-              Update the Typed Research Entity with modified mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.#ctor">
-            <summary>
-            Creates a new <see cref="T:AccountManager.UnitTests.ResearchTest"/> instance.
-            </summary>	
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Init">
-            <summary>
-            This method is used to construct the test environment prior to running the tests.
-            </summary>        
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Dispose">
-            <summary>
-            This method is used to restore the environment after the tests are completed.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_01_Insert">
-            <summary>
-            Inserts a mock Research entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_02_SelectAll">
-            <summary>
-            Selects a sample of  Research objects of the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_03_DeepLoad">
-            <summary>
-            Deep load all Research children.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_04_Update">
-            <summary>
-            Updates a mock Research entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_05_Delete">
-            <summary>
-            Delete the mock Research entity into the database.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_06_SerializeEntity">
-            <summary>
-            Serialize the mock Research entity into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_07_DeserializeEntity">
-            <summary>
-            Deserialize the mock Research entity from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_08_SerializeCollection">
-            <summary>
-            Serialize a Research collection into a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_09_DeserializeCollection">
-            <summary>
-            Deserialize a Research collection from a temporary file.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_10_FK">
-            <summary>
-            Check the foreign key dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_11_IX">
-            <summary>
-            Check the indexes dal methods.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_20_TestEntityHelper">
-            <summary>
-            Test methods exposed by the EntityHelper class.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.Step_30_TestFindByQuery">
-            <summary>
-            Test Find using the Query class
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.CreateMockInstance(AccountManager.DataAccess.TransactionManager)">
-            <summary>
-              Returns a Typed Research Entity with mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.UpdateMockInstance(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.Research)">
-            <summary>
-              Update the Typed Research Entity with modified mock values.
-            </summary>
-        </member>
-        <member name="M:AccountManager.UnitTests.ResearchTest.SetSpecialTestData(AccountManager.Entities.Research)">
-            <summary>
-            Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
-            </summary>
-            <param name="mock">Object to be modified</param>
-        </member>
-        <member name="T:AccountManager.UnitTests.BuyRightTest">
-            <summary>
-            Provides tests for the and <see cref="T:AccountManager.Entities.BuyRight"/> objects (entity, collection and repository).
-            </summary>
-            <summary>
-            Provides tests for the and <see cref="T:AccountManager.Entities.BuyRight"/> objects (entity, collection and repository).
+            Provides tests for the and <see cref="T:AccountManager.Entities.BrokerAccount"/> objects (entity, collection and repository).
             </summary>
             <remarks>
             This file is generated once and will never be overwritten.
             </remarks>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Init_Generated">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Init_Generated">
             <summary>
             This method is used to construct the test environment prior to running the tests.
             </summary>        
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.CleanUp_Generated">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.CleanUp_Generated">
             <summary>
             This method is used to restore the environment after the tests are completed.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_01_Insert_Generated">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_01_Insert_Generated">
             <summary>
-            Inserts a mock BuyRight entity into the database.
+            Inserts a mock BrokerAccount entity into the database.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_02_SelectAll_Generated">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_02_SelectAll_Generated">
             <summary>
-            Selects all BuyRight objects of the database.
+            Selects all BrokerAccount objects of the database.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_03_DeepLoad_Generated">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_03_DeepLoad_Generated">
             <summary>
-            Deep load all BuyRight children.
+            Deep load all BrokerAccount children.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_04_Update_Generated">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_04_Update_Generated">
             <summary>
-            Updates a mock BuyRight entity into the database.
+            Updates a mock BrokerAccount entity into the database.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_05_Delete_Generated">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_05_Delete_Generated">
             <summary>
-            Delete the mock BuyRight entity into the database.
+            Delete the mock BrokerAccount entity into the database.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_06_SerializeEntity_Generated">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_06_SerializeEntity_Generated">
             <summary>
-            Serialize the mock BuyRight entity into a temporary file.
+            Serialize the mock BrokerAccount entity into a temporary file.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_07_DeserializeEntity_Generated">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_07_DeserializeEntity_Generated">
             <summary>
-            Deserialize the mock BuyRight entity from a temporary file.
+            Deserialize the mock BrokerAccount entity from a temporary file.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_08_SerializeCollection_Generated">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_08_SerializeCollection_Generated">
             <summary>
-            Serialize a BuyRight collection into a temporary file.
+            Serialize a BrokerAccount collection into a temporary file.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_09_DeserializeCollection_Generated">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_09_DeserializeCollection_Generated">
             <summary>
-            Deserialize a BuyRight collection from a temporary file.
+            Deserialize a BrokerAccount collection from a temporary file.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_10_FK_Generated">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_10_FK_Generated">
             <summary>
             Check the foreign key dal methods.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_11_IX_Generated">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_11_IX_Generated">
             <summary>
             Check the indexes dal methods.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_20_TestEntityHelper_Generated">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_20_TestEntityHelper_Generated">
             <summary>
             Test methods exposed by the EntityHelper class.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_30_TestFindByQuery_Generated">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_30_TestFindByQuery_Generated">
             <summary>
             Test Find using the Query class
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.CreateMockInstance_Generated(AccountManager.DataAccess.TransactionManager)">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.CreateMockInstance_Generated(AccountManager.DataAccess.TransactionManager)">
             <summary>
-              Returns a Typed BuyRight Entity with mock values.
+              Returns a Typed BrokerAccount Entity with mock values.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.UpdateMockInstance_Generated(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.BuyRight)">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.UpdateMockInstance_Generated(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.BrokerAccount)">
             <summary>
-              Update the Typed BuyRight Entity with modified mock values.
+              Update the Typed BrokerAccount Entity with modified mock values.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.#ctor">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.#ctor">
             <summary>
-            Creates a new <see cref="T:AccountManager.UnitTests.BuyRightTest"/> instance.
+            Creates a new <see cref="T:AccountManager.UnitTests.BrokerAccountTest"/> instance.
             </summary>	
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Init">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Init">
             <summary>
             This method is used to construct the test environment prior to running the tests.
             </summary>        
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Dispose">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Dispose">
             <summary>
             This method is used to restore the environment after the tests are completed.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_01_Insert">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_01_Insert">
             <summary>
-            Inserts a mock BuyRight entity into the database.
+            Inserts a mock BrokerAccount entity into the database.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_02_SelectAll">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_02_SelectAll">
             <summary>
-            Selects a sample of  BuyRight objects of the database.
+            Selects a sample of  BrokerAccount objects of the database.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_03_DeepLoad">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_03_DeepLoad">
             <summary>
-            Deep load all BuyRight children.
+            Deep load all BrokerAccount children.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_04_Update">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_04_Update">
             <summary>
-            Updates a mock BuyRight entity into the database.
+            Updates a mock BrokerAccount entity into the database.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_05_Delete">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_05_Delete">
             <summary>
-            Delete the mock BuyRight entity into the database.
+            Delete the mock BrokerAccount entity into the database.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_06_SerializeEntity">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_06_SerializeEntity">
             <summary>
-            Serialize the mock BuyRight entity into a temporary file.
+            Serialize the mock BrokerAccount entity into a temporary file.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_07_DeserializeEntity">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_07_DeserializeEntity">
             <summary>
-            Deserialize the mock BuyRight entity from a temporary file.
+            Deserialize the mock BrokerAccount entity from a temporary file.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_08_SerializeCollection">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_08_SerializeCollection">
             <summary>
-            Serialize a BuyRight collection into a temporary file.
+            Serialize a BrokerAccount collection into a temporary file.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_09_DeserializeCollection">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_09_DeserializeCollection">
             <summary>
-            Deserialize a BuyRight collection from a temporary file.
+            Deserialize a BrokerAccount collection from a temporary file.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_10_FK">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_10_FK">
             <summary>
             Check the foreign key dal methods.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_11_IX">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_11_IX">
             <summary>
             Check the indexes dal methods.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_20_TestEntityHelper">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_20_TestEntityHelper">
             <summary>
             Test methods exposed by the EntityHelper class.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.Step_30_TestFindByQuery">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.Step_30_TestFindByQuery">
             <summary>
             Test Find using the Query class
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.CreateMockInstance(AccountManager.DataAccess.TransactionManager)">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.CreateMockInstance(AccountManager.DataAccess.TransactionManager)">
             <summary>
-              Returns a Typed BuyRight Entity with mock values.
+              Returns a Typed BrokerAccount Entity with mock values.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.UpdateMockInstance(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.BuyRight)">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.UpdateMockInstance(AccountManager.DataAccess.TransactionManager,AccountManager.Entities.BrokerAccount)">
             <summary>
-              Update the Typed BuyRight Entity with modified mock values.
+              Update the Typed BrokerAccount Entity with modified mock values.
             </summary>
         </member>
-        <member name="M:AccountManager.UnitTests.BuyRightTest.SetSpecialTestData(AccountManager.Entities.BuyRight)">
+        <member name="M:AccountManager.UnitTests.BrokerAccountTest.SetSpecialTestData(AccountManager.Entities.BrokerAccount)">
             <summary>
             Make any alterations necessary (i.e. for DB check constraints, special test cases, etc.)
             </summary>

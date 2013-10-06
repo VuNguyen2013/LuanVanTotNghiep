@@ -13,7 +13,7 @@ namespace ETradeCommon
         {
             try
             {
-                return ExceptionPolicy.HandleException(e, policyName);
+                return false;
             }
             catch (System.Configuration.ConfigurationErrorsException)
             {
