@@ -12,6 +12,10 @@ namespace StockCore.Repositories
         {
             return _entities.StockBalances.Where(x=>x.SubCustAccountID==accountNo && x.StockSymbol==stockSymbol).SingleOrDefault();
         }
+        public List<Models.StockBalance> GetByAccountNo(string accountNo)
+        {
+            return _entities.StockBalances.Where(x=>x.SubCustAccountID==accountNo).ToList();
+        }
         public bool Update(Models.StockBalance stockBalance)
         {
             try
