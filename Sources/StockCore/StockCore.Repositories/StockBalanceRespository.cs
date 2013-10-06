@@ -12,9 +12,12 @@ namespace StockCore.Repositories
         {
             return _entities.StockBalances.Where(x=>x.SubCustAccountID==accountNo && x.StockSymbol==stockSymbol).SingleOrDefault();
         }
-        public List<Models.StockBalance> GetByAccountNo(string accountNo)
+        public List<Common.StockBalanceData> GetByAccountNo(string accountNo)
         {
-            return _entities.StockBalances.Where(x=>x.SubCustAccountID==accountNo).ToList();
+            var listTemp = _entities.StockBalances.Where(x=>x.SubCustAccountID==accountNo).ToList();            
+            var result = listTemp.ConvertAll(x=>new Common.StockBalanceData(){SubCustAccountID = x.SubCustAccountID,Available = x.Available,
+            StockSymbol=x.StockSymbol,Total = x.Total,WTR_T1 = x.WTR_T1, WTR_T2 = x.WTR_T2, WTS_T1 = x.WTS_T1,WTS_T2 = x.WTS_T2}).ToList();
+            return result;
         }
         public bool Update(Models.StockBalance stockBalance)
         {

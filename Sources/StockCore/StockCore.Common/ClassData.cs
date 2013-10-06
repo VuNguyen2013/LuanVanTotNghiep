@@ -146,4 +146,15 @@ namespace StockCore.Common
         public long TotalBuy { get; set; }
         public long TotalSell{get;set;}
     }
+    public class StockBalanceData
+    {
+        public string SubCustAccountID { get; set; }
+        public string StockSymbol { get; set; }
+        public long Available { get; set; }
+        public long Total { get; set; }
+        public long WTR_T1 { get; set; }
+        public long WTR_T2 { get; set; }
+        public long WTS_T1 { get; set; }
+        public long WTS_T2 { get; set; }
+    }
 }

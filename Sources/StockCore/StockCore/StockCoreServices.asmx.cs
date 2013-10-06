@@ -41,10 +41,10 @@ namespace StockCore.Services
             return result;
         }
         [WebMethod]
-        public List<Models.StockBalance> GetStockBalaceByAccNo(string accountNo)
+        public List<Common.StockBalanceData> GetStockBalaceByAccNo(string accountNo)
         {            
             Repositories.StockBalanceRespository stockRep = new Repositories.StockBalanceRespository();
-            List<Models.StockBalance> result = stockRep.GetByAccountNo(accountNo);
+            List<Common.StockBalanceData> result = stockRep.GetByAccountNo(accountNo);
             return result;
         }
     }
