@@ -247,23 +247,8 @@ namespace Updater
             HoseStockInfoPort = int.Parse(configuration.AppSettings.Settings["HoseStockInfoPort"].Value);
             HNXStockInfoPort = int.Parse(configuration.AppSettings.Settings["HNXStockInfoPort"].Value);
             UpComStockInfoPort = int.Parse(configuration.AppSettings.Settings["UpComStockInfoPort"].Value);
-            txtServerIP.Text = configuration.AppSettings.Settings["ServerIP"].Value;
         }
-
-        private void txtServerIP_Leave(object sender, EventArgs e)
-        {
-            System.Net.IPAddress ipAdress;
-            if (!System.Net.IPAddress.TryParse(txtServerIP.Text,out ipAdress))
-            {
-                MessageBox.Show("IP không hợp lệ", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtServerIP.Focus();
-                return;
-            }
-            Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            configuration.AppSettings.Settings["ServerIP"].Value = txtServerIP.Text;
-            configuration.Save();
-            ConfigurationManager.RefreshSection("appSettings");
-        }
+       
         private void tmStatus_Tick(object sender, EventArgs e)
         {
             SetBackColorStatus(pnHoseStatus,_hoseStatus);
