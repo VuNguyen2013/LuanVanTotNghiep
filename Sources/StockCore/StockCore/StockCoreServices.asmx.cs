@@ -47,6 +47,27 @@ namespace StockCore.Services
             List<Common.StockBalanceData> result = stockRep.GetByAccountNo(accountNo);
             return result;
         }
+        [WebMethod]
+        public Common.StockBalanceData GetStockAvailable(string accountNo,string stockSymbol)
+        {
+            Repositories.StockBalanceRespository stockRep = new Repositories.StockBalanceRespository();
+            var stockBalance = stockRep.GetByAccountNoAndSymbol(accountNo,stockSymbol);
+            if (stockBalance != null)
+            {
+                Common.StockBalanceData result = new Common.StockBalanceData();
+                result.Available = stockBalance.Available;
+                result.StockSymbol = stockBalance.StockSymbol;
+                result.SubCustAccountID = stockBalance.SubCustAccountID;
+                result.Total = stockBalance.Total;
+                result.WTR_T1 = stockBalance.WTR_T1;
+                result.WTR_T2 = stockBalance.WTR_T2;
+                result.WTS_T1 = stockBalance.WTS_T1;
+                result.WTS_T2 = stockBalance.WTS_T2;
+                return result;
+            }
+            else
+                return null;
+        }
     }
     
 }
