@@ -2759,7 +2759,7 @@ namespace ETradeWebServices.Services
                         Result = new PagingObject<List<PortfolioInfo>, PortfolioInfo, PortfolioInfo>()
                     };                    
                 }
-                CaculatePortfolio(ref portfolioInfos,accountNo,accountType);                
+                //CaculatePortfolio(ref portfolioInfos,accountNo,accountType);                
             }
             catch (Exception exception)
             {

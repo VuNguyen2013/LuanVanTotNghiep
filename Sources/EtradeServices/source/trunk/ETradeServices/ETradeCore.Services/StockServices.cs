@@ -83,8 +83,7 @@ namespace ETradeCore.Services
             // Get portfolio information for symbols that can sell
             Dictionary<string, PortfolioInfo> returnVal=new Dictionary<string, PortfolioInfo>();
             var stockCoreServices=new StockCoreServices.StockCoreServices();
-            stockCoreServices.gets
-            /*
+            
             returnVal = this.GetPortfolio4Account(accountNo, accountType);
 
             if (returnVal == null)
@@ -95,7 +94,7 @@ namespace ETradeCore.Services
                     TraceEventType.Information);
                 return null;
             }
-            */
+            
             return returnVal;
         }
 
@@ -212,127 +211,15 @@ namespace ETradeCore.Services
         private Dictionary<String, PortfolioInfo> GetPortfolio4Account(string accountNo, int accounttype)
         {
             // Get portfolio information for symbols that can sell
-            List<Portfolio> portfolioInfos = null;
 
-            switch (accounttype)
-            {
-                case (int)CommonEnums.ACCOUNT_TYPE.NORMAL:
-                    portfolioInfos = this._fisProvider.GetPortfolio4NormalAccount(accountNo);
-                    break;
-                case (int)CommonEnums.ACCOUNT_TYPE.MARGIN:
-                    portfolioInfos = this._fisProvider.GetPortfolio4MarginAccount(accountNo);
-                    break;
-                default:
-                    break;
-            }
-
-            // Get stock due information for symbols wait to reveice or wait to send
-            Dictionary<string, StockDueInfo> listStockDueInfos = _fisProvider.GetStockDue(accountNo);
-          
-            var returnVal = new Dictionary<string, PortfolioInfo>();
-
-            if (portfolioInfos!=null)
-            {
-                foreach (Portfolio portfolio in portfolioInfos) // sellable share and buy/sell today.
+            var service=new StockCoreServices.StockCoreServices();
+            var list=service.GetStockBalaceByAccNo(accountNo);
+            List<PortfolioInfo> portfolioInfos = list.Select(stockBalanceData => new PortfolioInfo
                 {
-                    PortfolioInfo currentportfolio;
+                    Total = stockBalanceData.Total, Symbol = stockBalanceData.StockSymbol, SellableShare = stockBalanceData.Available,WTR_T1 = stockBalanceData.WTR_T1,WTR_T2 = stockBalanceData.WTR_T2,WTS_T1 = stockBalanceData.WTS_T1,WTS_T2 = stockBalanceData.WTS_T2,Amount = stockBalanceData.Available
+                }).ToList();
 
-                    // Only care 2 types of stock in this phase.
-                    if (portfolio.SecType != (int)CommonEnums.SEC_TYPE.SELLABLE_SHARE &&
-                        portfolio.SecType != (int)CommonEnums.SEC_TYPE.WAIT_RECV &&
-                        portfolio.SecType != (int)CommonEnums.SEC_TYPE.WAIT_SEND) continue;
-
-                    // don't care row with avilable volume = 0.
-                    if (portfolio.Available <= 0) continue;
-                    
-
-                    if (returnVal.ContainsKey(portfolio.Symbol))
-                    {
-                        // This symbol is existed in portfolio, so update portfolio information
-                        currentportfolio =  returnVal[portfolio.Symbol];
-                        currentportfolio.Amount += portfolio.Amount;
-                    }
-                    else
-                    {
-                        currentportfolio = new PortfolioInfo();
-                        currentportfolio.Symbol = portfolio.Symbol;
-                        currentportfolio.Amount = portfolio.Amount;
-                        returnVal.Add(portfolio.Symbol, currentportfolio);
-                    }
-
-                    switch (portfolio.SecType)
-                    {
-                        // TODO: USE IN THE FURTURE
-                        /*
-                        case (int)CommonEnums.SEC_TYPE.NON_SELLABLE_BY_LENDING_MONEY:
-                            currentportfolio.PledgeShare = portfolio.Available;
-                            break;
-                         */
-                        case (int)CommonEnums.SEC_TYPE.SELLABLE_SHARE:
-                            currentportfolio.SellableShare = portfolio.Available;
-                            currentportfolio.AvgPrice = portfolio.AvgPrice;
-                            currentportfolio.Total = portfolio.Total;
-                            break;
-
-                        case (int)CommonEnums.SEC_TYPE.WAIT_RECV:
-                            currentportfolio.WTR = portfolio.Available; //IntraD
-                            currentportfolio.WTRAVGPrice = IntraDAVRPrice(accountNo, accounttype, currentportfolio.Symbol);
-                            break;
-
-                        case (int)CommonEnums.SEC_TYPE.WAIT_SEND:
-                            currentportfolio.WTS = portfolio.Available; //IntraD
-                            break;
-
-                        default:
-                            break;
-                    }
-
-
-                    returnVal[portfolio.Symbol] = currentportfolio;
-                }// for reach
-            }
-            
-
-            if (listStockDueInfos != null)
-            {
-                foreach (var stockdue in listStockDueInfos)
-                {
-                    if ( stockdue.Value.WTR_T1 != 0 ||
-                        stockdue.Value.WTR_T2 != 0 ||
-                        stockdue.Value.WTR_T3 != 0 ||
-                        stockdue.Value.WTS_T1!=0 ||
-                        stockdue.Value.WTS_T2 != 0 ||
-                        stockdue.Value.WTS_T3 != 0||
-                        stockdue.Value.WTR_Amt_T1!=0||
-                        stockdue.Value.WTR_Amt_T2!=0||
-                        stockdue.Value.WTR_Amt_T3!=0)
-                    {
-                        string symbol = stockdue.Key;
-                        PortfolioInfo currentportfolio;
-
-                        if (returnVal.ContainsKey(symbol))
-                        {
-                            currentportfolio = returnVal[symbol];
-                        }
-                        else
-                        {
-                            currentportfolio = new PortfolioInfo();
-                            currentportfolio.Symbol = symbol;
-                            returnVal.Add(symbol, currentportfolio);                            
-                        }
-
-                        UpdateDuePortfolio(ref currentportfolio, listStockDueInfos[symbol]); //DUE =  WTR_T1, WTR_T2, WTR_T3                        
-                    }
-                }               
-            }
-
-            foreach (var portfolioInfo in returnVal)
-            {
-                PortfolioInfo currentportfolio = returnVal[portfolioInfo.Key];
-                UpdateTotalAVGPrice(ref currentportfolio);                
-            }
-          
-            return returnVal;
+            return portfolioInfos.ToDictionary(portfolioInfo => accountNo);
         }
 
         public List<OrderInfo> GetListOrderIntraDay(string accountNo)

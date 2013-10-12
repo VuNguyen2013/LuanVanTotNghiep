@@ -26,7 +26,7 @@ namespace ETradeWebServices.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:16786/Service.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:8808/Service.asmx")]
         public string ETradeWebServices_RTServices_Service {
             get {
                 return ((string)(this["ETradeWebServices_RTServices_Service"]));
@@ -46,7 +46,7 @@ namespace ETradeWebServices.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:2694/StockCoreServices.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:8807/StockCoreServices.asmx")]
         public string ETradeWebServices_StockCoreServices_StockCoreServices {
             get {
                 return ((string)(this["ETradeWebServices_StockCoreServices_StockCoreServices"]));
