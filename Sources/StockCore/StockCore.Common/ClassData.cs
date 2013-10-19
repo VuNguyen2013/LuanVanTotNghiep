@@ -157,4 +157,12 @@ namespace StockCore.Common
         public long WTS_T1 { get; set; }
         public long WTS_T2 { get; set; }
     }
+    public class StockInfoCache
+    {
+        public byte MarketID { get; set; }
+        public string Symbol { get; set; }
+        public long Floor { get; set; }
+        public long Ceil { get; set; }
+        public int Volume { get; set; }
+    }
 }

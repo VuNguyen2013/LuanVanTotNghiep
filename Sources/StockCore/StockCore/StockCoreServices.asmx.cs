@@ -68,6 +68,48 @@ namespace StockCore.Services
             else
                 return null;
         }
+        [WebMethod]
+        public Common.StockInfoCache GetStockInfoCache(string symbol)
+        {
+            Common.StockInfoCache result = null;
+            Repositories.HoseStockInfoRepository hoseRep = new Repositories.HoseStockInfoRepository();
+            var hoseStock = hoseRep.GetByStockSymbol(symbol);
+            if (hoseStock != null)
+            {
+                result = new Common.StockInfoCache();
+                result.Ceil = hoseStock.Ceiling;
+                result.Floor = hoseStock.Floor;
+                result.Symbol = hoseStock.StockSymbol;
+                result.MarketID = 1;
+            }
+            else
+            {
+                Repositories.HNXStockInfoRepository hnxRep = new Repositories.HNXStockInfoRepository();
+                var hnxStock = hnxRep.GetByStockSymbol(symbol);
+                if (hnxStock != null)
+                {
+                    result = new Common.StockInfoCache();
+                    result.Ceil = hnxStock.Ceiling;
+                    result.Floor = hnxStock.Floor;
+                    result.Symbol = hnxStock.StockSymbol;
+                    result.MarketID = 2;
+                }
+                else
+                {
+                    var upcomRep = new Repositories.UpComStockInfoRepository();
+                    var upcomStock = upcomRep.GetByStockSymbol(symbol);
+                    if (upcomStock != null)
+                    {
+                        result = new Common.StockInfoCache();
+                        result.Ceil = upcomStock.Ceiling;
+                        result.Floor = upcomStock.Floor;
+                        result.Symbol = upcomStock.StockSymbol;
+                        result.MarketID = 3;
+                    }
+                }
+            }
+            return result;
+        }
     }
     
 }

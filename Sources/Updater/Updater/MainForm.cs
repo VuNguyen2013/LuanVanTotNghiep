@@ -124,7 +124,7 @@ namespace Updater
             }
         }
         private void GetHoseStockInfoData()
-        {
+        {            
             while (true)
             {
                 try

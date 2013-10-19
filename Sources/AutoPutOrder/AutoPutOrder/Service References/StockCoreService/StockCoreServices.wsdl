@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:element name="ReceiveOrder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="clientOrderID" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="accountNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="stockSymbol" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="price" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="volume" type="s:short" />
+            <s:element minOccurs="1" maxOccurs="1" name="side" type="s1:char" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReceiveOrderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ReceiveOrderResult" type="s:short" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCashBalance">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accountNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCashBalanceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCashBalanceResult" type="tns:CashBalanceData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CashBalanceData">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="WithDraw" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="BuyCredit" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalBuy" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalSell" type="s:long" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetStockBalaceByAccNo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accountNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStockBalaceByAccNoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStockBalaceByAccNoResult" type="tns:ArrayOfStockBalanceData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfStockBalanceData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="StockBalanceData" nillable="true" type="tns:StockBalanceData" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="StockBalanceData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="SubCustAccountID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StockSymbol" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Available" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="Total" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="WTR_T1" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="WTR_T2" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="WTS_T1" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="WTS_T2" type="s:long" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetStockAvailable">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accountNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="stockSymbol" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStockAvailableResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStockAvailableResult" type="tns:StockBalanceData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStockInfoCache">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="symbol" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStockInfoCacheResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStockInfoCacheResult" type="tns:StockInfoCache" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="StockInfoCache">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="MarketID" type="s:unsignedByte" />
+          <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Floor" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="Ceil" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="Volume" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="short" type="s:short" />
+      <s:element name="CashBalanceData" nillable="true" type="tns:CashBalanceData" />
+      <s:element name="ArrayOfStockBalanceData" nillable="true" type="tns:ArrayOfStockBalanceData" />
+      <s:element name="StockBalanceData" nillable="true" type="tns:StockBalanceData" />
+      <s:element name="StockInfoCache" nillable="true" type="tns:StockInfoCache" />
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="char">
+        <s:restriction base="s:unsignedShort" />
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ReceiveOrderSoapIn">
+    <wsdl:part name="parameters" element="tns:ReceiveOrder" />
+  </wsdl:message>
+  <wsdl:message name="ReceiveOrderSoapOut">
+    <wsdl:part name="parameters" element="tns:ReceiveOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCashBalanceSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCashBalance" />
+  </wsdl:message>
+  <wsdl:message name="GetCashBalanceSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCashBalanceResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStockBalaceByAccNoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStockBalaceByAccNo" />
+  </wsdl:message>
+  <wsdl:message name="GetStockBalaceByAccNoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStockBalaceByAccNoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStockAvailableSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStockAvailable" />
+  </wsdl:message>
+  <wsdl:message name="GetStockAvailableSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStockAvailableResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStockInfoCacheSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStockInfoCache" />
+  </wsdl:message>
+  <wsdl:message name="GetStockInfoCacheSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStockInfoCacheResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReceiveOrderHttpGetIn">
+    <wsdl:part name="clientOrderID" type="s:string" />
+    <wsdl:part name="accountNo" type="s:string" />
+    <wsdl:part name="stockSymbol" type="s:string" />
+    <wsdl:part name="price" type="s:string" />
+    <wsdl:part name="volume" type="s:string" />
+    <wsdl:part name="side" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ReceiveOrderHttpGetOut">
+    <wsdl:part name="Body" element="tns:short" />
+  </wsdl:message>
+  <wsdl:message name="GetCashBalanceHttpGetIn">
+    <wsdl:part name="accountNo" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCashBalanceHttpGetOut">
+    <wsdl:part name="Body" element="tns:CashBalanceData" />
+  </wsdl:message>
+  <wsdl:message name="GetStockBalaceByAccNoHttpGetIn">
+    <wsdl:part name="accountNo" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStockBalaceByAccNoHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfStockBalanceData" />
+  </wsdl:message>
+  <wsdl:message name="GetStockAvailableHttpGetIn">
+    <wsdl:part name="accountNo" type="s:string" />
+    <wsdl:part name="stockSymbol" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStockAvailableHttpGetOut">
+    <wsdl:part name="Body" element="tns:StockBalanceData" />
+  </wsdl:message>
+  <wsdl:message name="GetStockInfoCacheHttpGetIn">
+    <wsdl:part name="symbol" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStockInfoCacheHttpGetOut">
+    <wsdl:part name="Body" element="tns:StockInfoCache" />
+  </wsdl:message>
+  <wsdl:message name="ReceiveOrderHttpPostIn">
+    <wsdl:part name="clientOrderID" type="s:string" />
+    <wsdl:part name="accountNo" type="s:string" />
+    <wsdl:part name="stockSymbol" type="s:string" />
+    <wsdl:part name="price" type="s:string" />
+    <wsdl:part name="volume" type="s:string" />
+    <wsdl:part name="side" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ReceiveOrderHttpPostOut">
+    <wsdl:part name="Body" element="tns:short" />
+  </wsdl:message>
+  <wsdl:message name="GetCashBalanceHttpPostIn">
+    <wsdl:part name="accountNo" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCashBalanceHttpPostOut">
+    <wsdl:part name="Body" element="tns:CashBalanceData" />
+  </wsdl:message>
+  <wsdl:message name="GetStockBalaceByAccNoHttpPostIn">
+    <wsdl:part name="accountNo" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStockBalaceByAccNoHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfStockBalanceData" />
+  </wsdl:message>
+  <wsdl:message name="GetStockAvailableHttpPostIn">
+    <wsdl:part name="accountNo" type="s:string" />
+    <wsdl:part name="stockSymbol" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStockAvailableHttpPostOut">
+    <wsdl:part name="Body" element="tns:StockBalanceData" />
+  </wsdl:message>
+  <wsdl:message name="GetStockInfoCacheHttpPostIn">
+    <wsdl:part name="symbol" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStockInfoCacheHttpPostOut">
+    <wsdl:part name="Body" element="tns:StockInfoCache" />
+  </wsdl:message>
+  <wsdl:portType name="StockCoreServicesSoap">
+    <wsdl:operation name="ReceiveOrder">
+      <wsdl:input message="tns:ReceiveOrderSoapIn" />
+      <wsdl:output message="tns:ReceiveOrderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCashBalance">
+      <wsdl:input message="tns:GetCashBalanceSoapIn" />
+      <wsdl:output message="tns:GetCashBalanceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStockBalaceByAccNo">
+      <wsdl:input message="tns:GetStockBalaceByAccNoSoapIn" />
+      <wsdl:output message="tns:GetStockBalaceByAccNoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStockAvailable">
+      <wsdl:input message="tns:GetStockAvailableSoapIn" />
+      <wsdl:output message="tns:GetStockAvailableSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStockInfoCache">
+      <wsdl:input message="tns:GetStockInfoCacheSoapIn" />
+      <wsdl:output message="tns:GetStockInfoCacheSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="StockCoreServicesHttpGet">
+    <wsdl:operation name="ReceiveOrder">
+      <wsdl:input message="tns:ReceiveOrderHttpGetIn" />
+      <wsdl:output message="tns:ReceiveOrderHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCashBalance">
+      <wsdl:input message="tns:GetCashBalanceHttpGetIn" />
+      <wsdl:output message="tns:GetCashBalanceHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStockBalaceByAccNo">
+      <wsdl:input message="tns:GetStockBalaceByAccNoHttpGetIn" />
+      <wsdl:output message="tns:GetStockBalaceByAccNoHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStockAvailable">
+      <wsdl:input message="tns:GetStockAvailableHttpGetIn" />
+      <wsdl:output message="tns:GetStockAvailableHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStockInfoCache">
+      <wsdl:input message="tns:GetStockInfoCacheHttpGetIn" />
+      <wsdl:output message="tns:GetStockInfoCacheHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="StockCoreServicesHttpPost">
+    <wsdl:operation name="ReceiveOrder">
+      <wsdl:input message="tns:ReceiveOrderHttpPostIn" />
+      <wsdl:output message="tns:ReceiveOrderHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCashBalance">
+      <wsdl:input message="tns:GetCashBalanceHttpPostIn" />
+      <wsdl:output message="tns:GetCashBalanceHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStockBalaceByAccNo">
+      <wsdl:input message="tns:GetStockBalaceByAccNoHttpPostIn" />
+      <wsdl:output message="tns:GetStockBalaceByAccNoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStockAvailable">
+      <wsdl:input message="tns:GetStockAvailableHttpPostIn" />
+      <wsdl:output message="tns:GetStockAvailableHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStockInfoCache">
+      <wsdl:input message="tns:GetStockInfoCacheHttpPostIn" />
+      <wsdl:output message="tns:GetStockInfoCacheHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="StockCoreServicesSoap" type="tns:StockCoreServicesSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ReceiveOrder">
+      <soap:operation soapAction="http://tempuri.org/ReceiveOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCashBalance">
+      <soap:operation soapAction="http://tempuri.org/GetCashBalance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockBalaceByAccNo">
+      <soap:operation soapAction="http://tempuri.org/GetStockBalaceByAccNo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockAvailable">
+      <soap:operation soapAction="http://tempuri.org/GetStockAvailable" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockInfoCache">
+      <soap:operation soapAction="http://tempuri.org/GetStockInfoCache" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="StockCoreServicesSoap12" type="tns:StockCoreServicesSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ReceiveOrder">
+      <soap12:operation soapAction="http://tempuri.org/ReceiveOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCashBalance">
+      <soap12:operation soapAction="http://tempuri.org/GetCashBalance" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockBalaceByAccNo">
+      <soap12:operation soapAction="http://tempuri.org/GetStockBalaceByAccNo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockAvailable">
+      <soap12:operation soapAction="http://tempuri.org/GetStockAvailable" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockInfoCache">
+      <soap12:operation soapAction="http://tempuri.org/GetStockInfoCache" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="StockCoreServicesHttpGet" type="tns:StockCoreServicesHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="ReceiveOrder">
+      <http:operation location="/ReceiveOrder" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCashBalance">
+      <http:operation location="/GetCashBalance" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockBalaceByAccNo">
+      <http:operation location="/GetStockBalaceByAccNo" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockAvailable">
+      <http:operation location="/GetStockAvailable" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockInfoCache">
+      <http:operation location="/GetStockInfoCache" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="StockCoreServicesHttpPost" type="tns:StockCoreServicesHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="ReceiveOrder">
+      <http:operation location="/ReceiveOrder" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCashBalance">
+      <http:operation location="/GetCashBalance" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockBalaceByAccNo">
+      <http:operation location="/GetStockBalaceByAccNo" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockAvailable">
+      <http:operation location="/GetStockAvailable" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockInfoCache">
+      <http:operation location="/GetStockInfoCache" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="StockCoreServices">
+    <wsdl:port name="StockCoreServicesSoap" binding="tns:StockCoreServicesSoap">
+      <soap:address location="http://localhost:8807/StockCoreServices.asmx" />
+    </wsdl:port>
+    <wsdl:port name="StockCoreServicesSoap12" binding="tns:StockCoreServicesSoap12">
+      <soap12:address location="http://localhost:8807/StockCoreServices.asmx" />
+    </wsdl:port>
+    <wsdl:port name="StockCoreServicesHttpGet" binding="tns:StockCoreServicesHttpGet">
+      <http:address location="http://localhost:8807/StockCoreServices.asmx" />
+    </wsdl:port>
+    <wsdl:port name="StockCoreServicesHttpPost" binding="tns:StockCoreServicesHttpPost">
+      <http:address location="http://localhost:8807/StockCoreServices.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
