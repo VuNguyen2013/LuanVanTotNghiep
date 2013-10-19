@@ -33,6 +33,8 @@ namespace ETradeCore.Services.StockCoreServices {
         
         private System.Threading.SendOrPostCallback GetCashBalanceOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GetStockBalaceByAccNoOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -76,6 +78,9 @@ namespace ETradeCore.Services.StockCoreServices {
         
         /// <remarks/>
         public event GetCashBalanceCompletedEventHandler GetCashBalanceCompleted;
+        
+        /// <remarks/>
+        public event GetStockBalaceByAccNoCompletedEventHandler GetStockBalaceByAccNoCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ReceiveOrder", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -142,6 +147,35 @@ namespace ETradeCore.Services.StockCoreServices {
             if ((this.GetCashBalanceCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.GetCashBalanceCompleted(this, new GetCashBalanceCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetStockBalaceByAccNo", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public StockBalanceData[] GetStockBalaceByAccNo(string accountNo) {
+            object[] results = this.Invoke("GetStockBalaceByAccNo", new object[] {
+                        accountNo});
+            return ((StockBalanceData[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetStockBalaceByAccNoAsync(string accountNo) {
+            this.GetStockBalaceByAccNoAsync(accountNo, null);
+        }
+        
+        /// <remarks/>
+        public void GetStockBalaceByAccNoAsync(string accountNo, object userState) {
+            if ((this.GetStockBalaceByAccNoOperationCompleted == null)) {
+                this.GetStockBalaceByAccNoOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetStockBalaceByAccNoOperationCompleted);
+            }
+            this.InvokeAsync("GetStockBalaceByAccNo", new object[] {
+                        accountNo}, this.GetStockBalaceByAccNoOperationCompleted, userState);
+        }
+        
+        private void OnGetStockBalaceByAccNoOperationCompleted(object arg) {
+            if ((this.GetStockBalaceByAccNoCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetStockBalaceByAccNoCompleted(this, new GetStockBalaceByAccNoCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -222,6 +256,111 @@ namespace ETradeCore.Services.StockCoreServices {
     }
     
     /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.32559")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class StockBalanceData {
+        
+        private string subCustAccountIDField;
+        
+        private string stockSymbolField;
+        
+        private long availableField;
+        
+        private long totalField;
+        
+        private long wTR_T1Field;
+        
+        private long wTR_T2Field;
+        
+        private long wTS_T1Field;
+        
+        private long wTS_T2Field;
+        
+        /// <remarks/>
+        public string SubCustAccountID {
+            get {
+                return this.subCustAccountIDField;
+            }
+            set {
+                this.subCustAccountIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string StockSymbol {
+            get {
+                return this.stockSymbolField;
+            }
+            set {
+                this.stockSymbolField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public long Available {
+            get {
+                return this.availableField;
+            }
+            set {
+                this.availableField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public long Total {
+            get {
+                return this.totalField;
+            }
+            set {
+                this.totalField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public long WTR_T1 {
+            get {
+                return this.wTR_T1Field;
+            }
+            set {
+                this.wTR_T1Field = value;
+            }
+        }
+        
+        /// <remarks/>
+        public long WTR_T2 {
+            get {
+                return this.wTR_T2Field;
+            }
+            set {
+                this.wTR_T2Field = value;
+            }
+        }
+        
+        /// <remarks/>
+        public long WTS_T1 {
+            get {
+                return this.wTS_T1Field;
+            }
+            set {
+                this.wTS_T1Field = value;
+            }
+        }
+        
+        /// <remarks/>
+        public long WTS_T2 {
+            get {
+                return this.wTS_T2Field;
+            }
+            set {
+                this.wTS_T2Field = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.32559")]
     public delegate void ReceiveOrderCompletedEventHandler(object sender, ReceiveOrderCompletedEventArgs e);
     
@@ -269,6 +408,32 @@ namespace ETradeCore.Services.StockCoreServices {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((CashBalanceData)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.32559")]
+    public delegate void GetStockBalaceByAccNoCompletedEventHandler(object sender, GetStockBalaceByAccNoCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.32559")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetStockBalaceByAccNoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetStockBalaceByAccNoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public StockBalanceData[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((StockBalanceData[])(this.results[0]));
             }
         }
     }
