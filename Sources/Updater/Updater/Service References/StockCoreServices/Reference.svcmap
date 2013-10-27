@@ -18,11 +18,11 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:2694/StockCoreServices.asmx" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://192.168.1.16:8807/StockCoreServices.asmx" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="StockCoreServices.wsdl" MetadataType="Wsdl" ID="02e7e1eb-1df4-44cc-be66-4b4ed55c4efb" SourceId="1" SourceUrl="http://localhost:2694/StockCoreServices.asmx?wsdl" />
-    <MetadataFile FileName="StockCoreServices.disco" MetadataType="Disco" ID="56176aab-124a-478a-851d-1e4a2017b123" SourceId="1" SourceUrl="http://localhost:2694/StockCoreServices.asmx?disco" />
+    <MetadataFile FileName="StockCoreServices1.wsdl" MetadataType="Wsdl" ID="8d2c6f70-1d0e-47eb-aaac-3454f9b3b544" SourceId="1" SourceUrl="http://192.168.1.16:8807/StockCoreServices.asmx?wsdl" />
+    <MetadataFile FileName="StockCoreServices1.disco" MetadataType="Disco" ID="078b642c-d748-42c4-bb99-9b48b92723b4" SourceId="1" SourceUrl="http://192.168.1.16:8807/StockCoreServices.asmx?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

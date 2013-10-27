@@ -35,6 +35,10 @@ namespace ETradeWebServices.StockCoreServices {
         
         private System.Threading.SendOrPostCallback GetStockBalaceByAccNoOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GetStockAvailableOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback GetStockInfoCacheOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -81,6 +85,12 @@ namespace ETradeWebServices.StockCoreServices {
         
         /// <remarks/>
         public event GetStockBalaceByAccNoCompletedEventHandler GetStockBalaceByAccNoCompleted;
+        
+        /// <remarks/>
+        public event GetStockAvailableCompletedEventHandler GetStockAvailableCompleted;
+        
+        /// <remarks/>
+        public event GetStockInfoCacheCompletedEventHandler GetStockInfoCacheCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ReceiveOrder", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -180,6 +190,66 @@ namespace ETradeWebServices.StockCoreServices {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetStockAvailable", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public StockBalanceData GetStockAvailable(string accountNo, string stockSymbol) {
+            object[] results = this.Invoke("GetStockAvailable", new object[] {
+                        accountNo,
+                        stockSymbol});
+            return ((StockBalanceData)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetStockAvailableAsync(string accountNo, string stockSymbol) {
+            this.GetStockAvailableAsync(accountNo, stockSymbol, null);
+        }
+        
+        /// <remarks/>
+        public void GetStockAvailableAsync(string accountNo, string stockSymbol, object userState) {
+            if ((this.GetStockAvailableOperationCompleted == null)) {
+                this.GetStockAvailableOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetStockAvailableOperationCompleted);
+            }
+            this.InvokeAsync("GetStockAvailable", new object[] {
+                        accountNo,
+                        stockSymbol}, this.GetStockAvailableOperationCompleted, userState);
+        }
+        
+        private void OnGetStockAvailableOperationCompleted(object arg) {
+            if ((this.GetStockAvailableCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetStockAvailableCompleted(this, new GetStockAvailableCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetStockInfoCache", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public StockInfoCache GetStockInfoCache(string symbol) {
+            object[] results = this.Invoke("GetStockInfoCache", new object[] {
+                        symbol});
+            return ((StockInfoCache)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetStockInfoCacheAsync(string symbol) {
+            this.GetStockInfoCacheAsync(symbol, null);
+        }
+        
+        /// <remarks/>
+        public void GetStockInfoCacheAsync(string symbol, object userState) {
+            if ((this.GetStockInfoCacheOperationCompleted == null)) {
+                this.GetStockInfoCacheOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetStockInfoCacheOperationCompleted);
+            }
+            this.InvokeAsync("GetStockInfoCache", new object[] {
+                        symbol}, this.GetStockInfoCacheOperationCompleted, userState);
+        }
+        
+        private void OnGetStockInfoCacheOperationCompleted(object arg) {
+            if ((this.GetStockInfoCacheCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetStockInfoCacheCompleted(this, new GetStockInfoCacheCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         public new void CancelAsync(object userState) {
             base.CancelAsync(userState);
         }
@@ -251,6 +321,75 @@ namespace ETradeWebServices.StockCoreServices {
             }
             set {
                 this.totalSellField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.32559")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class StockInfoCache {
+        
+        private byte marketIDField;
+        
+        private string symbolField;
+        
+        private long floorField;
+        
+        private long ceilField;
+        
+        private int volumeField;
+        
+        /// <remarks/>
+        public byte MarketID {
+            get {
+                return this.marketIDField;
+            }
+            set {
+                this.marketIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Symbol {
+            get {
+                return this.symbolField;
+            }
+            set {
+                this.symbolField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public long Floor {
+            get {
+                return this.floorField;
+            }
+            set {
+                this.floorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public long Ceil {
+            get {
+                return this.ceilField;
+            }
+            set {
+                this.ceilField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int Volume {
+            get {
+                return this.volumeField;
+            }
+            set {
+                this.volumeField = value;
             }
         }
     }
@@ -434,6 +573,58 @@ namespace ETradeWebServices.StockCoreServices {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((StockBalanceData[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.32559")]
+    public delegate void GetStockAvailableCompletedEventHandler(object sender, GetStockAvailableCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.32559")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetStockAvailableCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetStockAvailableCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public StockBalanceData Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((StockBalanceData)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.32559")]
+    public delegate void GetStockInfoCacheCompletedEventHandler(object sender, GetStockInfoCacheCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.32559")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetStockInfoCacheCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetStockInfoCacheCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public StockInfoCache Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((StockInfoCache)(this.results[0]));
             }
         }
     }

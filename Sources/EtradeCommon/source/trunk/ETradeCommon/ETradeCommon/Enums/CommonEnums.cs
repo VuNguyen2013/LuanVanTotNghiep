@@ -476,7 +476,7 @@ namespace ETradeCommon.Enums
             /// <summary>
             /// Incorrect login password
             /// </summary>
-            INCORRECT_PASSWORD = 7,
+            INCORRECTo_PASSWORD = 7,
 
             /// <summary>
             /// Old password is not match with new password

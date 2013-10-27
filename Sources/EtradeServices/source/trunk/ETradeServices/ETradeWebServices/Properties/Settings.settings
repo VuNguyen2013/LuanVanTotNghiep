@@ -9,7 +9,7 @@
       <Value Profile="(Default)">http://127.0.0.1:8098/AccountManagerServices.asmx</Value>
     </Setting>
     <Setting Name="ETradeWebServices_StockCoreServices_StockCoreServices" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://localhost:8807/StockCoreServices.asmx</Value>
+      <Value Profile="(Default)">http://192.168.1.128:8807/StockCoreServices.asmx</Value>
     </Setting>
   </Settings>
 </SettingsFile>

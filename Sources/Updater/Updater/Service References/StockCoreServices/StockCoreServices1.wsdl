@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:element name="ReceiveOrder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="clientOrderID" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="accountNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="stockSymbol" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="price" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="volume" type="s:short" />
+            <s:element minOccurs="1" maxOccurs="1" name="side" type="s1:char" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReceiveOrderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ReceiveOrderResult" type="s:short" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCashBalance">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accountNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCashBalanceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCashBalanceResult" type="tns:CashBalanceData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CashBalanceData">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="WithDraw" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="BuyCredit" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalBuy" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalSell" type="s:long" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetStockBalaceByAccNo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="accountNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStockBalaceByAccNoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStockBalaceByAccNoResult" type="tns:ArrayOfStockBalanceData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfStockBalanceData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="StockBalanceData" nillable="true" type="tns:StockBalanceData" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="StockBalanceData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="SubCustAccountID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StockSymbol" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Available" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="Total" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="WTR_T1" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="WTR_T2" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="WTS_T1" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="WTS_T2" type="s:long" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="char">
+        <s:restriction base="s:unsignedShort" />
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ReceiveOrderSoapIn">
+    <wsdl:part name="parameters" element="tns:ReceiveOrder" />
+  </wsdl:message>
+  <wsdl:message name="ReceiveOrderSoapOut">
+    <wsdl:part name="parameters" element="tns:ReceiveOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCashBalanceSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCashBalance" />
+  </wsdl:message>
+  <wsdl:message name="GetCashBalanceSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCashBalanceResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStockBalaceByAccNoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStockBalaceByAccNo" />
+  </wsdl:message>
+  <wsdl:message name="GetStockBalaceByAccNoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStockBalaceByAccNoResponse" />
+  </wsdl:message>
+  <wsdl:portType name="StockCoreServicesSoap">
+    <wsdl:operation name="ReceiveOrder">
+      <wsdl:input message="tns:ReceiveOrderSoapIn" />
+      <wsdl:output message="tns:ReceiveOrderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCashBalance">
+      <wsdl:input message="tns:GetCashBalanceSoapIn" />
+      <wsdl:output message="tns:GetCashBalanceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStockBalaceByAccNo">
+      <wsdl:input message="tns:GetStockBalaceByAccNoSoapIn" />
+      <wsdl:output message="tns:GetStockBalaceByAccNoSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="StockCoreServicesSoap" type="tns:StockCoreServicesSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ReceiveOrder">
+      <soap:operation soapAction="http://tempuri.org/ReceiveOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCashBalance">
+      <soap:operation soapAction="http://tempuri.org/GetCashBalance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockBalaceByAccNo">
+      <soap:operation soapAction="http://tempuri.org/GetStockBalaceByAccNo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="StockCoreServicesSoap12" type="tns:StockCoreServicesSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ReceiveOrder">
+      <soap12:operation soapAction="http://tempuri.org/ReceiveOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCashBalance">
+      <soap12:operation soapAction="http://tempuri.org/GetCashBalance" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStockBalaceByAccNo">
+      <soap12:operation soapAction="http://tempuri.org/GetStockBalaceByAccNo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="StockCoreServices">
+    <wsdl:port name="StockCoreServicesSoap" binding="tns:StockCoreServicesSoap">
+      <soap:address location="http://192.168.1.16:8807/StockCoreServices.asmx" />
+    </wsdl:port>
+    <wsdl:port name="StockCoreServicesSoap12" binding="tns:StockCoreServicesSoap12">
+      <soap12:address location="http://192.168.1.16:8807/StockCoreServices.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

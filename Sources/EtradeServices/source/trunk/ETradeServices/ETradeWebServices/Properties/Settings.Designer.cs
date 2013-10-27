@@ -46,7 +46,7 @@ namespace ETradeWebServices.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:8807/StockCoreServices.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://192.168.1.128:8807/StockCoreServices.asmx")]
         public string ETradeWebServices_StockCoreServices_StockCoreServices {
             get {
                 return ((string)(this["ETradeWebServices_StockCoreServices_StockCoreServices"]));

@@ -45,15 +45,17 @@ namespace ETradeCore.Services
         /// <returns>Available stock.</returns>
         public StockAvailable GetStockAvailable(string accountNo, string symbol, int accountType)
         {
-            StockAvailable stockBalance;
+            StockAvailable stockBalance = null;
 
-            if (accountType == (int)CommonEnums.ACCOUNT_TYPE.NORMAL)
+            var service = new StockCoreServices.StockCoreServices();
+            var temp=service.GetStockAvailable(accountNo, symbol);
+            if (temp != null)
             {
-                stockBalance = _fisProvider.GetStockAvailable4NormalAccount(accountNo, symbol);
-            }
-            else
-            {
-                stockBalance = _fisProvider.GetStockAvailable4MarginAccount(accountNo, symbol);
+                stockBalance=new StockAvailable();
+                stockBalance.AvaiVolume = temp.Available;
+                stockBalance.SecSymbol = temp.StockSymbol;
+                stockBalance.WTR_T1=temp.WTR_T1;
+                stockBalance.WTR_T2 = temp.WTR_T2;
             }
 
             if (stockBalance == null)
@@ -131,10 +133,10 @@ namespace ETradeCore.Services
             switch (accounttype)
             {
                 case (int)CommonEnums.ACCOUNT_TYPE.NORMAL:
-                    portfolioInfos = this._fisProvider.GetPortfolio4NormalAccount(accountNo);
+                    portfolioInfos = GetPortfolioDirect4NormalAccount(accountNo);
                     break;
                 case (int)CommonEnums.ACCOUNT_TYPE.MARGIN:
-                    portfolioInfos = this._fisProvider.GetPortfolio4MarginAccount(accountNo);
+                    portfolioInfos = GetPortfolioDirect4NormalAccount(accountNo);
                     break;
                 default:
                     break;
@@ -144,7 +146,8 @@ namespace ETradeCore.Services
             Dictionary<string, StockDueInfo> listStockDueInfos = _fisProvider.GetStockDue(accountNo);
 
             var returnVal = new Dictionary<string, PortfolioInfo>();
-
+            returnVal = GetPortfolio4Account(accountNo,accounttype);
+            /*
             if (portfolioInfos != null)
             {
                 foreach (Portfolio portfolio in portfolioInfos) // sellable share and buy/sell today.
@@ -191,7 +194,7 @@ namespace ETradeCore.Services
                 }
 
             }
-
+            */
             var retlistportfolios = new List<String>();
             foreach (var portfolio in returnVal)
             {
@@ -219,7 +222,7 @@ namespace ETradeCore.Services
                     Total = stockBalanceData.Total, Symbol = stockBalanceData.StockSymbol, SellableShare = stockBalanceData.Available,WTR_T1 = stockBalanceData.WTR_T1,WTR_T2 = stockBalanceData.WTR_T2,WTS_T1 = stockBalanceData.WTS_T1,WTS_T2 = stockBalanceData.WTS_T2,Amount = stockBalanceData.Available
                 }).ToList();
 
-            return portfolioInfos.ToDictionary(portfolioInfo => accountNo);
+            return portfolioInfos.ToDictionary(portfolioInfo => portfolioInfo.Symbol);
         }
 
         public List<OrderInfo> GetListOrderIntraDay(string accountNo)
@@ -336,7 +339,19 @@ namespace ETradeCore.Services
         /// </returns>
         public List<Portfolio> GetPortfolioDirect4NormalAccount(string accountNo)
         {
-            return this._fisProvider.GetPortfolioBySql4NormalAccount(accountNo);
+            var service = new StockCoreServices.StockCoreServices();
+            var list = service.GetStockBalaceByAccNo(accountNo);
+            var portfolios=new List<Portfolio>();
+            foreach (var item in list)
+            {
+                var portfolio=new Portfolio();
+                portfolio.Amount = item.Total;
+                portfolio.Available = item.Available;
+                portfolio.Symbol = item.StockSymbol;
+                portfolios.Add(portfolio);
+            }
+
+            return portfolios;
         }
         #endregion
 

@@ -1305,6 +1305,8 @@ namespace ETradeOrders.DataAccess.SqlClient
 			database.AddInParameter(commandWrapper, "@NewPrice", DbType.Decimal, (entity.NewPrice.HasValue ? (object) entity.NewPrice  : System.DBNull.Value));
 			database.AddInParameter(commandWrapper, "@ChangedOrderStatus", DbType.Int16, (entity.ChangedOrderStatus.HasValue ? (object) entity.ChangedOrderStatus  : System.DBNull.Value));
 			database.AddInParameter(commandWrapper, "@Condition", DbType.AnsiStringFixedLength, entity.Condition );
+            database.AddInParameter(commandWrapper, "@NewVolume", DbType.Int32, entity.Volume);
+            database.AddInParameter(commandWrapper, "@WaitMatchVol", DbType.Int32, 0);
 			
 			int results = 0;
 			
@@ -1393,6 +1395,9 @@ namespace ETradeOrders.DataAccess.SqlClient
 			database.AddInParameter(commandWrapper, "@NewPrice", DbType.Decimal, (entity.NewPrice.HasValue ? (object) entity.NewPrice : System.DBNull.Value) );
 			database.AddInParameter(commandWrapper, "@ChangedOrderStatus", DbType.Int16, (entity.ChangedOrderStatus.HasValue ? (object) entity.ChangedOrderStatus : System.DBNull.Value) );
 			database.AddInParameter(commandWrapper, "@Condition", DbType.AnsiStringFixedLength, entity.Condition );
+
+            database.AddInParameter(commandWrapper, "@NewVolume", DbType.Int32, entity.Volume);
+            database.AddInParameter(commandWrapper, "@WaitMatchVol", DbType.Int32, 0);
 			
 			int results = 0;
 			

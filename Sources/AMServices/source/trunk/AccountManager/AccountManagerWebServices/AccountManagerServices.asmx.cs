@@ -1611,7 +1611,7 @@ namespace AccountManagerWebServices
                 var mainCustAccountService = new MainCustAccountService();
                 var mainCustAccount = mainCustAccountService.GetByMainCustAccountId(username);
                 if(mainCustAccount==null)
-                    return (int)CommonEnums.RET_CODE.ERROR_ACCOUNT;
+                    return (int)CommonEnums.RET_CODE.ERROR_AfCCOUNT;
 
                 returnCode = GeneralService.AuthenticateCustLogon(mainCustAccount, password, username);
             }

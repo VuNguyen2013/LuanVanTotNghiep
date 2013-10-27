@@ -45,6 +45,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.ObjectBuilder2, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Microsoft.Practices.ObjectBuilder2.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
@@ -87,6 +91,9 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Web References\StockCoreServices\StockCoreServices.wsdl" />
+    <None Include="Web References\StockCoreServices\StockInfoCache.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_GlobalResources\Resource.Designer.cs">
@@ -263,10 +270,10 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>ETradeWebServices_RTServices_Service</CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="http://localhost:8807/StockCoreServices.asmx">
+    <WebReferenceUrl Include="http://192.168.1.128:8807/StockCoreServices.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\StockCoreServices\</RelPath>
-      <UpdateFromURL>http://localhost:8807/StockCoreServices.asmx</UpdateFromURL>
+      <UpdateFromURL>http://192.168.1.128:8807/StockCoreServices.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
@@ -320,7 +327,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>15007</DevelopmentServerPort>
+          <DevelopmentServerPort>51989</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

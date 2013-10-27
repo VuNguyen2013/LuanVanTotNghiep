@@ -109,12 +109,15 @@
       <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\StockCoreServices\StockCoreServices.wsdl" />
+    <None Include="Web References\StockCoreServices\StockInfoCache.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://localhost:8807/StockCoreServices.asmx">
+    <WebReferenceUrl Include="http://192.168.1.128:8807/StockCoreServices.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\StockCoreServices\</RelPath>
-      <UpdateFromURL>http://localhost:8807/StockCoreServices.asmx</UpdateFromURL>
+      <UpdateFromURL>http://192.168.1.128:8807/StockCoreServices.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>

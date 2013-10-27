@@ -24,7 +24,7 @@ namespace Updater.Repository
                 var reader = com.ExecuteReader();
                 while (reader.Read())
                 {
-                    var result = service.ReceiveOrder(long.Parse(reader["OrderID"].ToString()),reader["SubCustAccountID"].ToString(),reader["SecSymbol"].ToString(),(long)(Decimal.Parse(reader["Price"].ToString())),short.Parse(reader["Volume"].ToString()),char.Parse(reader["Side"].ToString()));
+                    var result = service.ReceiveOrder(long.Parse(reader["OrderID"].ToString()),reader["SubCustAccountID"].ToString(),reader["SecSymbol"].ToString(),(long)(Decimal.Parse(reader["Price"].ToString()))*1000,short.Parse(reader["Volume"].ToString()),char.Parse(reader["Side"].ToString()));
                     if (result == (short)StockCore.Common.Enums.PUT_ORDER_STATUS.SUCCESS)
                     {
                         var con2 = new SqlConnection(_etradeOrdersTestConString);

@@ -815,7 +815,7 @@ namespace ETradeWebServices.Services
                 execOrder.OrdRejReason = (int)CommonEnums.REJECT_REASON.NOTHING;
                 execOrder.IsNewOrder = true;
                 execOrder.ConditionOrderId = conditionOrderId;
-
+                
                 execOrder.AvgPrice = avgPrice;
                 execOrder.Condition = condition.ToString();
 
@@ -3149,6 +3149,11 @@ namespace ETradeWebServices.Services
             preTradeInfo.StockInfo = stockInfo.Result;
             preTradeInfo.TradingState = (CommonEnums.MARKET_STATUS) tradingState;
             preTradeInfo.listFee = FeeService.ListFees;
+            if (stockAvailable.Result != null)
+            {
+                preTradeInfo.StockInfo.TotalShare = (long)stockAvailable.Result.AvaiVolume;
+            }
+            
             return new ResultObject<PreTradeInfo>
             {
                 ErrorMessage = CommonEnums.RET_CODE.SUCCESS.ToString(),
@@ -4072,8 +4077,8 @@ namespace ETradeWebServices.Services
                     return (int) CommonEnums.RET_CODE.ERROR_ACCOUNT;
 
                 int bankAccountType = (int)subCustAccount.BankAccountType;
-                if (bankAccountType == (int)CommonEnums.BANK_ACCOUNT_TYPE.BANKACC)
-                    return (int)CommonEnums.RET_CODE.NOT_ALLOW;
+/*                if (bankAccountType == (int)CommonEnums.BANK_ACCOUNT_TYPE.BANKACC)
+                    return (int)CommonEnums.RET_CODE.NOT_ALLOW;*/
 
                 //check valid account & same in a main account       
                 //if (TlistSubCustAccount.Where(n => n.SubCustAccountId.Equals(sourceAccountID)).Count() == 0 || TlistSubCustAccount.Where(n => n.SubCustAccountId.Equals(destAccountID)).Count() == 0)                               
@@ -4385,9 +4390,8 @@ namespace ETradeWebServices.Services
                 if (sourceCustAccount == null)
                     return (int)CommonEnums.RET_CODE.ERROR_ACCOUNT;
 
-                int bankAccountType = (int)sourceCustAccount.BankAccountType;
-                if (bankAccountType == (int)CommonEnums.BANK_ACCOUNT_TYPE.BANKACC)
-                    return (int)CommonEnums.RET_CODE.NOT_ALLOW;
+     
+
 
                 //check Request Amount 
                 if (requestAmt <= 0)
