@@ -37,6 +37,7 @@ namespace StockCore.Models
         public long TotalSell { get; set; }
         public Nullable<long> WTR_T1 { get; set; }
         public Nullable<long> WTR_T2 { get; set; }
+        public Nullable<System.DateTime> LastTradeTime { get; set; }
     
         public virtual ICollection<CashTempDeduction> CashTempDeductions { get; set; }
         public virtual MainCustAccount MainCustAccount { get; set; }

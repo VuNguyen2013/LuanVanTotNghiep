@@ -167,4 +167,11 @@ namespace StockCore.Common
         public long Ceil { get; set; }
         public int Volume { get; set; }
     }
+    public class CashAdvanceData
+    {
+        public string Symbol { get; set; }
+        public long Amount { get; set; }
+        //public bool IsWTR_T1 { get; set; }
+        //public bool IsWTR_T2 { get; set; }
+    }
 }

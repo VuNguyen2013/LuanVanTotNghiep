@@ -40,5 +40,11 @@ namespace StockCore.Repositories
                 return false;
             }
         }
+        public List<Models.CashTempDeduction> GetForCashAdvance(string subCustAccount)
+        {
+            var dateTime = DateTime.Now;
+            dateTime = dateTime.AddDays(-2);
+            return _entities.CashTempDeductions.Where(x=>x.AccountNo==subCustAccount && x.DeductedDate>=dateTime && x.IsAdd).ToList();  
+        }
     }
 }

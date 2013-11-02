@@ -112,6 +112,32 @@ namespace StockCore.Services
             }
             return result;
         }
+        [WebMethod]
+        public List<Common.CashAdvanceData> GetListCashAdvance(string accountNo)
+        {
+            List<Common.CashAdvanceData> result = new List<Common.CashAdvanceData>();
+            var cashDeductRep = new Repositories.CashDeductRepository();
+            var listCashDeduct = cashDeductRep.GetForCashAdvance(accountNo);
+            var orderRep = new Repositories.OrderRepository();
+            foreach (var cashDeduct in listCashDeduct)
+            {
+                var order = orderRep.GetByOrderId(Convert.ToInt64(cashDeduct.OrderId));
+                if (result.Count > 0)
+                {
+                    var tempObj = (from x in result where x.Symbol == order.StockSymbol select x).SingleOrDefault();
+                    if (tempObj != null)
+                    {
+                        tempObj.Amount += cashDeduct.Amount;
+                        continue;
+                    }
+                }
+                var obj = new Common.CashAdvanceData();
+                obj.Amount = cashDeduct.Amount;
+                obj.Symbol = order.StockSymbol;
+                result.Add(obj);
+            }
+            return result;
+        }
     }
     
 }

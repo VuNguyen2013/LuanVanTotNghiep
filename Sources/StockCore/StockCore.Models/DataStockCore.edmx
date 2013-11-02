@@ -628,6 +628,7 @@
           <Property Name="TotalSell" Type="bigint" Nullable="false" />
           <Property Name="WTR_T1" Type="bigint" />
           <Property Name="WTR_T2" Type="bigint" />
+          <Property Name="LastTradeTime" Type="datetime" />
         </EntityType>
         <EntityType Name="UpComMarketInfo">
           <Key>
@@ -1632,6 +1633,7 @@
           <NavigationProperty Name="StockTempDeductions" Relationship="DataStockCoreModel.FK__StockTemp__Accou__0E04126B" FromRole="SubCustAccount" ToRole="StockTempDeduction" />
           <Property Type="Int64" Name="WTR_T1" />
           <Property Type="Int64" Name="WTR_T2" />
+          <Property Type="DateTime" Name="LastTradeTime" />
         </EntityType>
         <EntityType Name="UpComMarketInfo">
           <Key>
@@ -2419,6 +2421,7 @@
           <EntitySetMapping Name="SubCustAccounts">
             <EntityTypeMapping TypeName="DataStockCoreModel.SubCustAccount">
               <MappingFragment StoreEntitySet="SubCustAccount">
+                <ScalarProperty Name="LastTradeTime" ColumnName="LastTradeTime" />
                 <ScalarProperty Name="WTR_T2" ColumnName="WTR_T2" />
                 <ScalarProperty Name="WTR_T1" ColumnName="WTR_T1" />
                 <ScalarProperty Name="SubCustAccountID" ColumnName="SubCustAccountID" />

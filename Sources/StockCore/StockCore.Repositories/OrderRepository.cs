@@ -268,10 +268,19 @@ namespace StockCore.Repositories
 
                             var accountBuy = subRep.GetById(orderBuy.AccountNo);
                             var accountSell = subRep.GetById(orderSell.AccountNo);
-
+                            var fistTimeInDay = new DateTime(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.Day,0,0,0);
 
                             accountBuy.WithDraw -= matchedVol * orderBuy.Price;
                             accountBuy.BuyCredit -= matchedVol * orderBuy.Price;
+                            if (accountBuy.LastTradeTime != null && accountBuy.LastTradeTime < fistTimeInDay)
+                            {
+                                accountBuy.TotalBuy = matchedVol * orderBuy.Price;
+                            }
+                            else if (accountBuy.LastTradeTime != null && accountBuy.LastTradeTime >= fistTimeInDay)
+                            {
+                                accountBuy.TotalBuy += matchedVol * orderBuy.Price;
+                            }
+                            accountBuy.LastTradeTime = DateTime.Now;
                             subRep.Update(accountBuy);
                             Models.StockBalance stockByBalance = stockRep.GetByAccountNoAndSymbol(accountBuy.SubCustAccountID, orderBuy.StockSymbol);
                             if (stockByBalance != null)
@@ -297,6 +306,16 @@ namespace StockCore.Repositories
                                 accountSell.WTR_T2 += orderSell.Price * matchedVol;
                             else
                                 accountSell.WTR_T2 = orderSell.Price * matchedVol;
+
+                            if (accountSell.LastTradeTime != null && accountSell.LastTradeTime < fistTimeInDay)
+                            {
+                                accountSell.TotalSell = matchedVol * orderSell.Price;
+                            }
+                            else if (accountSell.LastTradeTime != null && accountSell.LastTradeTime >= fistTimeInDay)
+                            {
+                                accountSell.TotalSell += matchedVol * orderSell.Price;
+                            }
+                            accountSell.LastTradeTime = DateTime.Now;
                             subRep.Update(accountSell);
 
                             //update stock info
@@ -443,6 +462,10 @@ namespace StockCore.Repositories
                     i++;
                 }//end while 1   
             }
+        }
+        public Models.Order GetByOrderId(long orderId)
+        {
+            return (from x in _entities.Orders where x.Id == orderId select x).SingleOrDefault();
         }
     }
 }
