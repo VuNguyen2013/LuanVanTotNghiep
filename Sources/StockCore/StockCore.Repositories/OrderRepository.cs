@@ -202,10 +202,14 @@ namespace StockCore.Repositories
                    ) && x.Side == buyString).OrderByDescending(x => x.Price).ThenByDescending(x => x.Volume).ThenBy(x => x.TradeDate).ToList();
                 var listOrderSell = _entities.Orders.Where(x => (x.Status == (short)Common.Enums.ORDER_STATUS.WAITING_MATCH || x.Status == (short)Common.Enums.ORDER_STATUS.PARTIAL_MATCHED
                    ) && x.Side == sellString).OrderBy(x => x.Price).ThenByDescending(x => x.Volume).ThenBy(x => x.TradeDate).ToList();
-                foreach (var orderBuy in listOrderBuy)
+                int i = 0;                
+                while (i<listOrderBuy.Count )
                 {
-                    foreach (var orderSell in listOrderSell)
+                    var orderBuy = listOrderBuy[i];
+                    int j = 0;
+                    while (j<listOrderSell.Count)
                     {
+                        var orderSell = listOrderSell[j];
                         if (orderBuy.Price == orderSell.Price && orderSell.StockSymbol == orderBuy.StockSymbol)//matched
                         {
                             short matchedVol = 0;
@@ -257,6 +261,43 @@ namespace StockCore.Repositories
                             var stockDeductSell = stockDeductRep.GetByOrderId(orderSell.Id);
                             stockDeductSell.Status = (byte)Common.Enums.DEDUCTION_STATUS.PROCESSED;
                             stockDeductRep.Update(stockDeductSell);
+
+                            //update balance
+                            SubCustAccountRepository subRep = new SubCustAccountRepository();
+                            Repositories.StockBalanceRespository stockRep = new StockBalanceRespository();
+
+                            var accountBuy = subRep.GetById(orderBuy.AccountNo);
+                            var accountSell = subRep.GetById(orderSell.AccountNo);
+
+
+                            accountBuy.WithDraw -= matchedVol * orderBuy.Price;
+                            accountBuy.BuyCredit -= matchedVol * orderBuy.Price;
+                            subRep.Update(accountBuy);
+                            Models.StockBalance stockByBalance = stockRep.GetByAccountNoAndSymbol(accountBuy.SubCustAccountID, orderBuy.StockSymbol);
+                            if (stockByBalance != null)
+                            {
+                                stockByBalance.WTR_T2 += matchedVol;
+                                stockRep.Update(stockByBalance);
+                            }
+                            else
+                            {
+                                stockByBalance = new Models.StockBalance();
+                                stockByBalance.SubCustAccountID = accountBuy.SubCustAccountID;
+                                stockByBalance.StockSymbol = orderBuy.StockSymbol;
+                                stockByBalance.WTR_T2 = matchedVol;
+                                stockRep.Insert(stockByBalance);
+                            }
+
+
+                            var stockSellBalance = stockRep.GetByAccountNoAndSymbol(accountSell.SubCustAccountID, orderSell.StockSymbol);
+                            stockSellBalance.Total -= matchedVol;
+                            stockSellBalance.Available -= matchedVol;
+                            stockRep.Update(stockSellBalance);
+                            if (accountSell.WTR_T2 != null)
+                                accountSell.WTR_T2 += orderSell.Price * matchedVol;
+                            else
+                                accountSell.WTR_T2 = orderSell.Price * matchedVol;
+                            subRep.Update(accountSell);
 
                             //update stock info
                             var hoseStockRep = new HoseStockInfoRepository();
@@ -376,29 +417,31 @@ namespace StockCore.Repositories
                                     upcomStockRep.Update(upcomStock);
                                 }
                             }
-                            //send matched result to client
-                            SubCustAccountRepository subRep = new SubCustAccountRepository();
+                            //send matched result to client                            
                             SocketServer socketServer = new SocketServer();
 
-                            //send to buy account
-                            var accountBuy = subRep.GetById(orderBuy.AccountNo);
+                            //send to buy account                            
                             string buyStr = accountBuy.MainCustAccount.MemberStockCompanyID.ToString() + "|" + orderBuy.ClientID + "|" + matchedVol + "|" + orderBuy.Status;
                             socketServer.SendOrderResultData(buyStr);
 
-                            //send to sell acocunt
-                            var accountSell = subRep.GetById(orderSell.AccountNo);
+                            //send to sell acocunt                            
                             string sellStr = accountSell.MainCustAccount.MemberStockCompanyID.ToString() + "|" + orderSell.ClientID + "|" + matchedVol + "|" + orderSell.Status;
                             socketServer.SendOrderResultData(sellStr);
                             if (orderSell.Volume <= matchedVol)
                             {
                                 listOrderSell.Remove(orderSell);
+                                continue;
                             }
                             if (orderBuy.Volume <= matchedVol)
-                                break;                           
-
+                            {
+                                i++;
+                                break;
+                            }                            
                         }
-                    }//end foreach 2
-                }//end foreach 1   
+                        j++;
+                    }//end while 2
+                    i++;
+                }//end while 1   
             }
         }
     }

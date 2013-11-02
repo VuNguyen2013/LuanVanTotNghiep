@@ -145,6 +145,8 @@ namespace StockCore.Common
         public long BuyCredit { get; set; }
         public long TotalBuy { get; set; }
         public long TotalSell{get;set;}
+        public long WTR_T1 { get; set; }
+        public long WTR_T2 { get; set; }
     }
     public class StockBalanceData
     {

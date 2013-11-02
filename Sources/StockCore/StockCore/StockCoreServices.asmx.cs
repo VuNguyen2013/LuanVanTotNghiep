@@ -37,6 +37,8 @@ namespace StockCore.Services
                 result.BuyCredit = subAcc.BuyCredit;
                 result.TotalBuy = subAcc.TotalBuy;
                 result.TotalSell = subAcc.TotalSell;
+                result.WTR_T1 = subAcc.WTR_T1!=null?Convert.ToInt64(subAcc.WTR_T1):0;
+                result.WTR_T2 = subAcc.WTR_T2 != null ? Convert.ToInt64(subAcc.WTR_T2) : 0;
             }
             return result;
         }

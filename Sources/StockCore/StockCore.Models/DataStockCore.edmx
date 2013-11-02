@@ -10,37 +10,7 @@
           <EntitySet Name="CompanyInfo" EntityType="DataStockCoreModel.Store.CompanyInfo" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="HNXMarketInfo" EntityType="DataStockCoreModel.Store.HNXMarketInfo" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="HNXMarketInfoHist" EntityType="DataStockCoreModel.Store.HNXMarketInfoHist" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="HNXStockInfo" EntityType="DataStockCoreModel.Store.HNXStockInfo" store:Type="Tables" store:Schema="dbo" store:Name="HNXStockInfo">
-            <DefiningQuery>SELECT 
-      [HNXStockInfo].[id] AS [id], 
-      [HNXStockInfo].[TradeDate] AS [TradeDate], 
-      [HNXStockInfo].[StockSymbol] AS [StockSymbol], 
-      [HNXStockInfo].[Ceiling] AS [Ceiling], 
-      [HNXStockInfo].[Floor] AS [Floor], 
-      [HNXStockInfo].[AvrPrice] AS [AvrPrice], 
-      [HNXStockInfo].[Last] AS [Last], 
-      [HNXStockInfo].[LastVol] AS [LastVol], 
-      [HNXStockInfo].[LastVal] AS [LastVal], 
-      [HNXStockInfo].[Highest] AS [Highest], 
-      [HNXStockInfo].[Lowest] AS [Lowest], 
-      [HNXStockInfo].[Totalshares] AS [Totalshares], 
-      [HNXStockInfo].[TotalValue] AS [TotalValue], 
-      [HNXStockInfo].[Best1Bid] AS [Best1Bid], 
-      [HNXStockInfo].[Best1BidVolume] AS [Best1BidVolume], 
-      [HNXStockInfo].[Best2Bid] AS [Best2Bid], 
-      [HNXStockInfo].[Best2BidVolume] AS [Best2BidVolume], 
-      [HNXStockInfo].[Best3Bid] AS [Best3Bid], 
-      [HNXStockInfo].[Best3BidVolume] AS [Best3BidVolume], 
-      [HNXStockInfo].[Best1Offer] AS [Best1Offer], 
-      [HNXStockInfo].[Best1OfferVolume] AS [Best1OfferVolume], 
-      [HNXStockInfo].[Best2Offer] AS [Best2Offer], 
-      [HNXStockInfo].[Best2OfferVolume] AS [Best2OfferVolume], 
-      [HNXStockInfo].[Best3Offer] AS [Best3Offer], 
-      [HNXStockInfo].[Best3OfferVolume] AS [Best3OfferVolume], 
-      [HNXStockInfo].[SELL_FOREIGN_QTTY] AS [SELL_FOREIGN_QTTY], 
-      [HNXStockInfo].[BUY_FOREIGN_QTTY] AS [BUY_FOREIGN_QTTY]
-      FROM [dbo].[HNXStockInfo] AS [HNXStockInfo]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="HNXStockInfo" EntityType="DataStockCoreModel.Store.HNXStockInfo" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="HNXStockInfoHist" EntityType="DataStockCoreModel.Store.HNXStockInfoHist" store:Type="Tables" store:Schema="dbo" store:Name="HNXStockInfoHist">
             <DefiningQuery>SELECT 
       [HNXStockInfoHist].[id] AS [id], 
@@ -74,37 +44,7 @@
           </EntitySet>
           <EntitySet Name="HoseMarketInfo" EntityType="DataStockCoreModel.Store.HoseMarketInfo" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="HoseMarketInfoHist" EntityType="DataStockCoreModel.Store.HoseMarketInfoHist" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="HoseStockInfo" EntityType="DataStockCoreModel.Store.HoseStockInfo" store:Type="Tables" store:Schema="dbo" store:Name="HoseStockInfo">
-            <DefiningQuery>SELECT 
-      [HoseStockInfo].[id] AS [id], 
-      [HoseStockInfo].[TradeDate] AS [TradeDate], 
-      [HoseStockInfo].[StockSymbol] AS [StockSymbol], 
-      [HoseStockInfo].[Ceiling] AS [Ceiling], 
-      [HoseStockInfo].[Floor] AS [Floor], 
-      [HoseStockInfo].[AvrPrice] AS [AvrPrice], 
-      [HoseStockInfo].[Last] AS [Last], 
-      [HoseStockInfo].[LastVol] AS [LastVol], 
-      [HoseStockInfo].[LastVal] AS [LastVal], 
-      [HoseStockInfo].[Highest] AS [Highest], 
-      [HoseStockInfo].[Lowest] AS [Lowest], 
-      [HoseStockInfo].[Totalshares] AS [Totalshares], 
-      [HoseStockInfo].[TotalValue] AS [TotalValue], 
-      [HoseStockInfo].[Best1Bid] AS [Best1Bid], 
-      [HoseStockInfo].[Best1BidVolume] AS [Best1BidVolume], 
-      [HoseStockInfo].[Best2Bid] AS [Best2Bid], 
-      [HoseStockInfo].[Best2BidVolume] AS [Best2BidVolume], 
-      [HoseStockInfo].[Best3Bid] AS [Best3Bid], 
-      [HoseStockInfo].[Best3BidVolume] AS [Best3BidVolume], 
-      [HoseStockInfo].[Best1Offer] AS [Best1Offer], 
-      [HoseStockInfo].[Best1OfferVolume] AS [Best1OfferVolume], 
-      [HoseStockInfo].[Best2Offer] AS [Best2Offer], 
-      [HoseStockInfo].[Best2OfferVolume] AS [Best2OfferVolume], 
-      [HoseStockInfo].[Best3Offer] AS [Best3Offer], 
-      [HoseStockInfo].[Best3OfferVolume] AS [Best3OfferVolume], 
-      [HoseStockInfo].[CurrentRoom] AS [CurrentRoom], 
-      [HoseStockInfo].[StartRoom] AS [StartRoom]
-      FROM [dbo].[HoseStockInfo] AS [HoseStockInfo]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="HoseStockInfo" EntityType="DataStockCoreModel.Store.HoseStockInfo" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="HoseStockInfoHist" EntityType="DataStockCoreModel.Store.HoseStockInfoHist" store:Type="Tables" store:Schema="dbo" store:Name="HoseStockInfoHist">
             <DefiningQuery>SELECT 
       [HoseStockInfoHist].[id] AS [id], 
@@ -146,37 +86,7 @@
           <EntitySet Name="SubCustAccount" EntityType="DataStockCoreModel.Store.SubCustAccount" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UpComMarketInfo" EntityType="DataStockCoreModel.Store.UpComMarketInfo" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UpComMarketInfoHist" EntityType="DataStockCoreModel.Store.UpComMarketInfoHist" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="UpComStockInfo" EntityType="DataStockCoreModel.Store.UpComStockInfo" store:Type="Tables" store:Schema="dbo" store:Name="UpComStockInfo">
-            <DefiningQuery>SELECT 
-      [UpComStockInfo].[id] AS [id], 
-      [UpComStockInfo].[TradeDate] AS [TradeDate], 
-      [UpComStockInfo].[StockSymbol] AS [StockSymbol], 
-      [UpComStockInfo].[Ceiling] AS [Ceiling], 
-      [UpComStockInfo].[Floor] AS [Floor], 
-      [UpComStockInfo].[AvrPrice] AS [AvrPrice], 
-      [UpComStockInfo].[Last] AS [Last], 
-      [UpComStockInfo].[LastVol] AS [LastVol], 
-      [UpComStockInfo].[LastVal] AS [LastVal], 
-      [UpComStockInfo].[Highest] AS [Highest], 
-      [UpComStockInfo].[Lowest] AS [Lowest], 
-      [UpComStockInfo].[Totalshares] AS [Totalshares], 
-      [UpComStockInfo].[TotalValue] AS [TotalValue], 
-      [UpComStockInfo].[Best1Bid] AS [Best1Bid], 
-      [UpComStockInfo].[Best1BidVolume] AS [Best1BidVolume], 
-      [UpComStockInfo].[Best2Bid] AS [Best2Bid], 
-      [UpComStockInfo].[Best2BidVolume] AS [Best2BidVolume], 
-      [UpComStockInfo].[Best3Bid] AS [Best3Bid], 
-      [UpComStockInfo].[Best3BidVolume] AS [Best3BidVolume], 
-      [UpComStockInfo].[Best1Offer] AS [Best1Offer], 
-      [UpComStockInfo].[Best1OfferVolume] AS [Best1OfferVolume], 
-      [UpComStockInfo].[Best2Offer] AS [Best2Offer], 
-      [UpComStockInfo].[Best2OfferVolume] AS [Best2OfferVolume], 
-      [UpComStockInfo].[Best3Offer] AS [Best3Offer], 
-      [UpComStockInfo].[Best3OfferVolume] AS [Best3OfferVolume], 
-      [UpComStockInfo].[SELL_FOREIGN_QTTY] AS [SELL_FOREIGN_QTTY], 
-      [UpComStockInfo].[BUY_FOREIGN_QTTY] AS [BUY_FOREIGN_QTTY]
-      FROM [dbo].[UpComStockInfo] AS [UpComStockInfo]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="UpComStockInfo" EntityType="DataStockCoreModel.Store.UpComStockInfo" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UpComStockInfoHist" EntityType="DataStockCoreModel.Store.UpComStockInfoHist" store:Type="Tables" store:Schema="dbo" store:Name="UpComStockInfoHist">
             <DefiningQuery>SELECT 
       [UpComStockInfoHist].[id] AS [id], 
@@ -369,37 +279,9 @@
           <Property Name="MarketId" Type="int" />
           <Property Name="Status" Type="char" MaxLength="1" />
         </EntityType>
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'DataStockCore.dbo.HNXStockInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
         <EntityType Name="HNXStockInfo">
           <Key>
             <PropertyRef Name="id" />
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
           </Key>
           <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TradeDate" Type="datetime" Nullable="false" />
@@ -527,37 +409,9 @@
           <Property Name="MarketId" Type="int" />
           <Property Name="Status" Type="char" MaxLength="1" />
         </EntityType>
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'DataStockCore.dbo.HoseStockInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
         <EntityType Name="HoseStockInfo">
           <Key>
             <PropertyRef Name="id" />
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
           </Key>
           <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TradeDate" Type="datetime" Nullable="false" />
@@ -772,6 +626,8 @@
           <Property Name="BuyCredit" Type="bigint" Nullable="false" />
           <Property Name="TotalBuy" Type="bigint" Nullable="false" />
           <Property Name="TotalSell" Type="bigint" Nullable="false" />
+          <Property Name="WTR_T1" Type="bigint" />
+          <Property Name="WTR_T2" Type="bigint" />
         </EntityType>
         <EntityType Name="UpComMarketInfo">
           <Key>
@@ -807,37 +663,9 @@
           <Property Name="Marketid" Type="int" />
           <Property Name="Status" Type="char" MaxLength="1" />
         </EntityType>
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'DataStockCore.dbo.UpComStockInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
         <EntityType Name="UpComStockInfo">
           <Key>
             <PropertyRef Name="id" />
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            <PropertyRef Name="TotalValue" />
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
           </Key>
           <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TradeDate" Type="datetime" Nullable="false" />
@@ -1724,8 +1552,8 @@
           <Property Name="Fax" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="Website" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="IsPublished" Type="Boolean" Nullable="false" />
+          <Property Name="ServerIp" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="MainCustAccounts" Relationship="DataStockCoreModel.FK__MainCustA__Membe__11D4A34F" FromRole="MemberStockCompany" ToRole="MainCustAccount" />
-          <Property Type="String" Name="ServerIp" MaxLength="15" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -1802,6 +1630,8 @@
           <NavigationProperty Name="Orders" Relationship="DataStockCoreModel.FK__Order__AccountNo__762C88DA" FromRole="SubCustAccount" ToRole="Order" />
           <NavigationProperty Name="StockBalances" Relationship="DataStockCoreModel.FK__StockBala__SubCu__56B3DD81" FromRole="SubCustAccount" ToRole="StockBalance" />
           <NavigationProperty Name="StockTempDeductions" Relationship="DataStockCoreModel.FK__StockTemp__Accou__0E04126B" FromRole="SubCustAccount" ToRole="StockTempDeduction" />
+          <Property Type="Int64" Name="WTR_T1" />
+          <Property Type="Int64" Name="WTR_T2" />
         </EntityType>
         <EntityType Name="UpComMarketInfo">
           <Key>
@@ -1842,7 +1672,6 @@
         <EntityType Name="UpComStockInfo">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="TotalValue" />
           </Key>
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TradeDate" Type="DateTime" Nullable="false" />
@@ -1856,7 +1685,7 @@
           <Property Name="Highest" Type="Int64" Nullable="false" />
           <Property Name="Lowest" Type="Int64" Nullable="false" />
           <Property Name="Totalshares" Type="Int64" Nullable="false" />
-          <Property Name="TotalValue" Nullable="false" Type="Int64" />
+          <Property Name="TotalValue" Type="Int64" Nullable="false" />
           <Property Name="Best1Bid" Type="Int64" Nullable="false" />
           <Property Name="Best1BidVolume" Type="Int64" Nullable="false" />
           <Property Name="Best2Bid" Type="Int64" Nullable="false" />
@@ -2237,389 +2066,479 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="DataStockCoreModelStoreContainer" CdmEntityContainer="DataStockCoreEntities">
-          <EntitySetMapping Name="CashTempDeductions"><EntityTypeMapping TypeName="DataStockCoreModel.CashTempDeduction"><MappingFragment StoreEntitySet="CashTempDeduction">
-            <ScalarProperty Name="ID" ColumnName="ID" />
-            <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
-            <ScalarProperty Name="Amount" ColumnName="Amount" />
-            <ScalarProperty Name="DeductedDate" ColumnName="DeductedDate" />
-            <ScalarProperty Name="Status" ColumnName="Status" />
-            <ScalarProperty Name="IsAdd" ColumnName="IsAdd" />
-            <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="CompanyInfoes"><EntityTypeMapping TypeName="DataStockCoreModel.CompanyInfo"><MappingFragment StoreEntitySet="CompanyInfo">
-            <ScalarProperty Name="Code" ColumnName="Code" />
-            <ScalarProperty Name="ShortNameVi" ColumnName="ShortNameVi" />
-            <ScalarProperty Name="ShortNameEn" ColumnName="ShortNameEn" />
-            <ScalarProperty Name="Phone" ColumnName="Phone" />
-            <ScalarProperty Name="Email" ColumnName="Email" />
-            <ScalarProperty Name="Fax" ColumnName="Fax" />
-            <ScalarProperty Name="Website" ColumnName="Website" />
-            <ScalarProperty Name="IsPublished" ColumnName="IsPublished" />
-            <ScalarProperty Name="MarketId" ColumnName="MarketId" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="HNXMarketInfoes"><EntityTypeMapping TypeName="DataStockCoreModel.HNXMarketInfo"><MappingFragment StoreEntitySet="HNXMarketInfo">
-            <ScalarProperty Name="id" ColumnName="id" />
-            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
-            <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
-            <ScalarProperty Name="TotalTrade" ColumnName="TotalTrade" />
-            <ScalarProperty Name="Totalshare" ColumnName="Totalshare" />
-            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
-            <ScalarProperty Name="Advances" ColumnName="Advances" />
-            <ScalarProperty Name="Nochange" ColumnName="Nochange" />
-            <ScalarProperty Name="Declines" ColumnName="Declines" />
-            <ScalarProperty Name="OpenIndex" ColumnName="OpenIndex" />
-            <ScalarProperty Name="MarketId" ColumnName="MarketId" />
-            <ScalarProperty Name="Status" ColumnName="Status" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="HNXMarketInfoHists"><EntityTypeMapping TypeName="DataStockCoreModel.HNXMarketInfoHist"><MappingFragment StoreEntitySet="HNXMarketInfoHist">
-            <ScalarProperty Name="id" ColumnName="id" />
-            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
-            <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
-            <ScalarProperty Name="TotalTrade" ColumnName="TotalTrade" />
-            <ScalarProperty Name="Totalshare" ColumnName="Totalshare" />
-            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
-            <ScalarProperty Name="Advances" ColumnName="Advances" />
-            <ScalarProperty Name="Nochange" ColumnName="Nochange" />
-            <ScalarProperty Name="Declines" ColumnName="Declines" />
-            <ScalarProperty Name="OpenIndex" ColumnName="OpenIndex" />
-            <ScalarProperty Name="MarketId" ColumnName="MarketId" />
-            <ScalarProperty Name="Status" ColumnName="Status" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="HNXStockInfoes"><EntityTypeMapping TypeName="DataStockCoreModel.HNXStockInfo"><MappingFragment StoreEntitySet="HNXStockInfo">
-            <ScalarProperty Name="id" ColumnName="id" />
-            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
-            <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
-            <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
-            <ScalarProperty Name="Floor" ColumnName="Floor" />
-            <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
-            <ScalarProperty Name="Last" ColumnName="Last" />
-            <ScalarProperty Name="LastVol" ColumnName="LastVol" />
-            <ScalarProperty Name="LastVal" ColumnName="LastVal" />
-            <ScalarProperty Name="Highest" ColumnName="Highest" />
-            <ScalarProperty Name="Lowest" ColumnName="Lowest" />
-            <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
-            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
-            <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
-            <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
-            <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
-            <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
-            <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
-            <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
-            <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
-            <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
-            <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
-            <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
-            <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
-            <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
-            <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
-            <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="HNXStockInfoHists"><EntityTypeMapping TypeName="DataStockCoreModel.HNXStockInfoHist"><MappingFragment StoreEntitySet="HNXStockInfoHist">
-            <ScalarProperty Name="id" ColumnName="id" />
-            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
-            <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
-            <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
-            <ScalarProperty Name="Floor" ColumnName="Floor" />
-            <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
-            <ScalarProperty Name="Last" ColumnName="Last" />
-            <ScalarProperty Name="LastVol" ColumnName="LastVol" />
-            <ScalarProperty Name="LastVal" ColumnName="LastVal" />
-            <ScalarProperty Name="Highest" ColumnName="Highest" />
-            <ScalarProperty Name="Lowest" ColumnName="Lowest" />
-            <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
-            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
-            <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
-            <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
-            <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
-            <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
-            <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
-            <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
-            <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
-            <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
-            <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
-            <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
-            <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
-            <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
-            <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
-            <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="HoseMarketInfoes"><EntityTypeMapping TypeName="DataStockCoreModel.HoseMarketInfo"><MappingFragment StoreEntitySet="HoseMarketInfo">
-            <ScalarProperty Name="id" ColumnName="id" />
-            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
-            <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
-            <ScalarProperty Name="TotalTrade" ColumnName="TotalTrade" />
-            <ScalarProperty Name="Totalshare" ColumnName="Totalshare" />
-            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
-            <ScalarProperty Name="UpVolume" ColumnName="UpVolume" />
-            <ScalarProperty Name="DownVolume" ColumnName="DownVolume" />
-            <ScalarProperty Name="NoChangeVolume" ColumnName="NoChangeVolume" />
-            <ScalarProperty Name="Advances" ColumnName="Advances" />
-            <ScalarProperty Name="Declines" ColumnName="Declines" />
-            <ScalarProperty Name="Nochange" ColumnName="Nochange" />
-            <ScalarProperty Name="MarketId" ColumnName="MarketId" />
-            <ScalarProperty Name="Status" ColumnName="Status" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="HoseMarketInfoHists"><EntityTypeMapping TypeName="DataStockCoreModel.HoseMarketInfoHist"><MappingFragment StoreEntitySet="HoseMarketInfoHist">
-            <ScalarProperty Name="id" ColumnName="id" />
-            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
-            <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
-            <ScalarProperty Name="TotalTrade" ColumnName="TotalTrade" />
-            <ScalarProperty Name="Totalshare" ColumnName="Totalshare" />
-            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
-            <ScalarProperty Name="UpVolume" ColumnName="UpVolume" />
-            <ScalarProperty Name="DownVolume" ColumnName="DownVolume" />
-            <ScalarProperty Name="NoChangeVolume" ColumnName="NoChangeVolume" />
-            <ScalarProperty Name="Advances" ColumnName="Advances" />
-            <ScalarProperty Name="Declines" ColumnName="Declines" />
-            <ScalarProperty Name="Nochange" ColumnName="Nochange" />
-            <ScalarProperty Name="MarketId" ColumnName="MarketId" />
-            <ScalarProperty Name="Status" ColumnName="Status" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="HoseStockInfoes"><EntityTypeMapping TypeName="DataStockCoreModel.HoseStockInfo"><MappingFragment StoreEntitySet="HoseStockInfo">
-            <ScalarProperty Name="id" ColumnName="id" />
-            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
-            <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
-            <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
-            <ScalarProperty Name="Floor" ColumnName="Floor" />
-            <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
-            <ScalarProperty Name="Last" ColumnName="Last" />
-            <ScalarProperty Name="LastVol" ColumnName="LastVol" />
-            <ScalarProperty Name="LastVal" ColumnName="LastVal" />
-            <ScalarProperty Name="Highest" ColumnName="Highest" />
-            <ScalarProperty Name="Lowest" ColumnName="Lowest" />
-            <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
-            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
-            <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
-            <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
-            <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
-            <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
-            <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
-            <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
-            <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
-            <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
-            <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
-            <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
-            <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
-            <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
-            <ScalarProperty Name="CurrentRoom" ColumnName="CurrentRoom" />
-            <ScalarProperty Name="StartRoom" ColumnName="StartRoom" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="HoseStockInfoHists"><EntityTypeMapping TypeName="DataStockCoreModel.HoseStockInfoHist"><MappingFragment StoreEntitySet="HoseStockInfoHist">
-            <ScalarProperty Name="id" ColumnName="id" />
-            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
-            <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
-            <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
-            <ScalarProperty Name="Floor" ColumnName="Floor" />
-            <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
-            <ScalarProperty Name="Last" ColumnName="Last" />
-            <ScalarProperty Name="LastVol" ColumnName="LastVol" />
-            <ScalarProperty Name="LastVal" ColumnName="LastVal" />
-            <ScalarProperty Name="Highest" ColumnName="Highest" />
-            <ScalarProperty Name="Lowest" ColumnName="Lowest" />
-            <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
-            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
-            <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
-            <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
-            <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
-            <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
-            <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
-            <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
-            <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
-            <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
-            <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
-            <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
-            <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
-            <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
-            <ScalarProperty Name="CurrentRoom" ColumnName="CurrentRoom" />
-            <ScalarProperty Name="StartRoom" ColumnName="StartRoom" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="MainCustAccounts"><EntityTypeMapping TypeName="DataStockCoreModel.MainCustAccount"><MappingFragment StoreEntitySet="MainCustAccount">
-            <ScalarProperty Name="MainCustAccountID" ColumnName="MainCustAccountID" />
-            <ScalarProperty Name="FullName" ColumnName="FullName" />
-            <ScalarProperty Name="Email" ColumnName="Email" />
-            <ScalarProperty Name="Phone" ColumnName="Phone" />
-            <ScalarProperty Name="Actived" ColumnName="Actived" />
-            <ScalarProperty Name="Password" ColumnName="Password" />
-            <ScalarProperty Name="PIN" ColumnName="PIN" />
-            <ScalarProperty Name="PassLockReason" ColumnName="PassLockReason" />
-            <ScalarProperty Name="PINLockReason" ColumnName="PINLockReason" />
-            <ScalarProperty Name="LockReason" ColumnName="LockReason" />
-            <ScalarProperty Name="TokenID" ColumnName="TokenID" />
-            <ScalarProperty Name="TokenName" ColumnName="TokenName" />
-            <ScalarProperty Name="TokenActived" ColumnName="TokenActived" />
-            <ScalarProperty Name="BrokerID" ColumnName="BrokerID" />
-            <ScalarProperty Name="PassIsNew" ColumnName="PassIsNew" />
-            <ScalarProperty Name="PINIsNew" ColumnName="PINIsNew" />
-            <ScalarProperty Name="PassExpDate" ColumnName="PassExpDate" />
-            <ScalarProperty Name="PINExpDate" ColumnName="PINExpDate" />
-            <ScalarProperty Name="CustomerType" ColumnName="CustomerType" />
-            <ScalarProperty Name="AuthType" ColumnName="AuthType" />
-            <ScalarProperty Name="PinType" ColumnName="PinType" />
-            <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
-            <ScalarProperty Name="FailedLoginCount" ColumnName="FailedLoginCount" />
-            <ScalarProperty Name="FailedLoginTime" ColumnName="FailedLoginTime" />
-            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-            <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-            <ScalarProperty Name="UpdatedUser" ColumnName="UpdatedUser" />
-            <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-            <ScalarProperty Name="MemberStockCompanyID" ColumnName="MemberStockCompanyID" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="Markets"><EntityTypeMapping TypeName="DataStockCoreModel.Market"><MappingFragment StoreEntitySet="Market">
-            <ScalarProperty Name="Id" ColumnName="Id" />
-            <ScalarProperty Name="Name" ColumnName="Name" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="Matcheds"><EntityTypeMapping TypeName="DataStockCoreModel.Matched"><MappingFragment StoreEntitySet="Matched">
-            <ScalarProperty Name="OrderSellID" ColumnName="OrderSellID" />
-            <ScalarProperty Name="OrderBuyID" ColumnName="OrderBuyID" />
-            <ScalarProperty Name="MatchedPrice" ColumnName="MatchedPrice" />
-            <ScalarProperty Name="MatchedVol" ColumnName="MatchedVol" />
-            <ScalarProperty Name="DateMatched" ColumnName="DateMatched" />
-            <ScalarProperty Name="Id" ColumnName="Id" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="MemberStockCompanies"><EntityTypeMapping TypeName="DataStockCoreModel.MemberStockCompany"><MappingFragment StoreEntitySet="MemberStockCompany">
-            <ScalarProperty Name="ServerIp" ColumnName="ServerIp" />
+          <EntitySetMapping Name="CashTempDeductions">
+            <EntityTypeMapping TypeName="DataStockCoreModel.CashTempDeduction">
+              <MappingFragment StoreEntitySet="CashTempDeduction">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="DeductedDate" ColumnName="DeductedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IsAdd" ColumnName="IsAdd" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyInfoes">
+            <EntityTypeMapping TypeName="DataStockCoreModel.CompanyInfo">
+              <MappingFragment StoreEntitySet="CompanyInfo">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ShortNameVi" ColumnName="ShortNameVi" />
+                <ScalarProperty Name="ShortNameEn" ColumnName="ShortNameEn" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="IsPublished" ColumnName="IsPublished" />
+                <ScalarProperty Name="MarketId" ColumnName="MarketId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HNXMarketInfoes">
+            <EntityTypeMapping TypeName="DataStockCoreModel.HNXMarketInfo">
+              <MappingFragment StoreEntitySet="HNXMarketInfo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+                <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
+                <ScalarProperty Name="TotalTrade" ColumnName="TotalTrade" />
+                <ScalarProperty Name="Totalshare" ColumnName="Totalshare" />
+                <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+                <ScalarProperty Name="Advances" ColumnName="Advances" />
+                <ScalarProperty Name="Nochange" ColumnName="Nochange" />
+                <ScalarProperty Name="Declines" ColumnName="Declines" />
+                <ScalarProperty Name="OpenIndex" ColumnName="OpenIndex" />
+                <ScalarProperty Name="MarketId" ColumnName="MarketId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HNXMarketInfoHists">
+            <EntityTypeMapping TypeName="DataStockCoreModel.HNXMarketInfoHist">
+              <MappingFragment StoreEntitySet="HNXMarketInfoHist">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+                <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
+                <ScalarProperty Name="TotalTrade" ColumnName="TotalTrade" />
+                <ScalarProperty Name="Totalshare" ColumnName="Totalshare" />
+                <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+                <ScalarProperty Name="Advances" ColumnName="Advances" />
+                <ScalarProperty Name="Nochange" ColumnName="Nochange" />
+                <ScalarProperty Name="Declines" ColumnName="Declines" />
+                <ScalarProperty Name="OpenIndex" ColumnName="OpenIndex" />
+                <ScalarProperty Name="MarketId" ColumnName="MarketId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HNXStockInfoes">
+            <EntityTypeMapping TypeName="DataStockCoreModel.HNXStockInfo">
+              <MappingFragment StoreEntitySet="HNXStockInfo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+                <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
+                <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
+                <ScalarProperty Name="Floor" ColumnName="Floor" />
+                <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
+                <ScalarProperty Name="Last" ColumnName="Last" />
+                <ScalarProperty Name="LastVol" ColumnName="LastVol" />
+                <ScalarProperty Name="LastVal" ColumnName="LastVal" />
+                <ScalarProperty Name="Highest" ColumnName="Highest" />
+                <ScalarProperty Name="Lowest" ColumnName="Lowest" />
+                <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
+                <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+                <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
+                <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
+                <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
+                <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
+                <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
+                <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
+                <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
+                <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
+                <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
+                <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
+                <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
+                <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
+                <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
+                <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HNXStockInfoHists">
+            <EntityTypeMapping TypeName="DataStockCoreModel.HNXStockInfoHist">
+              <MappingFragment StoreEntitySet="HNXStockInfoHist">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+                <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
+                <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
+                <ScalarProperty Name="Floor" ColumnName="Floor" />
+                <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
+                <ScalarProperty Name="Last" ColumnName="Last" />
+                <ScalarProperty Name="LastVol" ColumnName="LastVol" />
+                <ScalarProperty Name="LastVal" ColumnName="LastVal" />
+                <ScalarProperty Name="Highest" ColumnName="Highest" />
+                <ScalarProperty Name="Lowest" ColumnName="Lowest" />
+                <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
+                <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+                <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
+                <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
+                <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
+                <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
+                <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
+                <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
+                <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
+                <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
+                <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
+                <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
+                <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
+                <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
+                <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
+                <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HoseMarketInfoes">
+            <EntityTypeMapping TypeName="DataStockCoreModel.HoseMarketInfo">
+              <MappingFragment StoreEntitySet="HoseMarketInfo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+                <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
+                <ScalarProperty Name="TotalTrade" ColumnName="TotalTrade" />
+                <ScalarProperty Name="Totalshare" ColumnName="Totalshare" />
+                <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+                <ScalarProperty Name="UpVolume" ColumnName="UpVolume" />
+                <ScalarProperty Name="DownVolume" ColumnName="DownVolume" />
+                <ScalarProperty Name="NoChangeVolume" ColumnName="NoChangeVolume" />
+                <ScalarProperty Name="Advances" ColumnName="Advances" />
+                <ScalarProperty Name="Declines" ColumnName="Declines" />
+                <ScalarProperty Name="Nochange" ColumnName="Nochange" />
+                <ScalarProperty Name="MarketId" ColumnName="MarketId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HoseMarketInfoHists">
+            <EntityTypeMapping TypeName="DataStockCoreModel.HoseMarketInfoHist">
+              <MappingFragment StoreEntitySet="HoseMarketInfoHist">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+                <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
+                <ScalarProperty Name="TotalTrade" ColumnName="TotalTrade" />
+                <ScalarProperty Name="Totalshare" ColumnName="Totalshare" />
+                <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+                <ScalarProperty Name="UpVolume" ColumnName="UpVolume" />
+                <ScalarProperty Name="DownVolume" ColumnName="DownVolume" />
+                <ScalarProperty Name="NoChangeVolume" ColumnName="NoChangeVolume" />
+                <ScalarProperty Name="Advances" ColumnName="Advances" />
+                <ScalarProperty Name="Declines" ColumnName="Declines" />
+                <ScalarProperty Name="Nochange" ColumnName="Nochange" />
+                <ScalarProperty Name="MarketId" ColumnName="MarketId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HoseStockInfoes">
+            <EntityTypeMapping TypeName="DataStockCoreModel.HoseStockInfo">
+              <MappingFragment StoreEntitySet="HoseStockInfo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+                <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
+                <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
+                <ScalarProperty Name="Floor" ColumnName="Floor" />
+                <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
+                <ScalarProperty Name="Last" ColumnName="Last" />
+                <ScalarProperty Name="LastVol" ColumnName="LastVol" />
+                <ScalarProperty Name="LastVal" ColumnName="LastVal" />
+                <ScalarProperty Name="Highest" ColumnName="Highest" />
+                <ScalarProperty Name="Lowest" ColumnName="Lowest" />
+                <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
+                <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+                <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
+                <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
+                <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
+                <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
+                <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
+                <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
+                <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
+                <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
+                <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
+                <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
+                <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
+                <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
+                <ScalarProperty Name="CurrentRoom" ColumnName="CurrentRoom" />
+                <ScalarProperty Name="StartRoom" ColumnName="StartRoom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HoseStockInfoHists">
+            <EntityTypeMapping TypeName="DataStockCoreModel.HoseStockInfoHist">
+              <MappingFragment StoreEntitySet="HoseStockInfoHist">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+                <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
+                <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
+                <ScalarProperty Name="Floor" ColumnName="Floor" />
+                <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
+                <ScalarProperty Name="Last" ColumnName="Last" />
+                <ScalarProperty Name="LastVol" ColumnName="LastVol" />
+                <ScalarProperty Name="LastVal" ColumnName="LastVal" />
+                <ScalarProperty Name="Highest" ColumnName="Highest" />
+                <ScalarProperty Name="Lowest" ColumnName="Lowest" />
+                <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
+                <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+                <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
+                <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
+                <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
+                <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
+                <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
+                <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
+                <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
+                <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
+                <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
+                <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
+                <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
+                <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
+                <ScalarProperty Name="CurrentRoom" ColumnName="CurrentRoom" />
+                <ScalarProperty Name="StartRoom" ColumnName="StartRoom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MainCustAccounts">
+            <EntityTypeMapping TypeName="DataStockCoreModel.MainCustAccount">
+              <MappingFragment StoreEntitySet="MainCustAccount">
+                <ScalarProperty Name="MainCustAccountID" ColumnName="MainCustAccountID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Actived" ColumnName="Actived" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="PIN" ColumnName="PIN" />
+                <ScalarProperty Name="PassLockReason" ColumnName="PassLockReason" />
+                <ScalarProperty Name="PINLockReason" ColumnName="PINLockReason" />
+                <ScalarProperty Name="LockReason" ColumnName="LockReason" />
+                <ScalarProperty Name="TokenID" ColumnName="TokenID" />
+                <ScalarProperty Name="TokenName" ColumnName="TokenName" />
+                <ScalarProperty Name="TokenActived" ColumnName="TokenActived" />
+                <ScalarProperty Name="BrokerID" ColumnName="BrokerID" />
+                <ScalarProperty Name="PassIsNew" ColumnName="PassIsNew" />
+                <ScalarProperty Name="PINIsNew" ColumnName="PINIsNew" />
+                <ScalarProperty Name="PassExpDate" ColumnName="PassExpDate" />
+                <ScalarProperty Name="PINExpDate" ColumnName="PINExpDate" />
+                <ScalarProperty Name="CustomerType" ColumnName="CustomerType" />
+                <ScalarProperty Name="AuthType" ColumnName="AuthType" />
+                <ScalarProperty Name="PinType" ColumnName="PinType" />
+                <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
+                <ScalarProperty Name="FailedLoginCount" ColumnName="FailedLoginCount" />
+                <ScalarProperty Name="FailedLoginTime" ColumnName="FailedLoginTime" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="UpdatedUser" ColumnName="UpdatedUser" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="MemberStockCompanyID" ColumnName="MemberStockCompanyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Markets">
+            <EntityTypeMapping TypeName="DataStockCoreModel.Market">
+              <MappingFragment StoreEntitySet="Market">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-            <ScalarProperty Name="ShortNameVi" ColumnName="ShortNameVi" />
-            <ScalarProperty Name="ShortNameEn" ColumnName="ShortNameEn" />
-            <ScalarProperty Name="Phone" ColumnName="Phone" />
-            <ScalarProperty Name="Email" ColumnName="Email" />
-            <ScalarProperty Name="Fax" ColumnName="Fax" />
-            <ScalarProperty Name="Website" ColumnName="Website" />
-            <ScalarProperty Name="IsPublished" ColumnName="IsPublished" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="Orders"><EntityTypeMapping TypeName="DataStockCoreModel.Order"><MappingFragment StoreEntitySet="Order">
-            <ScalarProperty Name="Id" ColumnName="Id" />
-            <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
-            <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
-            <ScalarProperty Name="Price" ColumnName="Price" />
-            <ScalarProperty Name="Volume" ColumnName="Volume" />
-            <ScalarProperty Name="MatchedVol" ColumnName="MatchedVol" />
-            <ScalarProperty Name="Side" ColumnName="Side" />
-            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
-            <ScalarProperty Name="Status" ColumnName="Status" />
-            <ScalarProperty Name="ClientID" ColumnName="ClientID" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="StockBalances"><EntityTypeMapping TypeName="DataStockCoreModel.StockBalance"><MappingFragment StoreEntitySet="StockBalance">
-            <ScalarProperty Name="SubCustAccountID" ColumnName="SubCustAccountID" />
-            <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
-            <ScalarProperty Name="Available" ColumnName="Available" />
-            <ScalarProperty Name="Total" ColumnName="Total" />
-            <ScalarProperty Name="WTR_T1" ColumnName="WTR_T1" />
-            <ScalarProperty Name="WTR_T2" ColumnName="WTR_T2" />
-            <ScalarProperty Name="WTS_T1" ColumnName="WTS_T1" />
-            <ScalarProperty Name="WTS_T2" ColumnName="WTS_T2" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="StockTempDeductions"><EntityTypeMapping TypeName="DataStockCoreModel.StockTempDeduction"><MappingFragment StoreEntitySet="StockTempDeduction">
-            <ScalarProperty Name="ID" ColumnName="ID" />
-            <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
-            <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
-            <ScalarProperty Name="Volume" ColumnName="Volume" />
-            <ScalarProperty Name="DeductedDate" ColumnName="DeductedDate" />
-            <ScalarProperty Name="Status" ColumnName="Status" />
-            <ScalarProperty Name="IsAdd" ColumnName="IsAdd" />
-            <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="SubCustAccounts"><EntityTypeMapping TypeName="DataStockCoreModel.SubCustAccount"><MappingFragment StoreEntitySet="SubCustAccount">
-            <ScalarProperty Name="SubCustAccountID" ColumnName="SubCustAccountID" />
-            <ScalarProperty Name="Name" ColumnName="Name" />
-            <ScalarProperty Name="Actived" ColumnName="Actived" />
-            <ScalarProperty Name="LockAccountReason" ColumnName="LockAccountReason" />
-            <ScalarProperty Name="MainCustAccountID" ColumnName="MainCustAccountID" />
-            <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-            <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-            <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-            <ScalarProperty Name="UpdatedUser" ColumnName="UpdatedUser" />
-            <ScalarProperty Name="WithDraw" ColumnName="WithDraw" />
-            <ScalarProperty Name="BuyCredit" ColumnName="BuyCredit" />
-            <ScalarProperty Name="TotalBuy" ColumnName="TotalBuy" />
-            <ScalarProperty Name="TotalSell" ColumnName="TotalSell" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="UpComMarketInfoes"><EntityTypeMapping TypeName="DataStockCoreModel.UpComMarketInfo"><MappingFragment StoreEntitySet="UpComMarketInfo">
-            <ScalarProperty Name="id" ColumnName="id" />
-            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
-            <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
-            <ScalarProperty Name="TotalTrade" ColumnName="TotalTrade" />
-            <ScalarProperty Name="Totalshare" ColumnName="Totalshare" />
-            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
-            <ScalarProperty Name="Advances" ColumnName="Advances" />
-            <ScalarProperty Name="Nochange" ColumnName="Nochange" />
-            <ScalarProperty Name="Declines" ColumnName="Declines" />
-            <ScalarProperty Name="OpenIndex" ColumnName="OpenIndex" />
-            <ScalarProperty Name="Marketid" ColumnName="Marketid" />
-            <ScalarProperty Name="Status" ColumnName="Status" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="UpComMarketInfoHists"><EntityTypeMapping TypeName="DataStockCoreModel.UpComMarketInfoHist"><MappingFragment StoreEntitySet="UpComMarketInfoHist">
-            <ScalarProperty Name="id" ColumnName="id" />
-            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
-            <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
-            <ScalarProperty Name="TotalTrade" ColumnName="TotalTrade" />
-            <ScalarProperty Name="Totalshare" ColumnName="Totalshare" />
-            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
-            <ScalarProperty Name="Advances" ColumnName="Advances" />
-            <ScalarProperty Name="Nochange" ColumnName="Nochange" />
-            <ScalarProperty Name="Declines" ColumnName="Declines" />
-            <ScalarProperty Name="OpenIndex" ColumnName="OpenIndex" />
-            <ScalarProperty Name="Marketid" ColumnName="Marketid" />
-            <ScalarProperty Name="Status" ColumnName="Status" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="UpComStockInfoes"><EntityTypeMapping TypeName="DataStockCoreModel.UpComStockInfo"><MappingFragment StoreEntitySet="UpComStockInfo">
-            <ScalarProperty Name="id" ColumnName="id" />
-            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
-            <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
-            <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
-            <ScalarProperty Name="Floor" ColumnName="Floor" />
-            <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
-            <ScalarProperty Name="Last" ColumnName="Last" />
-            <ScalarProperty Name="LastVol" ColumnName="LastVol" />
-            <ScalarProperty Name="LastVal" ColumnName="LastVal" />
-            <ScalarProperty Name="Highest" ColumnName="Highest" />
-            <ScalarProperty Name="Lowest" ColumnName="Lowest" />
-            <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
-            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
-            <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
-            <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
-            <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
-            <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
-            <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
-            <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
-            <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
-            <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
-            <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
-            <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
-            <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
-            <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
-            <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
-            <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="UpComStockInfoHists"><EntityTypeMapping TypeName="DataStockCoreModel.UpComStockInfoHist"><MappingFragment StoreEntitySet="UpComStockInfoHist">
-            <ScalarProperty Name="id" ColumnName="id" />
-            <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
-            <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
-            <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
-            <ScalarProperty Name="Floor" ColumnName="Floor" />
-            <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
-            <ScalarProperty Name="Last" ColumnName="Last" />
-            <ScalarProperty Name="LastVol" ColumnName="LastVol" />
-            <ScalarProperty Name="LastVal" ColumnName="LastVal" />
-            <ScalarProperty Name="Highest" ColumnName="Highest" />
-            <ScalarProperty Name="Lowest" ColumnName="Lowest" />
-            <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
-            <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
-            <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
-            <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
-            <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
-            <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
-            <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
-            <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
-            <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
-            <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
-            <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
-            <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
-            <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
-            <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
-            <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
-            <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Matcheds">
+            <EntityTypeMapping TypeName="DataStockCoreModel.Matched">
+              <MappingFragment StoreEntitySet="Matched">
+                <ScalarProperty Name="OrderSellID" ColumnName="OrderSellID" />
+                <ScalarProperty Name="OrderBuyID" ColumnName="OrderBuyID" />
+                <ScalarProperty Name="MatchedPrice" ColumnName="MatchedPrice" />
+                <ScalarProperty Name="MatchedVol" ColumnName="MatchedVol" />
+                <ScalarProperty Name="DateMatched" ColumnName="DateMatched" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MemberStockCompanies">
+            <EntityTypeMapping TypeName="DataStockCoreModel.MemberStockCompany">
+              <MappingFragment StoreEntitySet="MemberStockCompany">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ShortNameVi" ColumnName="ShortNameVi" />
+                <ScalarProperty Name="ShortNameEn" ColumnName="ShortNameEn" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="IsPublished" ColumnName="IsPublished" />
+                <ScalarProperty Name="ServerIp" ColumnName="ServerIp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="DataStockCoreModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+                <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Volume" ColumnName="Volume" />
+                <ScalarProperty Name="MatchedVol" ColumnName="MatchedVol" />
+                <ScalarProperty Name="Side" ColumnName="Side" />
+                <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockBalances">
+            <EntityTypeMapping TypeName="DataStockCoreModel.StockBalance">
+              <MappingFragment StoreEntitySet="StockBalance">
+                <ScalarProperty Name="SubCustAccountID" ColumnName="SubCustAccountID" />
+                <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
+                <ScalarProperty Name="Available" ColumnName="Available" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="WTR_T1" ColumnName="WTR_T1" />
+                <ScalarProperty Name="WTR_T2" ColumnName="WTR_T2" />
+                <ScalarProperty Name="WTS_T1" ColumnName="WTS_T1" />
+                <ScalarProperty Name="WTS_T2" ColumnName="WTS_T2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockTempDeductions">
+            <EntityTypeMapping TypeName="DataStockCoreModel.StockTempDeduction">
+              <MappingFragment StoreEntitySet="StockTempDeduction">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+                <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
+                <ScalarProperty Name="Volume" ColumnName="Volume" />
+                <ScalarProperty Name="DeductedDate" ColumnName="DeductedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IsAdd" ColumnName="IsAdd" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubCustAccounts">
+            <EntityTypeMapping TypeName="DataStockCoreModel.SubCustAccount">
+              <MappingFragment StoreEntitySet="SubCustAccount">
+                <ScalarProperty Name="WTR_T2" ColumnName="WTR_T2" />
+                <ScalarProperty Name="WTR_T1" ColumnName="WTR_T1" />
+                <ScalarProperty Name="SubCustAccountID" ColumnName="SubCustAccountID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Actived" ColumnName="Actived" />
+                <ScalarProperty Name="LockAccountReason" ColumnName="LockAccountReason" />
+                <ScalarProperty Name="MainCustAccountID" ColumnName="MainCustAccountID" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedUser" ColumnName="UpdatedUser" />
+                <ScalarProperty Name="WithDraw" ColumnName="WithDraw" />
+                <ScalarProperty Name="BuyCredit" ColumnName="BuyCredit" />
+                <ScalarProperty Name="TotalBuy" ColumnName="TotalBuy" />
+                <ScalarProperty Name="TotalSell" ColumnName="TotalSell" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UpComMarketInfoes">
+            <EntityTypeMapping TypeName="DataStockCoreModel.UpComMarketInfo">
+              <MappingFragment StoreEntitySet="UpComMarketInfo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+                <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
+                <ScalarProperty Name="TotalTrade" ColumnName="TotalTrade" />
+                <ScalarProperty Name="Totalshare" ColumnName="Totalshare" />
+                <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+                <ScalarProperty Name="Advances" ColumnName="Advances" />
+                <ScalarProperty Name="Nochange" ColumnName="Nochange" />
+                <ScalarProperty Name="Declines" ColumnName="Declines" />
+                <ScalarProperty Name="OpenIndex" ColumnName="OpenIndex" />
+                <ScalarProperty Name="Marketid" ColumnName="Marketid" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UpComMarketInfoHists">
+            <EntityTypeMapping TypeName="DataStockCoreModel.UpComMarketInfoHist">
+              <MappingFragment StoreEntitySet="UpComMarketInfoHist">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+                <ScalarProperty Name="SetIndex" ColumnName="SetIndex" />
+                <ScalarProperty Name="TotalTrade" ColumnName="TotalTrade" />
+                <ScalarProperty Name="Totalshare" ColumnName="Totalshare" />
+                <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+                <ScalarProperty Name="Advances" ColumnName="Advances" />
+                <ScalarProperty Name="Nochange" ColumnName="Nochange" />
+                <ScalarProperty Name="Declines" ColumnName="Declines" />
+                <ScalarProperty Name="OpenIndex" ColumnName="OpenIndex" />
+                <ScalarProperty Name="Marketid" ColumnName="Marketid" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UpComStockInfoes">
+            <EntityTypeMapping TypeName="DataStockCoreModel.UpComStockInfo">
+              <MappingFragment StoreEntitySet="UpComStockInfo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+                <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
+                <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
+                <ScalarProperty Name="Floor" ColumnName="Floor" />
+                <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
+                <ScalarProperty Name="Last" ColumnName="Last" />
+                <ScalarProperty Name="LastVol" ColumnName="LastVol" />
+                <ScalarProperty Name="LastVal" ColumnName="LastVal" />
+                <ScalarProperty Name="Highest" ColumnName="Highest" />
+                <ScalarProperty Name="Lowest" ColumnName="Lowest" />
+                <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
+                <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+                <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
+                <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
+                <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
+                <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
+                <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
+                <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
+                <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
+                <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
+                <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
+                <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
+                <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
+                <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
+                <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
+                <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UpComStockInfoHists">
+            <EntityTypeMapping TypeName="DataStockCoreModel.UpComStockInfoHist">
+              <MappingFragment StoreEntitySet="UpComStockInfoHist">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="TradeDate" ColumnName="TradeDate" />
+                <ScalarProperty Name="StockSymbol" ColumnName="StockSymbol" />
+                <ScalarProperty Name="Ceiling" ColumnName="Ceiling" />
+                <ScalarProperty Name="Floor" ColumnName="Floor" />
+                <ScalarProperty Name="AvrPrice" ColumnName="AvrPrice" />
+                <ScalarProperty Name="Last" ColumnName="Last" />
+                <ScalarProperty Name="LastVol" ColumnName="LastVol" />
+                <ScalarProperty Name="LastVal" ColumnName="LastVal" />
+                <ScalarProperty Name="Highest" ColumnName="Highest" />
+                <ScalarProperty Name="Lowest" ColumnName="Lowest" />
+                <ScalarProperty Name="Totalshares" ColumnName="Totalshares" />
+                <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+                <ScalarProperty Name="Best1Bid" ColumnName="Best1Bid" />
+                <ScalarProperty Name="Best1BidVolume" ColumnName="Best1BidVolume" />
+                <ScalarProperty Name="Best2Bid" ColumnName="Best2Bid" />
+                <ScalarProperty Name="Best2BidVolume" ColumnName="Best2BidVolume" />
+                <ScalarProperty Name="Best3Bid" ColumnName="Best3Bid" />
+                <ScalarProperty Name="Best3BidVolume" ColumnName="Best3BidVolume" />
+                <ScalarProperty Name="Best1Offer" ColumnName="Best1Offer" />
+                <ScalarProperty Name="Best1OfferVolume" ColumnName="Best1OfferVolume" />
+                <ScalarProperty Name="Best2Offer" ColumnName="Best2Offer" />
+                <ScalarProperty Name="Best2OfferVolume" ColumnName="Best2OfferVolume" />
+                <ScalarProperty Name="Best3Offer" ColumnName="Best3Offer" />
+                <ScalarProperty Name="Best3OfferVolume" ColumnName="Best3OfferVolume" />
+                <ScalarProperty Name="SELL_FOREIGN_QTTY" ColumnName="SELL_FOREIGN_QTTY" />
+                <ScalarProperty Name="BUY_FOREIGN_QTTY" ColumnName="BUY_FOREIGN_QTTY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2641,7 +2560,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="DataStockCore" ZoomLevel="100">
+      <Diagram Name="DataStockCore" ZoomLevel="60">
         <EntityTypeShape EntityType="DataStockCoreModel.CashTempDeduction" Width="1.5" PointX="8.25" PointY="30.5" Height="2.7494921874999996" IsExpanded="true" />
         <EntityTypeShape EntityType="DataStockCoreModel.CompanyInfo" Width="1.5" PointX="0.75" PointY="29.75" Height="4.4802050781250031" IsExpanded="true" />
         <EntityTypeShape EntityType="DataStockCoreModel.HNXMarketInfo" Width="1.5" PointX="11" PointY="2.125" Height="3.5186979166666656" IsExpanded="true" />
@@ -2655,7 +2574,7 @@
         <EntityTypeShape EntityType="DataStockCoreModel.MainCustAccount" Width="1.5" PointX="1.5" PointY="2.5" Height="6.9801236979166674" IsExpanded="true" />
         <EntityTypeShape EntityType="DataStockCoreModel.Market" Width="1.5" PointX="8.75" PointY="13.625" Height="2.5571907552083317" IsExpanded="true" />
         <EntityTypeShape EntityType="DataStockCoreModel.Matched" Width="1.5" PointX="8.25" PointY="34.125" Height="2.5571907552083388" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataStockCoreModel.MemberStockCompany" Width="1.5" PointX="1.5" PointY="39.5" Height="2.7494921875000102" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataStockCoreModel.MemberStockCompany" Width="1.5" PointX="1.5" PointY="39.5" Height="2.9417936197916674" IsExpanded="true" />
         <EntityTypeShape EntityType="DataStockCoreModel.Order" Width="1.5" PointX="6" PointY="29.875" Height="4.0956022135416639" IsExpanded="true" />
         <EntityTypeShape EntityType="DataStockCoreModel.StockBalance" Width="1.5" PointX="6" PointY="25.5" Height="2.9417936197916674" IsExpanded="true" />
         <EntityTypeShape EntityType="DataStockCoreModel.StockTempDeduction" Width="1.5" PointX="11.25" PointY="30.375" Height="3.1340950520833424" IsExpanded="true" />

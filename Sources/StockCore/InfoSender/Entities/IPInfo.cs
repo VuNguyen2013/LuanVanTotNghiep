@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data.SqlClient;
 using System.Data.OleDb;
 
 namespace StockCore.InfoSender.Entities
@@ -40,9 +41,9 @@ namespace StockCore.InfoSender.Entities
         }
         public bool Update()
         {
-            var con = new OleDbConnection(StaticValues.ConnectionString);
+            var con = new SqlConnection(StaticValues.ConnectionString);
             var command = con.CreateCommand();
-            command.CommandText = "Update ListIP  set IP='" + IP + "',CompanyName='" + CompanyName + "')";
+            command.CommandText = "Update MemberStockCompany  set ServerIp='" + IP + "',CompanyName='" + CompanyName + "')";
             try
             {
                 con.Open();
@@ -62,9 +63,9 @@ namespace StockCore.InfoSender.Entities
         }
         public static bool Delete(string ip)
         {
-            var con = new OleDbConnection(StaticValues.ConnectionString);
+            var con = new SqlConnection(StaticValues.ConnectionString);
             var command = con.CreateCommand();
-            command.CommandText = "Delete from ListIP  where IP='" + ip + "'";
+            command.CommandText = "Delete from MemberStockCompany  where ServerIp='" + ip + "'";
             try
             {
                 con.Open();

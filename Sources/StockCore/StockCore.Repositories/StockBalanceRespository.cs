@@ -34,5 +34,18 @@ namespace StockCore.Repositories
                 return false;
             }
         }
+        public bool Insert(Models.StockBalance stockBalance)
+        {
+            try
+            {
+                _entities.StockBalances.Add(stockBalance);
+                _entities.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

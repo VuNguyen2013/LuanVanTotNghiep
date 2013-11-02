@@ -69,6 +69,7 @@
             this.btIPAdd.TabIndex = 1;
             this.btIPAdd.Text = "Thêm";
             this.btIPAdd.UseVisualStyleBackColor = true;
+            this.btIPAdd.Visible = false;
             this.btIPAdd.Click += new System.EventHandler(this.lbIPAdd_Click);
             // 
             // btIPDelete
@@ -80,6 +81,7 @@
             this.btIPDelete.TabIndex = 1;
             this.btIPDelete.Text = "Xóa";
             this.btIPDelete.UseVisualStyleBackColor = true;
+            this.btIPDelete.Visible = false;
             this.btIPDelete.Click += new System.EventHandler(this.btIPDelete_Click);
             // 
             // label1

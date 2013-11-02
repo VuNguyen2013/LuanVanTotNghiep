@@ -35,6 +35,8 @@ namespace StockCore.Models
         public long BuyCredit { get; set; }
         public long TotalBuy { get; set; }
         public long TotalSell { get; set; }
+        public Nullable<long> WTR_T1 { get; set; }
+        public Nullable<long> WTR_T2 { get; set; }
     
         public virtual ICollection<CashTempDeduction> CashTempDeductions { get; set; }
         public virtual MainCustAccount MainCustAccount { get; set; }
