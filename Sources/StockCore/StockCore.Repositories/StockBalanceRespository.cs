@@ -47,5 +47,28 @@ namespace StockCore.Repositories
                 return false;
             }
         }
+        public Common.Enums.STOCK_TRANSFER_STATUS ProccessStockTransfer(string sourceAccID, string desAccID,string symbol, long requestAmt)
+        {
+            try
+            {
+                var stockSource = GetByAccountNoAndSymbol(sourceAccID, symbol);
+                var stockDes = GetByAccountNoAndSymbol(desAccID, symbol);
+                if (stockSource.Available < requestAmt)
+                {
+                    return Common.Enums.STOCK_TRANSFER_STATUS.NOT_ENOGH;
+                }
+                stockSource.Available -= requestAmt;
+                stockSource.Total -= requestAmt;
+                Update(stockSource);
+                stockDes.Available += requestAmt;
+                stockDes.Total += requestAmt;
+                return Common.Enums.STOCK_TRANSFER_STATUS.SUCCESS;
+            }
+            catch
+            {
+                return Common.Enums.STOCK_TRANSFER_STATUS.ERROR;
+            }
+            
+        }
     }
 }

@@ -64,5 +64,17 @@ namespace StockCore.Common
             CANCEL_REJECTED = 10,
             OTHER,
         }
+        public enum CASH_TRANSFER_STATUS
+        {
+            SUCCESS=1,
+            ERROR = 2,
+            NOT_ENOGH = 3
+        }
+        public enum STOCK_TRANSFER_STATUS
+        {
+            SUCCESS = 1,
+            ERROR = 2,
+            NOT_ENOGH = 3
+        }
     }
 }

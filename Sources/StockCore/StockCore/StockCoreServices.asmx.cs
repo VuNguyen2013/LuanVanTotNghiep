@@ -138,6 +138,30 @@ namespace StockCore.Services
             }
             return result;
         }
-    }
-    
+        /// <summary>
+        /// return Common.Enums.CASH_TRANSFER_STATUS
+        /// </summary>
+        /// <param name="sourceAcc"></param>
+        /// <param name="desAcc"></param>
+        /// <param name="requestAmt"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public Common.Enums.CASH_TRANSFER_STATUS ProccessCashTransfer(string sourceAcc,string desAcc,long requestAmt)
+        {
+            return new Repositories.SubCustAccountRepository().ProccessCashTransfer(sourceAcc,desAcc,requestAmt);
+        }
+        /// <summary>
+        /// return Common.Enums.STOCK_TRANSFER_STATUS
+        /// </summary>
+        /// <param name="sourceAcc"></param>
+        /// <param name="desAcc"></param>
+        /// <param name="symbol"></param>
+        /// <param name="requestAmt"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public Common.Enums.STOCK_TRANSFER_STATUS ProccessStockTransfer(string sourceAcc, string desAcc,string symbol, long requestAmt)
+        {
+            return new Repositories.StockBalanceRespository().ProccessStockTransfer(sourceAcc, desAcc,symbol, requestAmt);
+        }
+    }    
 }

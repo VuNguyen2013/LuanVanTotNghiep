@@ -27,5 +27,27 @@ namespace StockCore.Repositories
                 return false;
             }
         }
+        public Common.Enums.CASH_TRANSFER_STATUS ProccessCashTransfer(string sourceAccID,string desAccID,long requestAmt)
+        {
+            try{
+                var sourceAcc = GetById(sourceAccID);
+                var desAcc = GetById(desAccID);
+                if (sourceAcc.WithDraw < requestAmt)
+                {
+                    return Common.Enums.CASH_TRANSFER_STATUS.NOT_ENOGH;
+                }
+                sourceAcc.WithDraw -= requestAmt;
+                sourceAcc.BuyCredit -= requestAmt;
+                Update(sourceAcc);
+                desAcc.BuyCredit += requestAmt;
+                desAcc.WithDraw += requestAmt;
+                Update(desAcc);
+                return Common.Enums.CASH_TRANSFER_STATUS.SUCCESS;
+            }
+            catch
+            {
+                return Common.Enums.CASH_TRANSFER_STATUS.ERROR;
+            }
+        }
     }
 }
