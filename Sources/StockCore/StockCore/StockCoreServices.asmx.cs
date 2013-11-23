@@ -118,40 +118,51 @@ namespace StockCore.Services
             List<Common.CashAdvanceData> result = new List<Common.CashAdvanceData>();
             var cashDeductRep = new Repositories.CashDeductRepository();
             var listCashDeduct = cashDeductRep.GetForCashAdvance(accountNo);
-            var orderRep = new Repositories.OrderRepository();
             foreach (var cashDeduct in listCashDeduct)
             {
-                var order = orderRep.GetByOrderId(Convert.ToInt64(cashDeduct.OrderId));
-                if (result.Count > 0)
-                {
-                    var tempObj = (from x in result where x.Symbol == order.StockSymbol select x).SingleOrDefault();
-                    if (tempObj != null)
-                    {
-                        tempObj.Amount += cashDeduct.Amount;
-                        continue;
-                    }
-                }
-                var obj = new Common.CashAdvanceData();
+                Common.CashAdvanceData obj = new Common.CashAdvanceData();
                 obj.Amount = cashDeduct.Amount;
-                obj.Symbol = order.StockSymbol;
+                obj.Fee = ((decimal)cashDeduct.Amount) * 10 / 100;
+                obj.RealMoney = (decimal)cashDeduct.Amount - obj.Fee;
+                obj.SellDate = cashDeduct.DeductedDate;
+                obj.ReturnDate = cashDeduct.DeductedDate.AddDays(2);
                 result.Add(obj);
+                
             }
+            //var orderRep = new Repositories.OrderRepository();
+            //foreach (var cashDeduct in listCashDeduct)
+            //{
+            //    var order = orderRep.GetByOrderId(Convert.ToInt64(cashDeduct.OrderId));
+            //    if (result.Count > 0)
+            //    {
+            //        var tempObj = (from x in result where x.Symbol == order.StockSymbol select x).SingleOrDefault();
+            //        if (tempObj != null)
+            //        {
+            //            tempObj.Amount += cashDeduct.Amount;
+            //            continue;
+            //        }
+            //    }
+            //    var obj = new Common.CashAdvanceData();
+            //    obj.Amount = cashDeduct.Amount;
+            //    obj.Symbol = order.StockSymbol;
+            //    result.Add(obj);
+            //}
             return result;
         }
         /// <summary>
-        /// return Common.Enums.CASH_TRANSFER_STATUS
+        /// return 1: success,2 error, 3 not enogh
         /// </summary>
         /// <param name="sourceAcc"></param>
         /// <param name="desAcc"></param>
         /// <param name="requestAmt"></param>
         /// <returns></returns>
         [WebMethod]
-        public Common.Enums.CASH_TRANSFER_STATUS ProccessCashTransfer(string sourceAcc,string desAcc,long requestAmt)
+        public int ProccessCashTransfer(string sourceAcc,string desAcc,long requestAmt)
         {
-            return new Repositories.SubCustAccountRepository().ProccessCashTransfer(sourceAcc,desAcc,requestAmt);
+            return (int)(new Repositories.SubCustAccountRepository().ProccessCashTransfer(sourceAcc,desAcc,requestAmt));
         }
         /// <summary>
-        /// return Common.Enums.STOCK_TRANSFER_STATUS
+        ///return 1: success,2 error, 3 not enogh
         /// </summary>
         /// <param name="sourceAcc"></param>
         /// <param name="desAcc"></param>
@@ -159,9 +170,9 @@ namespace StockCore.Services
         /// <param name="requestAmt"></param>
         /// <returns></returns>
         [WebMethod]
-        public Common.Enums.STOCK_TRANSFER_STATUS ProccessStockTransfer(string sourceAcc, string desAcc,string symbol, long requestAmt)
+        public int ProccessStockTransfer(string sourceAcc, string desAcc,string symbol, long requestAmt)
         {
-            return new Repositories.StockBalanceRespository().ProccessStockTransfer(sourceAcc, desAcc,symbol, requestAmt);
+            return (int)(new Repositories.StockBalanceRespository().ProccessStockTransfer(sourceAcc, desAcc,symbol, requestAmt));
         }
     }    
 }

@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CashAdvanceRepository.cs" />
     <Compile Include="OrderRepository.cs" />
     <Compile Include="Service References\StockCoreServices\Reference.cs">
       <AutoGen>True</AutoGen>
